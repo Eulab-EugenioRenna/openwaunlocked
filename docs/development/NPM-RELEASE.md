@@ -23,8 +23,10 @@ pnpm release:npm:publish
 ```
 
 La pubblicazione usa Bumpy, accesso pubblico e tag `latest`. L'esecuzione
-locale con token disattiva temporaneamente la provenance OIDC e ripristina
-la configurazione al termine. I tag Git non vengono inviati automaticamente.
+locale con token passa alla pipeline pubblica di Bumpy una configurazione in
+memoria con provenance OIDC disattivata, senza modificare `_config.json`.
+Il controllo Git avviene prima di preparare l'autenticazione temporanea in
+`.npmrc`, che viene ripristinato al termine. I tag Git non vengono inviati automaticamente.
 Verificare separatamente versione, dist-tag e tarball sul registry prima
 di dichiarare la release disponibile; una versione accettata non va ripubblicata.
 
