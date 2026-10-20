@@ -42,7 +42,7 @@ catalog:
   cabin: ^11.0.3
   clsx: 2.1.1
   cors: ^2.8.5
-  dotenv: ^17.4.2
+  dotenv: ^18.0.8
   effect: 4.0.2
   express: ^4.17.3
   express-request-id: 1.4.1
