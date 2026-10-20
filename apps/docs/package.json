@@ -70,7 +70,7 @@
     "unist-util-visit": "^5.1.0",
     "vite": "catalog:",
     "zod": "catalog:",
-    "@fumadocs/asyncapi": "0.4.4",
+    "@fumadocs/asyncapi": "0.5.0",
     "shiki": "4.5.0"
   },
   "devDependencies": {
