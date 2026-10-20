@@ -1,0 +1,177 @@
+---
+title: AI Tools
+description: Declare custom plugin tools and understand the host integration needed to expose them to agents.
+---
+
+# AI Tools
+
+Plugins can declare tools in the `tool` hook returned by `init()`. The current open-wa MCP endpoint does not discover or invoke plugin-declared tools, so use these examples only when you are building a host integration that connects the hook to an agent.
+
+<Callout type="warning">
+The declaration alone does not make a tool available to an agent. Connect it to a tool host before advertising it.
+</Callout>
+
+## Declare a tool
+
+Each tool has a name, description, argument schema, and execution function. The host integration decides whether and how agents can discover and call it.
+
+```ts
+init: async ({ client }) => ({
+  tool: {
+    toolName: {
+      description: 'What this tool does',
+      args: {
+        argName: z.string().describe('Description of the argument'),
+      },
+      execute: async (args, context) => {
+        // Tool implementation
+        return 'result';
+      },
+    },
+  },
+})
+```
+
+### Fields
+
+- **description**: What the tool does. AI agents use this to decide when to call the tool.
+- **args**: Zod schema defining the arguments the tool accepts.
+- **execute**: The function that runs when the tool is called.
+
+## ToolContext
+
+The `execute` function receives a `ToolContext` with these guaranteed fields:
+
+```ts
+execute: async (args, context) => {
+  context.logger.info('Tool called', { sessionId: context.sessionId });
+
+  if (context.abort.aborted) {
+    return 'Tool cancelled before work started.';
+  }
+
+  return `Tool ran for session ${context.sessionId}`;
+}
+```
+
+- `sessionId`: current session ID
+- `logger`: scoped plugin logger
+- `abort`: `AbortSignal` for cancellation
+
+The tool context does **not** include `client`. If a tool needs to call WhatsApp methods, capture `client` from the plugin `init()` input and use it inside the returned `tool` handlers.
+
+## Example: Lookup Contact Tool
+
+```ts
+export default createPlugin({
+  meta: { name: 'contact-tools' },
+  init: async ({ client }) => ({
+    tool: {
+      lookupContact: {
+        description: 'Look up a contact by phone number',
+        args: {
+          phone: z.string().describe('Phone number to look up'),
+        },
+        execute: async ({ phone }, context) => {
+          if (typeof phone !== 'string') {
+            return JSON.stringify({ success: false, error: 'phone must be a string' });
+          }
+
+          const chatId = `${phone}@c.us`;
+          const contact = await client.getContact(chatId);
+          context.logger.info('Contact looked up', { phone });
+          return JSON.stringify({ success: true, contact });
+        },
+      },
+    },
+  }),
+});
+```
+
+## Example: Send Message Tool
+
+```ts
+init: async ({ client }) => ({
+  tool: {
+    sendMessage: {
+      description: 'Send a WhatsApp message to a contact',
+      args: {
+        phone: z.string().describe('Phone number to send to'),
+        message: z.string().describe('Message text'),
+      },
+      execute: async ({ phone, message }, context) => {
+        if (typeof phone !== 'string' || typeof message !== 'string') {
+          return JSON.stringify({ success: false, error: 'phone and message must be strings' });
+        }
+
+        const chatId = `${phone}@c.us`;
+        const messageId = await client.sendText(chatId, message);
+        context.logger.info('Message sent', { phone, messageId });
+        return JSON.stringify({ success: true, messageId });
+      },
+    },
+  },
+})
+```
+
+## Write a useful tool contract
+
+### Descriptive Names
+
+Use a name that says what the action does, such as `lookupContact` or `sendMessage`.
+
+### Clear Descriptions
+
+Describe when to use the tool and what it returns:
+
+```ts
+description: 'Look up a contact by phone number. Returns the contact name and profile info.'
+```
+
+### Argument Descriptions
+
+Describe each argument, including its expected format:
+
+```ts
+args: {
+  phone: z.string().describe('Phone number with country code, e.g. 1234567890'),
+}
+```
+
+### Error Handling
+
+Return useful errors to the caller and log the failure:
+
+```ts
+execute: async (args, context) => {
+  try {
+    if (typeof args.chatId !== 'string' || typeof args.message !== 'string') {
+      return JSON.stringify({ success: false, error: 'chatId and message must be strings' });
+    }
+
+    const messageId = await client.sendText(args.chatId, args.message);
+    return JSON.stringify({ success: true, messageId });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    context.logger.error('Failed to send message', { error: message });
+    return JSON.stringify({ success: false, error: message });
+  }
+}
+```
+
+### Return Structured Data
+
+Tool handlers return strings. If you want to return structured data to an agent, serialize a JSON object:
+
+```ts
+return JSON.stringify({
+  success: true,
+  data: { name: 'John', phone: '1234567890' },
+});
+```
+
+## Related
+
+- **[Plugin getting started](/docs/plugins/getting-started)** - Build your first plugin
+- **[MCP Integration](/docs/guides/mcp)** - AI agent integration
+- **[Hooks reference](/docs/plugins/hooks-reference)** - Available hooks

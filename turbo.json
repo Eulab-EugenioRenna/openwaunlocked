@@ -1,0 +1,51 @@
+{
+  "$schema": "https://v2-9-10.turborepo.dev/schema.json",
+  "globalPassThroughEnv": [
+    "NODE_ENV"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts",
+        "test/**/*.ts"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "typecheck": {
+      "outputs": []
+    },
+    "@open-wa/cf-proxy#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "registry#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    }
+  }
+}

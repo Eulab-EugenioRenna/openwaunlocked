@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  push:
+    branches: [release]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: read
+  packages: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: Release
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: '1'
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: npm install --global npm@^11.5.1
+      - run: pnpm install --frozen-lockfile
+      - name: Consume any bumps added just before the release merge
+        run: node tools/release/prepare-release.mjs --publishing
+      - name: Open or resume the release record
+        id: record
+        run: node tools/release/publish-release.mjs open
+      - name: Build packages for npm
+        if: steps.record.outputs.upload_npm == 'true'
+        run: pnpm build
+      - name: Submit unpublished versions to npm
+        if: steps.record.outputs.upload_npm == 'true'
+        run: node tools/release/publish-release.mjs npm
+      - name: Publish missing GitHub Packages
+        if: steps.record.outputs.active == 'true'
+        run: ./tools/release/publish-github-packages.sh
+        env:
+          BUMPY_PACKAGES: ${{ steps.record.outputs.packages }}
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Publish the GitHub release and start availability tracking
+        if: steps.record.outputs.active == 'true'
+        run: node tools/release/publish-release.mjs finish

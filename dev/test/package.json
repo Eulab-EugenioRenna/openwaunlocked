@@ -1,0 +1,30 @@
+{
+  "name": "openwa-free-dev-test-harness",
+  "author": "Eulab",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "qrcode": "1.5.4",
+    "@open-wa/client": "workspace:*",
+    "@open-wa/core": "workspace:*",
+    "@open-wa/driver-puppeteer": "workspace:*",
+    "@open-wa/runtime-node": "workspace:*",
+    "@open-wa/schema": "workspace:*"
+  },
+  "files": [
+    "server.mjs",
+    "index.html",
+    "smoke.mjs",
+    "audit.mjs",
+    "native-audit.mjs",
+    "demo.mjs",
+    "cases.mjs",
+    "harness-check.mjs",
+    "conversation.mjs",
+    "conversation-ui.mjs",
+    "conversation.test.mjs",
+    "native-audio-check.mjs",
+    "calling-stream.test.mjs",
+    "native-inspection.mjs"
+  ]
+}

@@ -1,0 +1,348 @@
+---
+title: Hooks reference
+description: Find the plugin hook to use for lifecycle events, auth, messages, interceptors, routes, pages, tools, and cleanup.
+---
+
+# Hooks reference
+
+Hooks connect your plugin to the open-wa host. Your plugin's `init()` function returns the handlers and features it wants to use.
+
+All hooks are optional. Use only the hook your task needs.
+
+## Lifecycle hooks
+
+### `core.starting`
+
+Fires when the session is starting up.
+
+```ts
+'core.starting': async ({ config }) => {
+  // config is the global wa.config.js contents
+  logger.info('Session starting');
+}
+```
+
+**Payload:** `{ config: unknown }`, the global configuration object.
+
+### `core.started`
+
+Fires after the session has fully started.
+
+```ts
+'core.started': async () => {
+  logger.info('Session ready');
+  // Start one-time setup here
+}
+```
+
+### `core.stopping`
+
+Fires when the session is shutting down.
+
+```ts
+'core.stopping': async ({ reason }) => {
+  logger.info('Session stopping', { reason });
+  // Flush queues, save state
+}
+```
+
+**Payload:** `{ reason?: string }`, why the session is stopping.
+
+### `client.ready`
+
+Fires when the WhatsApp client is connected and authenticated.
+
+```ts
+'client.ready': async ({ sessionId }) => {
+  logger.info('WhatsApp connected', { sessionId });
+}
+```
+
+**Payload:** `{ sessionId: string }`, the current session identifier.
+
+## Auth hooks
+
+### `auth.qr`
+
+Fires when a QR code is emitted.
+
+```ts
+'auth.qr': async ({ details }) => {
+  const qr = details?.qr;
+  const attempt = details?.attemptInThisCycle;
+  logger.info('QR code emitted', { attempt });
+  // Send the QR to your own display channel
+}
+```
+
+**Payload:**
+
+- `details.qr`, the QR code string
+- `details.attemptInThisCycle`, the QR emission count for this cycle, when provided
+
+The current host delivers this hook from its internal QR event, so the payload also contains the event envelope (`correlationId`, `ts`, and `step`). It does not include a `sessionId` field.
+
+### `auth.authenticated`
+
+Fires after successful authentication.
+
+```ts
+'auth.authenticated': async ({ details }) => {
+  if (!details?.isAuthenticated) return;
+  logger.info('Authenticated', { method: details.method });
+}
+```
+
+**Payload:** an event envelope whose `details` object contains `isAuthenticated` and, when known, the authentication `method`. The hook does not receive a `sessionId` field.
+
+## Message hooks
+
+### `message.received`
+
+Fires when a message is received.
+
+```ts
+function getTextMessage(message: unknown) {
+  if (!message || typeof message !== 'object') return null;
+
+  const candidate = message as { body?: unknown; from?: unknown; type?: unknown };
+  if (candidate.type !== 'chat') return null;
+  if (typeof candidate.body !== 'string' || typeof candidate.from !== 'string') {
+    return null;
+  }
+
+  return { body: candidate.body, from: candidate.from, type: 'chat' };
+}
+
+'message.received': async ({ message }) => {
+  const msg = getTextMessage(message);
+
+  if (!msg) return;
+
+  logger.info('Text message received', { from: msg.from });
+}
+```
+
+**Payload:** `{ message: unknown }`. Examine the necessary fields before you use them.
+
+To detect message type, check the `type` field:
+
+- `'chat'`, text message
+- `'image'`, image
+- `'video'`, video
+- `'audio'`, voice note or audio message
+- `'document'`, document/file
+- `'sticker'`, sticker
+- `'location'`, location share
+
+To detect group messages, check `message.isGroupMsg` or whether the `from` field ends with `@g.us`.
+
+### `message.sent`
+
+This hook currently reports the `message.any` event. Inspect the payload if you need to distinguish sent messages from other message events.
+
+```ts
+'message.sent': async ({ message }) => {
+  logger.info('Message sent', { message });
+}
+```
+
+**Payload:** `{ ctx: EventContext; message: unknown }`
+
+### `message.ack`
+
+Fires when a message acknowledgment is received.
+
+```ts
+'message.ack': async ({ ack }) => {
+  logger.info('Message acknowledged', { ack });
+}
+```
+
+**Payload:** `{ ctx: EventContext; ack: unknown }`, the event context and runtime acknowledgment value.
+
+## Message interceptors
+
+### `message.send.before`
+
+The hook is declared in the SDK types, but the host does not call it when a message is sent. Returning it from `init()` does not intercept sends.
+
+```ts
+'message.send.before': async (
+  input: { to: string; content: unknown },
+  output: { content: unknown; metadata?: Record<string, unknown> }
+) => {
+  // Modify outgoing text before it is sent
+  if (typeof output.content === 'string') {
+    output.content = output.content.replace(/badword/g, '****');
+  }
+}
+```
+
+The shown shape documents the declared type only. Use an explicit wrapper around your own `client.sendText()` calls when you need outbound filtering until host support is added.
+
+### `message.send.after`
+
+The hook is declared in the SDK types, but the host does not call it after a message is sent. Returning it from `init()` does not observe sends.
+
+```ts
+'message.send.after': async (
+  input: { messageId: string; to: string },
+  output: { metadata?: Record<string, unknown> }
+) => {
+  output.metadata = { sentAt: Date.now() };
+}
+```
+
+The shown shape documents the declared type only. Use a wrapper around your own send calls when you need post-send bookkeeping.
+
+## API routes
+
+### `routes`
+
+Return a Hono sub-app that will be mounted at `/plugins/<plugin-name>/`.
+
+```js
+import { Hono } from 'hono';
+
+init: async () => ({
+  routes: () => {
+    const app = new Hono();
+
+    app.get('/status', (c) => {
+      return c.json({ plugin: 'my-plugin', status: 'ok' });
+    });
+
+    app.post('/webhook', async (c) => {
+      const body = await c.req.json();
+      // handle incoming webhook
+      return c.json({ ok: true, body });
+    });
+
+    return app;
+  },
+})
+```
+
+Routes are automatically mounted and accessible at `/plugins/<plugin-name>/`.
+
+See **[HTTP routes in plugins](/docs/plugins/hono-routes)** for more details.
+
+## Dashboard pages
+
+### `pages`
+
+Declare dashboard pages this plugin wants rendered in the dashboard sidebar.
+
+```js
+init: async () => ({
+  pages: [{
+    path: '/',
+    title: 'Plugin Status',
+    icon: '📊',
+    order: 1,
+    description: 'Current plugin status and configuration',
+  }],
+})
+```
+
+**Fields:**
+
+- `path`, declared route segment; use `/` for the current dashboard entry
+- `title`, display title in sidebar
+- `icon`, emoji or Lucide icon name
+- `order`, optional ordering metadata; the current dashboard does not sort by it
+- `description`, optional metadata; the current dashboard does not display it
+
+The dashboard uses these declarations for its manifest and sidebar, then opens the standard plugin status view. The hook does not add a custom plugin screen.
+
+See **[Dashboard pages](/docs/plugins/dashboard-pages)** for more details.
+
+## AI tools
+
+### `tool`
+
+Declare a tool for a host integration to connect to an agent. Keep its description narrow, validate arguments, and avoid actions the agent must not run. The current MCP endpoint does not expose plugin-declared tools; see [AI Tools](/docs/plugins/ai-tools) for that limitation.
+
+```ts
+init: async ({ client }) => ({
+  tool: {
+    sendWelcomeMessage: {
+      description: 'Send a welcome message to a contact',
+      args: {
+        chatId: z.string().describe('The chat ID to send to'),
+        name: z.string().describe('The contact name'),
+      },
+      execute: async (args, context) => {
+        if (typeof args.chatId !== 'string' || typeof args.name !== 'string') {
+          return 'chatId and name must be strings';
+        }
+
+        await client.sendText(
+          args.chatId,
+          `Welcome, ${args.name}!`
+        );
+        context.logger.info('Welcome message sent', { sessionId: context.sessionId });
+        return `Welcome message sent to ${args.chatId}`;
+      },
+    },
+  },
+})
+```
+
+**Tool definition:**
+
+- `description`, what the tool does (shown to AI agents)
+- `args`, Zod schema for arguments
+- `execute`, the implementation function
+
+**Tool context:**
+
+- `sessionId`, current session ID
+- `logger`, scoped logger
+- `abort`, AbortSignal for cancellation
+
+The tool context does not include `client`. Tools that need WhatsApp methods must close over `client` from `init()`, as shown above.
+
+See **[AI tools](/docs/plugins/ai-tools)** for more details.
+
+## Cleanup
+
+### `dispose`
+
+Called when the session is shutting down. Use this to clean up resources.
+
+```ts
+init: async ({ logger }) => ({
+  dispose: async () => {
+    // Close database connections
+    // Flush message queues
+    // Wait for in-flight requests
+    logger.info('Plugin disposed');
+  },
+})
+```
+
+## Catch-all
+
+### `event`
+
+Receives every public event. Use this when you need to react to events that do not have a specific hook.
+
+```ts
+init: async ({ logger }) => ({
+  event: async ({ event, payload }) => {
+    logger.debug('Event received', { event, payload });
+  },
+})
+```
+
+**Input:** `{ event: string; payload: unknown }`
+
+Use specific hooks when possible. They are easier to test and prevent catch-all work on every event.
+
+## Related
+
+- **[Plugin getting started](/docs/plugins/getting-started)**, build your first plugin
+- **[PluginClient reference](/docs/plugins/plugin-client)**, available client methods
+- **[PluginInput breakdown](/docs/plugins/plugin-input)**, what your plugin receives

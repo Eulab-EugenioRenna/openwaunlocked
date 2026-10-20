@@ -1,0 +1,20 @@
+# @open-wa/orchestrator-dashboard
+
+TanStack Router dashboard for managing open-wa orchestrator sessions.
+
+Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+
+## Development
+
+- `pnpm --filter @open-wa/orchestrator-dashboard dev`
+- `pnpm --filter @open-wa/orchestrator-dashboard build`
+- `pnpm --filter @open-wa/orchestrator-dashboard start`
+- `pnpm --filter @open-wa/orchestrator-dashboard check`
+
+## Documentation
+
+See the [docs site](https://openwa.dev).
+
+## License
+
+[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

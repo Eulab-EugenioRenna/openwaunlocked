@@ -1,0 +1,31 @@
+# @open-wa/cli
+
+`@open-wa/cli` provides the `wa` command for starting and managing an Open-WA session and API server. The CLI delegates session startup to `@open-wa/wa-automate`.
+
+Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+
+## Install
+
+```bash
+npm install --global @open-wa/cli@5.1.0
+```
+
+## Start the API server
+
+```bash
+wa --session-id main --host 127.0.0.1 --port 8080
+```
+
+Scan the QR code shown in the terminal to sign in. The server listens on `127.0.0.1:8080`; use `wa --help` to see the available options. Add an API key with `--api-key` when clients need authentication, and keep the server on loopback or a private network unless you have configured an appropriate access boundary.
+
+## Remote clients
+
+Use [`@open-wa/socket-client`](https://openwa.dev/docs/client-and-integrations/socket-client) to send commands to this server and receive runtime events.
+
+## Documentation
+
+See the [CLI reference](https://openwa.dev/docs/guides/configuration-and-cli).
+
+## License
+
+[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

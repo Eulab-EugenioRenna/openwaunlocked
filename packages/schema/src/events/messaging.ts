@@ -1,0 +1,86 @@
+import { InteractiveResponseSchema, FormResponseSchema } from '../interactive';
+import { z } from 'zod';
+import { defineListenerV2 } from './registry';
+import { MessageSchema } from '../common-types';
+
+// Acknowledgements carry a message snapshot. Validate the delivery identity but
+// retain every message field, including fields absent from the static schema.
+// Requiring all received-message fields would discard updates for partially
+// loaded messages in WhatsApp's store.
+const AckSchema = MessageSchema.pick({ id: true, ack: true }).passthrough()
+    .describe('The full available message snapshot at acknowledgement time, including id, ack, body, sender and chat when supplied by WhatsApp.');
+
+export const messageEvent = defineListenerV2('message', {
+    legacyName: 'onMessage',
+    meta: {
+        description: 'Fired when a new message is received (excluding own messages)',
+        namespace: 'messages',
+        status: 'stable',
+        license: 'none',
+    },
+    payload: MessageSchema,
+    defaultQueueOptions: { concurrency: 1 },
+});
+
+export const anyMessageEvent = defineListenerV2('anyMessage', {
+    legacyName: 'onAnyMessage',
+    meta: {
+        description: 'Fired for any message including own messages',
+        namespace: 'messages',
+        status: 'stable',
+        license: 'none',
+    },
+    payload: MessageSchema,
+    defaultQueueOptions: { concurrency: 1 },
+});
+
+export const messageDeletedEvent = defineListenerV2('messageDeleted', {
+    legacyName: 'onMessageDeleted',
+    meta: {
+        description: 'Fired when a message is deleted',
+        namespace: 'messages',
+        status: 'stable',
+        license: 'none',
+    },
+    payload: MessageSchema,
+});
+
+export const ackEvent = defineListenerV2('ack', {
+    legacyName: 'onAck',
+    meta: {
+        description: 'Fired when a message acknowledgment is received',
+        namespace: 'messages',
+        status: 'stable',
+        license: 'none',
+    },
+    payload: AckSchema,
+});
+
+export const reactionEvent = defineListenerV2('reaction', {
+    legacyName: 'onReaction',
+    meta: {
+        description: 'Fired when a reaction is added to a message',
+        namespace: 'messages',
+        status: 'stable',
+        license: 'none',
+    },
+    payload: z.object({
+        messageId: z.string(),
+        reaction: z.string(),
+        senderId: z.string(),
+        timestamp: z.number(),
+    }),
+});
+
+export const interactiveResponseEvent = defineListenerV2('interactiveResponse', {
+    legacyName: 'onInteractiveResponse',
+    meta: { description: 'Structured reply, list, form or native interactive response', namespace: 'messages', status: 'stable', license: 'none' },
+    payload: InteractiveResponseSchema,
+    defaultQueueOptions: { concurrency: 1 },
+});
+export const formResponseEvent = defineListenerV2('formResponse', {
+    legacyName: 'onFormResponse',
+    meta: { description: 'A form submission with question IDs and chosen option IDs', namespace: 'messages', status: 'stable', license: 'none' },
+    payload: FormResponseSchema,
+    defaultQueueOptions: { concurrency: 1 },
+});

@@ -1,0 +1,656 @@
+import { developmentPremiumMethods, type DevelopmentPremiumMethods } from './methods/development-premium';
+import { disposeClientStickers } from './stickers';
+import type { HyperEmitter } from '@open-wa/hyperemitter';
+import type { Logger } from '@open-wa/logger';
+import type {
+  OpenWAClient,
+  OpenWAEventMap,
+  Transport,
+  SessionManager,
+  PluginHost,
+  STATE,
+  SessionRefreshOptions,
+  SessionRefreshResult,
+  SessionRefreshSnapshot,
+} from '@open-wa/core';
+import type {
+  ChatId,
+  GroupId,
+  ContactId,
+  MessageId,
+  Message,
+  Chat,
+  Contact,
+  InteractiveResponse,
+  FormResponse,
+  WhatsAppEvent,
+  EventResponse,
+  ParticipantChange,
+} from '@open-wa/schema';
+import { groupIdParam } from '@open-wa/schema';
+import {
+  MessageCollector,
+  MessageCollectorEvents,
+  MessageCollectorOptions,
+  AwaitMessagesOptions,
+  awaitMessages,
+  Collection,
+  CollectorFilter,
+} from '@open-wa/domain';
+import { ListenerManager, type ListenerHandle } from './events/index';
+import { throwUnsupportedListener } from './runtimeSurface';
+import { hydrateCall } from './calls';
+import { normalizeCallMedia } from '@open-wa/schema';
+import type { Call, CallActionResult, CallCapabilities, CallIdentity, CallMediaOptions, AudioInput, AudioOutput, VideoInput } from '@open-wa/schema';
+import type { QueueOptions } from '@open-wa/schema';
+
+import { interactiveMethods, type InteractiveMethods } from './methods/interactive';
+import { messagingMethods, type MessagingMethods } from './methods/messaging';
+import { mediaMethods, type MediaMethods } from './methods/media';
+import { statusMethods, type StatusMethods } from './methods/status';
+import { groupMethods, type GroupMethods } from './methods/groups';
+import { chatMethods, type ChatMethods } from './methods/chats';
+import { contactMethods, type ContactMethods } from './methods/contacts';
+import { utilitiesMethods, type UtilitiesMethods } from './methods/utilities';
+import { whatsappEventMethods, type WhatsAppEventMethods } from './methods/whatsapp-events';
+
+/**
+ * Configuration for creating a WhatsApp Client.
+ */
+export interface ClientConfig {
+  /**
+   * The OpenWAClient instance from @open-wa/core.
+   */
+  client: OpenWAClient;
+  
+  /**
+   * Transport instance for page.evaluate calls.
+   * Required for WAPI method invocations.
+   */
+  transport: Transport;
+}
+
+/**
+ * Evaluate function type - runs code in browser context.
+ */
+export type EvaluateFn = <Arg, Ret>(
+  fn: (arg: Arg) => Ret | Promise<Ret>,
+  arg: Arg
+) => Promise<Ret>;
+
+/**
+ * Client - High-level facade for WhatsApp Web automation.
+ * 
+ * Composes:
+ * - OpenWAClient from @open-wa/core (lifecycle, events, plugins)
+ * - Transport for WAPI method calls
+ * - Domain-specific method modules (messaging, groups, chats, contacts)
+ * 
+ * @example
+ * ```typescript
+ * import { createClient } from '@open-wa/core';
+ * import { Client } from '@open-wa/client';
+ * 
+ * const openwa = await createClient({ driver, plugins: [] });
+ * 
+ * const client = new Client({ client: openwa, transport: openwa.getTransport() });
+ * await client.start();
+ * 
+ * // Send a message
+ * await client.sendText('123456789@c.us', 'Hello!');
+ * 
+ * // Listen to messages
+ * client.onMessage(msg => console.log(msg));
+ * ```
+ */
+export class Client implements DevelopmentPremiumMethods, InteractiveMethods, MessagingMethods, MediaMethods, StatusMethods, GroupMethods, ChatMethods, ContactMethods, UtilitiesMethods, WhatsAppEventMethods {
+  private readonly _client: OpenWAClient;
+  private readonly _transport: Transport;
+  private readonly _listenerManager: ListenerManager;
+  private _loadedPromise?: Promise<void>;
+  private _loaded = false;
+  private _phoneVersion?: string;
+  private _retainedHooksInstalled = false;
+  private _logoutCleanupPromise?: Promise<void>;
+  
+  constructor(config: ClientConfig) {
+    this._client = config.client;
+    this._transport = config.transport;
+    this._listenerManager = new ListenerManager({
+      sessionId: config.client.sessionId,
+      events: config.client.events,
+      observability: config.client.observability,
+    });
+    
+    // Bind method modules
+    this._bindMethods(messagingMethods, this);
+    this._bindMethods(interactiveMethods, this);
+    this._bindMethods(developmentPremiumMethods, this);
+    this._bindMethods(mediaMethods, this);
+    this._bindMethods(statusMethods, this);
+    this._bindMethods(groupMethods, this);
+    this._bindMethods(chatMethods, this);
+    this._bindMethods(contactMethods, this);
+    this._bindMethods(utilitiesMethods, this);
+    this._bindMethods(whatsappEventMethods, this);
+
+    this._client.registerFinalizationHook(() => this.loaded());
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Core accessors
+  // ─────────────────────────────────────────────────────────────────
+  
+  /**
+   * Session ID for this client instance.
+   */
+  get sessionId(): string {
+    return this._client.sessionId;
+  }
+  
+  /**
+   * Event emitter for all WhatsApp events.
+   * Uses MQTT wildcard patterns (e.g., 'message.*', 'group.#').
+   */
+  get events(): HyperEmitter<OpenWAEventMap> {
+    return this._client.events;
+  }
+  
+  /**
+   * Logger instance.
+   */
+  get logger(): Logger {
+    return this._client.logger;
+  }
+  
+  /**
+   * Session manager for state tracking.
+   */
+  get session(): SessionManager {
+    return this._client.session;
+  }
+  
+  /**
+   * Plugin host for managing plugins.
+   */
+  get plugins(): PluginHost {
+    return this._client.plugins;
+  }
+
+  /**
+   * Phone WhatsApp version captured during the loaded-equivalent finalization phase.
+   */
+  get phoneVersion(): string | undefined {
+    return this._phoneVersion;
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Lifecycle
+  // ─────────────────────────────────────────────────────────────────
+  
+  /**
+   * Start the client - initializes browser, navigates to WA Web, injects WAPI.
+   */
+  async start(): Promise<void> {
+    return this._client.start();
+  }
+
+  /** Rebuild public and licensed patches. Warning: messages may be missed during the page reload. */
+  refresh(options?: SessionRefreshOptions): Promise<SessionRefreshResult> { return this._client.refresh(options); }
+  /** Start a background refresh. Warning: messages may be missed during the page reload. */
+  requestRefresh(options?: SessionRefreshOptions): { operationId: string } { return this._client.requestRefresh(options); }
+  getRefreshStatus(): Promise<SessionRefreshSnapshot> { return this._client.getRefreshStatus(); }
+  
+  /**
+   * Stop the client gracefully.
+   */
+  async stop(reason?: string): Promise<void> {
+    await disposeClientStickers(this).catch(() => {});
+    await this._listenerManager.dispose();
+    return this._client.stop(reason);
+  }
+  
+  /**
+   * Get current connection state.
+   */
+  getState(): STATE {
+    return this._client.getState();
+  }
+
+  /**
+   * Loaded-equivalent finalization phase.
+   * Waits for sync/session readiness, autobinds listener bridges, and captures phone version.
+   */
+  async loaded(): Promise<void> {
+    if (this._loaded) {
+      return;
+    }
+
+    if (!this._loadedPromise) {
+      this._loadedPromise = this._runLoadedFinalization().catch((error) => {
+        this._loadedPromise = undefined;
+        throw error;
+      });
+    }
+
+    await this._loadedPromise;
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Evaluate - Low-level WAPI access
+  // ─────────────────────────────────────────────────────────────────
+  
+  /**
+   * Execute code in the browser context (page.evaluate).
+   * This is the low-level method used by all WAPI calls.
+   */
+  async evaluate<Arg, Ret>(
+    fn: (arg: Arg) => Ret | Promise<Ret>,
+    arg: Arg
+  ): Promise<Ret> {
+    return this._transport.evaluate(fn, arg);
+  }
+
+  /** Execute an explicitly supplied function expression inside this chat's configured sandbox. */
+  async executeInChatSandbox<T = unknown>(chatId: string, source: string, input?: unknown): Promise<T> {
+    return this._client.executeInChatSandbox<T>(chatId, source, input);
+  }
+
+  async closeChatSandbox(chatId: string): Promise<void> {
+    await this._client.closeChatSandbox(chatId);
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Message Collectors (Discord.js style)
+  // ─────────────────────────────────────────────────────────────────
+  
+  /**
+   * Create a message collector for a specific chat.
+   * Collects messages matching the filter until stopped or limits reached.
+   * 
+   * @example
+   * ```typescript
+   * const collector = client.createMessageCollector('123@c.us', {
+   *   filter: (msg) => msg.body.startsWith('!'),
+   *   max: 10,
+   *   time: 60000
+   * });
+   * 
+   * collector.on('collect', (msg) => console.log('Collected:', msg.body));
+   * collector.on('end', (collected, reason) => {
+   *   console.log(`Collected ${collected.size} messages. Reason: ${reason}`);
+   * });
+   * ```
+   */
+  createMessageCollector(
+    chatId: ChatId,
+    options: MessageCollectorOptions & { filter?: CollectorFilter<[Message]> } = {}
+  ): MessageCollector {
+    const { filter = () => true, ...collectorOptions } = options;
+    
+    return new MessageCollector(
+      this.sessionId,
+      chatId,
+      filter,
+      this.events as unknown as HyperEmitter<MessageCollectorEvents>,
+      collectorOptions
+    );
+  }
+  
+  /**
+   * Await messages in a chat - promise-based collector.
+   * 
+   * @example
+   * ```typescript
+   * const messages = await client.awaitMessages('123@c.us', {
+   *   filter: (msg) => msg.body === 'confirm',
+   *   max: 1,
+   *   time: 30000,
+   *   errors: ['time']
+   * });
+   * 
+   * console.log('Received confirmation:', messages.first());
+   * ```
+   */
+  async awaitMessages(
+    chatId: ChatId,
+    options: AwaitMessagesOptions & { filter?: CollectorFilter<[Message]> } = {}
+  ): Promise<Collection<string, Message>> {
+    const { filter = () => true, ...awaitOptions } = options;
+    
+    return awaitMessages(
+      this.sessionId,
+      chatId,
+      this.events as unknown as HyperEmitter<MessageCollectorEvents>,
+      filter,
+      awaitOptions
+    );
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Event Listeners (convenience wrappers)
+  // ─────────────────────────────────────────────────────────────────
+  
+  /**
+   * Listen for structured interactive selections and submissions.
+   */
+  onInteractiveResponse(callback: (response: InteractiveResponse) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('interactiveResponse', callback, options);
+  }
+
+  /** Listen only for form submissions from the interactive response stream. */
+  onFormResponse(callback: (response: FormResponse) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('formResponse', callback, options);
+  }
+
+  /** Decrypted votes from the synced store; history hydration can emit votes too. */
+  onPollVote(callback: (vote: import('@open-wa/schema').PollVote) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('pollVote', callback, options);
+  }
+
+  onEvent(callback: (event: WhatsAppEvent) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('event', callback, options);
+  }
+
+  onEventResponse(callback: (response: EventResponse) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('eventResponse', callback, options);
+  }
+
+  /** Listen for all incoming messages. */
+  onMessage(callback: (message: Message) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('message', async (payload) => {
+      await callback(payload);
+    }, options);
+  }
+  
+  /**
+   * Listen for message acknowledgements (sent, delivered, read).
+   */
+  onAck(callback: (message: Message) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('ack', async (payload) => {
+      await callback(payload);
+    }, options);
+  }
+  
+  /**
+   * Listen for state changes (CONNECTED, DISCONNECTED, etc.).
+   */
+  onStateChanged(callback: (state: STATE) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('stateChanged', async (payload) => {
+      await callback(payload.state);
+    }, options);
+  }
+
+  onAnyMessage(callback: (message: Message) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('anyMessage', async (payload) => {
+      await callback(payload);
+    }, options);
+  }
+
+  /** Listen to the existing participant-change patch for one group. */
+  onParticipantsChanged(
+    groupId: GroupId,
+    callback: (change: ParticipantChange) => void | boolean | Promise<void | boolean>,
+    options?: QueueOptions,
+  ): ListenerHandle {
+    const id = groupIdParam.parse(groupId);
+    return this._listenerManager.on('participantsChanged', async change => {
+      if (String(change.groupId) === String(id)) await callback(change);
+    }, options);
+  }
+
+  /** Listen to participant changes across the session's groups. */
+  onGlobalParticipantsChanged(
+    callback: (change: ParticipantChange) => void | boolean | Promise<void | boolean>,
+    options?: QueueOptions,
+  ): ListenerHandle {
+    return this._listenerManager.on('participantsChanged', async change => {
+      await callback(change);
+    }, options);
+  }
+
+  onMessageDeleted(callback: (payload: { messageId: string; chatId: string; by?: string }) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    void callback;
+    void options;
+    return throwUnsupportedListener('onMessageDeleted');
+  }
+
+  onLogout(callback: (payload: { reason?: string; timestamp: number }) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+    return this._listenerManager.on('logout', async (payload) => {
+      await callback(payload);
+    }, options);
+  }
+  
+  // ─────────────────────────────────────────────────────────────────
+  // Private helpers
+  // ─────────────────────────────────────────────────────────────────
+  
+  getCallCapabilities(): Promise<CallCapabilities> { return this._transport.calling.capabilities(); }
+  /** Access selected by the accepted licence payload; no capability preflight is required. */
+  async getLicenseFeatures(): Promise<import('@open-wa/schema').LicenseFeatures> { return this._transport.getLicenseFeatures(); }
+  /** Used by the bundled API's authenticated binary media route. */
+  getCallingService() { return this._transport.calling; }
+  async getActiveCall(): Promise<Call | null> {
+    const snapshot = await this._transport.calling.getActive();
+    return snapshot ? hydrateCall(snapshot, this) : null;
+  }
+  onIncomingCall(callback: (call: Call) => unknown, options?: QueueOptions): ListenerHandle {
+    this._transport.calling.logListenerAvailability();
+    return this._listenerManager.on('incomingCall', async snapshot => { await callback(hydrateCall(snapshot, this)); }, options);
+  }
+  onCallState(callback: (call: Call) => unknown, options?: QueueOptions): ListenerHandle {
+    this._transport.calling.logListenerAvailability();
+    return this._listenerManager.on('callState', async snapshot => { await callback(hydrateCall(snapshot, this)); }, options);
+  }
+  acceptCall(call: CallIdentity, media?: CallMediaOptions): Promise<CallActionResult> { return this._transport.calling.accept(call, media); }
+  startCall(to: string, microphone?: AudioInput | CallMediaOptions, speaker?: AudioOutput, camera?: VideoInput): Promise<CallActionResult> {
+    return this._transport.calling.start(to, normalizeCallMedia(microphone, speaker, camera));
+  }
+  rejectCall(call: CallIdentity): Promise<CallActionResult> { return this._transport.calling.control('reject', call); }
+  endCall(call: CallIdentity): Promise<CallActionResult> { return this._transport.calling.control('end', call); }
+  muteCall(call: CallIdentity, muted: boolean): Promise<CallActionResult> { return this._transport.calling.control('mute', call, muted); }
+  clearCallAudio(call: CallIdentity): Promise<CallActionResult> { return this._transport.calling.control('clear', call); }
+  setCallMedia(call: CallIdentity, media: CallMediaOptions): Promise<CallActionResult> { return this._transport.calling.replace(call, media); }
+  observeCallAudio(call: CallIdentity, speaker: AudioOutput): Promise<CallActionResult & { observerId?: string }> { return this._transport.calling.observeAudio(call, speaker); }
+  stopCallAudioObserver(call: CallIdentity, observerId: string): Promise<CallActionResult> { return this._transport.calling.stopObserver(call, observerId); }
+
+  private _bindMethods<T extends object>(
+    methods: (client: Client) => T,
+    target: Client
+  ): void {
+    const boundMethods = methods(target);
+    for (const [name, method] of Object.entries(boundMethods)) {
+      if (typeof method === 'function') {
+        (target as any)[name] = method.bind(target);
+      }
+    }
+  }
+
+  private async _runLoadedFinalization(): Promise<void> {
+    this.registerAllSimpleListenersOnEv();
+    this._phoneVersion = await this._capturePhoneVersion().catch(() => undefined);
+    this._installRetainedFinalizationHooks();
+    this._loaded = true;
+
+    this.logger.info('client_loaded', {
+      sessionId: this.sessionId,
+      phoneVersion: this._phoneVersion ?? 'unknown',
+    });
+  }
+
+  private registerAllSimpleListenersOnEv(): void {
+    this._listenerManager.autobindAll();
+  }
+
+  private async _capturePhoneVersion(): Promise<string | undefined> {
+    const phoneVersion = await this._transport.evaluate(() => {
+      const root = globalThis as typeof globalThis & {
+        WAPI?: {
+          getMe?: () => { phone?: { wa_version?: string } } | null;
+          getWAVersion?: () => string;
+        };
+      };
+
+      const me = typeof root.WAPI?.getMe === 'function' ? root.WAPI.getMe() : null;
+      return me?.phone?.wa_version ?? root.WAPI?.getWAVersion?.() ?? undefined;
+    }, undefined);
+
+    return phoneVersion ?? undefined;
+  }
+
+  private _installRetainedFinalizationHooks(): void {
+    if (this._retainedHooksInstalled) {
+      return;
+    }
+
+    this.events.on('session.state.changed', event => {
+      if (event.details?.next === 'STARTING' || event.details?.next === 'AUTHENTICATING') {
+        this._loaded = false;
+        this._loadedPromise = undefined;
+        this._phoneVersion = undefined;
+      }
+    });
+
+    this.events.on('session.logout', () => {
+      if (!this._logoutCleanupPromise) {
+        this._logoutCleanupPromise = this._runLogoutCleanup().catch(error => {
+          this.logger.error('session_logout_cleanup_failed', { error });
+        }).finally(() => {
+          this._loaded = false;
+          this._loadedPromise = undefined;
+          this._phoneVersion = undefined;
+          this._logoutCleanupPromise = undefined;
+        });
+      }
+    });
+
+    this._retainedHooksInstalled = true;
+  }
+
+  private async _runLogoutCleanup(): Promise<void> {
+    if (this._client.config.killClientOnLogout) await this._client.stop('LOGGED_OUT');
+  }
+
+  // ─────────────────────────────────────────────────────────────────
+  // Method declarations (implemented by bound modules)
+  // These are filled in by _bindMethods at construction time.
+  // ─────────────────────────────────────────────────────────────────
+  
+  // Messaging methods
+  declare sendInteractive: InteractiveMethods['sendInteractive'];
+  declare sendRawMessage: InteractiveMethods['sendRawMessage'];
+  declare getNumberProfile: DevelopmentPremiumMethods['getNumberProfile'];
+  declare getOrder: DevelopmentPremiumMethods['getOrder'];
+  declare getStories: DevelopmentPremiumMethods['getStories'];
+  declare getStatuses: DevelopmentPremiumMethods['getStatuses'];
+  declare getStatus: DevelopmentPremiumMethods['getStatus'];
+  declare deleteStatus: DevelopmentPremiumMethods['deleteStatus'];
+  declare deleteAllStatus: DevelopmentPremiumMethods['deleteAllStatus'];
+  declare deleteAllStatuses: DevelopmentPremiumMethods['deleteAllStatuses'];
+  declare getStarredMessages: DevelopmentPremiumMethods['getStarredMessages'];
+  declare setProfilePicture: DevelopmentPremiumMethods['setProfilePicture'];
+  declare setProfilePic: DevelopmentPremiumMethods['setProfilePic'];
+  declare sendButtons: DevelopmentPremiumMethods['sendButtons'];
+  declare sendAdvancedButtons: DevelopmentPremiumMethods['sendAdvancedButtons'];
+  declare sendListMessage: DevelopmentPremiumMethods['sendListMessage'];
+  declare sendList: DevelopmentPremiumMethods['sendList'];
+  declare sendText: MessagingMethods['sendText'];
+  declare sendAlbum: MessagingMethods['sendAlbum'];
+  declare sendImage: MessagingMethods['sendImage'];
+  declare sendFile: MessagingMethods['sendFile'];
+  declare sendAudio: MessagingMethods['sendAudio'];
+  declare sendPtt: MessagingMethods['sendPtt'];
+  declare sendVideoAsGif: MessagingMethods['sendVideoAsGif'];
+  declare sendPoll: MessagingMethods['sendPoll'];
+  declare voteOnPoll: MessagingMethods['voteOnPoll'];
+  declare getPollResults: MessagingMethods['getPollResults'];
+  declare pinMessage: MessagingMethods['pinMessage'];
+  declare unpinMessage: MessagingMethods['unpinMessage'];
+  declare sendLocation: MessagingMethods['sendLocation'];
+  declare sendContact: MessagingMethods['sendContact'];
+  declare sendMultipleContacts: MessagingMethods['sendMultipleContacts'];
+  declare sendVCard: MessagingMethods['sendVCard'];
+  declare sendSticker: MessagingMethods['sendSticker'];
+  declare reply: MessagingMethods['reply'];
+  declare forwardMessages: MessagingMethods['forwardMessages'];
+  declare deleteMessage: MessagingMethods['deleteMessage'];
+  declare editMessage: MessagingMethods['editMessage'];
+  declare react: MessagingMethods['react'];
+  declare sendSeen: MessagingMethods['sendSeen'];
+  declare getMessageById: MessagingMethods['getMessageById'];
+  declare sendEvent: WhatsAppEventMethods['sendEvent'];
+  declare getEvent: WhatsAppEventMethods['getEvent'];
+  declare getEvents: WhatsAppEventMethods['getEvents'];
+  declare getEventResponses: WhatsAppEventMethods['getEventResponses'];
+  declare editEvent: WhatsAppEventMethods['editEvent'];
+  declare cancelEvent: WhatsAppEventMethods['cancelEvent'];
+  declare respondToEvent: WhatsAppEventMethods['respondToEvent'];
+  declare getAlbumMessages: MessagingMethods['getAlbumMessages'];
+  declare sendFileFromUrl: MediaMethods['sendFileFromUrl'];
+  declare decryptMedia: MediaMethods['decryptMedia'];
+  declare downloadMedia: MediaMethods['downloadMedia'];
+  declare postTextStatus: StatusMethods['postTextStatus'];
+  declare postImageStatus: StatusMethods['postImageStatus'];
+  declare postVideoStatus: StatusMethods['postVideoStatus'];
+  
+  // Group methods
+  declare createGroup: GroupMethods['createGroup'];
+  declare addParticipant: GroupMethods['addParticipant'];
+  declare removeParticipant: GroupMethods['removeParticipant'];
+  declare promoteParticipant: GroupMethods['promoteParticipant'];
+  declare demoteParticipant: GroupMethods['demoteParticipant'];
+  declare setGroupTitle: GroupMethods['setGroupTitle'];
+  declare setGroupDescription: GroupMethods['setGroupDescription'];
+  declare setGroupIcon: GroupMethods['setGroupIcon'];
+  declare getGroupInfo: GroupMethods['getGroupInfo'];
+  declare getGroupMembers: GroupMethods['getGroupMembers'];
+  declare getGroupMembersId: GroupMethods['getGroupMembersId'];
+  declare getGroupInviteLink: GroupMethods['getGroupInviteLink'];
+  declare revokeGroupInviteLink: GroupMethods['revokeGroupInviteLink'];
+  declare joinGroupViaLink: GroupMethods['joinGroupViaLink'];
+  declare leaveGroup: GroupMethods['leaveGroup'];
+  
+  // Chat methods
+  declare getChat: ChatMethods['getChat'];
+  declare getAllChats: ChatMethods['getAllChats'];
+  declare getChatById: ChatMethods['getChatById'];
+  declare deleteChat: ChatMethods['deleteChat'];
+  declare clearChat: ChatMethods['clearChat'];
+  declare archiveChat: ChatMethods['archiveChat'];
+  declare unarchiveChat: ChatMethods['unarchiveChat'];
+  declare pinChat: ChatMethods['pinChat'];
+  declare unpinChat: ChatMethods['unpinChat'];
+  declare muteChat: ChatMethods['muteChat'];
+  declare unmuteChat: ChatMethods['unmuteChat'];
+  declare markAsUnread: ChatMethods['markAsUnread'];
+  declare getAllMessages: ChatMethods['getAllMessages'];
+  declare loadEarlierMessages: ChatMethods['loadEarlierMessages'];
+  
+  // Contact methods
+  declare getContact: ContactMethods['getContact'];
+  declare requestPhoneNumber: ContactMethods['requestPhoneNumber'];
+  declare sharePhoneNumber: ContactMethods['sharePhoneNumber'];
+  declare getAllContacts: ContactMethods['getAllContacts'];
+  declare getContactById: ContactMethods['getContactById'];
+  declare checkNumberStatus: ContactMethods['checkNumberStatus'];
+  declare getProfilePic: ContactMethods['getProfilePic'];
+  declare blockContact: ContactMethods['blockContact'];
+  declare unblockContact: ContactMethods['unblockContact'];
+  declare getBlockedContacts: ContactMethods['getBlockedContacts'];
+  declare getCommonGroups: ContactMethods['getCommonGroups'];
+  declare getLastSeen: ContactMethods['getLastSeen'];
+  declare isChatOnline: ContactMethods['isChatOnline'];
+  
+  // Utilities methods
+  declare getHostNumber: UtilitiesMethods['getHostNumber'];
+  declare getWAVersion: UtilitiesMethods['getWAVersion'];
+  declare getConnectionState: UtilitiesMethods['getConnectionState'];
+  declare getBatteryLevel: UtilitiesMethods['getBatteryLevel'];
+  declare getIsPlugged: UtilitiesMethods['getIsPlugged'];
+  declare getAmountOfLoadedMessages: UtilitiesMethods['getAmountOfLoadedMessages'];
+  declare getMe: UtilitiesMethods['getMe'];
+  declare getFeatures: UtilitiesMethods['getFeatures'];
+  declare getProcessStats: UtilitiesMethods['getProcessStats'];
+  declare setMyName: UtilitiesMethods['setMyName'];
+  declare setMyStatus: UtilitiesMethods['setMyStatus'];
+}

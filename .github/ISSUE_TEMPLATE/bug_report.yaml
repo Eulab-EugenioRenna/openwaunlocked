@@ -1,0 +1,101 @@
+name: 🐞 Bug report
+description: Create a report to help us improve
+labels: [Bug, Needs Triage]
+body:
+- type: input
+  id: session_type
+  attributes:
+    label: What type of session are you experiencing this issue on?
+    description: "Optional. Describe the linked session if you know its type. Leave this blank if you aren't sure."
+- type: input
+  id: acc_type
+  attributes:
+    label: What type of host account are you experiencing this issue on?
+    description: "Optional. Examples: Personal account (normal), Business account, or Tested and experienced on both."
+- type: input
+  id: mode
+  attributes:
+    label: Mode
+    description: "Optional. Tell us whether you use the Easy API/CLI, SocketClient, or an embedded client in your own Node.js app."
+- type: textarea
+  id: curr_b
+  attributes:
+    label: Current Behavior
+    description: A concise description of what you're experiencing.
+  validations:
+    required: false
+- type: textarea
+  id: expected_b
+  attributes:
+    label: Expected Behavior
+    description: A concise description of what you expected to happen.
+  validations:
+    required: true
+- type: textarea
+  id: repro
+  attributes:
+    label: Steps To Reproduce
+    description: Include the steps, relevant code, and request bodies. Replace credentials, phone numbers, message content, and private file details before sharing.
+    placeholder: |
+      1. In this environment...
+      2. With this config...
+      3. Run '...'
+      4. See error...
+  validations:
+    required: true
+- type: textarea
+  id: c_code
+  attributes:
+    label: Client setup or CLI command and configuration
+    description: |
+      Paste the command you ran or the code that creates your client, including relevant configuration.
+      Remove API keys, licence keys, session credentials, and other private values.
+      See the [CLI guide](https://openwa.dev/docs/guides/configuration-and-cli) or [custom-code guide](https://openwa.dev/docs/getting-started/custom-code) for the supported setup.
+    render: markdown
+  validations:
+    required: false
+    
+- type: textarea
+  id: d_info
+  attributes:
+    label: Runtime details
+    description: |
+      Include your open-wa version, Node.js version, browser and driver, and WhatsApp Web version if available.
+      The dashboard's Report issue button can collect available runtime details. If a value is unavailable, say so rather than guessing.
+    render: markdown
+  validations:
+    required: true
+- type: textarea
+  id: enviro
+  attributes:
+    label: Environment
+    description: |
+      Describe the machine running open-wa, which may differ from the machine displaying your dashboard.
+      Include the operating system, Node.js version, package manager, and whether you use Docker or another container.
+    value: |
+        - OS: 
+        - Node: 
+        - npm: 
+    render: markdown
+  validations:
+    required: true
+    
+- type: textarea
+  id: screenshots
+  attributes:
+    label: Screenshots/Logs
+    description: |
+      Add the relevant error and nearby log lines, or a screenshot showing what happened.
+      Mask QR/link codes, credentials, phone numbers, contact names, and message content before sharing.
+      See [Logging and audit](https://openwa.dev/docs/guides/logging-and-audit) for supported logging options.
+  validations:
+    required: false
+    
+- type: textarea
+  id: extra
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+  validations:
+    required: false

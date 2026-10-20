@@ -1,0 +1,110 @@
+# Add patterns to ignore here, one per line
+# Example:
+# *.log
+# tmp/
+node_modules
+dist
+session
+newsession
+**buttons.js
+**req.ts
+**qr_code_session.png
+**.re.js
+**.postman_collection.json
+**.sw_col.json
+tempchangelog.txt
+
+.DS_Store
+demo/buttons.js
+demo/**.jpeg
+demo/**.png
+demo/**.mp4
+**.ignore.ts
+**.ignore**
+**_IGNORE_**
+**docs-v2**
+# **docs-v3**
+.vscode/launch.json
+**logs**
+**legacy**
+bin/cli.config.json
+
+# managed by open-wa
+**.data.json
+**.node-persist**
+# end managed by open-wa
+**.log
+**.log.gz
+**-audit.json
+# Monorepo specific
+node_modules/
+.turbo/
+dist/
+build/
+*.log
+.env
+.env.*
+!.env.example
+
+# Package specific
+packages/*/dist
+packages/*/build
+apps/*/dist
+apps/*/build
+apps/*/.next
+apps/*/.output
+apps/*/.tanstack
+
+# Testing
+coverage/
+*.test.js
+
+# Build artifacts (TypeScript compilation)
+*.tsbuildinfo
+**/.tsbuildinfo
+
+# Generated files should not be committed
+packages/*/generated/
+**/generated/*.js
+**/generated/*.d.ts
+**/generated/*.map
+
+# Compiled JavaScript files in source directories
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.map
+apps/*/src/**/*.js
+apps/*/src/**/*.d.ts
+apps/*/src/**/*.map
+
+# Exclude JS config files and scripts from ignore
+!*.config.js
+!**/scripts/**/*.js
+!jest.config.js
+!vitest.config.js
+
+
+# Switchboard kanban database — machine-local, do not commit.
+.switchboard/kanban.db
+.switchboard/*.db-shm
+.switchboard/*.db-wal
+
+**patches**
+**CHANGELOG**
+**.sisyphus**
+
+**sqlite**
+**wal**
+**.js
+**.cjs
+**.map
+**output.txt
+**.svg
+**.jpeg
+**.jpg
+**.changeset**
+**.opencode**
+**patches**
+**dist**
+**node_modules**
+**ignore**

@@ -1,0 +1,61 @@
+{
+  "name": "@open-wa/client",
+  "author": "Eulab",
+  "version": "5.6.6",
+  "description": "User-facing API client for open-wa WhatsApp automation",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.mts"
+    }
+  },
+  "scripts": {
+    "build": "tsdown src/index.ts --format esm --format cjs",
+    "dev": "tsdown src/index.ts --format esm --format cjs --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@open-wa/decrypt": "workspace:*",
+    "@open-wa/core": "workspace:*",
+    "@open-wa/domain": "workspace:*",
+    "@open-wa/hyperemitter": "workspace:*",
+    "@open-wa/logger": "workspace:*",
+    "@open-wa/runtime-core": "workspace:*",
+    "@open-wa/schema": "workspace:*",
+    "axios": "catalog:",
+    "effect": "catalog:",
+    "@open-wa/stickers": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs",
+        "types": "./dist/index.d.mts"
+      }
+    }
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "files": [
+    "dist"
+  ]
+}

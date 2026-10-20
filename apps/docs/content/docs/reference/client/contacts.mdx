@@ -1,0 +1,1093 @@
+---
+title: "Contacts Client API"
+description: "Generated client method reference for the contacts namespace."
+icon: "BookOpen"
+---
+
+# Contacts Client API
+
+This page documents 12 schema-registry client methods in the `contacts` namespace.
+
+
+## `blockContact`
+
+Block a contact
+
+**Signature** `client.blockContact(contactId: string): Promise<boolean>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.blockContact("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.blockContact({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X PUT "http://localhost:8080/api/contacts/block" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{
+    "contactId": "447123456789@c.us"
+  }'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": true
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="BlockContactParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<boolean>` |
+
+Resolves to `boolean`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<boolean>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `update` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contactBlock`, `contacts.block`, `contacts.contactBlock` |
+| Deprecated aliases | `contactBlock`, `contacts.contactBlock` |
+| Access | Open |
+| WAPI override | `contactBlock` |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `PUT` | `/api/contacts/block` | `blockContact` | Active |
+| Alias | `PUT` | `/api/blockContact` | `blockContact` | Active |
+| Deprecated alias | `PUT` | `/api/contactBlock` | `contactBlock` | **Deprecated** |
+| Deprecated alias | `PUT` | `/api/contacts/contactBlock` | `contacts.contactBlock` | **Deprecated** |
+
+</details>
+
+
+## `checkNumberStatus`
+
+Check if number is on WhatsApp
+
+**Signature** `client.checkNumberStatus(contactId: string): Promise<NumberCheck>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.checkNumberStatus("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.checkNumberStatus({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/checkNumberStatus" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": {
+      "server": "example",
+      "user": "example",
+      "_serialized": "example"
+    },
+    "canReceiveMessage": true
+  }
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="CheckNumberStatusParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<NumberCheck>` |
+| NumberCheck | [View fields](/docs/reference/client/return-types#numbercheck) |
+
+Resolves to `NumberCheck`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<NumberCheck>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.checkNumberStatus` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/checkNumberStatus` | `checkNumberStatus` | Active |
+| Alias | `GET` | `/api/checkNumberStatus` | `checkNumberStatus` | Active |
+
+</details>
+
+
+## `checkReadReceipts`
+
+Check read receipts setting
+
+**Signature** `client.checkReadReceipts(contactId: string): Promise<boolean \| string>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.checkReadReceipts({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/checkReadReceipts" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": true
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="CheckReadReceiptsParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<boolean \| string>` |
+
+Resolves to `boolean \| string`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.checkReadReceipts`, `contacts.getReadReceipts`, `getReadReceipts` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/checkReadReceipts` | `checkReadReceipts` | Active |
+| Alias | `GET` | `/api/checkReadReceipts` | `checkReadReceipts` | Active |
+| Alias | `GET` | `/api/contacts/getReadReceipts` | `contacts.getReadReceipts` | Active |
+| Alias | `GET` | `/api/getReadReceipts` | `getReadReceipts` | Active |
+
+</details>
+
+
+## `getAllContacts`
+
+Retrieves all contacts
+
+**Signature** `client.getAllContacts(): Promise<Contact[]>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.getAllContacts();
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getAllContacts();
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X GET "http://localhost:8080/api/contacts/getAll" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{}'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": []
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+This method does not define input parameters.
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<Contact[]>` |
+| Contact | [View fields](/docs/reference/client/return-types#contact) |
+
+Resolves to `Contact[]`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<Contact[]>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | - |
+| Aliases | `contacts.all`, `contacts.getAll`, `contacts.list`, `listContacts` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/getAll` | `getAllContacts` | Active |
+| Alias | `GET` | `/api/contacts/all` | `contacts.all` | Active |
+| Alias | `GET` | `/api/contacts/list` | `contacts.list` | Active |
+| Alias | `GET` | `/api/getAllContacts` | `getAllContacts` | Active |
+| Alias | `GET` | `/api/listContacts` | `listContacts` | Active |
+
+</details>
+
+
+## `getBlockedIds`
+
+Get blocked contact IDs
+
+**Signature** `client.getBlockedIds(): Promise<ContactId[] \| false>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getBlockedIds();
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X GET "http://localhost:8080/api/contacts/getBlockedIds" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{}'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": []
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+This method does not define input parameters.
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<ContactId[] \| false>` |
+| ContactId | [View fields](/docs/reference/client/return-types#contactid) |
+
+Resolves to `ContactId[] \| false`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | - |
+| Aliases | `contacts.getBlockedIds` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/getBlockedIds` | `getBlockedIds` | Active |
+| Alias | `GET` | `/api/getBlockedIds` | `getBlockedIds` | Active |
+
+</details>
+
+
+## `getCommonGroups`
+
+Get common groups with contact
+
+**Signature** `client.getCommonGroups(contactId: string): Promise<CommonGroup[] \| false>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.getCommonGroups("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getCommonGroups({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/getCommonGroups" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": []
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetCommonGroupsParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<CommonGroup[] \| false>` |
+| CommonGroup | [View fields](/docs/reference/client/return-types#commongroup) |
+
+Resolves to `CommonGroup[] \| false`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<Array<{ id: GroupId; title: string }>>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.getCommonGroups` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/getCommonGroups` | `getCommonGroups` | Active |
+| Alias | `GET` | `/api/getCommonGroups` | `getCommonGroups` | Active |
+
+</details>
+
+
+## `getContact`
+
+Get specific contact
+
+**Signature** `client.getContact(contactId: string): Promise<Contact \| null>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.getContact("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getContact({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/get" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "447123456789@c.us"
+  }
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetContactParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<Contact \| null>` |
+| Contact | [View fields](/docs/reference/client/return-types#contact) |
+
+Resolves to `Contact \| null`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<Contact \| null>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.get` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/get` | `getContact` | Active |
+| Alias | `GET` | `/api/getContact` | `getContact` | Active |
+
+</details>
+
+
+## `getNumberProfile`
+
+Get profile of number
+
+**Signature** `client.getNumberProfile(contactId: string): Promise<NumberProfile>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getNumberProfile({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/getNumberProfile" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {}
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetNumberProfileParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<NumberProfile>` |
+| NumberProfile | [View fields](/docs/reference/client/return-types#numberprofile) |
+
+Provisional number profile based on the public Contact fields. Fields are optional and additional provider fields are unknown. The licensed getNumberProfile payload has not been verified against this model.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+Provisional number profile based on the public Contact fields. Fields are optional and additional provider fields are unknown. The licensed getNumberProfile payload has not been verified against this model.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.getNumberProfile` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/getNumberProfile` | `getNumberProfile` | Active |
+| Alias | `GET` | `/api/getNumberProfile` | `getNumberProfile` | Active |
+
+</details>
+
+
+## `getProfilePicture`
+
+Get profile picture from server
+
+**Signature** `client.getProfilePicture(chatId: string): Promise<string>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.getProfilePic("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getProfilePicture({
+  chatId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/contacts/getProfilePicture" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "chatId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": "example"
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetProfilePictureParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<string>` |
+
+Resolves to `string`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<string \| null>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `chatId` |
+| Aliases | `contacts.getProfilePicFromServer`, `contacts.getProfilePicture`, `getProfilePicFromServer` |
+| Deprecated aliases | `contacts.getProfilePicFromServer`, `getProfilePicFromServer` |
+| Access | Open |
+| WAPI override | `getProfilePicFromServer` |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/contacts/getProfilePicture` | `getProfilePicture` | Active |
+| Deprecated alias | `GET` | `/api/contacts/getProfilePicFromServer` | `contacts.getProfilePicFromServer` | **Deprecated** |
+| Deprecated alias | `GET` | `/api/getProfilePicFromServer` | `getProfilePicFromServer` | **Deprecated** |
+| Alias | `GET` | `/api/getProfilePicture` | `getProfilePicture` | Active |
+
+</details>
+
+
+## `requestPhoneNumber`
+
+Ask a direct LID chat to voluntarily share their phone number. A submitted request does not confirm sharing.
+
+**Signature** `client.requestPhoneNumber(to: string): Promise<string>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.requestPhoneNumber("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.requestPhoneNumber({
+  to: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X POST "http://localhost:8080/api/contacts/requestPhoneNumber" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{
+    "to": "447123456789@c.us"
+  }'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="RequestPhoneNumberParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<string>` |
+
+Message ID
+
+In-process Client resolves to `Promise<MessageId>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+Message ID
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `send` |
+| Functionality | `both` |
+| Positional parameter order | `to` |
+| Aliases | `contacts.requestPhoneNumber` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `POST` | `/api/contacts/requestPhoneNumber` | `requestPhoneNumber` | Active |
+| Alias | `POST` | `/api/requestPhoneNumber` | `requestPhoneNumber` | Active |
+
+</details>
+
+
+## `sharePhoneNumber`
+
+Share the signed-in account’s own phone number with a direct LID chat using WhatsApp’s native protocol. No arbitrary phone number is accepted.
+
+**Signature** `client.sharePhoneNumber(to: string): Promise<string>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.sharePhoneNumber("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.sharePhoneNumber({
+  to: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X POST "http://localhost:8080/api/contacts/sharePhoneNumber" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{
+    "to": "447123456789@c.us"
+  }'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="SharePhoneNumberParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<string>` |
+
+Message ID
+
+In-process Client resolves to `Promise<MessageId>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+Message ID
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `send` |
+| Functionality | `both` |
+| Positional parameter order | `to` |
+| Aliases | `contacts.sharePhoneNumber` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `POST` | `/api/contacts/sharePhoneNumber` | `sharePhoneNumber` | Active |
+| Alias | `POST` | `/api/sharePhoneNumber` | `sharePhoneNumber` | Active |
+
+</details>
+
+
+## `unblockContact`
+
+Unblock a contact
+
+**Signature** `client.unblockContact(contactId: string): Promise<boolean>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="Embedded">
+
+```ts
+const result = await client.unblockContact("447123456789@c.us");
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.unblockContact({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -X PUT "http://localhost:8080/api/contacts/unblock" \
+  -H "content-type: application/json" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data '{
+    "contactId": "447123456789@c.us"
+  }'
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": true
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="UnblockContactParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<boolean>` |
+
+Resolves to `boolean`. A rejected Promise indicates input validation or dispatch failure.
+
+In-process Client resolves to `Promise<boolean>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `contacts` |
+| Action | `update` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `contacts.contactUnblock`, `contacts.unblock`, `contactUnblock` |
+| Deprecated aliases | `contacts.contactUnblock`, `contactUnblock` |
+| Access | Open |
+| WAPI override | `contactUnblock` |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `PUT` | `/api/contacts/unblock` | `unblockContact` | Active |
+| Deprecated alias | `PUT` | `/api/contacts/contactUnblock` | `contacts.contactUnblock` | **Deprecated** |
+| Deprecated alias | `PUT` | `/api/contactUnblock` | `contactUnblock` | **Deprecated** |
+| Alias | `PUT` | `/api/unblockContact` | `unblockContact` | Active |
+
+</details>

@@ -1,0 +1,105 @@
+---
+title: Groups
+description: Create groups, manage participants, and handle invite links with the account permissions those actions require.
+---
+
+# Groups
+
+Group IDs are assigned by WhatsApp. Keep the complete ID returned by a method
+or message event; do not derive it from a group name or participant numbers.
+See the [Chat ID guide](/docs/guides/chatid-primer) for accepted identifier
+forms and invite-token handling.
+
+## Create a group
+
+`createGroup` has Open access. It returns a group object with a
+`gid`, or `null` if creation did not return a group. The connected account must
+also be able to create the group and add the listed contacts.
+
+```ts
+const created = await client.createGroup('Support updates', [
+  '447700900000@c.us',
+]);
+
+if (!created?.gid) {
+  throw new Error('The group was not created');
+}
+
+const groupId = created.gid;
+```
+
+See the exact [`createGroup` contract](/docs/reference/client/client#creategroup)
+and [Open access guidance](/docs/licensing/pricing) before using this method.
+
+## Participants and permissions
+
+The embedded `Client` supports adding, removing, promoting, and demoting one
+participant at a time. These operations require group-administrator
+permissions, and each call returns `true` only when the runtime reports
+success.
+
+```ts
+const changed = await client.addParticipant(groupId, '447700900000@c.us');
+if (!changed) {
+  console.error('The participant was not added');
+}
+```
+
+Use the [participant method reference](/docs/reference/client/groups#addparticipant)
+for the other operations and their exact signatures. Keep the returned contact
+IDs intact; see [group filtering](/docs/guides/group-filtering) for matching
+incoming messages to a group allowlist.
+
+## Invite links
+
+`getGroupInviteLink` and `revokeGroupInviteLink` operate on a group ID. The
+returned invite URL is a token for joining, not the group ID. Joining through a
+link has Open access. The embedded `Client` returns a group ID
+or `false`; the Easy API also accepts an option to return a chat object.
+
+```ts
+const inviteUrl = await client.getGroupInviteLink(groupId);
+const result = await client.joinGroupViaLink(inviteUrl);
+
+if (typeof result === 'string') {
+  console.log('Joined group:', result);
+} else {
+  console.error('The invite did not return a group ID:', result);
+}
+```
+
+The [`joinGroupViaLink` contract](/docs/reference/client/client#joingroupvialink)
+includes its parameters and Easy API option. Check the result for your
+selected surface before treating the join as complete. Revoking an invite
+invalidates the old URL; retrieve and share the replacement only when your
+workflow needs one.
+
+## Other group operations
+
+The generated Easy API catalog includes group reads and settings updates such
+as `getGroupMembers`, `getGroupAdmins`, and `setGroupDescription`. Method
+availability differs by client surface: the current embedded `Client` does not
+declare every Easy API group method, and its `getGroupInfo`, `setGroupTitle`,
+and `setGroupDescription` entries are unsupported. Check the exact method
+reference for your deployed surface before calling one:
+
+- [Group methods](/docs/reference/client/groups)
+- [Open features](/docs/licensing/licensed-features)
+
+## Membership events
+
+The runtime event map exposes `group.participants.changed.global`. Its
+`change` payload contains the group ID, action, affected participant IDs, and
+the actor when available:
+
+```ts
+import { ev } from '@open-wa/wa-automate';
+
+ev.on('group.participants.changed.global', ({ change }) => {
+  console.log(change.groupId, change.action, change.participantIds, change.by);
+});
+```
+
+The event is a change notification, not a complete membership snapshot. Keep
+an application-owned group record if later actions depend on current state.
+See the [event reference](/docs/reference/events) for its full type.

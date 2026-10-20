@@ -1,0 +1,65 @@
+{
+  "name": "@open-wa/decrypt",
+  "author": "Eulab",
+  "version": "5.6.6",
+  "description": "Lightweight WhatsApp media decryption \u2014 zero external dependencies",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "test": "vitest run",
+    "lint": "oxlint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@open-wa/schema": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@open-wa/schema": "workspace:*"
+  },
+  "peerDependenciesMeta": {
+    "@open-wa/schema": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "import": "./dist/index.mjs",
+        "require": "./dist/index.cjs"
+      }
+    }
+  },
+  "keywords": [
+    "open-wa",
+    "whatsapp",
+    "decrypt",
+    "media"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md"
+}

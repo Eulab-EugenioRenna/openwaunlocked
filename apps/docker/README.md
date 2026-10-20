@@ -1,0 +1,18 @@
+# wa-automate-docker
+
+This app runs the Open-WA API server in a Docker container. The Compose example binds the API to `127.0.0.1`, pins the Open-WA version, and stores the browser profile in a named volume.
+
+## Instructions
+
+Set an API key and start the Compose service from this directory:
+
+```bash
+export WA_API_KEY='replace-with-a-long-random-key'
+docker compose up -d
+```
+
+Open-WA listens on port `8080` inside the container, and Compose publishes it on `127.0.0.1:8080`. The `sessions` volume preserves the browser profile when the container restarts. Keep the API on loopback or a private network unless you have configured an appropriate access boundary.
+
+## Versioning
+
+The Compose file sets `W_A_V` to `5.1.0`; update that value when you choose another published [wa-automate version](https://github.com/open-wa/wa-automate-nodejs/releases). The container entrypoint installs that version when it starts.

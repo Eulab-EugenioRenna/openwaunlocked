@@ -1,0 +1,128 @@
+import type { Client } from '../Client';
+import type {
+  ChatId,
+  ContactId,
+  Contact,
+  NumberCheck,
+  GroupId,
+  MessageId,
+} from '@open-wa/schema';
+import { chatIdCodec, MessageIdSchema } from '@open-wa/schema';
+import { invokePatch } from '../patchRuntime';
+import { createUnsupportedMethodStub } from '../runtimeSurface';
+
+declare const WAPI: {
+  getContact: (contactId: string) => Contact;
+  getAllContacts: () => Contact[];
+  checkNumberStatus: (contactId: string) => Promise<NumberCheck>;
+  getProfilePicFromServer: (chatId: string) => Promise<string | null>;
+  contactBlock: (contactId: string) => Promise<boolean>;
+  contactUnblock: (contactId: string) => Promise<boolean>;
+  getBlockedIds: () => Promise<string[]>;
+  getCommonGroups: (contactId: string) => Promise<Array<{ id: string; title: string }>>;
+  getLastSeen: (contactId: string) => Promise<number | boolean>;
+  isChatOnline: (chatId: string) => Promise<boolean | string>;
+};
+
+export interface ContactMethods {
+  requestPhoneNumber(to: string): Promise<MessageId>;
+  sharePhoneNumber(to: string): Promise<MessageId>;
+  getContact(contactId: ContactId): Promise<Contact | null>;
+  getAllContacts(): Promise<Contact[]>;
+  getContactById(contactId: ContactId): Promise<Contact | null>;
+  checkNumberStatus(contactId: ContactId): Promise<NumberCheck>;
+  getProfilePic(chatId: ChatId): Promise<string | null>;
+  blockContact(contactId: ContactId): Promise<boolean>;
+  unblockContact(contactId: ContactId): Promise<boolean>;
+  getBlockedContacts(): Promise<ContactId[]>;
+  getCommonGroups(contactId: ContactId): Promise<Array<{ id: GroupId; title: string }>>;
+  getLastSeen(contactId: ContactId): Promise<number | null>;
+  isChatOnline(chatId: ChatId): Promise<boolean>;
+}
+
+export function contactMethods(client: Client): ContactMethods {
+  const evaluate = client.evaluate.bind(client);
+  const unsupportedGetBlockedContacts = createUnsupportedMethodStub<ContactMethods['getBlockedContacts']>('getBlockedContacts');
+  const unsupportedGetCommonGroups = createUnsupportedMethodStub<ContactMethods['getCommonGroups']>('getCommonGroups');
+  
+  return {
+    async requestPhoneNumber(to) {
+      return MessageIdSchema.parse(await invokePatch(client, 'requestPhoneNumber', [chatIdCodec.decode(to)]));
+    },
+    async sharePhoneNumber(to) {
+      return MessageIdSchema.parse(await invokePatch(client, 'sharePhoneNumber', [chatIdCodec.decode(to)]));
+    },
+    async getContact(contactId: ContactId): Promise<Contact | null> {
+      return evaluate(
+        ({ contactId }) => WAPI.getContact(contactId),
+        { contactId }
+      );
+    },
+    
+    async getAllContacts(): Promise<Contact[]> {
+      return evaluate(
+        () => WAPI.getAllContacts(),
+        undefined
+      );
+    },
+    
+    async getContactById(contactId: ContactId): Promise<Contact | null> {
+      return evaluate(
+        ({ contactId }) => WAPI.getContact(contactId),
+        { contactId }
+      );
+    },
+    
+    async checkNumberStatus(contactId: ContactId): Promise<NumberCheck> {
+      return evaluate(
+        ({ contactId }) => WAPI.checkNumberStatus(contactId),
+        { contactId }
+      );
+    },
+    
+    async getProfilePic(chatId: ChatId): Promise<string | null> {
+      return evaluate(
+        ({ chatId }) => WAPI.getProfilePicFromServer(chatId),
+        { chatId }
+      );
+    },
+    
+    async blockContact(contactId: ContactId): Promise<boolean> {
+      return evaluate(
+        ({ contactId }) => WAPI.contactBlock(contactId),
+        { contactId }
+      );
+    },
+    
+    async unblockContact(contactId: ContactId): Promise<boolean> {
+      return evaluate(
+        ({ contactId }) => WAPI.contactUnblock(contactId),
+        { contactId }
+      );
+    },
+    
+    async getBlockedContacts(): Promise<ContactId[]> {
+      return unsupportedGetBlockedContacts();
+    },
+    
+    async getCommonGroups(contactId: ContactId): Promise<Array<{ id: GroupId; title: string }>> {
+      return unsupportedGetCommonGroups(contactId);
+    },
+    
+    async getLastSeen(contactId: ContactId): Promise<number | null> {
+      const result = await evaluate(
+        ({ contactId }) => WAPI.getLastSeen(contactId),
+        { contactId }
+      );
+      return typeof result === 'number' ? result : null;
+    },
+    
+    async isChatOnline(chatId: ChatId): Promise<boolean> {
+      const result = await evaluate(
+        ({ chatId }) => WAPI.isChatOnline(chatId),
+        { chatId }
+      );
+      return result === true;
+    },
+  };
+}

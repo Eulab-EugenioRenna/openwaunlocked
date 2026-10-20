@@ -1,0 +1,2516 @@
+import { PortableSessionController } from './portableSession';
+import { acquireSessionPersistence, type SessionPersistenceConfig } from './sessionPersistence';
+import type { SessionEncryptionOptions } from './sessionEncryption';
+import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type {
+  DisposableHandle,
+  IConsoleMessage,
+  IDriver,
+  IBrowser,
+  IPage,
+  IRequest,
+  LightpandaOptions,
+  BrowserProvisionOptions,
+  WaitForFunctionOptions,
+} from '@open-wa/driver-interface';
+import type { HyperEmitter } from '@open-wa/hyperemitter';
+import type { Logger } from '@open-wa/logger';
+import type { OpenWAEventMap, STATE } from '../events/eventMap';
+import { loadOfflinePatches, isOpenWaServiceUrl } from './offlineDevelopment';
+import { installDocumentRuntime } from '../livePatch/installDocument';
+import { InjectionController, type GenerationSnapshot } from './InjectionController';
+import { getProgObserverScript, injectInitPatch } from './initPatchScripts';
+import { getRuntimeListenerSurfaceEntry, runtimeListenerSurface } from './runtimeListenerSurface';
+import { auditWapiHelperAssetRequirements, ScriptLoader } from './ScriptLoader';
+import { chromiumConfig, sanitizeBrowserArgs } from './browserConfig';
+import { CallingService } from '../calling/CallingService';
+import type { LicenseFeatures } from '@open-wa/schema';
+import { ParticipantChangePatchSchema } from '@open-wa/schema';
+
+export interface PatchFetchConfig {
+  /** Use GitHub raw patches as the primary source instead of the default CDN. */
+  ghPatch?: boolean;
+  /** @deprecated Prefer `ghPatch`. When false, disables the CDN -> GitHub fallback path. */
+  ghPatchFallback?: boolean;
+  cachedPatch?: boolean;
+}
+
+export interface LicenseServerConfig {
+  url?: string;
+  offlineLicenseMode?: boolean;
+}
+
+export interface SessionDebugInfo {
+  WA_VERSION: string;
+  WA_AUTOMATE_VERSION: string;
+  hostNumber: string;
+  BROWSER_VERSION?: string;
+  PAGE_UA?: string;
+  OS?: string;
+  NUM_HASH?: string;
+}
+
+export interface TransportOptions extends SessionPersistenceConfig, SessionEncryptionOptions {
+  driver: IDriver;
+  events: HyperEmitter<OpenWAEventMap>;
+  logger: Logger;
+  waWebUrl?: string;
+  headless?: boolean;
+  qrTimeoutMs?: number;
+  authTimeoutMs?: number;
+  oorTimeoutMs?: number;
+  qrPollingMs?: number;
+  navigationTimeoutMs?: number;
+  executablePath?: string;
+  browser?: BrowserProvisionOptions;
+  watermark?: boolean | { text?: string; color?: string; background?: string; };
+  browserArgs?: string[];
+  allowDangerousBrowserArgs?: boolean;
+  userDataDir?: string;
+  linkCode?: string;
+  qrMax?: number;
+  ignoreNuke?: boolean;
+  logConsole?: boolean;
+  logConsoleErrors?: boolean;
+  blockCrashLogs?: boolean;
+  blockAssets?: boolean;
+  safeMode?: boolean;
+  lightpanda?: LightpandaOptions;
+  patchConfig?: PatchFetchConfig;
+  licenseConfig?: LicenseServerConfig;
+  calling?: import('@open-wa/schema').CallingOptions;
+  callMediaHost?: import('../calling/ports').CallMediaHost;
+}
+
+const CRASH_LOG_URL_FRAGMENTS = [
+  'https://dit.whatsapp.net/deidentified_telemetry',
+  'https://crashlogs.whatsapp.net/',
+];
+
+const BLOCKED_ASSET_RESOURCE_TYPES = new Set(['image', 'stylesheet', 'font']);
+
+/** JavaScript snippet to extract QR data from the WA Web page */
+const QR_CHECK_SCRIPT = `document.querySelector("canvas[aria-label]")?.parentElement?.getAttribute("data-ref") || null`;
+const PRE_AUTH_SURFACE_READY_CHECK_SCRIPT = `Boolean(
+  document.querySelector('#pane-side')
+  || document.querySelector('[data-testid="chat-list-search"]')
+  || (${QR_CHECK_SCRIPT})
+)`;
+const QR_SELECTOR_PRIMARY = "canvas[aria-label='Scan this QR code to link a device!']";
+const QR_SELECTOR_FALLBACK = 'canvas[aria-label]';
+const PRE_API_HELPER_READY_CHECK_SCRIPT = `Boolean(!['jsSHA','axios','QRCode','Base64','objectHash'].find(x=>!window[x]))`;
+
+const WAPI_RUNTIME_CHECK_SCRIPT = '!!window.WAPI';
+const STORE_MSG_CHECK_SCRIPT = '!!(window.Store && window.Store.Msg)';
+const PHONE_OUT_OF_REACH_CHECK_SCRIPT = `!!(
+  typeof document !== 'undefined'
+  && document.querySelector('body')
+  && document.querySelector('body').innerText.includes('Trying to reach phone')
+)`;
+const LINK_CODE_AVAILABLE_CHECK_SCRIPT = `!!(typeof window.linkCode === 'function')`;
+const AUTHENTICATED_SHELL_CHECK_SCRIPT = `Boolean(
+  document.querySelector('#pane-side')
+  || document.querySelector('[data-testid="chat-list-search"]')
+)`;
+const DOCUMENT_READY_CHECK_SCRIPT = `!!(
+  typeof document === 'undefined'
+  || document.readyState === 'interactive'
+  || document.readyState === 'complete'
+)`;
+
+const RUNTIME_REPLACEMENT_OBSERVER_SCRIPT = `(() => {
+  const root = globalThis;
+  const existingState = root.__OPENWA_RUNTIME_REPLACEMENT_OBSERVER__;
+  if (existingState?.installed) {
+    return;
+  }
+
+  const descriptor = Object.getOwnPropertyDescriptor(root, 'WAPI');
+  if (descriptor && descriptor.configurable === false) {
+    root.__OPENWA_RUNTIME_REPLACEMENT_OBSERVER__ = {
+      installed: false,
+      skipped: true,
+      reason: 'non_configurable_property',
+    };
+    return;
+  }
+
+  let currentValue = descriptor?.get ? descriptor.get.call(root) : root.WAPI;
+  const originalGet = descriptor?.get ? descriptor.get.bind(root) : null;
+  const originalSet = descriptor?.set ? descriptor.set.bind(root) : null;
+
+  const notifyRuntimeReplacement = () => {
+    try {
+      const notify = root.OpenWA_RuntimeReplacementDetected;
+      if (typeof notify === 'function') {
+        void notify({ reason: 'runtime_replaced' });
+      }
+    } catch {
+      // Ignore bridge notifications that fail inside the page context.
+    }
+  };
+
+  Object.defineProperty(root, 'WAPI', {
+    configurable: true,
+    enumerable: descriptor ? descriptor.enumerable !== false : true,
+    get() {
+      if (originalGet) {
+        const next = originalGet();
+        if (next !== undefined) {
+          currentValue = next;
+        }
+      }
+      return currentValue;
+    },
+    set(value) {
+      const previous = originalGet ? (originalGet() ?? currentValue) : currentValue;
+      if (originalSet) {
+        originalSet(value);
+      }
+      currentValue = value;
+
+      if (previous && value && previous !== value) {
+        notifyRuntimeReplacement();
+      }
+    },
+  });
+
+  root.__OPENWA_RUNTIME_REPLACEMENT_OBSERVER__ = {
+    installed: true,
+    installedAt: Date.now(),
+  };
+})();`;
+
+export interface RuntimeCapabilityProbe {
+  hasRuntime: boolean;
+  hasStoreMsg: boolean;
+  sessionLoaded: boolean;
+}
+
+export type AuthSettlementOutcome = 'authenticated' | 'qr_timeout' | 'auth_timeout' | 'phone_out_of_reach' | 'qr_max';
+
+export interface AuthSettlementResult {
+  outcome: AuthSettlementOutcome;
+  qrSeen: boolean;
+  qrAttempts: number;
+  authMethod?: 'qr' | 'link_code' | 'resumed_session';
+}
+
+export interface TransportOperationalReadinessSnapshot {
+  generation: GenerationSnapshot | null;
+  phase: string;
+  driverActiveGeneration: boolean;
+  runtimeOperational: boolean;
+  runtimeBridgeReady: boolean;
+  reinjectionSettled: boolean;
+  missingRuntimeMethods: string[];
+}
+
+export type LicenseStatus = 'valid' | 'metadata_only' | 'missing' | 'invalid' | 'expired';
+export type LicenseSource = 'local' | 'remote' | 'cached' | 'none';
+export type LicenseKeyResolver =
+  | string
+  | Record<string, string | undefined>
+  | ((sessionId: string) => Promise<string | null | undefined> | string | null | undefined);
+
+export interface LicensePreloadOptions {
+  sessionId: string;
+  licenseKey?: LicenseKeyResolver;
+  source?: Exclude<LicenseSource, 'none'>;
+  sessionInfo?: SessionDebugInfo;
+  strict?: boolean;
+}
+
+export interface LicenseArtifact {
+  key: string;
+  maskedKey: string;
+  source: Exclude<LicenseSource, 'none'>;
+  payload: string;
+  keyType: string;
+  payloadSource: 'server' | 'local_metadata';
+}
+
+export interface LicensePreloadResult {
+  outcome: 'ready' | 'missing' | 'failed';
+  status: LicenseStatus;
+  source: LicenseSource;
+  artifact: LicenseArtifact | null;
+  blockingFailure: boolean;
+  detail?: string;
+  error?: Error;
+}
+
+export interface LicenseCheckResult {
+  status: LicenseStatus;
+  source: Exclude<LicenseSource, 'none'>;
+  artifact: LicenseArtifact | null;
+  blockingFailure: boolean;
+  detail?: string;
+}
+
+export interface LicenseApplyResult {
+  status: LicenseStatus;
+  applied: boolean;
+  blockingFailure: boolean;
+  keyType?: string;
+  detail?: string;
+}
+
+export type PatchArtifactSource = 'builtin' | 'remote' | 'cached';
+
+export interface PatchArtifact {
+  patchId: string;
+  description: string;
+  required: boolean;
+  script: string;
+  applicabilityCheckScript?: string;
+  source: PatchArtifactSource;
+}
+
+export interface LivePatchPreloadResult {
+  outcome: 'ready' | 'none' | 'failed';
+  source: 'builtin' | 'remote' | 'cached' | 'none';
+  tag: string | null;
+  artifacts: PatchArtifact[];
+  blockingFailure: boolean;
+  error?: Error;
+}
+
+export interface PatchApplicationResult {
+  patchId: string;
+  description?: string;
+  required: boolean;
+  outcome: 'applied' | 'not_applicable' | 'failed';
+  detail?: string;
+}
+
+export interface PatchApplyResult {
+  outcome: 'applied' | 'skipped' | 'failed';
+  applied: string[];
+  blockingFailure: boolean;
+  results: PatchApplicationResult[];
+}
+
+interface LivePatchFetchResult {
+  data: string[];
+  tag: string;
+  source: 'remote' | 'cached';
+}
+
+const BUILTIN_LIVE_PATCH_ARTIFACTS: readonly PatchArtifact[] = [
+  {
+    patchId: 'runtime-bootstrap-overlay',
+    description: 'Records bootstrap patch attestation after runtime activation.',
+    required: true,
+    source: 'builtin',
+    applicabilityCheckScript: 'Boolean(window.WAPI)',
+    script: `(() => {
+      if (!window.WAPI) {
+        throw new Error('WAPI runtime not available for bootstrap patch attestation');
+      }
+      window.__OPENWA_PATCH_LIFECYCLE__ = window.__OPENWA_PATCH_LIFECYCLE__ || {};
+      window.__OPENWA_PATCH_LIFECYCLE__['runtime-bootstrap-overlay'] = {
+        appliedAt: Date.now(),
+        mode: 'bootstrap_attestation',
+        hasRuntime: !!window.WAPI,
+        hasStoreMsg: !!(window.Store && window.Store.Msg),
+      };
+      return true;
+    })();`,
+  },
+];
+
+/**
+ * Builtin init-patch artifact — wraps `injectInitPatch` as a deferred script
+ * applied during the patch-apply phase (post-auth finalization).
+ * This mirrors legacy `initializer.ts:429`.
+ */
+const INIT_PATCH_ARTIFACT: PatchArtifact = {
+  patchId: 'init-patch-legacy',
+  description: 'Legacy init-patch: webpack module interceptor + Store.sendMessage guard.',
+  required: true,
+  source: 'builtin',
+  // No applicability check — always inject; the obfuscated blob handles its own guards.
+  script: 'DEFERRED_INIT_PATCH',
+};
+
+class SessionRecoveryRequired extends Error {}
+
+export class Transport {
+  private static assetScriptCache = new Map<string, Promise<string>>();
+  private driver: IDriver;
+  private browser: IBrowser | null = null;
+  private page: IPage | null = null;
+  private events: HyperEmitter<OpenWAEventMap>;
+  private logger: Logger;
+  private waWebUrl: string;
+  private headless: boolean;
+  private qrTimeoutMs: number;
+  private authTimeoutMs: number;
+  private oorTimeoutMs: number;
+  private qrPollingMs: number;
+  private navigationTimeoutMs: number;
+  private executablePath?: string;
+  private browserArgs?: string[];
+  private allowDangerousBrowserArgs?: boolean;
+  private linkCode?: string;
+  private qrMax?: number;
+  private logConsole: boolean;
+  private logConsoleErrors: boolean;
+  private blockCrashLogs: boolean;
+  private blockAssets: boolean;
+  private safeMode: boolean;
+  private lightpanda?: LightpandaOptions;
+  private qrWatcherAbort: AbortController | null = null;
+  private qrPollTimer?: ReturnType<typeof setTimeout>;
+  private qrAttempt = 0;
+  private lastQrData: string | null = null;
+  private lastRuntimeState: STATE | null = null;
+  private pageListeners: DisposableHandle[] = [];
+  private readonly injectionController: InjectionController;
+  private runtimeRecoveryQueue: Promise<void> = Promise.resolve();
+  private runtimeRecoveryEnabled = false;
+  private latestRuntimeRecoveryRequestId = 0;
+  private pendingRuntimeRecoveryCount = 0;
+  /** Cached live patch scripts for re-application during recovery */
+  private cachedLivePatchScripts: string[] = [];
+  private frameNavCounter = 0;
+  private readonly options: TransportOptions;
+  readonly calling: CallingService;
+  private plannedRuntimeMutation = 0;
+  private runtimeRecoveryFailed = false;
+  private activeLivePatchPreload: LivePatchPreloadResult | null = null;
+  private refreshHandler?: () => Promise<unknown>;
+  private effectiveLicenseKey?: string;
+  private sessionRecoveryHandler?: (reason: string) => Promise<void>;
+  private sessionRecovery: Promise<void> | null = null;
+  private closed = false;
+  private awaitingRecoveryPairing = false;
+
+  constructor(options: TransportOptions) {
+    this.options = options;
+    this.driver = options.driver;
+    this.events = options.events;
+    this.logger = options.logger;
+    this.waWebUrl = options.waWebUrl ?? 'https://web.whatsapp.com';
+    this.headless = options.headless ?? true;
+    this.qrTimeoutMs = options.qrTimeoutMs ?? 60000;
+    this.authTimeoutMs = options.authTimeoutMs ?? 60000;
+    this.oorTimeoutMs = options.oorTimeoutMs ?? 60000;
+    this.qrPollingMs = options.qrPollingMs ?? 500;
+    this.navigationTimeoutMs = options.navigationTimeoutMs ?? 60_000;
+    this.executablePath = options.executablePath;
+    this.browserArgs = options.browserArgs;
+    this.allowDangerousBrowserArgs = options.allowDangerousBrowserArgs;
+    this.linkCode = options.linkCode;
+    this.qrMax = options.qrMax;
+    this.logConsole = options.logConsole ?? false;
+    this.logConsoleErrors = options.logConsoleErrors ?? false;
+    this.blockCrashLogs = options.blockCrashLogs ?? true;
+    this.blockAssets = options.blockAssets ?? false;
+    this.safeMode = options.safeMode ?? false;
+    this.lightpanda = options.lightpanda;
+    this.injectionController = new InjectionController(this.logger);
+    this.calling = new CallingService({
+      sessionId: options.sessionId ?? 'session', logger: this.logger,
+      config: options.calling, mediaHost: options.callMediaHost,
+      page: () => this.page,
+      generation: () => {
+        const value = this.injectionController.getHealthSnapshot().generation;
+        return value.documentId && value.runtimeId ? `${value.documentId}:${value.runtimeId}` : '';
+      },
+      emit: (type, snapshot) => {
+        const ctx = { correlationId: crypto.randomUUID(), ts: snapshot.observedAt };
+        if (type === 'incoming') this.events.emit('call.incoming', { ctx, call: snapshot });
+        else this.events.emit('call.state', { ctx, state: snapshot });
+      },
+    });
+    this.portable = new PortableSessionController({
+      onError: error => this.logger.warn('session_checkpoint_reset_failed', { error }),
+      acquire: async sessionId => {
+        const lease = await acquireSessionPersistence({ ...options, sessionId }, reason => {
+          this.awaitingRecoveryPairing = true;
+          this.logger.warn('session_reauthentication_required', { reason });
+        });
+        return {
+          read: () => lease.read(),
+          remove: () => lease.remove(),
+          release: () => lease.release(),
+          write: async (data: string) => {
+            try { await lease.write(data); }
+            catch (error) { this.logger.warn('session_checkpoint_save_failed', { error }); throw error; }
+            // A notification must not turn an accepted durable commit into a
+            // failed commit or expose plaintext session encryption keys.
+            try {
+              this.events.emit('session.data', {
+                ctx: { correlationId: 'portable-session-saved', ts: Date.now() }, data,
+              });
+            } catch (error) {
+              this.logger.error('session_data_listener_error', { error });
+            }
+          },
+        };
+      },
+    }, options.sessionId ?? 'session', options);
+  }
+
+  private readonly portable: PortableSessionController;
+
+  setSessionRecoveryHandler(handler: (reason: string) => Promise<void>): void {
+    this.sessionRecoveryHandler = handler;
+  }
+
+  private requestSessionRecovery(reason: string): void {
+    if (this.closed || this.sessionRecovery || !this.sessionRecoveryHandler) return;
+    this.runtimeRecoveryEnabled = false;
+    this.awaitingRecoveryPairing = true;
+    this.runtimeRecoveryFailed = true;
+    ++this.latestRuntimeRecoveryRequestId;
+    this.logger.warn('session_reauthentication_required', { reason });
+    this.sessionRecovery = Promise.resolve().then(async () => {
+      await this.runtimeRecoveryQueue;
+      if (!this.closed) await this.sessionRecoveryHandler!(reason);
+    }).catch(error => {
+      if (!this.closed) {
+        const normalized = error instanceof Error ? error : new Error(String(error));
+        this.logger.error('session_reauthentication_failed', { error: normalized });
+        try { this.events.emit('error', { scope: 'session.reauthentication', error: normalized, fatal: false }); }
+        catch (listenerError) { this.logger.error('session_reauthentication_listener_failed', { error: listenerError }); }
+      }
+    }).finally(() => { this.sessionRecovery = null; });
+  }
+
+  /** Replace only this session's disposable browser; keep its client and writer lease. */
+  async resetSessionForPairing(reason: string): Promise<void> {
+    if (this.closed) throw new Error('Session has stopped');
+    this.runtimeRecoveryEnabled = false;
+    this.awaitingRecoveryPairing = true;
+    ++this.latestRuntimeRecoveryRequestId;
+    this.stopQrWatcher();
+    await this.portable.preparePairing();
+    await this.calling.invalidate();
+    this.disposePageListeners();
+    await this.injectionController.dispose();
+    if (this.browser) await this.browser.close();
+    this.browser = null;
+    this.page = null;
+    if (this.closed) return;
+    this.lastQrData = null;
+    this.qrAttempt = 0;
+    this.lastRuntimeState = null;
+    this.logger.warn('session_reset_for_pairing', { reason });
+    await this.initialize();
+  }
+
+  async initialize(): Promise<void> {
+    this.events.emit('launch.browser.init.before', {
+      correlationId: 'transport-init',
+      ts: Date.now(),
+      step: 'browser_init',
+      details: { headless: this.headless }
+    });
+
+    await this.driver.init({ logger: this.logger });
+    this.browser = await this.driver.launch({
+      headless: this.headless,
+      executablePath: this.executablePath,
+      browser: this.options.browser,
+      args: [
+        ...chromiumConfig.chromiumArgs,
+        ...sanitizeBrowserArgs(this.browserArgs, {
+          allowDangerous: this.allowDangerousBrowserArgs,
+          onRemoved: (removed) =>
+            this.logger.warn(
+              `Removed browser args known to crash WhatsApp Web: ${removed.join(', ')}. ` +
+                'These cause "Navigating frame was detached" errors on modern Chrome. ' +
+                'Set allowDangerousBrowserArgs: true to force them (unsupported).',
+              { removed }
+            ),
+        }),
+      ],
+      defaultViewport: null,
+      lightpanda: this.lightpanda,
+    });
+    this.page = await this.browser.newPage();
+
+
+    await this.portable.install(this.page, new URL(this.waWebUrl).origin,
+      await new ScriptLoader().load('pre_init.js'));
+    await this.configurePageRuntime(this.page);
+
+    await this.page.setUserAgent(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
+    );
+
+    this.events.emit('launch.browser.init.after', {
+      correlationId: 'transport-init',
+      ts: Date.now(),
+      step: 'browser_init',
+      details: {}
+    });
+
+    this.logger.info('transport_initialized', { driverName: this.driver.name });
+  }
+
+  async navigate(): Promise<void> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    this.events.emit('launch.navigation.gotoWaWeb.before', {
+      correlationId: 'transport-nav',
+      ts: Date.now(),
+      step: 'navigation',
+      details: { url: this.waWebUrl }
+    });
+    await this.page.goto(this.waWebUrl, {
+      waitUntil: 'domcontentloaded',
+      timeoutMs: this.navigationTimeoutMs,
+    });
+
+    this.events.emit('launch.navigation.gotoWaWeb.after', {
+      correlationId: 'transport-nav',
+      ts: Date.now(),
+      step: 'navigation',
+      details: { finalUrl: this.page.url() }
+    });
+
+    this.logger.info('transport_navigated', { url: this.waWebUrl });
+    await this.configureLaunchBootstrap(this.page);
+    await this.waitForInjectableSession();
+  }
+
+  //wait until wawebcollections resolves
+  async waitForInjectableSession(): Promise<boolean> {
+    if (!this.page) return false;
+
+    const readyScript = `(() => Boolean(globalThis.OpenWA_PortableSession?.startupFailure()) || (${PRE_AUTH_SURFACE_READY_CHECK_SCRIPT}))()`;
+    try {
+      await this.page.waitForFunction(readyScript, {
+        timeoutMs: 0,
+        polling: 100,
+      });
+    } catch (error) {
+      if (this.closed || !this.portable.hasCheckpoint) throw error;
+      if (this.runtimeRecoveryEnabled) throw new SessionRecoveryRequired('session_restore_timeout');
+      await this.resetSessionForPairing('session_restore_timeout');
+      await this.navigate();
+      return true;
+    }
+    const portableFailure = await this.page.evaluateScript<string | null>('globalThis.OpenWA_PortableSession?.startupFailure() ?? null');
+    if (portableFailure) {
+      this.logger.warn('portable_session_bootstrap_failed', {
+        code: /^[A-Z_]+$/.test(portableFailure) ? portableFailure : 'SESSION_STARTUP_FAILED',
+      });
+      if (portableFailure === 'SESSION_ENCRYPTION_CONFIG_INVALID') {
+        throw new Error('Session data encryption configuration is invalid. Supply a base64-encoded 32-byte key.');
+      }
+      if (this.runtimeRecoveryEnabled) throw new SessionRecoveryRequired(portableFailure);
+      if (this.portable.hasCheckpoint) {
+        await this.resetSessionForPairing(portableFailure);
+        await this.navigate();
+        return true;
+      }
+      throw new Error('WhatsApp could not initialize a fresh pairing session.');
+    }
+    return true;
+  }
+
+  async injectWapi(options?: { reuseCachedPatches?: boolean }): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    // Ensure launch bootstrap is configured
+    // (normally done in navigate() -> configureLaunchBootstrap())
+    if (this.injectionController.getHealthSnapshot().phase === 'idle') {
+      await this.configureLaunchBootstrap(this.page);
+    }
+
+    this.events.emit('launch.wapi.inject.before', {
+      correlationId: 'transport-inject',
+      ts: Date.now(),
+      step: 'wapi_inject',
+      details: { injectPreApiScripts: true }
+    });
+
+    let success = false;
+
+    try {
+      await this.runPreApiHelperPhase();
+      success = await this.performRuntimeInjection(() => true, options?.reuseCachedPatches !== false);
+
+      if (success) {
+        // Pairing has no authenticated message store yet. Startup activates
+        // these bindings after authentication, patches, and the init patch.
+        await this.registerRuntimeEventBridgeBindings();
+      }
+
+      return success;
+    } finally {
+      this.events.emit('launch.wapi.inject.after', {
+        correlationId: 'transport-inject',
+        ts: Date.now(),
+        step: 'wapi_inject',
+        details: { success }
+      });
+    }
+  }
+
+  /**
+   * Phase 1: Register Node-side persistent bindings for WAPI event bridge.
+   *
+   * This sets up the `exposeFunction` callbacks that the browser page will
+   * call into. It does NOT wire them to WAPI methods — that happens in
+   * `activateRuntimeEventBridge()`.
+   *
+   * Safe to call pre-patch: only registers Node-side callbacks and records
+   * bridge metadata. No WAPI code is called.
+   */
+  async registerRuntimeEventBridgeBindings(): Promise<void> {
+    const pollSurface = getRuntimeListenerSurfaceEntry('poll.vote');
+    await this.injectionController.registerRuntimeWapiBridge(
+      pollSurface.event, pollSurface.bindingName,
+      (vote: import('@open-wa/schema').PollVote) => {
+        this.events.emit('poll.vote', { ctx: { correlationId: 'runtime-poll-vote', ts: Date.now() }, vote });
+      }, { wapiMethod: pollSurface.wapiMethod, required: pollSurface.required },
+    );
+    const eventSurface = getRuntimeListenerSurfaceEntry('event.changed');
+    await this.injectionController.registerRuntimeWapiBridge(
+      eventSurface.event, eventSurface.bindingName,
+      (event: import('@open-wa/schema').WhatsAppEvent) => {
+        this.events.emit('event.changed', { ctx: { correlationId: 'runtime-event', ts: Date.now() }, event });
+      }, { wapiMethod: eventSurface.wapiMethod, required: eventSurface.required },
+    );
+    const eventResponseSurface = getRuntimeListenerSurfaceEntry('event.response');
+    await this.injectionController.registerRuntimeWapiBridge(
+      eventResponseSurface.event, eventResponseSurface.bindingName,
+      (response: import('@open-wa/schema').EventResponse) => {
+        this.events.emit('event.response', { ctx: { correlationId: 'runtime-event-response', ts: Date.now() }, response });
+      }, { wapiMethod: eventResponseSurface.wapiMethod, required: eventResponseSurface.required },
+    );
+    const interactiveSurface = getRuntimeListenerSurfaceEntry('interactive.response');
+    await this.injectionController.registerRuntimeWapiBridge(
+      interactiveSurface.event, interactiveSurface.bindingName,
+      (response: unknown) => {
+        this.events.emit('interactive.response', {
+          ctx: { correlationId: 'runtime-interactive-response', ts: Date.now() }, response,
+        });
+      },
+      { wapiMethod: interactiveSurface.wapiMethod, required: interactiveSurface.required },
+    );
+    const messageReceivedSurface = getRuntimeListenerSurfaceEntry('message.received');
+    const messageAnySurface = getRuntimeListenerSurfaceEntry('message.any');
+    const ackChangedSurface = getRuntimeListenerSurfaceEntry('ack.changed');
+    const stateChangedSurface = getRuntimeListenerSurfaceEntry('session.state.changed');
+    const addedToGroupSurface = getRuntimeListenerSurfaceEntry('group.addedToGroup');
+    const participantsChangedSurface = getRuntimeListenerSurfaceEntry('group.participants.changed.global');
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      messageReceivedSurface.event,
+      messageReceivedSurface.bindingName,
+      (message: unknown) => {
+        const value = message as { fromMe?: boolean; self?: string; id?: { fromMe?: boolean } } | null;
+        if (!value || value.fromMe || value.id?.fromMe || value.self === 'out') return;
+        this.events.emit('message.received', {
+          ctx: { correlationId: 'runtime-message-received', ts: Date.now() }, message,
+        });
+      },
+      { wapiMethod: messageReceivedSurface.wapiMethod, required: messageReceivedSurface.required },
+    );
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      messageAnySurface.event,
+      messageAnySurface.bindingName,
+      (message: unknown) => {
+        this.events.emit('message.any', {
+          ctx: { correlationId: 'runtime-message-any', ts: Date.now() },
+          message,
+        });
+      },
+      { wapiMethod: messageAnySurface.wapiMethod, required: messageAnySurface.required },
+    );
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      ackChangedSurface.event,
+      ackChangedSurface.bindingName,
+      (ack: unknown) => {
+        this.events.emit('ack.changed', {
+          ctx: { correlationId: 'runtime-ack-changed', ts: Date.now() },
+          ack,
+        });
+      },
+      { wapiMethod: ackChangedSurface.wapiMethod, required: ackChangedSurface.required },
+    );
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      stateChangedSurface.event,
+      stateChangedSurface.bindingName,
+      (state: unknown) => {
+        const next = (typeof state === 'string' ? state : String(state ?? '')) as STATE;
+        const prev = this.lastRuntimeState ?? next;
+        this.lastRuntimeState = next || this.lastRuntimeState;
+
+        this.events.emit('session.state.changed', {
+          correlationId: 'runtime-session-state',
+          ts: Date.now(),
+          step: 'session_state_changed',
+          details: { prev, next },
+        });
+        if (this.runtimeRecoveryEnabled && !this.plannedRuntimeMutation
+          && ['UNPAIRED', 'UNPAIRED_IDLE'].includes(String(state))) {
+          this.requestSessionRecovery('authentication_lost');
+        }
+      },
+      { wapiMethod: stateChangedSurface.wapiMethod, required: stateChangedSurface.required },
+    );
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      addedToGroupSurface.event,
+      addedToGroupSurface.bindingName,
+      (chat: Record<string, unknown> | null | undefined) => {
+        const groupId = String(chat?.id ?? chat?.chatId ?? '');
+        if (!groupId) {
+          return;
+        }
+
+        this.events.emit('group.addedToGroup', {
+          ctx: { correlationId: 'runtime-group-added', ts: Date.now() },
+          groupId,
+          by: typeof chat?.['groupMetadata'] === 'object' ? undefined : undefined,
+        });
+      },
+      { wapiMethod: addedToGroupSurface.wapiMethod, required: addedToGroupSurface.required },
+    );
+
+    await this.injectionController.registerRuntimeWapiBridge(
+      participantsChangedSurface.event,
+      participantsChangedSurface.bindingName,
+      (rawChange: unknown) => {
+        const parsed = ParticipantChangePatchSchema.safeParse(rawChange);
+        if (!parsed.success) {
+          this.logger.warn('group_participants_event_invalid');
+          return;
+        }
+        this.events.emit('group.participants.changed.global', {
+          ctx: { correlationId: 'runtime-group-participants', ts: Date.now() },
+          change: parsed.data,
+        });
+      },
+      { wapiMethod: participantsChangedSurface.wapiMethod, required: participantsChangedSurface.required },
+    );
+
+    this.logger.info('runtime_event_bridge_bindings_registered', {
+      bindings: [
+        eventSurface.bindingName,
+        eventResponseSurface.bindingName,
+        interactiveSurface.bindingName,
+        messageReceivedSurface.bindingName,
+        messageAnySurface.bindingName,
+        ackChangedSurface.bindingName,
+        stateChangedSurface.bindingName,
+        addedToGroupSurface.bindingName,
+        participantsChangedSurface.bindingName,
+      ],
+      requiredMethods: this.injectionController.getRequiredRuntimeMethods(),
+    });
+  }
+
+  /**
+   * Phase 2: Wire the registered bridge bindings to WAPI methods in-page.
+   *
+   * This calls `ensureRuntimeBridge()` which executes in-page JavaScript
+   * like `WAPI.onAnyMessage(obj => window.OpenWA_RuntimeMessageReceived(obj))`.
+   *
+   * MUST only be called AFTER patches, license, and init-patch have been
+   * applied — otherwise the WAPI methods being wired may be broken/unpatched.
+   *
+   * Idempotent: if bridges are already wired (e.g. by a post_patch validation
+   * stage), this becomes a no-op via the `already_registered` check.
+   */
+  async activateRuntimeEventBridge(): Promise<void> {
+    const bridgeReady = await this.injectionController.ensureRuntimeBridge();
+    await this.portable.activate().catch(error => this.logger.warn('session_save_background_start_failed', { error }));
+    // Licence application precedes bridge activation during bootstrap. Calling
+    // can bind only after the bridge has assigned this document's runtime ID.
+    await this.calling.bind().catch(error => {
+      this.logger.warn('Calling could not connect to the WhatsApp session', { message: String(error) });
+    });
+    const capability = await this.probeRuntimeCapability();
+    this.logger.info('runtime_event_bridge_ready', {
+      bridgeReady,
+      hasRuntime: capability.hasRuntime,
+      hasStoreMsg: capability.hasStoreMsg,
+      sessionLoaded: capability.sessionLoaded,
+    });
+  }
+
+  /**
+   * Convenience wrapper: registers bindings and then wires them to WAPI.
+   *
+   * Used by recovery flows (e.g. `recoverRuntimeForCurrentDocument`) where
+   * both phases should happen together because patches are already applied.
+   * The bootstrap sequence uses the split methods directly instead.
+   */
+  async configureRuntimeEventBridge(): Promise<void> {
+    await this.registerRuntimeEventBridgeBindings();
+    await this.activateRuntimeEventBridge();
+  }
+
+  async probeRuntimeCapability(): Promise<RuntimeCapabilityProbe> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    const probes = [
+      { key: 'hasRuntime', script: WAPI_RUNTIME_CHECK_SCRIPT },
+      { key: 'hasStoreMsg', script: STORE_MSG_CHECK_SCRIPT },
+      { key: 'sessionLoaded', script: AUTHENTICATED_SHELL_CHECK_SCRIPT },
+    ] as const;
+
+    const capability: RuntimeCapabilityProbe = {
+      hasRuntime: false,
+      hasStoreMsg: false,
+      sessionLoaded: false,
+    };
+
+    for (const probe of probes) {
+      try {
+        const value = await this.evaluateBooleanScript(probe.script);
+        capability[probe.key] = value;
+      } catch (error) {
+        this.logger.error('runtime_capability_probe_failed', {
+          probe: probe.key,
+          scriptPreview: probe.script.replace(/\s+/g, ' ').trim().slice(0, 180),
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+        this.logger.error('probe_runtime_capability_failed', {
+          probe: probe.key,
+          error: error instanceof Error ? error : new Error(String(error)),
+        });
+        break;
+      }
+    }
+
+    return capability;
+  }
+
+  async preloadLivePatchArtifacts(options?: { sessionInfo?: SessionDebugInfo; fresh?: boolean }): Promise<LivePatchPreloadResult> {
+    const correlationId = 'transport-patch-preload';
+    const startTime = Date.now();
+
+    this.events.emit('launch.patch.init.before', {
+      correlationId,
+      ts: startTime,
+      step: 'patch_preload',
+      details: { phase: 'preload', source: 'builtin' },
+    });
+
+    try {
+      // Start with builtin attestation artifacts
+      const artifacts: PatchArtifact[] = BUILTIN_LIVE_PATCH_ARTIFACTS.map((artifact) => ({ ...artifact }));
+
+      // Load only the locally supplied public patch bundle
+      let remoteFetchResult: LivePatchFetchResult | null = null;
+
+      try {
+        remoteFetchResult = options?.fresh
+          ? { ...(await this.fetchFreshLivePatches(options.sessionInfo, true)), source: 'cached' }
+          : await this.fetchLivePatchesWithCache(options?.sessionInfo);
+        if (options?.fresh && (!remoteFetchResult.data.length || remoteFetchResult.data.some(script => !script.trim()))) {
+          throw new Error('The public patch bundle is empty.');
+        }
+      } catch (fetchError) {
+        if (options?.fresh) throw new Error('Local public patches could not be loaded.');
+        const fetchMsg = fetchError instanceof Error ? fetchError.message : String(fetchError);
+        this.logger.warn('local_patch_load_failed', { error: fetchMsg });
+        // Local bundle load failure is non-blocking — we fall through to builtin-only
+      }
+
+      if (remoteFetchResult) {
+        // Append remote patches after builtin attestation
+        for (let i = 0; i < remoteFetchResult.data.length; i++) {
+          artifacts.push({
+            patchId: `remote-patch-${i}`,
+            description: `Remote live patch #${i} (tag: ${remoteFetchResult.tag})`,
+            script: remoteFetchResult.data[i],
+            required: options?.fresh === true,
+            source: remoteFetchResult.source,
+          });
+        }
+      }
+
+      const developmentScript = await readFile(join(dirname(Transport.resolveWapiScriptPath()), 'dev-premium.js'), 'utf8');
+      artifacts.push({ patchId: 'dev-premium', description: 'Local free-use development implementations',
+        script: developmentScript, required: true, source: 'builtin' });
+
+      const effectiveSource = remoteFetchResult?.source ?? (artifacts.length > 0 ? 'builtin' : 'none');
+      const tag = createHash('sha256').update(JSON.stringify(artifacts)).digest('hex').slice(0, 16);
+
+      const outcome: LivePatchPreloadResult = {
+        outcome: artifacts.length > 0 ? 'ready' : 'none',
+        source: effectiveSource,
+        tag,
+        artifacts,
+        blockingFailure: false,
+      };
+
+      this.events.emit('launch.patch.init.after', {
+        correlationId,
+        ts: Date.now(),
+        step: 'patch_preload',
+        durationMs: Date.now() - startTime,
+        details: {
+          phase: 'preload',
+          applied: [],
+          available: artifacts.map((artifact) => artifact.patchId),
+          outcome: outcome.outcome,
+          source: outcome.source,
+          tag: outcome.tag,
+          blockingFailure: outcome.blockingFailure,
+        },
+      });
+
+      return outcome;
+    } catch (error) {
+      const normalizedError = error instanceof Error ? error : new Error(String(error));
+      const outcome: LivePatchPreloadResult = {
+        outcome: 'failed',
+        source: 'builtin',
+        tag: null,
+        artifacts: [],
+        blockingFailure: true,
+        error: normalizedError,
+      };
+
+      this.events.emit('launch.patch.init.after', {
+        correlationId,
+        ts: Date.now(),
+        step: 'patch_preload',
+        durationMs: Date.now() - startTime,
+        error: {
+          name: normalizedError.name,
+          message: normalizedError.message,
+          stack: normalizedError.stack,
+        },
+        details: {
+          phase: 'preload',
+          applied: [],
+          available: [],
+          outcome: outcome.outcome,
+          source: outcome.source,
+          tag: outcome.tag,
+          blockingFailure: outcome.blockingFailure,
+        },
+      });
+
+      return outcome;
+    }
+  }
+
+  async applyLivePatchArtifacts(preloaded: LivePatchPreloadResult): Promise<PatchApplyResult> {
+    if (preloaded.outcome === 'failed') {
+      return this.buildFailedLivePatchApplyResult(preloaded);
+    }
+
+    const result = await this.applyPatchArtifactSequence(preloaded.artifacts, {
+      correlationId: 'transport-live-patch-apply',
+      preloadOutcome: preloaded.outcome,
+    });
+
+    // Cache the remote live patch scripts for re-application during recovery.
+    // Only cache scripts that were successfully applied and are real evaluatable
+    // scripts (not builtin attestation or deferred init-patch markers).
+    if (result.outcome !== 'failed') {
+      this.activeLivePatchPreload = { ...preloaded,
+        artifacts: preloaded.artifacts.filter(artifact => result.applied.includes(artifact.patchId))
+          .map(artifact => ({ ...artifact, required: artifact.source !== 'builtin' || artifact.required })) };
+      this.cachedLivePatchScripts = preloaded.artifacts
+        .filter((a) => a.source !== 'builtin' && a.script !== 'DEFERRED_INIT_PATCH' && result.applied.includes(a.patchId))
+        .map((a) => a.script);
+
+      if (this.cachedLivePatchScripts.length > 0) {
+        this.logger.debug('live_patch_scripts_cached_for_recovery', {
+          count: this.cachedLivePatchScripts.length,
+        });
+      }
+    }
+
+    return result;
+  }
+
+  async applyDeferredInitPatchArtifact(): Promise<PatchApplyResult> {
+    return this.applyPatchArtifactSequence([{ ...INIT_PATCH_ARTIFACT }], {
+      correlationId: 'transport-init-patch-apply',
+      preloadOutcome: 'ready',
+    });
+  }
+
+  private buildFailedLivePatchApplyResult(preloaded: LivePatchPreloadResult): PatchApplyResult {
+    return {
+      outcome: 'failed',
+      applied: [],
+      blockingFailure: preloaded.blockingFailure,
+      results: preloaded.error
+        ? [{
+          patchId: 'patch-preload',
+          description: 'Patch preload failed before application could begin.',
+          required: true,
+          outcome: 'failed',
+          detail: preloaded.error.message,
+        }]
+        : [],
+    };
+  }
+
+  private async applyPatchArtifactSequence(
+    artifacts: PatchArtifact[],
+    options: {
+      correlationId: string;
+      preloadOutcome: 'ready' | 'none' | 'failed';
+    },
+  ): Promise<PatchApplyResult> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    const correlationId = options.correlationId;
+    const startTime = Date.now();
+    const patchIds = artifacts.map((artifact) => artifact.patchId);
+
+    this.events.emit('patch.init.before', {
+      correlationId,
+      ts: startTime,
+      step: 'patch_apply',
+      details: {
+        phase: 'apply',
+        patchIds,
+        preloadOutcome: options.preloadOutcome,
+      },
+    });
+
+    const applied: string[] = [];
+    const results: PatchApplicationResult[] = [];
+    let blockingFailure = false;
+
+    for (const artifact of artifacts) {
+      const patchStartTime = Date.now();
+      this.events.emit('patch.apply.before', {
+        correlationId,
+        ts: patchStartTime,
+        step: 'patch_apply_item',
+        details: {
+          patchId: artifact.patchId,
+          description: artifact.description,
+          required: artifact.required,
+          source: artifact.source,
+        },
+      });
+
+      this.logger.info('live_patch_installing', {
+        patchId: artifact.patchId,
+        description: artifact.description,
+        required: artifact.required,
+        source: artifact.source,
+      });
+
+      let result: PatchApplicationResult;
+
+      try {
+        const applicable = artifact.applicabilityCheckScript
+          ? await this.evaluateBooleanScript(artifact.applicabilityCheckScript)
+          : true;
+
+        if (!applicable) {
+          result = {
+            patchId: artifact.patchId,
+            description: artifact.description,
+            required: artifact.required,
+            outcome: 'not_applicable',
+            detail: 'Patch applicability check returned false.',
+          };
+          if (artifact.required) {
+            blockingFailure = true;
+          }
+        } else {
+          let appliedSuccessfully: boolean;
+          // Handle deferred init-patch: call the actual injection function directly
+          if (artifact.script === 'DEFERRED_INIT_PATCH') {
+            this.logger.info('applying_deferred_init_patch', { patchId: artifact.patchId });
+            await injectInitPatch(this.page);
+            appliedSuccessfully = true; // deferred patches succeed if no exception thrown
+          } else {
+            const applyResult = await this.page.evaluateScript<unknown>(artifact.script);
+            appliedSuccessfully = applyResult !== false;
+          }
+
+          if (!appliedSuccessfully) {
+            result = {
+              patchId: artifact.patchId,
+              description: artifact.description,
+              required: artifact.required,
+              outcome: 'failed',
+              detail: 'Patch script returned a failure signal.',
+            };
+            if (artifact.required) {
+              blockingFailure = true;
+            }
+          } else {
+            applied.push(artifact.patchId);
+            result = {
+              patchId: artifact.patchId,
+              description: artifact.description,
+              required: artifact.required,
+              outcome: 'applied',
+            };
+          }
+        }
+      } catch (error) {
+        const normalizedError = error instanceof Error ? error : new Error(String(error));
+        result = {
+          patchId: artifact.patchId,
+          description: artifact.description,
+          required: artifact.required,
+          outcome: 'failed',
+          detail: normalizedError.message,
+        };
+        if (artifact.required) {
+          blockingFailure = true;
+        }
+      }
+
+      results.push(result);
+
+      this.logger.info('live_patch_install_result', {
+        patchId: artifact.patchId,
+        outcome: result.outcome,
+        required: artifact.required,
+        durationMs: Date.now() - patchStartTime,
+        detail: result.detail,
+      });
+
+      this.events.emit('patch.apply.after', {
+        correlationId,
+        ts: Date.now(),
+        step: 'patch_apply_item',
+        durationMs: Date.now() - patchStartTime,
+        details: {
+          patchId: artifact.patchId,
+          applied: result.outcome === 'applied',
+          description: artifact.description,
+          outcome: result.outcome,
+          required: artifact.required,
+          detail: result.detail,
+        },
+      });
+    }
+
+    const outcome: PatchApplyResult = {
+      outcome: blockingFailure
+        ? 'failed'
+        : applied.length > 0
+          ? 'applied'
+          : 'skipped',
+      applied,
+      blockingFailure,
+      results,
+    };
+
+    this.logger.info('live_patch_sequence_complete', {
+      outcome: outcome.outcome,
+      appliedCount: applied.length,
+      totalCount: artifacts.length,
+      appliedPatchIds: applied,
+      blockingFailure,
+    });
+
+    this.events.emit('patch.init.after', {
+      correlationId,
+      ts: Date.now(),
+      step: 'patch_apply',
+      durationMs: Date.now() - startTime,
+      details: {
+        phase: 'apply',
+        applied: outcome.applied,
+        outcome: outcome.outcome,
+        blockingFailure: outcome.blockingFailure,
+        results: outcome.results,
+      },
+    });
+
+    return outcome;
+  }
+
+  // This development fork has no license lifecycle, key resolution, or remote payloads.
+  async preloadLicenseArtifact(_options: LicensePreloadOptions): Promise<LicensePreloadResult> {
+    return { outcome: 'ready', status: 'valid', source: 'local', artifact: null,
+      blockingFailure: false, detail: 'Local development: no license required.' };
+  }
+
+  async checkLicenseArtifact(_preloaded: LicensePreloadResult): Promise<LicenseCheckResult> {
+    return { status: 'valid', source: 'local', artifact: null, blockingFailure: false,
+      detail: 'Local development: no license required.' };
+  }
+
+  async applyLicenseArtifact(_checked: LicenseCheckResult): Promise<LicenseApplyResult> {
+    if (!this.page) throw new Error('Transport not initialized');
+    // Discover a locally installed provider without downloading or evaluating a license.
+    await this.calling.install();
+    return { status: 'valid', applied: true, blockingFailure: false,
+      detail: 'Local development: available local implementations are accessible.' };
+  }
+
+  getLicenseFeatures(): LicenseFeatures {
+    // Do not claim that missing implementations are installed.
+    return { status: 'valid', keyType: 'development', expiresAt: null, features: this.calling.featureFlags() };
+  }
+
+  async waitForQr(): Promise<string | null> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    this.events.emit('launch.auth.qr.requested', {
+      correlationId: 'qr-wait',
+      ts: Date.now(),
+      step: 'qr_wait',
+      details: { smartQr: false }
+    });
+
+    this.stopQrWatcher();
+    this.qrWatcherAbort = new AbortController();
+
+    try {
+      await this.waitForFunctionProbe(`Boolean(${QR_CHECK_SCRIPT})`, {
+        timeoutMs: this.awaitingRecoveryPairing ? 0 : this.qrTimeoutMs,
+        polling: 'mutation',
+      });
+    } catch {
+      this.events.emit('launch.auth.timeout', {
+        correlationId: 'qr-wait',
+        ts: Date.now(),
+        step: 'qr_timeout',
+        details: { timeoutMs: this.qrTimeoutMs }
+      });
+      return null;
+    }
+
+    if (this.qrWatcherAbort?.signal.aborted) {
+      return null;
+    }
+
+    try {
+      const qrData = await this.page.evaluateScript<string | null>(QR_CHECK_SCRIPT);
+      if (qrData && typeof qrData === 'string') {
+        const watcher = this.qrWatcherAbort;
+        if (!watcher || watcher.signal.aborted) return null;
+        await this.injectionController.registerPersistentBinding('OpenWA_QrChanged', (value: unknown) => {
+          if (!watcher?.signal.aborted && typeof value === 'string'
+            && value !== 'QR_CODE_SUCCESS' && value !== 'MULTI_DEVICE_DETECTED') {
+            this.emitQrData(value);
+          }
+        });
+        if (this.driver.name !== 'lightpanda') {
+          await this.page.evaluateScript(`(() => {
+            if (typeof window.smartQr !== 'function') throw new Error('QR refresh helper unavailable');
+            window.smartQr(window.OpenWA_QrChanged);
+          })()`).catch(error => this.logger.warn('qr_refresh_observer_failed', {
+            error: error instanceof Error ? error.message : String(error),
+          }));
+        }
+        this.emitQrData(qrData);
+        if (this.driver.name === 'lightpanda') this.pollQrChanges(watcher);
+      }
+      return qrData;
+    } catch (error) {
+      this.logger.debug('qr_check_error', { error });
+      return null;
+    }
+  }
+
+  private emitQrData(qrData: string): void {
+    if (!qrData || qrData === this.lastQrData) return;
+    this.lastQrData = qrData;
+    this.qrAttempt++;
+    this.events.emit('launch.auth.qr.generated', {
+      correlationId: 'qr-wait', ts: Date.now(), step: 'qr_generated',
+      details: { qr: qrData, attemptInThisCycle: this.qrAttempt },
+    });
+    this.logger.info('qr_code_generated', { attempt: this.qrAttempt });
+  }
+
+  private pollQrChanges(watcher: AbortController): void {
+    // Lightpanda's DOM observer can miss QR updates and expiry. Use WA's
+    // native state and current linking action to renew an expired QR cycle.
+    const poll = async () => {
+      if (watcher.signal.aborted || !this.page) return;
+      try {
+        const current = await this.page.evaluateScript<{ state: string; qr: string | null }>(`(() => {
+          const state = require('WAWebSocketModel').Socket.state;
+          return { state, qr: state === 'UNPAIRED' ? (${QR_CHECK_SCRIPT}) : null };
+        })()`);
+        if (watcher.signal.aborted) return;
+        if (current.state === 'UNPAIRED_IDLE') {
+          if (this.lastQrData) {
+            this.lastQrData = null;
+            this.events.emit('launch.auth.qr.expired', {
+              correlationId: 'qr-wait', ts: Date.now(), step: 'qr_expired',
+            });
+          }
+          await this.page.evaluateScript(`require('WAWebLinkDeviceAction').resetLinkDeviceState({
+            linkDeviceMethod: require('WAWebPairingType').PairingType.QR_CODE
+          })`);
+        } else if (typeof current.qr === 'string') {
+          this.emitQrData(current.qr);
+        }
+      } catch (error) {
+        if (!watcher.signal.aborted) this.logger.debug('qr_refresh_poll_failed', {
+          error: error instanceof Error ? error.message : String(error),
+        });
+      } finally {
+        if (!watcher.signal.aborted) this.qrPollTimer = setTimeout(() => { void poll(); }, 1000);
+      }
+    };
+    this.qrPollTimer = setTimeout(() => { void poll(); }, 1000);
+  }
+
+  async waitForSessionLoaded(timeoutMs: number = this.authTimeoutMs): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    try {
+      await this.page.waitForFunction(AUTHENTICATED_SHELL_CHECK_SCRIPT, {
+        timeoutMs,
+        polling: 'mutation',
+      });
+      this.stopQrWatcher();
+      this.events.emit('launch.auth.qr.scanned', {
+        correlationId: 'auth-wait',
+        ts: Date.now(),
+        step: 'qr_scanned',
+      });
+      return true;
+    } catch (error) {
+      this.logger.warn('session_load_wait_failed', {
+        timeoutMs,
+        error: error instanceof Error ? error.message : String(error),
+      });
+      return false;
+    }
+  }
+
+  private async needsToScan(): Promise<false> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    try {
+      await Promise.race([
+        this.page.waitForSelector(QR_SELECTOR_PRIMARY, { timeoutMs: 0 }),
+        this.page.waitForSelector(QR_SELECTOR_FALLBACK, { timeoutMs: 0 }),
+      ]);
+      return false;
+    } catch {
+      // QR selectors not found = no QR code available right now.
+      // Hang here so that isInsideChat() or the
+      // outer auth-timeout signal in waitForAuthentication() can win.
+      return new Promise(() => { });
+    }
+  }
+
+  private async isInsideChat(): Promise<true> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    try {
+      await this.page.waitForFunction(AUTHENTICATED_SHELL_CHECK_SCRIPT, {
+        timeoutMs: 0,
+      });
+      return true;
+    } catch {
+      return new Promise(() => { });
+    }
+  }
+
+  async isAuthenticated(): Promise<unknown> {
+    const signals: Array<Promise<unknown>> = [
+      this.needsToScan(),
+      this.isInsideChat(),
+    ];
+
+    return Promise.race(signals);
+  }
+
+  async waitForAuthentication(): Promise<AuthSettlementResult> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    this.events.emit('launch.auth.check.before', {
+      correlationId: 'auth-settle',
+      ts: Date.now(),
+      step: 'auth_check',
+      details: { timeoutMs: this.authTimeoutMs },
+    });
+
+    this.events.emit('launch.auth.qr.requested', {
+      correlationId: 'auth-settle',
+      ts: Date.now(),
+      step: 'qr_wait',
+      details: { smartQr: false },
+    });
+
+    const authRace: Array<Promise<unknown>> = [this.isAuthenticated().catch(() => undefined)];
+    let authTimer: ReturnType<typeof setTimeout> | undefined;
+    if (!this.awaitingRecoveryPairing && this.authTimeoutMs !== 0) {
+      authRace.push(new Promise((resolve) => {
+        authTimer = setTimeout(() => resolve('timeout'), this.authTimeoutMs);
+      }));
+    }
+
+    let authenticated: unknown;
+    try {
+      authenticated = await Promise.race(authRace);
+    } finally {
+      if (authTimer !== undefined) clearTimeout(authTimer);
+    }
+
+    if (authenticated === true) {
+      this.logger.info('successfulScan');
+      this.logger.info('SUCCESS');
+
+      this.events.emit('launch.auth.check.after', {
+        correlationId: 'auth-settle',
+        ts: Date.now(),
+        step: 'auth_check',
+        details: { isAuthenticated: true, method: 'shell_probe' },
+      });
+
+      return {
+        outcome: 'authenticated',
+        qrSeen: false,
+        qrAttempts: this.qrAttempt,
+        authMethod: 'resumed_session',
+      };
+    }
+
+    if (authenticated === false && this.portable.hasCheckpoint) {
+      // WhatsApp has already returned to its login screen. Keep that page and QR.
+      this.awaitingRecoveryPairing = true;
+      await this.portable.beginPairing().catch(error => this.logger.warn('session_checkpoint_reset_failed', { error }));
+    }
+
+    if (authenticated === 'timeout' && this.portable.hasCheckpoint) {
+      await this.resetSessionForPairing('session_restore_timeout');
+      await this.navigate();
+      return this.waitForAuthentication();
+    }
+
+    if (authenticated === 'timeout') {
+      return this.resolveAuthTimeoutOutcome({
+        correlationId: 'auth-settle',
+        qrSeen: false,
+        authMethod: 'resumed_session',
+      });
+    }
+
+    if (this.linkCode) {
+      const linkCodeSupported = await this.evaluateBooleanScript(LINK_CODE_AVAILABLE_CHECK_SCRIPT).catch(() => false);
+      if (linkCodeSupported) {
+        this.events.emit('launch.auth.linkCode.requested', {
+          correlationId: 'auth-settle',
+          ts: Date.now(),
+          step: 'link_code_requested',
+        });
+
+        const generatedLinkCode = await this.page.evaluateScript<string | null>(`(() => {
+          try {
+            return typeof window.linkCode === 'function' ? window.linkCode(${JSON.stringify(this.linkCode)}) : null;
+          } catch {
+            return null;
+          }
+        })()`);
+
+        if (generatedLinkCode && typeof generatedLinkCode === 'string') {
+          this.qrAttempt += 1;
+          this.events.emit('launch.auth.linkCode.generated', {
+            correlationId: 'auth-settle',
+            ts: Date.now(),
+            step: 'link_code_generated',
+            details: { linkCode: generatedLinkCode },
+          });
+          this.logger.info('link_code_generated', { attempt: this.qrAttempt });
+
+          if (!this.awaitingRecoveryPairing && this.qrMax && this.qrAttempt >= this.qrMax) {
+            return {
+              outcome: 'qr_max',
+              qrSeen: true,
+              qrAttempts: this.qrAttempt,
+              authMethod: 'link_code',
+            };
+          }
+
+          const linkCodeTimeoutMs = this.awaitingRecoveryPairing || this.qrTimeoutMs === 0 ? 0 : this.qrTimeoutMs * 2;
+          const sessionLoaded = await this.waitForSessionLoaded(linkCodeTimeoutMs);
+          return sessionLoaded
+            ? {
+              outcome: 'authenticated',
+              qrSeen: true,
+              qrAttempts: this.qrAttempt,
+              authMethod: 'link_code',
+            }
+            : {
+              outcome: 'qr_timeout',
+              qrSeen: true,
+              qrAttempts: this.qrAttempt,
+              authMethod: 'link_code',
+            };
+        }
+      } else {
+        this.logger.warn('link_code_not_available', {
+          reason: 'window.linkCode_not_exposed',
+          fallback: 'qr_flow',
+        });
+      }
+    }
+
+    const qrData = await this.waitForQr();
+    if (!qrData) {
+      return this.resolveAuthTimeoutOutcome({
+        correlationId: 'auth-settle',
+        qrSeen: false,
+        authMethod: 'qr',
+      });
+    }
+
+    const qrScanTimeoutMs = this.awaitingRecoveryPairing || this.qrTimeoutMs === 0 ? 0 : this.qrTimeoutMs * 2;
+    const sessionLoaded = await this.waitForSessionLoaded(qrScanTimeoutMs);
+    if (sessionLoaded) {
+      return {
+        outcome: 'authenticated',
+        qrSeen: true,
+        qrAttempts: this.qrAttempt,
+        authMethod: 'qr',
+      };
+    }
+
+    if (!this.awaitingRecoveryPairing && this.qrMax && this.qrAttempt >= this.qrMax) {
+      return {
+        outcome: 'qr_max',
+        qrSeen: true,
+        qrAttempts: this.qrAttempt,
+        authMethod: 'qr',
+      };
+    }
+
+    return {
+      outcome: 'qr_timeout',
+      qrSeen: true,
+      qrAttempts: this.qrAttempt,
+      authMethod: 'qr',
+    };
+  }
+
+  private async resolveAuthTimeoutOutcome(options: {
+    correlationId: string;
+    qrSeen: boolean;
+    authMethod: AuthSettlementResult['authMethod'];
+  }): Promise<AuthSettlementResult> {
+    const phoneOutOfReach = await this.waitForPhoneOutOfReach();
+
+    this.events.emit('launch.auth.timeout', {
+      correlationId: options.correlationId,
+      ts: Date.now(),
+      step: 'auth_timeout',
+      details: {
+        timeoutMs: this.authTimeoutMs,
+        phoneOutOfReach,
+      },
+    });
+
+    if (phoneOutOfReach) {
+      this.events.emit('launch.auth.phoneOutOfReach', {
+        correlationId: options.correlationId,
+        ts: Date.now(),
+        step: 'phone_out_of_reach',
+        details: { reason: 'trying_to_reach_phone' },
+      });
+
+      return {
+        outcome: 'phone_out_of_reach',
+        qrSeen: options.qrSeen,
+        qrAttempts: this.qrAttempt,
+        authMethod: options.authMethod,
+      };
+    }
+
+    return {
+      outcome: 'auth_timeout',
+      qrSeen: options.qrSeen,
+      qrAttempts: this.qrAttempt,
+      authMethod: options.authMethod,
+    };
+  }
+
+  private async waitForPhoneOutOfReach(): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    try {
+      await this.page.waitForFunction(PHONE_OUT_OF_REACH_CHECK_SCRIPT, {
+        timeoutMs: this.oorTimeoutMs,
+        polling: 'mutation',
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  stopQrWatcher(): void {
+    this.qrWatcherAbort?.abort();
+    this.qrWatcherAbort = null;
+    if (this.qrPollTimer) clearTimeout(this.qrPollTimer);
+    this.qrPollTimer = undefined;
+  }
+
+  async evaluate<Arg, Ret>(fn: (arg: Arg) => Ret | Promise<Ret>, arg: Arg): Promise<Ret> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+    const page = this.page;
+    return page.evaluate(fn, arg);
+  }
+
+  async evaluateScript<T = unknown>(script: string): Promise<T | null> {
+    const page = this.page;
+    if (!page || page.isClosed()) return null;
+    return page.evaluateScript<T>(script);
+  }
+
+  getActiveLivePatchPreload(): LivePatchPreloadResult | null { return this.activeLivePatchPreload; }
+  getEffectiveLicenseKey(): string | undefined { return this.effectiveLicenseKey; }
+  getDocumentGeneration(): GenerationSnapshot { return { ...this.injectionController.getHealthSnapshot().generation }; }
+  commitEffectiveLicenseKey(key: string | undefined): void { this.effectiveLicenseKey = key; }
+  setRuntimeRefreshHandler(handler: () => Promise<unknown>): void { this.refreshHandler = handler; }
+
+  async runPlannedRuntimeMutation<T>(operation: () => Promise<T>): Promise<T> {
+    this.plannedRuntimeMutation++;
+    ++this.latestRuntimeRecoveryRequestId;
+    try {
+      await this.runtimeRecoveryQueue;
+      await this.injectionController.waitForIdle();
+      return await operation();
+    } finally { this.plannedRuntimeMutation--; }
+  }
+
+  async reloadPage(): Promise<void> {
+    if (!this.page || this.page.isClosed()) throw new Error('SESSION_REFRESH_PAGE_UNAVAILABLE');
+    this.runtimeRecoveryFailed = true;
+    await this.calling.invalidate('The session is refreshing. Attach fresh call media after it is ready.');
+    await this.page.reload();
+    await this.injectionController.waitForIdle();
+  }
+
+  completeRuntimeReplacement(): void { this.runtimeRecoveryFailed = false; }
+
+  enableRuntimeRecovery(): void {
+    if (this.closed) return;
+    this.awaitingRecoveryPairing = false;
+    this.runtimeRecoveryEnabled = true;
+  }
+
+  getPage(): IPage | null {
+    return this.page;
+  }
+
+  getOperationalReadinessSnapshot(): TransportOperationalReadinessSnapshot {
+    const health = this.injectionController.getHealthSnapshot();
+    const driverActiveGeneration = Boolean(
+      this.page
+      && !this.page.isClosed()
+      && health.phase !== 'disposed'
+      && health.generation.documentId
+      && health.generation.runtimeId
+    );
+    const missingRuntimeMethods = [...health.missingRuntimeMethods].sort();
+
+    return {
+      generation: driverActiveGeneration ? { ...health.generation } : null,
+      phase: health.phase,
+      driverActiveGeneration,
+      runtimeOperational: !this.runtimeRecoveryFailed && health.runtimePresent && health.hasStoreMsg && health.sessionLoaded,
+      runtimeBridgeReady: health.bridgeReady && missingRuntimeMethods.length === 0,
+      reinjectionSettled: this.pendingRuntimeRecoveryCount === 0,
+      missingRuntimeMethods,
+    };
+  }
+
+  getBrowser(): IBrowser | null {
+    return this.browser;
+  }
+
+  async close(): Promise<void> {
+    this.closed = true;
+    this.runtimeRecoveryEnabled = false;
+    ++this.latestRuntimeRecoveryRequestId;
+    await this.calling.close();
+    this.stopQrWatcher();
+    try {
+      await this.portable.flush();
+    } finally {
+      this.disposePageListeners();
+      try {
+        await this.injectionController.dispose();
+        if (this.page) { await this.page.close(); this.page = null; }
+      } finally {
+        // Never release ownership while an old browser can still write.
+        if (this.browser) { await this.browser.close(); this.browser = null; }
+        await this.portable.release();
+      }
+    }
+    this.logger.info('transport_closed');
+  }
+
+  private async configurePageRuntime(page: IPage): Promise<void> {
+    this.registerPageDiagnostics(page);
+
+    // Inject self-healing watermark if configured
+    if (this.options.watermark) {
+      const wbg = typeof this.options.watermark === 'object' && this.options.watermark.background ? this.options.watermark.background : 'rgba(255, 0, 0, 0.1)';
+      const wcolor = typeof this.options.watermark === 'object' && this.options.watermark.color ? this.options.watermark.color : 'rgba(255, 0, 0, 0.5)';
+      const wtext = typeof this.options.watermark === 'object' && this.options.watermark.text ? this.options.watermark.text : 'RESTRICTED AUTOMATION';
+
+      await page.addInitScript(`
+        (() => {
+          if (window !== window.top) return;
+
+          let element = null;
+          const bg = ${JSON.stringify(wbg)};
+          const color = ${JSON.stringify(wcolor)};
+          const txt = ${JSON.stringify(wtext)};
+
+          const enforceWatermark = () => {
+            if (!element || !element.isConnected) {
+              const host = document.createElement('wa-watermark-host');
+              host.style.position = 'fixed';
+              host.style.top = '0';
+              host.style.left = '0';
+              host.style.width = '100vw';
+              host.style.height = '100vh';
+              host.style.pointerEvents = 'none';
+              host.style.zIndex = '2147483647';
+
+              const shadow = host.attachShadow({ mode: 'closed' });
+
+              const tint = document.createElement('div');
+              tint.style.cssText = \`position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: \${bg}; pointer-events: none; mix-blend-mode: multiply;\`;
+
+              const text = document.createElement('div');
+              text.style.cssText = \`position: absolute; bottom: 20px; right: 20px; color: \${color}; font-family: sans-serif; font-size: 24px; font-weight: bold; text-shadow: 1px 1px 2px rgba(255,255,255,0.8); pointer-events: none;\`;
+              text.textContent = txt;
+
+              shadow.appendChild(tint);
+              shadow.appendChild(text);
+
+              document.documentElement.appendChild(host);
+              element = host;
+            }
+
+            if (element) {
+              element.style.display = 'block';
+              element.style.opacity = '1';
+              element.style.visibility = 'visible';
+              element.style.transform = 'none';
+            }
+
+            requestAnimationFrame(enforceWatermark);
+          };
+
+          requestAnimationFrame(enforceWatermark);
+        })();
+      `);
+    }
+
+    await this.configureRequestInterception(page);
+  }
+
+  private async configureLaunchBootstrap(page: IPage): Promise<void> {
+    const logoutSurface = getRuntimeListenerSurfaceEntry('session.logout');
+
+    await this.injectionController.registerPersistentBinding('ProgressBarEvent', (data: { value?: number; text?: string }) => {
+      const msg = `${(data.value || data.value === 0) ? `${data.value}%:\t` : ''} ${data.text ?? ''}`;
+      this.logger.info('progress_bar_event', { value: data.value, text: data.text, msg });
+      this.events.emit('internal_launch_progress', {
+        value: data.value,
+        text: data.text,
+      });
+    });
+
+    await this.injectionController.registerPersistentBinding('CriticalInternalMessage', (data: { value?: string; text?: string }) => {
+      this.logger.warn('critical_internal_message', { value: data.value, text: data.text });
+      this.events.emit('critical_internal_message', {
+        value: data.value,
+        text: data.text,
+      });
+    });
+
+    await this.injectionController.registerPersistentBinding('OpenWA_RuntimeReplacementDetected', () => {
+      this.queueRuntimeRecovery('runtime_replaced');
+    });
+
+    this.injectionController.registerNavigationObserver(logoutSurface.observerId, (frame) => {
+      const url = frame.url();
+      if (!url.includes('post_logout=1')) {
+        return;
+      }
+
+      this.events.emit('session.logout', {
+        correlationId: 'page-post-logout',
+        ts: Date.now(),
+        step: 'session_logout',
+        details: { reason: 'post_logout=1' },
+      });
+      this.requestSessionRecovery('logged_out');
+    });
+
+    this.injectionController.registerNavigationObserver('runtime.navigation_recovery', (_frame, generation) => {
+      if (!this.runtimeRecoveryEnabled || this.plannedRuntimeMutation) return;
+      void this.calling.invalidate().catch(error => this.logger.warn('Calling media could not close after navigation', { message: String(error) }));
+      this.logger.info(`FRAME NAV DETECTED ${this.frameNavCounter}, ${_frame.url()}, Reinjecting APIs...`);
+      this.queueRuntimeRecovery('main_frame_navigation', generation);
+      this.frameNavCounter++;
+    });
+
+    await this.injectionController.registerPersistentInitScript('prog_observer', await getProgObserverScript());
+    await this.injectionController.registerPersistentInitScript('runtime_replacement_observer', RUNTIME_REPLACEMENT_OBSERVER_SCRIPT);
+    await this.injectionController.initialize(page);
+
+    this.logger.debug('exposed_page_callbacks', {
+      functions: ['ProgressBarEvent', 'CriticalInternalMessage', 'OpenWA_RuntimeReplacementDetected'],
+    });
+    this.logger.info('prog_observer_registered_post_navigation');
+  }
+
+  private async runPreApiHelperPhase(): Promise<void> {
+    const helpersReady = await this.evaluateBooleanScript(PRE_API_HELPER_READY_CHECK_SCRIPT).catch(() => false);
+
+    this.events.emit('launch.helper.pre_api.before', {
+      correlationId: 'transport-pre-api-helper',
+      ts: Date.now(),
+      step: 'pre_api_helper_phase',
+      details: { mode: helpersReady ? 'noop' : 'scripts' },
+    });
+
+    const wapiScript = await Transport.getAssetScript('wapi.js');
+    const audit = auditWapiHelperAssetRequirements(wapiScript);
+
+    if (audit.forbiddenMatches.length > 0) {
+      // throw new Error(`wapi.js still depends on legacy helper globals: ${audit.forbiddenMatches.join(', ')}`);
+    }
+
+    if (audit.requiredLegacyHelpers.length > 0) {
+      throw new Error(`Legacy pre-api helper phase is required but not implemented for: ${audit.requiredLegacyHelpers.join(', ')}`);
+    }
+
+    if (!helpersReady) {
+      const helperAssets: Array<'qr.min.js' | 'hash.js'> = ['qr.min.js', 'hash.js'];
+      for (const asset of helperAssets) {
+        const assetPath = Transport.resolveAssetPath(asset);
+        const helperScript = await Transport.getAssetScript(asset);
+        this.logger.info('transport_injection_asset_evaluating', {
+          asset,
+          assetPath,
+          bytes: helperScript.length,
+        });
+        await this.page!.evaluateScript(helperScript);
+      }
+    }
+
+    this.logger.info('pre_api_helper_phase_complete', {
+      mode: helpersReady ? 'noop' : 'scripts',
+      requiredLegacyHelpers: audit.requiredLegacyHelpers,
+    });
+
+    this.events.emit('launch.helper.pre_api.after', {
+      correlationId: 'transport-pre-api-helper',
+      ts: Date.now(),
+      step: 'pre_api_helper_phase',
+      details: {
+        mode: helpersReady ? 'noop' : 'scripts',
+        success: true,
+        requiredLegacyHelpers: audit.requiredLegacyHelpers,
+      },
+    });
+  }
+
+  private registerPageDiagnostics(page: IPage): void {
+    this.disposePageListeners();
+
+    this.pageListeners.push(
+      page.on('console', (message) => this.handleConsoleMessage(message)),
+      page.on('pageerror', (error) => this.handlePageError(error)),
+    );
+  }
+
+  private async configureRequestInterception(page: IPage): Promise<void> {
+    const shouldBlockAssets = this.headless && this.blockAssets;
+    const shouldEnableInterception = true; // Always enforce offline OpenWA services.
+
+    this.events.emit('launch.page.interception.before', {
+      correlationId: 'transport-page-interception',
+      ts: Date.now(),
+      step: 'page_interception',
+      details: { enabled: shouldEnableInterception },
+    });
+
+    if (!shouldEnableInterception) {
+      this.events.emit('launch.page.interception.after', {
+        correlationId: 'transport-page-interception',
+        ts: Date.now(),
+        step: 'page_interception',
+        details: {},
+      });
+      return;
+    }
+
+    try {
+      await page.setRequestInterception(true);
+      this.pageListeners.push(page.on('request', (request) => this.handleInterceptedRequest(request)));
+      this.logger.info('page_request_interception_enabled', {
+        blockCrashLogs: this.blockCrashLogs,
+        blockAssets: shouldBlockAssets,
+        safeMode: this.safeMode,
+      });
+    } catch (error) {
+      this.logger.warn('page_request_interception_unavailable', {
+        error: error instanceof Error ? error.message : String(error),
+        blockCrashLogs: this.blockCrashLogs,
+        blockAssets: shouldBlockAssets,
+        safeMode: this.safeMode,
+      });
+      throw new Error('Offline development requires browser request interception.', { cause: error });
+    } finally {
+      this.events.emit('launch.page.interception.after', {
+        correlationId: 'transport-page-interception',
+        ts: Date.now(),
+        step: 'page_interception',
+        details: {},
+      });
+    }
+  }
+
+  private handleConsoleMessage(message: IConsoleMessage): void {
+    const meta = {
+      type: message.type(),
+      text: message.text(),
+      location: message.location?.(),
+    };
+
+    if (this.logConsole) {
+      console.log(message.text());
+    }
+
+    this.logger.info('page_console', meta);
+  }
+
+  private handlePageError(error: Error): void {
+    if (this.logConsoleErrors) {
+      console.error(error);
+    }
+
+    this.logger.error('page_console_error', {
+      message: error.message,
+      stack: error.stack,
+    });
+  }
+
+  private async handleInterceptedRequest(request: IRequest): Promise<void> {
+    const shouldBlockAssets = this.headless && this.blockAssets;
+    const url = request.url();
+    const resourceType = request.resourceType();
+
+    if (isOpenWaServiceUrl(url)) {
+      await request.abort();
+      return;
+    }
+
+    if (this.blockCrashLogs && CRASH_LOG_URL_FRAGMENTS.some((fragment) => url.includes(fragment))) {
+      await request.abort();
+      return;
+    }
+
+    if (shouldBlockAssets && resourceType && BLOCKED_ASSET_RESOURCE_TYPES.has(resourceType)) {
+      await request.abort();
+      return;
+    }
+
+    await request.continue();
+  }
+
+  private disposePageListeners(): void {
+    const handles = this.pageListeners.splice(0, this.pageListeners.length);
+    for (const handle of handles) {
+      void Promise.resolve(handle.dispose()).catch(() => undefined);
+    }
+  }
+
+  private static async getAssetScript(assetFileName: 'launch.js' | 'wapi.js' | 'qr.min.js' | 'hash.js'): Promise<string> {
+    const cached = Transport.assetScriptCache.get(assetFileName);
+    if (cached) {
+      return cached;
+    }
+
+    const scriptPromise = readFile(Transport.resolveAssetPath(assetFileName), 'utf8');
+    Transport.assetScriptCache.set(assetFileName, scriptPromise);
+    return scriptPromise;
+  }
+
+  private static resolveAssetPath(assetFileName: 'launch.js' | 'wapi.js' | 'qr.min.js' | 'hash.js'): string {
+    const moduleDir = Transport.resolveCurrentModuleDir();
+    const candidates = [
+      join(moduleDir, 'assets', assetFileName),
+      join(moduleDir, 'transport/assets', assetFileName),
+    ];
+
+    const match = candidates.find((candidate) => existsSync(candidate));
+    if (!match) {
+      throw new Error(`Unable to resolve ${assetFileName} for runtime activation from module-relative candidates: ${candidates.join(', ')}`);
+    }
+
+    return match;
+  }
+
+  static resolveLaunchScriptPath(): string {
+    return Transport.resolveAssetPath('launch.js');
+  }
+
+  static resolveWapiScriptPath(): string {
+    return Transport.resolveAssetPath('wapi.js');
+  }
+
+  private static resolveCurrentModuleDir(): string {
+    const originalPrepareStackTrace = Error.prepareStackTrace;
+
+    try {
+      Error.prepareStackTrace = (_error, stack) => stack;
+      const stack = new Error().stack as unknown as NodeJS.CallSite[] | undefined;
+      const fileName = stack
+        ?.map((callSite) => callSite.getFileName())
+        .find((candidate): candidate is string => (
+          typeof candidate === 'string'
+          && candidate.length > 0
+          && !candidate.startsWith('node:')
+          && !candidate.startsWith('[')
+          && !candidate.includes('/[eval]')
+          && !candidate.includes('\[eval]')
+        ));
+
+      if (!fileName) {
+        throw new Error('Unable to determine current module path for launch.js resolution');
+      }
+
+      // Node ESM stack frames contain file URLs; filesystem lookups need paths.
+      return dirname(fileName.startsWith('file:') ? fileURLToPath(fileName) : fileName);
+    } finally {
+      Error.prepareStackTrace = originalPrepareStackTrace;
+    }
+  }
+
+  private async evaluateBooleanScript(script: string): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    return Boolean(await this.page.evaluateScript<boolean>(script));
+  }
+
+  private queueRuntimeRecovery(
+    trigger: 'main_frame_navigation' | 'runtime_replaced',
+    generation?: GenerationSnapshot,
+  ): void {
+    // Bootstrap owns the initial document until it has finished installing every
+    // artifact. Navigation and WAPI replacement callbacks must not race it.
+    if (!this.runtimeRecoveryEnabled || this.plannedRuntimeMutation) return;
+    const requestId = ++this.latestRuntimeRecoveryRequestId;
+    this.pendingRuntimeRecoveryCount += 1;
+
+
+    this.logger.warn('runtime_recovery_queued', {
+      trigger,
+      requestId: String(requestId),
+    });
+
+    this.runtimeRecoveryQueue = this.runtimeRecoveryQueue.then(
+      () => this.recoverDocument({ requestId, trigger, generation }),
+      () => this.recoverDocument({ requestId, trigger, generation }),
+    ).catch((error) => {
+      this.runtimeRecoveryFailed = true;
+      if (error instanceof SessionRecoveryRequired || (error instanceof Error && error.message === 'PORTABLE_SESSION_ACTIVATE_FAILED')) {
+        this.requestSessionRecovery(error.message);
+        return;
+      }
+      this.logger.warn('runtime_recovery_failed', {
+        trigger,
+        requestId: String(requestId),
+        error: error instanceof Error ? error.message : String(error),
+      });
+    });
+  }
+
+  private async recoverDocument(request: Parameters<Transport['runRuntimeRecovery']>[0]): Promise<void> {
+    // Own callbacks during recovery itself without waiting on our own queue.
+    this.plannedRuntimeMutation++;
+    try {
+      await this.runRuntimeRecovery(request);
+    }
+    catch (error) { this.runtimeRecoveryFailed = true; throw error; }
+    finally {
+      this.plannedRuntimeMutation--;
+
+    }
+  }
+
+  private isLatestRuntimeRecoveryRequest(requestId: number): boolean {
+    return requestId === this.latestRuntimeRecoveryRequestId;
+  }
+
+  private async runRuntimeRecovery(request: {
+    requestId: number;
+    trigger: 'main_frame_navigation' | 'runtime_replaced';
+    generation?: GenerationSnapshot;
+  }): Promise<void> {
+    try {
+      if (!this.page) {
+        return;
+      }
+
+      if (!this.runtimeRecoveryEnabled || !this.isLatestRuntimeRecoveryRequest(request.requestId)) return;
+      if (this.page.url().includes('post_logout=1')
+        || await this.evaluateBooleanScript(`Boolean(${QR_CHECK_SCRIPT})`)) {
+        throw new SessionRecoveryRequired('authentication_lost');
+      }
+
+      const settledGeneration = await this.injectionController.waitForIdle();
+      if (!this.isLatestRuntimeRecoveryRequest(request.requestId)) {
+        this.logger.debug('runtime_recovery_dropped_stale_request', {
+          trigger: request.trigger,
+          requestId: String(request.requestId),
+          latestRequestId: String(this.latestRuntimeRecoveryRequestId),
+        });
+        return;
+      }
+
+      if (
+        request.generation
+        && request.generation.documentId !== settledGeneration.documentId
+      ) {
+        this.logger.debug('runtime_recovery_generation_superseded', {
+          trigger: request.trigger,
+          requestDocumentId: request.generation.documentId,
+          settledDocumentId: settledGeneration.documentId,
+        });
+        return;
+      }
+
+      await this.waitForFunctionProbe(DOCUMENT_READY_CHECK_SCRIPT, {
+        timeoutMs: 3000,
+        polling: 'mutation',
+      });
+
+      if (!this.isLatestRuntimeRecoveryRequest(request.requestId)) {
+        return;
+      }
+
+      // A navigation can keep the current runtime. Wait for WhatsApp's visible
+      // screen before deciding between QR pairing and restoring the bindings.
+      if (request.trigger === 'main_frame_navigation') {
+        try {
+          const injectable = await this.waitForInjectableSession();
+          if (injectable) {
+            if (await this.evaluateBooleanScript(`Boolean(${QR_CHECK_SCRIPT})`)) {
+              throw new SessionRecoveryRequired('authentication_lost');
+            }
+            const livePatchIntact = await this.evaluateBooleanScript(
+              `!!(typeof window.moi === 'function' && window.moi())`
+            );
+            if (livePatchIntact) {
+              await this.calling.bind();
+
+              this.logger.info('runtime_recovery_skipped_session_intact', {
+                trigger: request.trigger,
+                requestId: String(request.requestId),
+                reason: 'live_patches_intact_after_frame_nav',
+              });
+              return;
+            }
+            this.logger.debug('runtime_recovery_live_patches_missing', {
+              trigger: request.trigger,
+              requestId: String(request.requestId),
+            });
+          }
+        } catch (probeError) {
+          if (probeError instanceof SessionRecoveryRequired) throw probeError;
+          // Probe failed — session is likely flushed, proceed with full recovery
+          this.logger.debug('runtime_recovery_integrity_probe_failed', {
+            trigger: request.trigger,
+            requestId: String(request.requestId),
+            error: probeError instanceof Error ? probeError.message : String(probeError),
+          });
+        }
+      }
+
+      const { reinjected } = await this.recoverRuntimeForCurrentDocument({
+        trigger: request.trigger,
+        shouldContinue: () => this.isLatestRuntimeRecoveryRequest(request.requestId),
+        forceReinject: true,
+      });
+
+      this.logger.info('runtime_recovery_completed', {
+        trigger: request.trigger,
+        requestId: String(request.requestId),
+        reinjected,
+        generation: settledGeneration,
+      });
+
+      } finally {
+      this.pendingRuntimeRecoveryCount = Math.max(0, this.pendingRuntimeRecoveryCount - 1);
+    }
+  }
+
+  private async recoverRuntimeForCurrentDocument(options: {
+    trigger: 'main_frame_navigation' | 'runtime_replaced' | 'post_authentication' | 'validation_failure';
+    shouldContinue?: () => boolean;
+    forceReinject?: boolean;
+  }): Promise<{ capability: RuntimeCapabilityProbe; reinjected: boolean }> {
+    const shouldContinue = options.shouldContinue ?? (() => true);
+
+    let capability = await this.probeRuntimeCapability();
+    if (!shouldContinue()) {
+      return { capability, reinjected: false };
+    }
+
+    // ── Short-circuit: runtime is intact AND bridge is NOT tested here ──
+    // We do NOT call ensureRuntimeBridge() as a pre-check because it would try
+    // to wire onStateChanged before live patches and init patch are re-applied,
+    // causing failures that trigger the WAPI setter trap → infinite recovery loop.
+    //
+    // Instead, we only short-circuit if the runtime exists AND we are NOT in a
+    // post_authentication or forceReinject scenario.
+    if (!options.forceReinject && capability.hasRuntime) {
+      const isPostAuth = options.trigger === 'post_authentication';
+      const storeReady = capability.hasStoreMsg;
+
+      // For non-auth triggers: if runtime is present, skip reinjection.
+      // The bridge will be wired after the full recovery sequence.
+      if (!isPostAuth || storeReady) {
+        this.logger.debug('runtime_recovery_runtime_present_skip_reinject', {
+          trigger: options.trigger,
+          hasStoreMsg: storeReady,
+        });
+        return { capability, reinjected: false };
+      }
+
+      if (isPostAuth && !storeReady) {
+        this.logger.info('runtime_recovery_forcing_reinject_store_missing', {
+          trigger: options.trigger,
+          hasRuntime: capability.hasRuntime,
+          hasStoreMsg: false,
+        });
+      }
+    }
+
+    const contextRecovery = options.trigger === 'main_frame_navigation' || options.trigger === 'runtime_replaced';
+    const reinjected = await this.performRuntimeInjection(shouldContinue, !contextRecovery);
+    if (!shouldContinue()) return { capability: await this.probeRuntimeCapability(), reinjected };
+    if (contextRecovery && !reinjected) throw new Error('The base runtime could not be restored.');
+    if (reinjected && contextRecovery) {
+      const documentId = this.getDocumentGeneration().documentId;
+      const patches = this.activeLivePatchPreload;
+      if (!patches) throw new Error('No complete public installation is available for document recovery.');
+      await this.calling.invalidate();
+      await installDocumentRuntime(this, { ...patches, artifacts: patches.artifacts.map(artifact => ({ ...artifact, required: artifact.source !== 'builtin' || artifact.required })) }, async () => {
+        if (this.getDocumentGeneration().documentId !== documentId || !shouldContinue()) throw new Error('Document recovery was superseded.');
+        const license = await this.preloadLicenseArtifact({ sessionId: this.options.sessionId ?? 'session',
+          licenseKey: this.effectiveLicenseKey, sessionInfo: await this.getSessionDebugInfo(), strict: true });
+        return license;
+      });
+      if (this.getDocumentGeneration().documentId !== documentId || !shouldContinue()) throw new Error('Document recovery was superseded.');
+      this.completeRuntimeReplacement();
+    }
+
+    capability = await this.probeRuntimeCapability();
+
+    return {
+      capability,
+      reinjected,
+    };
+  }
+
+  private async performRuntimeInjection(shouldContinue: () => boolean = () => true, reuseCachedPatches = true): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    const wapiAssetPath = Transport.resolveWapiScriptPath();
+    const wapiScript = await Transport.getAssetScript('wapi.js');
+    this.logger.info('transport_injection_asset_evaluating', {
+      asset: 'wapi.js',
+      assetPath: wapiAssetPath,
+      bytes: wapiScript.length,
+    });
+    await this.page.evaluateScript(wapiScript);
+
+    await this.waitForFunctionProbe(WAPI_RUNTIME_CHECK_SCRIPT, { timeoutMs: 3000, polling: 50 });
+    if (!shouldContinue()) {
+      return false;
+    }
+
+    let capability = await this.probeRuntimeCapability();
+
+    if (!capability.hasRuntime) {
+      this.logger.warn('wapi_bootstrap_missing_runtime_after_wapi_asset');
+    }
+
+    const launchAssetPath = Transport.resolveLaunchScriptPath();
+    const launchScript = await Transport.getAssetScript('launch.js');
+    this.logger.info('transport_injection_asset_evaluating', {
+      asset: 'launch.js',
+      assetPath: launchAssetPath,
+      bytes: launchScript.length,
+    });
+    try {
+      await this.page.evaluateScript(launchScript);
+    } catch (error) {
+      const qrData = await this.page.evaluateScript<string | null>(QR_CHECK_SCRIPT).catch(() => null);
+      if (!qrData) {
+        throw error;
+      }
+
+      this.logger.warn('launch_asset_deferred_for_pre_auth_qr', {
+        reason: 'qr_surface_available',
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+
+    await this.waitForFunctionProbe(WAPI_RUNTIME_CHECK_SCRIPT, { timeoutMs: 3000, polling: 50 });
+    if (!shouldContinue()) {
+      return false;
+    }
+
+    capability = await this.probeRuntimeCapability();
+
+    if (!capability.hasRuntime) {
+      this.logger.warn('wapi_bootstrap_missing_runtime_after_launch_asset');
+    }
+
+    const success = capability.hasRuntime;
+
+    this.logger.info('wapi_injection_probe', { ...capability });
+
+    // Re-apply cached live patch scripts after wapi.js/launch.js re-injection.
+    // Without this, the freshly injected WAPI overwrites the live-patched version,
+    // causing onStateChanged (and similar methods) to fail and triggering an
+    // infinite recovery loop.
+    if (success && reuseCachedPatches && this.cachedLivePatchScripts.length > 0) {
+      this.logger.info('recovery_reapplying_live_patches', {
+        count: this.cachedLivePatchScripts.length,
+      });
+
+      for (let i = 0; i < this.cachedLivePatchScripts.length; i++) {
+        try {
+          await this.page.evaluateScript(this.cachedLivePatchScripts[i]);
+          this.logger.debug('recovery_live_patch_reapplied', { index: i });
+        } catch (reapplyError) {
+          const msg = reapplyError instanceof Error ? reapplyError.message : String(reapplyError);
+          this.logger.warn('recovery_live_patch_reapply_failed', { index: i, error: msg });
+        }
+      }
+    }
+
+    return success;
+  }
+
+  private async waitForFunctionProbe(
+    script: string,
+    options?: WaitForFunctionOptions,
+  ): Promise<boolean> {
+    if (!this.page) {
+      throw new Error('Transport not initialized');
+    }
+
+    try {
+      await this.page.waitForFunction(script, options);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  private async fetchLivePatchesWithCache(
+    _sessionInfo?: SessionDebugInfo,
+  ): Promise<LivePatchFetchResult> {
+    const result = await loadOfflinePatches(process.cwd());
+    return { ...result, source: 'cached' };
+  }
+
+  private async fetchFreshLivePatches(_sessionInfo?: SessionDebugInfo, _fresh = false): Promise<{ data: string[]; tag: string }> {
+    return loadOfflinePatches(process.cwd());
+  }
+
+  // ─── Session Debug Info ───────────────────────────────────────────────────
+
+  /**
+   * Extract session debug info from the authenticated browser page.
+   *
+   * Must be called AFTER authentication completes and the WhatsApp runtime is available.
+   * Returns the data needed for remote overlay requests (patch params + license validation body).
+   *
+   * Mirrors legacy `WAPI.getMe()._serialized` + session debug info collection.
+   */
+  async getSessionDebugInfo(): Promise<SessionDebugInfo> {
+    if (!this.page) {
+      throw new Error('Transport not initialized — cannot extract session debug info');
+    }
+
+    const info = await this.page.evaluate(
+      () => {
+        const runtime = globalThis as any;
+        const connectionIdentity = runtime.Store?.Conn?.me?._serialized;
+        const connectionHost = typeof connectionIdentity === 'string' && connectionIdentity.endsWith('@c.us')
+          ? connectionIdentity : '';
+        const patchedHost = typeof runtime.moi === 'function' ? runtime.moi() : '';
+
+        return {
+          waVersion: runtime.Debug?.VERSION ?? 'unknown',
+          hostNumber: (typeof patchedHost === 'string' ? patchedHost : '') || connectionHost,
+          pageUA: navigator.userAgent,
+          os: navigator.platform ?? 'unknown',
+        };
+      },
+      undefined,
+    );
+
+    const hostNumber = info.hostNumber ?? '';
+    const numHash = hostNumber
+      ? createHash('md5').update(hostNumber).digest('hex').slice(-5)
+      : undefined;
+
+    return {
+      WA_VERSION: info.waVersion,
+      WA_AUTOMATE_VERSION: '5.0.0',
+      hostNumber,
+      BROWSER_VERSION: info.pageUA,
+      PAGE_UA: info.pageUA,
+      OS: info.os,
+      NUM_HASH: numHash,
+    };
+  }
+}

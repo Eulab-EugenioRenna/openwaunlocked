@@ -1,0 +1,15 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "getting-started",
+    "releases",
+    "concepts",
+    "guides",
+    "client-and-integrations",
+    "plugins",
+    "reference",
+    "operations",
+    "licensing"
+  ]
+}

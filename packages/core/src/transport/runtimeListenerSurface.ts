@@ -1,0 +1,96 @@
+import type { OpenWAEventMap } from '../events/eventMap';
+
+type RuntimeBridgeEvent = Extract<
+  keyof OpenWAEventMap,
+  'message.received' | 'message.any' | 'interactive.response' | 'event.changed' | 'event.response' | 'poll.vote' | 'ack.changed' | 'session.state.changed' | 'group.addedToGroup' | 'group.participants.changed.global'
+>;
+
+type RuntimeNavigationEvent = Extract<keyof OpenWAEventMap, 'session.logout'>;
+
+export interface RuntimeWapiListenerSurfaceEntry {
+  kind: 'wapi';
+  event: RuntimeBridgeEvent;
+  bindingName: string;
+  wapiMethod: string;
+  required: boolean;
+}
+
+export interface RuntimeNavigationListenerSurfaceEntry {
+  kind: 'navigation';
+  event: RuntimeNavigationEvent;
+  observerId: string;
+}
+
+export type RuntimeListenerSurfaceEntry =
+  | RuntimeWapiListenerSurfaceEntry
+  | RuntimeNavigationListenerSurfaceEntry;
+
+export const runtimeListenerSurface = {
+  'poll.vote': { kind: 'wapi', event: 'poll.vote', bindingName: 'OpenWA_RuntimePollVote', wapiMethod: 'onPollVote', required: false },
+  'event.changed': { kind: 'wapi', event: 'event.changed', bindingName: 'OpenWA_RuntimeEvent', wapiMethod: 'onEvent', required: false },
+  'event.response': { kind: 'wapi', event: 'event.response', bindingName: 'OpenWA_RuntimeEventResponse', wapiMethod: 'onEventResponse', required: false },
+  'interactive.response': {
+    kind: 'wapi', event: 'interactive.response', bindingName: 'OpenWA_RuntimeInteractiveResponse',
+    wapiMethod: 'onInteractiveResponse', required: false,
+  },
+  'message.received': {
+    kind: 'wapi',
+    event: 'message.received',
+    bindingName: 'OpenWA_RuntimeMessageReceived',
+    wapiMethod: 'onAnyMessage',
+    required: true,
+  },
+  'message.any': {
+    kind: 'wapi',
+    event: 'message.any',
+    bindingName: 'OpenWA_RuntimeAnyMessage',
+    wapiMethod: 'onAnyMessage',
+    required: false,
+  },
+  'ack.changed': {
+    kind: 'wapi',
+    event: 'ack.changed',
+    bindingName: 'OpenWA_RuntimeAckChanged',
+    wapiMethod: 'onAck',
+    required: true,
+  },
+  'session.state.changed': {
+    kind: 'wapi',
+    event: 'session.state.changed',
+    bindingName: 'OpenWA_RuntimeStateChanged',
+    wapiMethod: 'onStateChanged',
+    required: true,
+  },
+  'group.addedToGroup': {
+    kind: 'wapi',
+    event: 'group.addedToGroup',
+    bindingName: 'OpenWA_RuntimeAddedToGroup',
+    wapiMethod: 'onAddedToGroup',
+    required: false,
+  },
+  'group.participants.changed.global': {
+    kind: 'wapi',
+    event: 'group.participants.changed.global',
+    bindingName: 'OpenWA_RuntimeParticipantsChanged',
+    wapiMethod: 'onGlobalParticipantsChanged',
+    required: false,
+  },
+  'session.logout': {
+    kind: 'navigation',
+    event: 'session.logout',
+    observerId: 'session.logout',
+  },
+} as const satisfies Record<string, RuntimeListenerSurfaceEntry>;
+
+export function getRuntimeListenerSurfaceEntry<EventName extends keyof typeof runtimeListenerSurface>(
+  eventName: EventName,
+): (typeof runtimeListenerSurface)[EventName] {
+  return runtimeListenerSurface[eventName];
+}
+
+export const requiredRuntimeWapiMethods = [
+  ...new Set(
+    Object.values(runtimeListenerSurface)
+      .flatMap((entry) => (entry.kind === 'wapi' && entry.required ? [entry.wapiMethod] : [])),
+  ),
+].sort();

@@ -1,0 +1,78 @@
+{
+  "name": "@open-wa/node-red",
+  "version": "5.6.6",
+  "description": "Official @open-wa node-red integration.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "keywords": [
+    "node-red",
+    "whatsapp",
+    "javascript",
+    "bot",
+    "automation"
+  ],
+  "scripts": {
+    "add-node": "node ./utils/add-node.js",
+    "copy": "copyfiles -u 1 src/**/*.{png,svg} dist/",
+    "build:editor": "pnpm run clean:editor && copyfiles -u 2 src/editor/**/*.{css,html} dist/ && rollup -c rollup.config.editor.mjs",
+    "build:editor:watch": "rollup -c rollup.config.editor.mjs -w",
+    "build:runtime": "pnpm run clean:runtime && tsc -p tsconfig.runtime.json",
+    "build:runtime:watch": "tsc -p tsconfig.runtime.watch.json --watch --preserveWatchOutput",
+    "build": "rimraf dist && pnpm run copy && pnpm run build:editor && pnpm run build:runtime",
+    "clean:editor": "rimraf dist/*.html && rimraf dist/*.js",
+    "clean:runtime": "rimraf dist/*.js",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest --passWithNoTests",
+    "dev": "rimraf dist && pnpm run copy && concurrently --names \"COPY,EDITOR,RUNTIME,TEST\" --prefix \"({name})\" --prefix-colors \"yellow.bold,cyan.bold,greenBright.bold,magenta.bold\" \"onchange -v \\\"src/**/*.png\\\" \\\"src/**/*.svg\\\" -- pnpm run copy\" \"pnpm run build:editor:watch\" \"pnpm run build:runtime:watch\" \"node -e \\\"setTimeout(() => process.exit(0), 10000)\\\" && pnpm run test:watch\"",
+    "lint": "oxlint src utils rollup.config.editor.mjs",
+    "lint:fix": "oxlint src utils rollup.config.editor.mjs --fix"
+  },
+  "author": "Eulab",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "node-red": {
+    "nodes": {
+      "listen": "./dist/nodes/listen/listen.js",
+      "cmd": "./dist/nodes/cmd/cmd.js",
+      "owa-server": "./dist/nodes/owa-server/owa-server.js"
+    }
+  },
+  "dependenciesMeta": {
+    "puppeteer": {
+      "built": false
+    }
+  },
+  "devDependencies": {
+    "@rollup/plugin-swc": "^0.4.1",
+    "@swc/core": "^1.16.2",
+    "@types/express": "catalog:",
+    "@types/node": "catalog:",
+    "@types/node-red": "^1.3.5",
+    "@types/node-red-node-test-helper": "^0.3.5",
+    "@types/sinon": "^22.0.0",
+    "@types/supertest": "^7.2.1",
+    "colorette": "^2.0.20",
+    "concurrently": "^10.0.5",
+    "copyfiles": "^2.4.1",
+    "glob": "^13.0.6",
+    "mustache": "^4.2.0",
+    "node-red": "^5.0.7",
+    "node-red-node-test-helper": "^0.3.6",
+    "onchange": "^7.1.0",
+    "prettier": "catalog:",
+    "rollup": "^4.63.5",
+    "type-fest": "^5.10.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "yarpm": "^1.2.0"
+  },
+  "dependencies": {
+    "@open-wa/schema": "workspace:*",
+    "@open-wa/socket-client": "workspace:*",
+    "@open-wa/wa-automate-types-only": "workspace:*"
+  }
+}

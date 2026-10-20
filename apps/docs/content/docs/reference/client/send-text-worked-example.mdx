@@ -1,0 +1,41 @@
+---
+title: "Trace sendText through the runtime"
+description: "Contributor walkthrough of how sendText is defined and dispatched."
+icon: "BookOpen"
+---
+
+# Trace sendText through the runtime
+
+This contributor walkthrough follows `sendText` from its schema definition to runtime dispatch. For the consumer contract, start with the [sendText method block](/docs/reference/client/messages#sendtext).
+
+## Consumer usage
+
+```ts
+import { create } from '@open-wa/wa-automate';
+
+const client = await create({ sessionId: 'docs-example' });
+try {
+  const messageId = await client.sendText('447123456789@c.us', 'Hello from open-wa');
+  console.log('Message ID:', messageId);
+} finally {
+  await client.stop();
+}
+```
+
+## Runtime trace
+
+`sendText` is defined in `packages/schema/src/methods/messaging.ts`:
+
+```ts
+export const sendText = defineMethodV2('sendText', {
+  meta: { description: "Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch.", namespace: "messages", httpMethod: "POST" },
+  parameterOrder: ["to","content","options"],
+  // input: z.object({ to, content, options }), output: SendTextResultSchema
+});
+```
+
+1. A positional call maps by `parameterOrder`.
+2. An object call resolves key aliases (`chatId` → `to`, `text` → `content`).
+3. `inputSchema.parseAsync()` validates before dispatch.
+4. Dispatch target is `execute('sendText', validatedParams)`.
+5. See the full reference on the [messages namespace page](/docs/reference/client/messages#sendtext).

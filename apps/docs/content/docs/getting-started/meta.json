@@ -1,0 +1,15 @@
+{
+  "title": "Getting Started",
+  "icon": "Rocket",
+  "defaultOpen": false,
+  "pages": [
+    "quickstart",
+    "migrating-to-v5",
+    "initializer",
+    "link-code",
+    "easy-api",
+    "custom-code",
+    "docker",
+    "v5-alpha"
+  ]
+}

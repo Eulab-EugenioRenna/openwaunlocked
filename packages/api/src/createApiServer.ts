@@ -1,0 +1,497 @@
+import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { logger } from 'hono/logger';
+import { createAdaptorServer, upgradeWebSocket } from '@hono/node-server';
+import { createServer, type Server } from 'node:http';
+import { WebSocketServer } from 'ws';
+import { getHttpMethodDefinitions, type Config } from '@open-wa/schema';
+import '@open-wa/schema';
+import {
+  createScreencastRoute,
+  ScreencastManager,
+} from '@open-wa/screencaster/server';
+import { createApiMiddleware } from './createApiMiddleware';
+import { createHonoMcpAdapter } from '@open-wa/mcp';
+import { registerMetaRoutes } from './routes/meta';
+import { registerDebugRoutes } from './routes/debug';
+import { registerCallingRoutes } from './routes/calls';
+import { registerSessionRefreshRoutes } from './routes/session-refresh';
+import { registerAgentDiscoveryRoutes } from './routes/agent-discovery';
+import { type EventBridge } from './events/EventBridge';
+import { HealthStore } from './health/HealthStore';
+import { DiagnosticStore } from './diagnostics/DiagnosticStore';
+import { API_VERSION } from './version';
+import { EventBroadcaster } from './events/EventBroadcaster';
+import { ElasticEmitter } from './monitoring/elastic';
+import {
+  setupViteDevServer,
+  mountDashboardProduction,
+} from './dashboard/middleware';
+import type { ApiServerOptions, ClientMethodMap } from './types';
+import type { IScreencastPage } from '@open-wa/screencaster/server';
+import type { PluginHost } from '@open-wa/core';
+
+function parseCorsOrigin(corsConfig: string | string[]): string | string[] {
+  if (corsConfig === '*') {
+    return '*';
+  }
+
+  if (Array.isArray(corsConfig)) {
+    return corsConfig;
+  }
+
+  if (typeof corsConfig === 'string' && corsConfig.includes(',')) {
+    return corsConfig.split(',').map((origin) => origin.trim());
+  }
+
+  return corsConfig;
+}
+
+export class ApiServer {
+  private app: Hono;
+  private config: Config;
+  private client: ClientMethodMap | undefined;
+  private elasticEmitter?: ElasticEmitter;
+  private latestQR: string | null = null;
+  private screencastManager: ScreencastManager;
+  private server?: Server;
+  private dashboardDevServer?: { close(): Promise<void> };
+  private isDashboardActive: boolean = false;
+  private pluginHost?: PluginHost;
+  private healthStore: HealthStore = new HealthStore();
+  private diagnosticStore: DiagnosticStore = new DiagnosticStore();
+  private eventBroadcaster: EventBroadcaster;
+  private mcpAdapter?: ReturnType<typeof createHonoMcpAdapter>;
+  private eventBridge?: EventBridge;
+  private eventBridgeListener?: (event: string, payload: any) => void;
+  private readinessProvider?: () =>
+    | {
+        state?: string;
+        status?: string;
+        ready: boolean;
+        exposureSafe?: boolean;
+        pending?: string[];
+        blockers?: string[];
+      }
+    | undefined;
+
+  constructor(options: ApiServerOptions) {
+    this.config = options.config;
+
+    // Validate MCP configuration
+    if (this.config.mcp?.enabled && !this.config.apiKey) {
+      throw new Error(
+        'MCP requires Easy API apiKey. Refusing to start with MCP enabled and no apiKey configured.',
+      );
+    }
+
+    this.app = new Hono();
+    this.screencastManager = new ScreencastManager();
+    this.eventBroadcaster = new EventBroadcaster(this.config.sessionId);
+
+    if (this.config.elasticUrl) {
+      this.elasticEmitter = new ElasticEmitter({
+        url: this.config.elasticUrl,
+        username: this.config.elasticUsername,
+        password: this.config.elasticPassword,
+        bufferSize: this.config.elasticBufferSize,
+        pipeline: this.config.elasticPipeline,
+        indexPrefix: this.config.elasticIndexPrefix,
+      });
+    }
+
+    this.setupMiddleware(options.verbose);
+    registerCallingRoutes(this.app, { config: this.config, upgrade: upgradeWebSocket, getService: () => this.client?.getCallingService?.() });
+    this.registerRoutes();
+
+    // Register screencast WebSocket route
+    this.app.get(
+      '/screencast',
+      createScreencastRoute(upgradeWebSocket, this.screencastManager),
+    );
+  }
+
+  public setClient(client: ClientMethodMap | undefined) {
+    this.client = client;
+  }
+
+  public setEventBridge(bridge: EventBridge) {
+    if (this.eventBridge && this.eventBridgeListener) {
+      this.eventBridge.offAny(this.eventBridgeListener);
+    }
+
+    this.eventBridge = bridge;
+    this.eventBridgeListener = (event: string, payload: any) => {
+      this.healthStore.processEvent(event, payload);
+      this.diagnosticStore.capture(event, payload);
+      this.eventBroadcaster.broadcast(event, payload);
+      this.mcpAdapter?.publishEvent(event, payload);
+    };
+
+    // Also wire events into the HealthStore so /health returns accumulated data
+    bridge.onAny(this.eventBridgeListener);
+    this.diagnosticStore.attach();
+  }
+
+  public setReadinessProvider(
+    provider:
+      | (() =>
+          | {
+              state?: string;
+              status?: string;
+              ready: boolean;
+              exposureSafe?: boolean;
+              pending?: string[];
+              blockers?: string[];
+            }
+          | undefined)
+      | undefined,
+  ) {
+    this.readinessProvider = provider;
+  }
+
+  /**
+   * Bind a CDP-capable page for screencasting.
+   * Call this once the browser page is ready.
+   */
+  public async setPage(page: IScreencastPage): Promise<void> {
+    if (this.config.useLightpanda) {
+      await this.screencastManager.clearPage();
+      return;
+    }
+    await this.screencastManager.setPage(page);
+  }
+
+  /**
+   * Unbind the screencaster page (session ended).
+   */
+  public async clearPage(): Promise<void> {
+    await this.screencastManager.clearPage();
+  }
+
+  public setQR(qr: string | null) {
+    this.latestQR = qr;
+  }
+
+  public getApp() {
+    return this.app;
+  }
+
+  public getEventBroadcaster() {
+    return this.eventBroadcaster;
+  }
+
+  /**
+   * Mount plugin routes and manifest endpoint.
+   * Call this after the PluginHost has all plugins registered.
+   */
+  public mountPlugins(pluginHost: PluginHost): void {
+    this.pluginHost = pluginHost;
+
+    // Mount each plugin's routes at /plugins/<name>/
+    for (const { name, router } of pluginHost.getRoutes()) {
+      this.app.route(`/plugins/${name}`, router);
+    }
+  }
+
+  public async start() {
+    let viteDevServer: any = null;
+    if (this.config.dashboard) {
+      viteDevServer = await setupViteDevServer();
+      this.dashboardDevServer = viteDevServer ?? undefined;
+      if (!viteDevServer) {
+        this.isDashboardActive = await mountDashboardProduction(this.app);
+      } else {
+        this.isDashboardActive = true;
+      }
+    }
+
+    const server = createAdaptorServer({
+      fetch: this.app.fetch,
+      websocket: {
+        server: new WebSocketServer({ noServer: true }),
+      },
+      createServer: (options, honoListener) =>
+        createServer(options, (request, response) => {
+          if (viteDevServer && request.url?.startsWith('/dashboard')) {
+            viteDevServer.middlewares(request, response, () => {
+              void honoListener(request, response);
+            });
+            return;
+          }
+          void honoListener(request, response);
+        }),
+    });
+    this.server = server as Server;
+
+    await new Promise<void>((resolve, reject) => {
+      const onError = (error: Error) => {
+        server.off('error', onError);
+        reject(error);
+      };
+      server.once('error', onError);
+      server.listen(this.config.port, this.config.host, () => {
+        server.off('error', onError);
+        console.log(
+          `Server running on http://${this.config.host}:${this.config.port}`,
+        );
+        resolve();
+      });
+    });
+
+    if (this.elasticEmitter) {
+      await this.elasticEmitter.start();
+    }
+  }
+
+  public async stop() {
+    if (this.eventBridge && this.eventBridgeListener) this.eventBridge.offAny(this.eventBridgeListener);
+    await this.mcpAdapter?.close();
+    this.mcpAdapter = undefined;
+    await this.dashboardDevServer?.close();
+    this.dashboardDevServer = undefined;
+    const server = this.server;
+    this.server = undefined;
+    await this.screencastManager.destroy();
+    this.eventBroadcaster.close();
+    if (server?.listening) {
+      await new Promise<void>((resolve, reject) => {
+        server.close((error) => (error ? reject(error) : resolve()));
+        // Dashboard SSE responses remain open by design. Once admission has
+        // stopped, close them so shutdown can release the listening socket.
+        server.closeAllConnections();
+      });
+    }
+    if (this.elasticEmitter) {
+      await this.elasticEmitter.stop();
+    }
+  }
+
+  public isDashboardRunning() {
+    return this.isDashboardActive;
+  }
+
+  private isSessionConnected() {
+    const readiness = this.readinessProvider?.();
+    if (readiness) {
+      return readiness.ready;
+    }
+
+    if (!this.client) {
+      return false;
+    }
+
+    return typeof this.client.isConnected === 'function'
+      ? this.client.isConnected()
+      : false;
+  }
+
+  private setupMiddleware(verbose = false) {
+    this.app.use(
+      '/*',
+      cors({
+        origin: parseCorsOrigin(this.config.cors),
+        credentials: true,
+      }),
+    );
+
+    this.app.use('/*', async (c, next) => {
+      const path = new URL(c.req.url).pathname;
+      if (path === '/' || path.startsWith('/dashboard')) {
+        c.header(
+          'Link',
+          [
+            `</.well-known/api-catalog>; rel="api-catalog"`,
+            `</.well-known/mcp/server-card.json>; rel="mcp"`,
+            `</.well-known/agent-card.json>; rel="describedby"`,
+          ].join(', '),
+        );
+      }
+
+      if (
+        path === '/' &&
+        (c.req.header('Accept') || '').includes('text/markdown')
+      ) {
+        const origin = new URL(c.req.url).origin;
+        c.header('Content-Type', 'text/markdown');
+        return c.text(
+          `# Open-WA Easy API\n\nThis is an Agent-Native API endpoint.\n\n## API Catalog\nExplore endpoints at \`${origin}/.well-known/api-catalog\` and docs at \`${origin}/api-docs\`.\n\n## MCP Endpoint\nAn MCP server is running for agents at \`${origin}/mcp\`.\n`,
+        );
+      }
+      await next();
+    });
+
+    if (verbose || ['debug', 'verbose'].includes(this.config.logLevel?.toLowerCase() ?? '')) {
+      this.app.use('*', logger());
+    }
+  }
+
+  private registerRoutes() {
+    registerSessionRefreshRoutes(this.app, this.config, () => this.client);
+    const methodDefinitions = getHttpMethodDefinitions();
+    registerAgentDiscoveryRoutes(this.app, {
+      config: this.config,
+      methodDefinitions,
+    });
+
+    this.app.get('/plugins/manifest', (c) =>
+      c.json(this.pluginHost?.getManifest() ?? { plugins: [] }),
+    );
+
+    this.app.get('/health', (c) => {
+      const healthSnapshot = this.healthStore.getSnapshot();
+      return c.json({
+        status: 'ok',
+        version: API_VERSION,
+        host: {
+          available: true,
+          api: true,
+          dashboard: {
+            enabled: this.config.dashboard,
+            running: this.isDashboardRunning(),
+            port: this.config.dashboardPort,
+          },
+          mcp: {
+            enabled: Boolean(this.config.mcp?.enabled),
+            available: Boolean(this.config.apiKey && this.config.mcp?.enabled),
+            path: this.config.mcp?.path || '/mcp',
+          },
+        },
+        capabilities: {
+          livePortalAvailable: !this.config.useLightpanda,
+          livePortalUnavailableReason: this.config.useLightpanda
+            ? 'Lightpanda does not render a visual feed. Use Chrome or Chromium for Live Portal.'
+            : undefined,
+          apiKeyConfigured: Boolean(this.config.apiKey),
+          mcpEnabled: Boolean(this.config.mcp?.enabled),
+          mcpAvailable: Boolean(this.config.apiKey && this.config.mcp?.enabled),
+          mcpPath: this.config.mcp?.path || '/mcp',
+        },
+        connected: this.isSessionConnected(),
+        session: this.readinessProvider?.() ?? {
+          ready: false,
+          status: this.client ? 'legacy' : 'unavailable',
+          state: this.client ? 'UNKNOWN' : 'DISCONNECTED',
+          pending: this.client
+            ? ['session_readiness_unavailable']
+            : ['client_not_bound'],
+          blockers: [],
+          exposureSafe: false,
+        },
+        // QR code for pre-launch scanning
+        qr: this.latestQR ?? null,
+        // Accumulated health data for the dashboard
+        launchTimeline: healthSnapshot.launchTimeline,
+        patches: healthSnapshot.patches,
+        license: healthSnapshot.license,
+        reconnections: healthSnapshot.reconnections,
+        startedAt: healthSnapshot.startedAt,
+        lastEventAt: healthSnapshot.lastEventAt,
+      });
+    });
+
+    this.app.get('/qr', (c) => {
+      if (!this.config.ezqr) {
+        return c.json({ error: 'QR endpoint disabled' }, 404);
+      }
+
+      if (!this.latestQR) {
+        return c.json(
+          {
+            error: 'QR code not available',
+            note: 'Session might be connected or generating QR',
+          },
+          404,
+        );
+      }
+
+      return c.json({
+        qr: this.latestQR,
+        note: 'Scan this QR code in WhatsApp',
+      });
+    });
+
+    this.app.get('/api/events', (c) => {
+      // TODO: Unify this inline auth check with the shared apiKeyMiddleware used across Easy API.
+      // Note: This intentionally supports query params to preserve legacy Easy API behavior,
+      // unlike the MCP adapter which strictly enforces header-only auth (X-API-Key) for security.
+      if (this.config.apiKey) {
+        const apiKey =
+          c.req.header('X-API-Key') ||
+          c.req.query('api_key') ||
+          c.req.query('key');
+
+        if (!apiKey || apiKey !== this.config.apiKey) {
+          return c.json(
+            { error: 'Unauthorized', details: 'Invalid or missing API key' },
+            401,
+          );
+        }
+      }
+
+      const topicsParam = c.req.query('topics');
+      const topics = topicsParam
+        ? topicsParam
+            .split(',')
+            .map((topic) => topic.trim())
+            .filter(Boolean)
+        : ['*'];
+
+      return new Response(
+        this.eventBroadcaster.createStream({
+          signal: c.req.raw.signal,
+          topics,
+        }),
+        {
+          headers: {
+            'Cache-Control': 'no-cache, no-transform',
+            Connection: 'keep-alive',
+            'Content-Type': 'text/event-stream',
+            'X-Accel-Buffering': 'no',
+          },
+        },
+      );
+    });
+
+    registerMetaRoutes(this.app, {
+      config: this.config,
+      methodDefinitions,
+    });
+
+    registerDebugRoutes(this.app, {
+      config: this.config,
+      getConfig: () => this.config,
+      getDiagnostics: () => this.diagnosticStore.getSnapshot(),
+      setIntegration: (id, data) => {
+        if (!this.config.integrations) {
+          this.config.integrations = {};
+        }
+        this.config.integrations[id] = data;
+      },
+    });
+    this.app.route(
+      '/api',
+      createApiMiddleware(() => this.client, {
+        config: this.config,
+        basePath: '/api',
+        elasticEmitter: this.elasticEmitter,
+        isSessionConnected: () => this.isSessionConnected(),
+      }),
+    );
+
+    if (this.config.mcp?.enabled) {
+      this.mcpAdapter = createHonoMcpAdapter({
+        config: this.config,
+        clientSource: () => this.client,
+        elasticEmitter: this.elasticEmitter,
+        basePath: '/api',
+        isSessionConnected: () => this.isSessionConnected(),
+      });
+      this.mcpAdapter.mount(this.app, this.config.mcp.path || '/mcp');
+    }
+  }
+}
+
+export function createApiServer(config: Config) {
+  return new ApiServer({ config });
+}

@@ -1,0 +1,24 @@
+name: openwa-free-dev-test
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: dev/test/Dockerfile
+    image: openwa-free-dev-test:local
+    init: true
+    shm_size: 1gb
+    ports:
+      - '127.0.0.1:8099:8099'
+    volumes:
+      - dev-test-state:/state
+    environment:
+      DEV_PORT: '8099'
+      DEV_STATE_PATH: /state
+      CHROMIUM_PATH: /usr/bin/chromium
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:8099/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+volumes:
+  dev-test-state:

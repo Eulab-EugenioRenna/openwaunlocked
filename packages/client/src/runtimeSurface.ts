@@ -1,0 +1,242 @@
+import type { ListenerHandle } from './events/index';
+
+export type ClientRuntimeSupport = 'runtime' | 'unsupported';
+
+export interface ClientRuntimeMethodSurfaceEntry {
+  support: ClientRuntimeSupport;
+  runtimeMethod?: string;
+  runtimeSource?: 'asset' | 'live-patch';
+  runtimePatch?: string;
+  reason?: string;
+}
+
+export interface ClientRuntimeListenerSurfaceEntry {
+  runtimeSource?: 'bridge' | 'calling';
+  support: ClientRuntimeSupport;
+  runtimeSupportEvent?: string;
+  reason?: string;
+}
+
+export const clientRuntimeMethodSurface = {
+  getNumberProfile: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getNumberProfile' },
+  getOrder: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getOrder' },
+  getStories: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getStories' },
+  getStatuses: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getStories' },
+  getStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getStatus' },
+  deleteStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'deleteStatus' },
+  deleteAllStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'deleteAllStatus' },
+  deleteAllStatuses: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'deleteAllStatus' },
+  getStarredMessages: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'getStarredMessages' },
+  setProfilePicture: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'setProfilePic' },
+  setProfilePic: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'setProfilePic' },
+  sendButtons: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendButtons' },
+  sendAdvancedButtons: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendAdvancedButtons' },
+  sendListMessage: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendListMessage' },
+  sendList: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendListMessage' },
+  sendEvent: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'sendEvent' },
+  getEvent: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'getEvent' },
+  getEvents: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'getEvents' },
+  getEventResponses: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'getEventResponses' },
+  editEvent: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'editEvent' },
+  cancelEvent: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'cancelEvent' },
+  respondToEvent: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'events', runtimeMethod: 'respondToEvent' },
+  getCallCapabilities: { support: 'runtime', reason: 'calling admission service' },
+  getActiveCall: { support: 'runtime', reason: 'local native calling provider' },
+  startCall: { support: 'runtime', reason: 'local native calling provider' },
+  acceptCall: { support: 'runtime', reason: 'local native calling provider' },
+  rejectCall: { support: 'runtime', reason: 'local native calling provider' },
+  endCall: { support: 'runtime', reason: 'local native calling provider' },
+  muteCall: { support: 'runtime', reason: 'local native calling provider' },
+  clearCallAudio: { support: 'runtime', reason: 'local native calling provider' },
+  setCallMedia: { support: 'runtime', reason: 'local native calling provider' },
+  observeCallAudio: { support: 'runtime', reason: 'local native calling provider' },
+  stopCallAudioObserver: { support: 'runtime', reason: 'local native calling provider' },
+  sendInteractive: {
+    support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendInteractive',
+    reason: 'provided by the local development patch',
+  },
+  sendRawMessage: {
+    support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'sendRawMessage',
+    reason: 'provided by the local development patch',
+  },
+  sendText: { support: 'runtime', runtimeMethod: 'sendMessage' },
+  sendImage: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage' },
+  sendFile: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage', reason: 'generic media pipeline in the common patch' },
+  sendAudio: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage' },
+  sendPtt: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage' },
+  sendVideoAsGif: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage' },
+  voteOnPoll: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'voteOnPoll' },
+  getPollResults: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'getPollResults' },
+  pinMessage: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'pinMessage' },
+  unpinMessage: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'pinMessage' },
+  sendPoll: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendPoll', reason: 'provided by the common patch' },
+  sendLocation: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'sendLocation' },
+  sendContact: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'sendContact' },
+  sendMultipleContacts: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'sendContact' },
+  sendVCard: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'sendVCard' },
+  sendSticker: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'private', runtimeMethod: 'sendSticker', reason: 'provided by the private donor finalizer' },
+  reply: { support: 'runtime', runtimeMethod: 'reply' },
+  forwardMessages: { support: 'runtime', runtimeMethod: 'forwardMessages' },
+  deleteMessage: { support: 'runtime', runtimeMethod: 'smartDeleteMessages' },
+  editMessage: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'editMessage', reason: 'provided by the common patch' },
+  react: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'react', reason: 'provided by the common patch' },
+  sendSeen: { support: 'runtime', runtimeMethod: 'sendSeen' },
+  getMessageById: { support: 'runtime', runtimeMethod: 'getMessageById' },
+  getAlbumMessages: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'getAlbumMessages' },
+  sendAlbum: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'common', runtimeMethod: 'sendAlbum' },
+  sendFileFromUrl: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sendImage' },
+  postTextStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'postTextStatus', reason: 'local text story payload' },
+  postImageStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'postImageStatus', reason: 'local image story payload' },
+  postVideoStatus: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'dev-premium', runtimeMethod: 'postVideoStatus', reason: 'local video story payload' },
+  decryptMedia: { support: 'runtime', reason: 'uses local decrypt flow plus getMessageById' },
+  downloadMedia: { support: 'runtime', reason: 'uses local decrypt flow plus filesystem write' },
+  createGroup: { support: 'runtime', runtimeMethod: 'createGroup' },
+  addParticipant: { support: 'runtime', runtimeMethod: 'addParticipant' },
+  removeParticipant: { support: 'runtime', runtimeMethod: 'removeParticipant' },
+  promoteParticipant: { support: 'runtime', runtimeMethod: 'promoteParticipant' },
+  demoteParticipant: { support: 'runtime', runtimeMethod: 'demoteParticipant' },
+  setGroupTitle: {
+    support: 'runtime',
+    runtimeSource: 'live-patch',
+    runtimePatch: 'private',
+    runtimeMethod: 'setGroupTitle',
+    reason: 'provided by the installed private patch pipeline',
+  },
+  setGroupDescription: {
+    support: 'runtime',
+    runtimeSource: 'live-patch',
+    runtimePatch: 'private',
+    runtimeMethod: 'setGroupDescription',
+    reason: 'provided by the installed private patch pipeline',
+  },
+  setGroupIcon: { support: 'runtime', runtimeMethod: 'setGroupIcon' },
+  getGroupInfo: {
+    support: 'runtime',
+    runtimeSource: 'live-patch',
+    runtimePatch: 'private',
+    runtimeMethod: 'getGroupInfo',
+    reason: 'provided by the installed private patch pipeline',
+  },
+  getGroupMembers: { support: 'runtime', runtimeMethod: 'getGroupParticipantIDs' },
+  getGroupMembersId: { support: 'runtime', runtimeMethod: 'getGroupParticipantIDs' },
+  getGroupInviteLink: { support: 'runtime', runtimeMethod: 'getGroupInviteLink' },
+  revokeGroupInviteLink: { support: 'runtime', runtimeMethod: 'revokeGroupInviteLink' },
+  joinGroupViaLink: { support: 'runtime', runtimeMethod: 'joinGroupViaLink' },
+  leaveGroup: { support: 'runtime', runtimeMethod: 'leaveGroup' },
+  getChat: { support: 'runtime', runtimeMethod: 'getChat' },
+  getAllChats: { support: 'runtime', runtimeMethod: 'getAllChats' },
+  getChatById: { support: 'runtime', runtimeMethod: 'getChatById' },
+  deleteChat: { support: 'runtime', runtimeMethod: 'deleteConversation' },
+  clearChat: { support: 'runtime', runtimeMethod: 'clearChat' },
+  archiveChat: { support: 'runtime', runtimeMethod: 'archiveChat' },
+  unarchiveChat: { support: 'runtime', runtimeMethod: 'archiveChat' },
+  pinChat: {
+    support: 'unsupported',
+    runtimeMethod: 'pinChat',
+    reason: 'shipped wapi.js does not define window.WAPI.pinChat',
+  },
+  unpinChat: {
+    support: 'unsupported',
+    runtimeMethod: 'pinChat',
+    reason: 'shipped wapi.js does not define window.WAPI.pinChat',
+  },
+  muteChat: {
+    support: 'unsupported',
+    runtimeMethod: 'muteChat',
+    reason: 'shipped wapi.js does not define window.WAPI.muteChat',
+  },
+  unmuteChat: {
+    support: 'unsupported',
+    runtimeMethod: 'unmuteChat',
+    reason: 'shipped wapi.js does not define window.WAPI.unmuteChat',
+  },
+  markAsUnread: { support: 'runtime', runtimeMethod: 'markAsUnread' },
+  getAllMessages: { support: 'runtime', runtimeMethod: 'getAllMessagesInChat' },
+  loadEarlierMessages: { support: 'runtime', runtimeMethod: 'loadEarlierMessages' },
+  getContact: { support: 'runtime', runtimeMethod: 'getContact' },
+  requestPhoneNumber: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'requestPhoneNumber' },
+  sharePhoneNumber: { support: 'runtime', runtimeSource: 'live-patch', runtimePatch: 'message-options', runtimeMethod: 'sharePhoneNumber' },
+  getAllContacts: { support: 'runtime', runtimeMethod: 'getAllContacts' },
+  getContactById: { support: 'runtime', runtimeMethod: 'getContact' },
+  checkNumberStatus: { support: 'runtime', runtimeMethod: 'checkNumberStatus' },
+  getProfilePic: { support: 'runtime', runtimeMethod: 'getProfilePicFromServer' },
+  blockContact: { support: 'runtime', runtimeMethod: 'contactBlock' },
+  unblockContact: { support: 'runtime', runtimeMethod: 'contactUnblock' },
+  getBlockedContacts: {
+    support: 'unsupported',
+    runtimeMethod: 'getBlockedIds',
+    reason: 'shipped wapi.js overrides window.WAPI.getBlockedIds with a placeholder that returns false',
+  },
+  getCommonGroups: {
+    support: 'unsupported',
+    runtimeMethod: 'getCommonGroups',
+    reason: 'shipped wapi.js overrides window.WAPI.getCommonGroups with a placeholder that returns false',
+  },
+  getLastSeen: { support: 'runtime', runtimeMethod: 'getLastSeen' },
+  isChatOnline: { support: 'runtime', runtimeMethod: 'isChatOnline' },
+  getHostNumber: { support: 'runtime', runtimeMethod: 'getHostNumber' },
+  getWAVersion: { support: 'runtime', runtimeMethod: 'getWAVersion' },
+  getConnectionState: {
+    support: 'unsupported',
+    runtimeMethod: 'getConnectionState',
+    reason: 'shipped wapi.js does not define window.WAPI.getConnectionState',
+  },
+  getBatteryLevel: { support: 'runtime', runtimeMethod: 'getBatteryLevel' },
+  getIsPlugged: { support: 'runtime', runtimeMethod: 'getIsPlugged' },
+  getAmountOfLoadedMessages: { support: 'runtime', runtimeMethod: 'getAmountOfLoadedMessages' },
+  getMe: { support: 'runtime', runtimeMethod: 'getMe' },
+  getFeatures: {
+    support: 'unsupported',
+    runtimeMethod: 'getFeatures',
+    reason: 'shipped wapi.js does not define window.WAPI.getFeatures',
+  },
+  getProcessStats: {
+    support: 'unsupported',
+    runtimeMethod: 'getProcessStats',
+    reason: 'shipped wapi.js does not define window.WAPI.getProcessStats',
+  },
+  setMyName: { support: 'runtime', runtimeMethod: 'setMyName' },
+  setMyStatus: { support: 'runtime', runtimeMethod: 'setMyStatus' },
+} as const satisfies Record<string, ClientRuntimeMethodSurfaceEntry>;
+
+export const clientRuntimeListenerSurface = {
+  onPollVote: { support: 'runtime', runtimeSupportEvent: 'poll.vote' },
+  onEvent: { support: 'runtime', runtimeSupportEvent: 'event.changed' },
+  onEventResponse: { support: 'runtime', runtimeSupportEvent: 'event.response' },
+  onIncomingCall: { support: 'runtime', runtimeSource: 'calling', runtimeSupportEvent: 'call.incoming', reason: 'provided by the local native calling provider' },
+  onCallState: { support: 'runtime', runtimeSource: 'calling', runtimeSupportEvent: 'call.state', reason: 'provided by the local native calling provider' },
+  onInteractiveResponse: { support: 'runtime', runtimeSupportEvent: 'interactive.response' },
+  onFormResponse: { support: 'runtime', runtimeSupportEvent: 'interactive.response' },
+  onMessage: { support: 'runtime', runtimeSupportEvent: 'message.received' },
+  onAck: { support: 'runtime', runtimeSupportEvent: 'ack.changed' },
+  onStateChanged: { support: 'runtime', runtimeSupportEvent: 'session.state.changed' },
+  onAnyMessage: { support: 'runtime', runtimeSupportEvent: 'message.any' },
+  onParticipantsChanged: { support: 'runtime', runtimeSupportEvent: 'group.participants.changed.global' },
+  onGlobalParticipantsChanged: { support: 'runtime', runtimeSupportEvent: 'group.participants.changed.global' },
+  onMessageDeleted: {
+    support: 'unsupported',
+    reason: 'client listener expects message.deleted, but the shipped transport/runtime surface does not register any deletion bridge',
+  },
+  onLogout: { support: 'runtime', runtimeSupportEvent: 'session.logout' },
+} as const satisfies Record<string, ClientRuntimeListenerSurfaceEntry>;
+
+export function createUnsupportedRuntimeSurfaceError(kind: 'method' | 'listener', name: string, reason: string): Error {
+  return new Error(`Client ${kind} "${name}" is not supported by the shipped browser runtime: ${reason}`);
+}
+
+export function createUnsupportedMethodStub<T extends (...args: any[]) => unknown>(
+  name: keyof typeof clientRuntimeMethodSurface,
+): T {
+  const entry = clientRuntimeMethodSurface[name] as ClientRuntimeMethodSurfaceEntry;
+  const reason = entry.reason ?? 'no shipped runtime backing is available';
+
+  return ((..._args: Parameters<T>) => {
+    throw createUnsupportedRuntimeSurfaceError('method', name, reason);
+  }) as unknown as T;
+}
+
+export function throwUnsupportedListener(name: keyof typeof clientRuntimeListenerSurface): ListenerHandle {
+  const entry = clientRuntimeListenerSurface[name] as ClientRuntimeListenerSurfaceEntry;
+  const reason = entry.reason ?? 'no shipped runtime backing is available';
+  throw createUnsupportedRuntimeSurfaceError('listener', name, reason);
+}

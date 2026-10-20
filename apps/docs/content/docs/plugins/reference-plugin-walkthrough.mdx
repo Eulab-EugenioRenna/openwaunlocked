@@ -1,0 +1,175 @@
+---
+title: Anatomy of a Plugin
+description: Step-by-step walkthrough of the webhook and Chatwoot reference plugins.
+---
+
+# Anatomy of a Plugin
+
+This page explains the event and lifecycle patterns used by the webhook and Chatwoot integrations in this checkout. Keep the source files as the authority when an integration adds provider-specific behavior.
+
+## The Webhook Plugin
+
+The webhook plugin pushes public WhatsApp events to an external HTTP endpoint. It demonstrates catch-all event forwarding, configuration, bounded delivery, retries, and disposal.
+
+### File Location
+
+```
+integrations/webhook/src/plugin.ts
+```
+
+### Structure Breakdown
+
+```ts
+export default createPlugin({
+  meta: { name: 'webhook' },
+  configSchema: webhookConfigSchema,
+  init: async ({ logger, config, sessionId }) => ({
+    event: async ({ event, payload }) => {
+      // The integration's deliverer applies filtering, queueing and retries.
+      await deliver(event, payload, config, sessionId);
+    },
+    dispose: async () => {
+      // Drain and close the delivery runtime.
+    },
+  }),
+});
+```
+
+### Key Patterns
+
+- **`meta.name`**: Used for logging prefix and config key mapping
+- **`configSchema`**: Zod schema that validates `pluginConfig.webhook` from `wa.config.js`
+- **`init`**: Creates the delivery runtime and returns the plugin's `Hooks` object
+- **`event`**: Receives public events; the integration filters and queues the events selected by its config
+- **`dispose`**: Releases the delivery runtime and drains its queue during shutdown
+
+### Event Forwarding Pattern
+
+```ts
+event: async ({ event, payload }) => {
+  await fetch(config.url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event,
+      data: payload,
+      timestamp: Date.now(),
+    }),
+  });
+});
+```
+
+This is a shape for a simple receiver. The supplied integration adds event filtering, queue capacity, retry policy, request timeouts, and optional durable delivery around the HTTP call.
+
+## The Chatwoot Plugin
+
+The Chatwoot plugin bridges WhatsApp into Chatwoot conversations. It demonstrates bidirectional message handling, contact management, and media mapping.
+
+### File Location
+
+```
+integrations/chatwoot/src/plugin.ts
+```
+
+### Structure Breakdown
+
+```ts
+export default createPlugin({
+  meta: { name: 'chatwoot' },
+  configSchema: chatwootConfigSchema,
+  init: async ({ events, logger, config, client }) => { ... },
+});
+```
+
+### Key Patterns
+
+- **Bidirectional sync**: WhatsApp messages flow into Chatwoot, and Chatwoot agent replies flow back to WhatsApp
+- **Contact mapping**: Phone numbers are mapped to Chatwoot contacts
+- **Media handling**: Media messages are uploaded to Chatwoot as attachments
+
+### Contact Sync Pattern
+
+```ts
+async function getOrCreateContact(phoneNumber: string) {
+  // Check if contact exists in Chatwoot
+  // If not, create a new contact
+  // Return the contact ID
+}
+```
+
+### Message Routing Pattern
+
+```ts
+events.on('message.received', async ({ message }) => {
+  const contactId = await getOrCreateContact(message.from);
+  await createChatwootMessage(contactId, message.body);
+});
+```
+
+## Patterns to Reuse
+
+### 1. Config Validation
+
+Always provide a `configSchema`:
+
+```ts
+const configSchema = z.object({
+  url: z.string().url(),
+  apiKey: z.string().optional(),
+  enabled: z.boolean().default(true),
+});
+```
+
+### 2. Event Subscription
+
+Subscribe to specific events instead of a catch-all subscription:
+
+```ts
+events.on('message.received', handler);
+events.on('client.ready', handler);
+events.on('core.stopping', handler);
+```
+
+### 3. Error Handling
+
+Wrap external calls in try-catch and log errors:
+
+```ts
+try {
+  await fetchExternalAPI(data);
+} catch (error) {
+  logger.error('External API failed', { error: error.message });
+}
+```
+
+### 4. Graceful Degradation
+
+Keep the host alive when an external service fails, but make the retry or persistence policy explicit:
+
+```ts
+events.on('message.received', async ({ message }) => {
+  try {
+    await processMessage(message);
+  } catch (error) {
+    logger.error('Processing failed', { error: error.message });
+    // Add an explicit retry or durable queue if the event must not be lost.
+  }
+});
+```
+
+### 5. Lifecycle Awareness
+
+Handle session state changes:
+
+```ts
+events.on('core.stopping', async () => {
+  // Flush queues, save state, close connections
+  logger.info('Plugin shutting down');
+});
+```
+
+## Related
+
+- **[Plugin getting started](/docs/plugins/getting-started)** - Build your first plugin
+- **[Hooks reference](/docs/plugins/hooks-reference)** - Available hooks
+- **[Plugin security model](/docs/plugins/security-model)** - Security boundaries

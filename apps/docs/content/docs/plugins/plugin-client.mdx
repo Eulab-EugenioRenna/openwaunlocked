@@ -1,0 +1,204 @@
+---
+title: PluginClient Reference
+description: Reference for the PluginClient interface, the transport-agnostic proxy for calling WhatsApp methods from plugins.
+---
+
+# PluginClient Reference
+
+The `PluginClient` is the WhatsApp-method interface provided in `PluginInput`. It is a **host-managed proxy** backed by the connected runtime page. `PluginInput` does not include a browser or CDP handle, and the proxy does not create an isolation boundary around trusted plugin code.
+
+## What PluginClient Is
+
+- A proxy that forwards method calls to `window.WAPI` in the connected runtime
+- Available through `client` in your plugin's `PluginInput`
+- Uses the host's runtime transport without exposing that transport to plugin code
+- Forwards method names through `ask()` without an SDK method allowlist
+
+## What PluginClient Is Not
+
+- A browser or CDP interface. The client proxy does not expose CDP commands, DOM access, cookies, or page injection.
+- Filesystem isolation. `PluginClient` has no filesystem methods; trusted in-process plugin code still has the OS permissions of its host process.
+- A raw WebSocket. It is a managed proxy whose methods are forwarded by the host transport.
+
+## Generic Method Dispatcher
+
+### `ask(method, args?)`
+
+Call a method by name on the connected runtime's `window.WAPI` object. This is the most flexible way to interact with the runtime; `ask()` does not check the requested name against a safe-method list.
+
+```ts
+// Send a text message
+const messageId = await client.ask<string>('sendText', ['1234567890@c.us', 'Hello']);
+
+// Get host number
+const number = await client.ask<string>('getHostNumber');
+
+// Get a contact
+const contact = await client.ask('getContact', ['1234567890@c.us']);
+```
+
+**Parameters:**
+
+- `method`, Method name (e.g., `'sendText'`, `'sendImage'`, `'getHostNumber'`)
+- `args`, Arguments to pass. Can be an array `['arg1', 'arg2']` or a record `{ key: 'value' }`
+
+**Returns:** `Promise<T>`, The method's return value, typed via the generic parameter.
+
+## Event Listener
+
+### `listen(listener, callback)`
+
+The SDK keeps this method for interface compatibility, but the current host does not support direct client listeners. Calling it logs a warning, does not register the callback, and resolves to the placeholder string `'noop'`. Return event hooks from `init()` instead.
+
+```ts
+const result = await client.listen('onMessage', (data) => {
+  console.log('Message received:', data);
+});
+// Current host result: 'noop'; the callback is not registered.
+```
+
+**Parameters:**
+
+- `listener`, Listener name (e.g., `'onMessage'`, `'onAnyMessage'`)
+- `callback`, Callback function receiving the event data
+
+**Returns:** `Promise<string>`, currently `'noop'`. There is no client-level unsubscribe flow; use `events` or named hooks from `PluginInput` for subscriptions.
+
+## Convenience Methods
+
+These typed methods are provided for common operations. They all delegate to `ask()` under the hood.
+
+### `sendText(to, content)`
+
+Send a text message.
+
+```ts
+const messageId = await client.sendText('1234567890@c.us', 'Hello!');
+```
+
+**Returns:** `Promise<string>`, The message ID.
+
+### `sendImage(to, url, filename?, options?)`
+
+Send an image from a URL.
+
+```ts
+const messageId = await client.sendImage(
+  '1234567890@c.us',
+  'https://example.com/image.jpg',
+  'image.jpg',
+  { caption: 'Check this out!' }
+);
+```
+
+### `sendFile(to, base64, filename?, options?)`
+
+Send a file from base64 data.
+
+```ts
+const messageId = await client.sendFile(
+  '1234567890@c.us',
+  'data:application/pdf;base64,JVBERi0...',
+  'document.pdf',
+  { type: 'document', caption: 'Here is the document' }
+);
+```
+
+### `sendLocation(to, lat, lng, text?)`
+
+Send a location.
+
+```ts
+await client.sendLocation('1234567890@c.us', '51.5074', '-0.1278', 'London');
+```
+
+### `sendLinkWithAutoPreview(to, url, text)`
+
+Send a link with an automatic preview.
+
+```ts
+await client.sendLinkWithAutoPreview(
+  '1234567890@c.us',
+  'https://example.com',
+  'Check out this site'
+);
+```
+
+### `reply(to, content, quotedMsgId)`
+
+Reply to a specific message.
+
+```ts
+await client.reply('1234567890@c.us', 'Got it!', originalMessageId);
+```
+
+### `decryptMedia(message)`
+
+Decrypt media from a message object.
+
+```ts
+const mediaDataUrl = await client.decryptMedia(message);
+// mediaDataUrl is a data URL, such as 'data:image/png;base64,...'
+```
+
+Use this for images, voice notes, videos, and documents received in messages.
+
+### `getHostNumber()`
+
+Get the phone number of the connected WhatsApp account.
+
+```ts
+const number = await client.getHostNumber();
+// Returns something like '447700900000'
+```
+
+### `getContact(contactId)`
+
+Get information about a contact.
+
+```ts
+const contact = await client.getContact('1234567890@c.us');
+```
+
+### `getAllContacts()`
+
+Get all contacts.
+
+```ts
+const contacts = await client.getAllContacts();
+```
+
+### `getAllChats()`
+
+Get all chats.
+
+```ts
+const chats = await client.getAllChats();
+```
+
+### `sendSeen(chatId)`
+
+Mark a chat as seen (blue ticks).
+
+```ts
+const success = await client.sendSeen('1234567890@c.us');
+```
+
+**Returns:** `Promise<boolean>`
+
+## Proxy Fallback
+
+Any method name not listed above can be called on the client object. The proxy forwards it to the runtime; availability depends on the connected runtime exposing that method through `window.WAPI`.
+
+```ts
+// These all work via the proxy:
+await client.sendText('123@c.us', 'Hello');
+await client.getHostNumber();
+await client.someOtherMethod('args');
+```
+
+## Related
+
+- **[Hooks reference](/docs/plugins/hooks-reference)**, All available hooks
+- **[PluginInput breakdown](/docs/plugins/plugin-input)**, What your plugin receives
+- **[Plugin getting started](/docs/plugins/getting-started)**, Build your first plugin

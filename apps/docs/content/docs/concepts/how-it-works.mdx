@@ -1,0 +1,129 @@
+---
+title: How it works
+description: Understand which process owns WhatsApp, how sessions become ready, and which integration path to choose.
+---
+
+# How it works
+
+This page explains the processes that operate before your code can send messages or receive events. It also explains which process owns the browser session. Use this information to select Easy API, custom code, or a remote consumer.
+
+## Runtime flow
+
+The same runtime can be reached directly from your app, through the Easy API, or through remote consumers:
+
+```text
+Browser session
+  WhatsApp Web
+    |
+    v
+Runtime bridge injected by open-wa
+    |
+    v
+Client surface
+  actions, listeners, lifecycle, events
+    |
+    +--> Library mode
+    |      your Node.js process calls createClient()
+    |
+    +--> Easy API
+    |      HTTP commands, generated docs, webhooks, MCP
+    |
+    +--> Remote consumers
+           SocketClient, Cloudflare proxy, external services
+```
+
+Every integration reaches the same browser-backed client. The process that starts the browser owns the session; API and remote consumers send commands to that process.
+
+## Browser injection
+
+open-wa starts or connects to a browser page, loads WhatsApp Web, then registers the bridge code inside that page. The bridge gives the Node.js side a controlled way to call WhatsApp Web capabilities and listen for runtime events.
+
+Injection is treated as part of session readiness, not just a setup detail. The runtime checks that the bridge, store, and necessary methods are present before the client is considered ready. If a navigation or reload removes the bridge, the runtime can detect that and run a reinjection path before exposing the session again.
+
+## API/Socket/MCP flow
+
+The public surfaces sit on top of the same client surface:
+
+- **Easy API** receives HTTP requests, checks lifecycle readiness, and calls the matching client method.
+- **SocketClient** connects to a running Easy API instance, sends commands over the remote API path, and listens for runtime events from that process.
+- **MCP** exposes Easy API methods as tools for AI agents. Tool execution is blocked until the session is connected and ready.
+
+That means remote consumers do not own the browser. They talk to the process that owns the browser.
+
+## Lifecycle states
+
+A session usually moves through these operational states:
+
+1. **starting**: the runtime is resolving config, opening the browser, and preparing the page
+2. **QR**: the browser needs authentication and a QR code or link-code flow is available
+3. **authenticated**: WhatsApp Web has accepted the login, but the runtime can still be syncing, injecting, or validating
+4. **ready**: the bridge is usable and client methods can run safely
+5. **stopping**: shutdown has started and listeners, queues, plugins, and browser resources are being drained
+6. **stopped**: the process has released the browser/runtime resources for that session
+
+In code, some of these are emitted through lower-level names such as `STARTING`, `AUTHENTICATING`, `READY`, and `STOPPED`. The docs use the practical names above because they match what operators see during startup and shutdown.
+
+## Session-data storage
+
+Modern session persistence uses a browser profile. Unless you select `ephemeral`, open-wa resolves a `userDataDir` for the browser profile. If you do not provide one, the runtime derives a directory from the session ID. It usually uses `./_IGNORE_<sessionId>` relative to `sessionDataPath` or the working directory.
+
+That profile contains the browser state needed for WhatsApp Web to restore the login after restart. If you provide `userDataDir`, the runtime uses your path instead.
+
+Legacy JSON session restore still exists for migration. In that path, open-wa looks for `<sessionId>.data.json` under `sessionDataPath`, or treats `sessionDataPath` as the full file path if it already ends in `.data.json`. On logout cleanup, that file can be marked `LOGGED OUT` or deleted, and the `userDataDir` can also be removed when configured.
+
+The CLI can also create `.open-wa/chrome-executable-path.json` to cache the resolved Chrome executable path. That file is runtime convenience data, not WhatsApp authentication state.
+
+## Where plugins fit
+
+Plugins sit after the core event emitter and before external integrations:
+
+```text
+Runtime events
+  |
+  v
+HyperEmitter
+  |
+  v
+PluginHost
+  |
+  +--> plugin hooks
+  +--> plugin routes
+  +--> plugin dashboard pages
+  +--> plugin tools
+  |
+  v
+External services
+  webhooks, Chatwoot, S3, custom integrations
+```
+
+This keeps the browser and client lifecycle inside open-wa, while plugins extend what happens around events, routes, tools, and integration output.
+
+## Security-filtered event pipeline
+
+Plugins do not receive the raw internal event bus. `PluginHost` creates an event gateway for each plugin, and that gateway only allows subscriptions to public, non-sensitive events.
+
+Internal launch, patch, persistence, webhook delivery, server, and license events are blocked from plugin event subscriptions. Sensitive authentication events, such as QR and link-code payloads, are also blocked. Plugins can listen to public message, ack, session, group, chat, device, call, UI, label, story, commerce, reaction, core, and error events.
+
+The gateway also does not expose `emit()`. Plugins consume events and provide hooks, routes, pages, or tools, but they do not get a direct write handle to the core event bus.
+
+## The three primary usage modes
+
+<Tabs items={['Library mode', 'Easy API mode', 'Remote-consumer mode']}>
+<Tab value="Library mode">
+    You call `createClient()` directly and own the client in your application process.
+</Tab>
+<Tab value="Easy API mode">
+    You run the runtime as an API surface, then consume it remotely over HTTP and related transports.
+</Tab>
+<Tab value="Remote-consumer mode">
+    You connect to an already running Easy API instance with `SocketClient` instead of embedding the browser automation runtime in your own app.
+</Tab>
+</Tabs>
+
+## What to do next
+
+- Start with **Easy API mode** when you need a running WhatsApp-backed HTTP API quickly.
+- Use **Library mode** when your Node.js app must own browser startup, lifecycle, and event handling directly.
+- Use **Remote-consumer mode** when another service must communicate with an Easy API process that owns the browser session.
+
+For each path, make sure that the session gets to **ready** before you send commands. Keep session data in durable storage when restarts are necessary. Protect all remote surfaces with API keys or proxy tokens.

@@ -1,0 +1,133 @@
+---
+title: Plugin getting started
+description: Build a small JavaScript plugin that listens for a message, serves a health route, and appears in the dashboard.
+---
+
+# Plugin getting started
+
+Use a plugin when you want reusable logic to run inside the Easy API process. A plugin can listen for events, call client methods, mount HTTP routes, add dashboard metadata, or register AI tools.
+
+Plugins are trusted, dynamically imported modules in the host process. The SDK filters the event emitter and exposes a client proxy, but it does not sandbox Node.js code. Review a plugin and its dependencies before loading it; see the [security model](/docs/plugins/security-model) for the boundary that actually exists.
+
+## Install the SDK
+
+```bash
+pnpm add @open-wa/plugin-sdk@5.1.0 hono
+# or
+npm install @open-wa/plugin-sdk@5.1.0 hono
+```
+
+The SDK provides `createPlugin()`, `defineConfig()`, `z`, and the plugin contract types. The starter below imports `Hono` separately because the route is a regular Hono app.
+
+## Build the starter plugin
+
+Create `plugins/greeting-bot.mjs` with this JavaScript module:
+
+```js
+import { Hono } from 'hono';
+import { createPlugin, defineConfig } from '@open-wa/plugin-sdk';
+
+const configSchema = defineConfig((zod) => zod.object({
+  greeting: zod.string().default('👋 Welcome!'),
+  triggerWord: zod.string().default('Hi'),
+}));
+
+function getTextMessage(message) {
+  if (!message || typeof message !== 'object') return null;
+
+  const body = message.body;
+  const from = message.from;
+  if (typeof body !== 'string' || typeof from !== 'string') return null;
+
+  return { body, from };
+}
+
+export default createPlugin({
+  meta: {
+    name: 'greeting-bot',
+    version: '1.0.0',
+    description: 'Replies to a configured greeting word',
+  },
+  configSchema,
+
+  init: async ({ client, logger, config }) => ({
+    'message.received': async ({ message }) => {
+      const msg = getTextMessage(message);
+      if (!msg || msg.body !== config.triggerWord) return;
+
+      await client.sendText(msg.from, config.greeting);
+      logger.info('Sent greeting', { from: msg.from });
+    },
+
+    routes: () => {
+      const app = new Hono();
+      app.get('/health', (c) => c.json({ ok: true, plugin: 'greeting-bot' }));
+      return app;
+    },
+
+    pages: [{
+      path: '/',
+      title: 'Greeting bot',
+      icon: '👋',
+      description: 'The plugin is loaded and its health route is available.',
+    }],
+  }),
+});
+```
+
+The important shape is `init: async (...) => ({ ... })`: event handlers, `routes`, `pages`, tools, and `dispose` are returned from `init`. They are not sibling options on `createPlugin()`.
+
+## Configure the plugin
+
+Create `wa.config.mjs` beside the `plugins` directory. The `plugins` entry is loaded with Node's dynamic `import()`, so the file must contain JavaScript that Node can execute. The loader does not compile TypeScript.
+
+```js
+export default {
+  sessionId: 'my-session',
+  plugins: [
+    new URL('./plugins/greeting-bot.mjs', import.meta.url).href,
+  ],
+  pluginConfig: {
+    'greeting-bot': {
+      greeting: 'Hello! Welcome to our service.',
+      triggerWord: 'hello',
+    },
+  },
+};
+```
+
+The `pluginConfig` key is `meta.name` (`greeting-bot`), not the package name or file path. The loader accepts npm package names and importable local references, and it uses a module's default export or named `plugin` export.
+
+## Run it
+
+Run the CLI from the directory containing `wa.config.mjs`:
+
+```bash
+npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id my-session --host 127.0.0.1 --port 8080
+```
+
+This binds the API to loopback, so it is reachable only from this machine. If you choose another host, protect `/api` with `--api-key "your-secure-key"` and add a guard to plugin routes before exposing them. See [HTTP routes in plugins](/docs/plugins/hono-routes).
+
+After the session is connected, send `hello` from another WhatsApp account. The plugin sends `Hello! Welcome to our service.` back to the sender.
+
+The plugin's health endpoint is [http://localhost:8080/plugins/greeting-bot/health](http://localhost:8080/plugins/greeting-bot/health).
+
+Open the [local dashboard](http://localhost:8080/dashboard/) and select Greeting bot in the Plugins sidebar. It opens the standard plugin status view; the declaration supplies metadata for that view, not a custom dashboard component.
+
+## If the plugin does not load
+
+- Confirm the CLI loaded the intended config file. Run with `--config ./wa.config.mjs` when in doubt.
+- Confirm the plugin reference points to JavaScript that Node can import, such as `.mjs` or compiled `.js`.
+- Confirm the module exports `default createPlugin(...)` or a named `plugin` export.
+- Confirm `meta.name` is present and that `pluginConfig` uses the same name.
+- Check for `plugin_loaded`, `plugin_registered`, `plugin_config_invalid`, or `plugin_load_error` in the Easy API logs.
+
+If a hook never fires, check the exact hook name against the [Hooks reference](/docs/plugins/hooks-reference). The reference marks hooks that plugins can subscribe to.
+
+## Related
+
+- **[Hooks reference](/docs/plugins/hooks-reference)**: Complete hooks API
+- **[PluginClient reference](/docs/plugins/plugin-client)**: Available client methods
+- **[PluginInput breakdown](/docs/plugins/plugin-input)**: What `init()` receives
+- **[Plugin security model](/docs/plugins/security-model)**: Runtime boundary and restrictions
+- **[Publishing a plugin](/docs/plugins/publishing)**: How to share your plugin

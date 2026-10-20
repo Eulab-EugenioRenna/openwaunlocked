@@ -1,0 +1,56 @@
+{
+  "name": "@open-wa/logger",
+  "author": "Eulab",
+  "version": "5.6.6",
+  "description": "Centralized logging and terminal UI for open-wa v5",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.cts",
+  "scripts": {
+    "build": "tsdown src/index.ts src/browser.ts --format cjs",
+    "dev": "tsdown src/index.ts src/browser.ts --format cjs --watch",
+    "lint": "oxlint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "chalk": "^6.0.1",
+    "figlet": "^1.11.4",
+    "log-update": "^8.0.0",
+    "ora": "^9.4.1",
+    "winston": "catalog:",
+    "winston-transport": "^4.9.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "exports": {
+    ".": {
+      "browser": "./dist/browser.cjs",
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.cts",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "browser": "./dist/browser.cjs",
+        "types": "./dist/index.d.cts",
+        "require": "./dist/index.cjs",
+        "default": "./dist/index.cjs"
+      }
+    }
+  }
+}

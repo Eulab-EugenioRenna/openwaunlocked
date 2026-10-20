@@ -1,0 +1,169 @@
+import type { Client } from '../Client';
+import type {
+  ChatId,
+  GroupId,
+  ContactId,
+  Contact,
+  GroupInfo,
+  Chat,
+  DataURL,
+} from '@open-wa/schema';
+import {
+  implementMethod,
+  setGroupTitle as setGroupTitleSchema,
+  setGroupDescription as setGroupDescriptionSchema,
+  getGroupInfo as getGroupInfoSchema,
+} from '@open-wa/schema';
+
+declare const WAPI: {
+  createGroup: (groupName: string, contactId: string | string[]) => Promise<any>;
+  addParticipant: (groupId: string, contactId: string) => Promise<boolean | string>;
+  removeParticipant: (groupId: string, contactId: string) => Promise<boolean | string>;
+  promoteParticipant: (groupId: string, contactId: string) => Promise<boolean | string>;
+  demoteParticipant: (groupId: string, contactId: string) => Promise<boolean | string>;
+  setGroupTitle: (groupId: string, title: string) => Promise<boolean>;
+  setGroupDescription: (groupId: string, description: string) => Promise<boolean>;
+  setGroupIcon: (groupId: string, imgData: string) => Promise<boolean>;
+  getGroupInfo: (groupId: string) => Promise<GroupInfo | string | null>;
+  getGroupParticipantIDs: (groupId: string) => Promise<string[]>;
+  getContact: (contactId: string) => Contact | null | Promise<Contact | null>;
+  getGroupInviteLink: (groupId: string) => Promise<string>;
+  revokeGroupInviteLink: (groupId: string) => Promise<string | boolean>;
+  joinGroupViaLink: (link: string, returnChatObj?: boolean) => Promise<string | boolean | number | Chat>;
+  leaveGroup: (groupId: string) => Promise<any>;
+};
+
+export interface GroupMethods {
+  createGroup(name: string, participants: ContactId | ContactId[]): Promise<{ gid: GroupId } | null>;
+  addParticipant(groupId: GroupId, participant: ContactId): Promise<boolean>;
+  removeParticipant(groupId: GroupId, participant: ContactId): Promise<boolean>;
+  promoteParticipant(groupId: GroupId, participant: ContactId): Promise<boolean>;
+  demoteParticipant(groupId: GroupId, participant: ContactId): Promise<boolean>;
+  setGroupTitle: ReturnType<typeof implementMethod<typeof setGroupTitleSchema>>;
+  setGroupDescription: ReturnType<typeof implementMethod<typeof setGroupDescriptionSchema>>;
+  setGroupIcon(groupId: GroupId, image: DataURL): Promise<boolean>;
+  getGroupInfo: ReturnType<typeof implementMethod<typeof getGroupInfoSchema>>;
+  getGroupMembers(groupId: GroupId): Promise<Contact[]>;
+  getGroupMembersId(groupId: GroupId): Promise<ContactId[]>;
+  getGroupInviteLink(groupId: GroupId): Promise<string>;
+  revokeGroupInviteLink(groupId: GroupId): Promise<string | boolean>;
+  joinGroupViaLink(inviteLink: string, returnChatObj?: boolean): Promise<GroupId | boolean | number | Chat>;
+  leaveGroup(groupId: GroupId): Promise<boolean>;
+}
+
+export function groupMethods(client: Client): GroupMethods {
+  const evaluate = client.evaluate.bind(client);
+  
+  return {
+    async createGroup(name: string, participants: ContactId | ContactId[]): Promise<{ gid: GroupId } | null> {
+      return evaluate(
+        ({ name, participants }) => WAPI.createGroup(name, participants),
+        { name, participants }
+      );
+    },
+    
+    async addParticipant(groupId: GroupId, participant: ContactId): Promise<boolean> {
+      const result = await evaluate(
+        ({ groupId, participant }) => WAPI.addParticipant(groupId, participant),
+        { groupId, participant }
+      );
+      return result === true;
+    },
+    
+    async removeParticipant(groupId: GroupId, participant: ContactId): Promise<boolean> {
+      const result = await evaluate(
+        ({ groupId, participant }) => WAPI.removeParticipant(groupId, participant),
+        { groupId, participant }
+      );
+      return result === true;
+    },
+    
+    async promoteParticipant(groupId: GroupId, participant: ContactId): Promise<boolean> {
+      const result = await evaluate(
+        ({ groupId, participant }) => WAPI.promoteParticipant(groupId, participant),
+        { groupId, participant }
+      );
+      return result === true;
+    },
+    
+    async demoteParticipant(groupId: GroupId, participant: ContactId): Promise<boolean> {
+      const result = await evaluate(
+        ({ groupId, participant }) => WAPI.demoteParticipant(groupId, participant),
+        { groupId, participant }
+      );
+      return result === true;
+    },
+    
+    setGroupTitle: implementMethod(setGroupTitleSchema, ({ groupId, title }) =>
+      evaluate(
+        ({ groupId, title }) => WAPI.setGroupTitle(groupId, title),
+        { groupId, title }
+      )),
+
+    setGroupDescription: implementMethod(setGroupDescriptionSchema, ({ groupId, description }) =>
+      evaluate(
+        ({ groupId, description }) => WAPI.setGroupDescription(groupId, description),
+        { groupId, description }
+      )),
+    
+    async setGroupIcon(groupId: GroupId, image: DataURL): Promise<boolean> {
+      return evaluate(
+        ({ groupId, image }) => WAPI.setGroupIcon(groupId, image),
+        { groupId, image }
+      );
+    },
+    
+    getGroupInfo: implementMethod(getGroupInfoSchema, ({ groupId }) =>
+      evaluate(({ groupId }) => WAPI.getGroupInfo(groupId), { groupId })),
+    
+    async getGroupMembers(groupId: GroupId): Promise<Contact[]> {
+      // Resolve in the browser so a group needs one transport round trip,
+      // rather than a separate evaluate call for every participant.
+      return evaluate(async ({ groupId }) => {
+        const ids = await WAPI.getGroupParticipantIDs(groupId);
+        if (!Array.isArray(ids)) throw new Error(`Could not load members of group ${groupId}`);
+        return Promise.all(ids.map(async (id) => {
+          const contact = await WAPI.getContact(id);
+          if (!contact) throw new Error(`Could not load contact ${id} in group ${groupId}`);
+          return contact;
+        }));
+      }, { groupId });
+    },
+
+    async getGroupMembersId(groupId: GroupId): Promise<ContactId[]> {
+      return evaluate(
+        ({ groupId }) => WAPI.getGroupParticipantIDs(groupId),
+        { groupId }
+      ) as Promise<ContactId[]>;
+    },
+    
+    async getGroupInviteLink(groupId: GroupId): Promise<string> {
+      return evaluate(
+        ({ groupId }) => WAPI.getGroupInviteLink(groupId),
+        { groupId }
+      );
+    },
+    
+    async revokeGroupInviteLink(groupId: GroupId): Promise<string | boolean> {
+      return evaluate(
+        ({ groupId }) => WAPI.revokeGroupInviteLink(groupId),
+        { groupId }
+      );
+    },
+    
+    async joinGroupViaLink(inviteLink: string, returnChatObj = false): Promise<GroupId | boolean | number | Chat> {
+      return evaluate(
+        ({ inviteLink, returnChatObj }) => WAPI.joinGroupViaLink(inviteLink, returnChatObj),
+        { inviteLink, returnChatObj }
+      ) as Promise<GroupId | boolean | number | Chat>;
+    },
+    
+    async leaveGroup(groupId: GroupId): Promise<boolean> {
+      const result = await evaluate(
+        ({ groupId }) => WAPI.leaveGroup(groupId),
+        { groupId }
+      );
+      return !!result;
+    },
+  };
+}

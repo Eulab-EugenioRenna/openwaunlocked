@@ -1,0 +1,62 @@
+---
+title: Refresh a Live Session
+description: Refresh local patches without restarting the browser process.
+---
+
+# Refresh a live session
+
+Choose **Refresh patches** on the dashboard's Health page to reload the local patches and rebuild the WhatsApp page. The browser process, Node process, API server, client object, host listeners, and session persistence lease stay alive. **Refresh status** only reloads the health information displayed in the dashboard.
+
+**Warning:** Refreshing reloads WhatsApp. You may miss messages during the refresh.
+
+Refresh rebuilds the page even when the local patch tag hasn't changed. A page reload temporarily interrupts WhatsApp operations and ends document-owned call media; attach fresh media after the session is ready. Refresh does not pause application calls, native message storage, or receipts, and does not wait for pending operations before reloading. Operations interrupted by the page reload aren't replayed automatically.
+
+## Local patches and Open access
+
+The Eulab branch loads patches from local files. It does not download license
+payloads, activate keys or contact an external validation service. API access
+is Open; a refresh still depends on a ready WhatsApp session and valid local
+patch artifacts.
+
+## Use the client
+
+The in-process `Client`, HTTP/SSE `SocketClient`, and `TunnelSocketClient` expose the same controls:
+
+```ts
+const result = await client.refresh();
+
+const status = await client.getRefreshStatus();
+```
+
+To accept the work without waiting for installation:
+
+```ts
+const { operationId } = await client.requestRefresh();
+const status = await client.getRefreshStatus();
+```
+
+Inspect `phase`, `running`, `runtimeUsable`, `restored`, and `error`. `phase: 'ready'` means the replacement completed. `phase: 'failed', restored: true` means a runtime installation failed but the previous public patches were restored. `runtimeUsable: false` means the document runtime is unavailable.
+
+If `phase` is `needs_auth`, pair the session using its existing QR journey. The accepted operation retains ownership while waiting and resumes installation after pairing. Read status again to follow that continuation; `refresh()` can return the actionable pairing state before the background operation finishes.
+
+## Use the HTTP controls
+
+Both routes use the configured API key policy and remain available while WAPI is being restored. Supply `X-API-Key` when an API key is configured.
+
+| Method | Route | Body | Result |
+| --- | --- | --- | --- |
+| `POST` | `/api/session/refresh` | `{}` | `202 { "operationId": "…" }` |
+| `GET` | `/api/session/refresh` | None | Current operation snapshot |
+
+Acceptance isn't installation success. Follow the status route or `session.refresh.progress` on the existing event stream. Closing the requesting dashboard or client doesn't cancel the accepted server operation.
+
+Repeated requests with the same intent return the current operation ID. Conflicting refresh requests receive HTTP 409, invalid input receives 400, and an unavailable runtime owner receives 503.
+
+## When refresh fails
+
+Missing or invalid local patches can prevent runtime installation. Inspect the
+operation error and runtime state before continuing. Refresh does not replay
+interrupted operations. Keep session data and local patch sources intact.
+
+Generate injected code through the local patch pipeline. Do not edit generated
+assets or the immutable `wapi.js` by hand.

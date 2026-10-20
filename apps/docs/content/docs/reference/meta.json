@@ -1,0 +1,15 @@
+{
+  "title": "API Reference",
+  "icon": "FileCode",
+  "pages": [
+    "index",
+    "create",
+    "workspaces",
+    "client",
+    "messaging",
+    "events",
+    "hyperemitter",
+    "event-contracts",
+    "core"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "@open-wa/monorepo",
+  "version": "5.0.0",
+  "private": true,
+  "description": "The most reliable WhatsApp automation library - v5 Monorepo",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Eulab",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "integrations/*",
+    "sdks/*",
+    "dev/test"
+  ],
+  "scripts": {
+    "build": "turbo build --filter='!docs'",
+    "dev": "turbo dev --concurrency 100",
+    "test": "turbo test",
+    "test:startup": "turbo build --filter=@open-wa/cli... --output-logs=errors-only && node --test tools/regression/runtime-startup.test.mjs",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "clean": "turbo clean && rimraf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "typecheck": "turbo typecheck",
+    "check:effect-contracts": "pnpm build && pnpm --filter './packages/runtime-*' test && pnpm --filter './packages/runtime-*' typecheck && pnpm --filter @open-wa/integration-webhook test && pnpm --filter @open-wa/integration-webhook typecheck && pnpm --filter @open-wa/integration-s3 test && pnpm --filter @open-wa/integration-s3 typecheck && pnpm --filter @open-wa/integration-chatwoot test && pnpm --filter @open-wa/integration-chatwoot typecheck && pnpm --filter @open-wa/client test && pnpm --filter @open-wa/client typecheck && pnpm --filter @open-wa/config typecheck && pnpm --filter @open-wa/core exec vitest run test/unit/bootstrapContract.test.ts test/unit/sessionReadinessTruth.test.ts && pnpm --filter @open-wa/config exec vitest run src/__tests__/schema.test.ts && pnpm --filter @open-wa/wa-automate exec vitest run src/__tests__/cli-runtime.test.ts && node tools/check-portable-imports.mjs && node tools/check-effect-pins.mjs && node tools/check-effect-evidence.mjs && node tools/bench-effect-startup.mjs",
+    "bench:runtime:real": "node tools/bench-real-runtime.mjs",
+    "bench:effect:replacements": "node tools/bench-effect-replacements.mjs",
+    "bump": "bumpy add",
+    "version-packages": "bumpy version",
+    "repomix": "npx repomix@latest",
+    "publish-packages": "bumpy publish",
+    "release-image": "node tools/release-image.js",
+    "dev:patches": "node dev/patches/build.mjs",
+    "test:dev": "node --test dev/patches/test.mjs tools/regression/offline-development.test.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@varlock/bumpy": "1.18.1",
+    "node-emoji": "2.2.0",
+    "oxlint": "^1.85.0",
+    "prettier": "catalog:",
+    "rimraf": "^6.1.3",
+    "syncpack": "^15.3.3",
+    "ts-morph": "^28.0.0",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.15",
+    "turbo": "^2.11.4",
+    "typescript": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.21.1"
+  },
+  "packageManager": "pnpm@11.25.0",
+  "dependencies": {
+    "@elastic/elasticsearch": "catalog:"
+  }
+}

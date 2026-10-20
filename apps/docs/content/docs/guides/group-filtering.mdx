@@ -1,0 +1,69 @@
+---
+title: Group vs DM Handling
+description: Use message fields and stored group IDs to route group and direct-message automation.
+---
+
+# Group vs DM Handling
+
+Use `isGroupMsg` to distinguish group traffic from direct messages, then use
+the complete `chatId` value for routing. Do not rebuild a group ID from its
+name or assume every incoming identifier has the same format. See the
+[Chat ID guide](/docs/guides/chatid-primer) for the accepted input forms.
+
+```ts
+client.onMessage(async (message) => {
+  if (message.isGroupMsg) {
+    console.log('Group message:', message.chatId);
+    return;
+  }
+
+  console.log('Direct message:', message.chatId);
+});
+```
+
+## Allow or block groups
+
+Populate the set with group IDs copied from a lookup or message event. Keeping
+the exact returned value avoids assumptions about the identifier suffix.
+
+```ts
+const allowedGroups = new Set([
+  '447123456789-1445627445@g.us',
+]);
+
+client.onMessage(async (message) => {
+  if (message.isGroupMsg && !allowedGroups.has(message.chatId)) return;
+  await handleMessage(message);
+});
+```
+
+For a blocklist, replace the condition with
+`message.isGroupMsg && blockedGroups.has(message.chatId)`.
+
+## Sender and administrator rules
+
+In group messages, `author` identifies the participant when WhatsApp provides
+it. Compare full contact IDs, not a bare number stripped from the ID. The
+current embedded `Client` does not expose `getGroupAdmins`; the generated Easy
+API has a [`getGroupAdmins` method](/docs/reference/client/groups#getgroupadmins).
+If your workflow uses that API, compare its returned contact IDs with
+`message.author` and handle missing authors or lookup failures explicitly.
+
+```ts
+const adminsByGroup = new Map<string, Set<string>>();
+
+client.onMessage(async (message) => {
+  if (!message.isGroupMsg || !message.author) return;
+
+  const adminIds = adminsByGroup.get(message.chatId);
+  if (adminIds?.has(message.author)) return;
+
+  await moderate(message);
+});
+```
+
+This example uses application-owned admin data. Refresh it from the supported
+Easy API method when permissions change; do not treat a cached list as current
+membership state. See the [groups guide](/docs/guides/groups) for method
+availability and the [event reference](/docs/reference/events) for group
+membership events.

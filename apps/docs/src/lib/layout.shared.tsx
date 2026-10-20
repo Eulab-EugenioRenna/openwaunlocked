@@ -1,0 +1,37 @@
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import { DOCS_PATHS, REPO_URL } from '@/lib/site';
+import { OpenAccessButton } from '@/components/licensing';
+
+export function baseOptions(): BaseLayoutProps {
+  return {
+    nav: {
+      transparentMode: 'top',
+      title: (
+        <span className="site-wordmark flex items-center gap-2 font-semibold tracking-tight">
+          <span className="site-brand-mark flex size-7 items-center justify-center rounded-md bg-[#214be6] text-white">
+            <img src="/logo.png" alt="open-wa logo" className="size-4 object-contain" />
+          </span>
+          <span>Eulab Open</span>
+        </span>
+      ),
+      url: '/',
+    },
+    links: [
+      { type: 'custom', secondary: true, children: <OpenAccessButton className="license-header-button" /> },
+      { text: 'Docs', url: DOCS_PATHS.overview },
+      { text: 'API reference', url: DOCS_PATHS.referenceClient },
+      { text: 'Integrations', url: DOCS_PATHS.integrationsOverview },
+      { text: 'Changelog', url: DOCS_PATHS.changelog },
+      { text: 'Blog', url: DOCS_PATHS.blog, active: 'nested-url' },
+      {
+        text: 'Resources', type: 'menu', items: [
+          { text: 'API Explorer', url: DOCS_PATHS.apiExplorer },
+          { text: 'Open access', url: DOCS_PATHS.licensedFeatures },
+          { text: 'GitHub', url: REPO_URL, external: true },
+          { text: 'Discord', url: 'https://discord.gg/dpan7EYE3t', external: true },
+        ],
+      },
+    ],
+    githubUrl: REPO_URL,
+  };
+}

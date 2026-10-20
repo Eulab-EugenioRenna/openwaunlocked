@@ -1,0 +1,416 @@
+---
+title: "Example: OpenAI moderation"
+description: Check incoming group messages with OpenAI moderation and choose how to handle flagged results.
+---
+
+# Example: OpenAI moderation
+
+This plugin checks incoming group-message text with the OpenAI Moderation API. Depending on its configuration, it can delete a flagged message when the connected account has permission, reply to the sender, and log the result. The `message.send.before` hook is declared by the SDK but is not active in the host, so apply any outgoing policy before calling the send method.
+
+## Scan incoming messages
+
+```ts
+function getModeratableMessage(message: unknown) {
+  if (!message || typeof message !== 'object') return null;
+
+  const candidate = message as {
+    body?: unknown;
+    from?: unknown;
+    chatId?: unknown;
+    id?: unknown;
+    isGroupMsg?: unknown;
+    sender?: { id?: string };
+  };
+  if (candidate.isGroupMsg !== true) return null;
+  if (typeof candidate.body !== 'string' || typeof candidate.from !== 'string') return null;
+  if (typeof candidate.chatId !== 'string' || typeof candidate.id !== 'string') return null;
+
+  return {
+    body: candidate.body,
+    from: candidate.from,
+    chatId: candidate.chatId,
+    id: candidate.id,
+    sender: candidate.sender,
+  };
+}
+
+events.on('message.received', async ({ message }) => {
+  const msg = getModeratableMessage(message);
+
+  if (!msg) return;
+
+  const result = await checkModeration(msg.body, config.apiKey);
+
+  if (result.flagged) {
+    // Take action
+  }
+});
+```
+
+## Call OpenAI moderation
+
+```ts
+type ModerationResult = {
+  flagged: boolean;
+  categories: Record<string, boolean>;
+};
+
+async function checkModeration(text: string, apiKey: string) {
+  const response = await fetch('https://api.openai.com/v1/moderations', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ input: text }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Moderation API error: ${response.status}`);
+  }
+
+  const data = await response.json() as { results?: ModerationResult[] };
+  const [result] = data.results ?? [];
+
+  if (!result) {
+    throw new Error('Moderation API response did not include a result');
+  }
+
+  return result;
+}
+```
+
+## Check messages before sending
+
+The host does not call the declared `message.send.before` hook, so it cannot block arbitrary sends. Apply moderation before calling `client.sendText()` in your own workflow, or put the policy in the service that owns outgoing sends:
+
+```ts
+async function sendModerated(client, chatId, content, logger, apiKey) {
+  const result = await checkModeration(content, apiKey);
+  if (result.flagged) {
+    logger.warn('Outgoing message blocked by moderation', { chatId });
+    return { sent: false, reason: 'flagged' };
+  }
+
+  const messageId = await client.sendText(chatId, content);
+  return { sent: true, messageId };
+}
+```
+
+## Act on flagged incoming messages
+
+The hook runs after a message arrives. You can delete it when the connected account has permission, reply to the sender, or record the result:
+
+```ts
+if (result.flagged) {
+  // Delete the message if the connected account is a group admin
+  await client.deleteMessage(msg.chatId, msg.id);
+
+  // Warn the sender
+  await client.reply(
+    msg.from,
+    'Your message was flagged for inappropriate content.',
+    msg.id
+  );
+
+  // Log the action
+  logger.warn('Message flagged and deleted', {
+    from: msg.from,
+    categories: result.categories,
+  });
+}
+```
+
+## Group-only moderation
+
+Detect group messages and skip direct messages:
+
+```ts
+events.on('message.received', async ({ message }) => {
+  const msg = getModeratableMessage(message);
+
+  if (!msg) return;
+
+  // Check if this group is in the moderation list
+  if (config.groups.length > 0 && !config.groups.includes(msg.from)) {
+    return;
+  }
+
+  // Moderate the message
+});
+```
+
+## Exempt admins
+
+```ts
+const exemptAdmins = new Set(config.adminIds || []);
+
+events.on('message.received', async ({ message }) => {
+  const msg = getModeratableMessage(message);
+
+  if (!msg) return;
+
+  if (exemptAdmins.has(msg.sender?.id)) {
+    return; // Admin messages are exempt
+  }
+});
+```
+
+## Delete flagged messages
+
+```ts
+// Delete the message
+if (msg.chatId && msg.id) {
+  await client.deleteMessage(msg.chatId, msg.id);
+}
+```
+
+Notes:
+- The bot must be a group admin to delete messages
+- There can be a time limit on how old a message can be deleted
+- Incoming messages can have different deletion behavior than sent messages
+
+## Log actions
+
+```ts
+logger.warn('Moderation action taken', {
+  from: msg.from,
+  groupId: msg.chatId,
+  flagged: result.flagged,
+  categories: result.categories,
+  action: 'deleted',
+});
+```
+
+## Configuration schema
+
+```ts
+const configSchema = z.object({
+  apiKey: z.string().min(1, 'OpenAI API key is required'),
+  groups: z.array(z.string()).default([]), // Empty = all groups
+  adminIds: z.array(z.string()).default([]), // Exempt admins
+  actions: z.object({
+    delete: z.boolean().default(true),
+    warn: z.boolean().default(true),
+    log: z.boolean().default(true),
+  }).default({}),
+});
+```
+
+## Full code example
+
+```ts
+// moderation.ts
+import { createPlugin, z } from '@open-wa/plugin-sdk';
+
+type ModerationResult = {
+  flagged: boolean;
+  categories: Record<string, boolean>;
+};
+
+type ModeratableMessage = {
+  body: string;
+  from: string;
+  chatId: string;
+  id: string;
+  sender?: { id?: string };
+};
+
+function getModeratableMessage(message: unknown): ModeratableMessage | null {
+  if (!message || typeof message !== 'object') return null;
+
+  const candidate = message as {
+    body?: unknown;
+    from?: unknown;
+    chatId?: unknown;
+    isGroupMsg?: unknown;
+    id?: unknown;
+    sender?: { id?: string };
+  };
+
+  if (candidate.isGroupMsg !== true) return null;
+  if (typeof candidate.body !== 'string' || candidate.body.length === 0) return null;
+  if (typeof candidate.from !== 'string') return null;
+  if (typeof candidate.chatId !== 'string' || typeof candidate.id !== 'string') return null;
+
+  return {
+    body: candidate.body,
+    from: candidate.from,
+    chatId: candidate.chatId,
+    id: candidate.id,
+    sender: candidate.sender,
+  };
+}
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+const configSchema = z.object({
+  apiKey: z.string().min(1, 'OpenAI API key is required'),
+  groups: z.array(z.string()).default([]),
+  adminIds: z.array(z.string()).default([]),
+  actions: z.object({
+    delete: z.boolean().default(true),
+    warn: z.boolean().default(true),
+    log: z.boolean().default(true),
+  }).default({}),
+});
+
+async function checkModeration(text: string, apiKey: string): Promise<ModerationResult> {
+  const response = await fetch('https://api.openai.com/v1/moderations', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ input: text }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Moderation API error: ${response.status}`);
+  }
+
+  const data = await response.json() as { results?: ModerationResult[] };
+  const [result] = data.results ?? [];
+
+  if (!result) {
+    throw new Error('Moderation API response did not include a result');
+  }
+
+  return result;
+}
+
+export default createPlugin({
+  meta: { name: 'openai-moderation' },
+  configSchema,
+  init: async ({ events, logger, config, client }) => {
+    logger.info('OpenAI Moderation loaded', {
+      groups: config.groups.length > 0 ? config.groups : 'all',
+    });
+
+    const exemptAdmins = new Set(config.adminIds);
+
+    events.on('message.received', async ({ message }) => {
+      const msg = getModeratableMessage(message);
+
+      if (!msg) return;
+
+      // Skip exempt admins
+      if (exemptAdmins.has(msg.sender?.id)) return;
+
+      // Check group filter
+      if (config.groups.length > 0 && !config.groups.includes(msg.from)) return;
+
+      try {
+        const result = await checkModeration(msg.body, config.apiKey);
+
+        if (result.flagged) {
+          if (config.actions.log) {
+            logger.warn('Message flagged', {
+              from: msg.from,
+              categories: result.categories,
+            });
+          }
+
+          if (config.actions.delete) {
+            try {
+              await client.deleteMessage(msg.chatId, msg.id);
+              logger.info('Message deleted');
+            } catch (error) {
+              logger.error('Failed to delete message', { error: errorMessage(error) });
+            }
+          }
+
+          if (config.actions.warn) {
+            await client.reply(
+              msg.from,
+              'Your message was flagged for inappropriate content.',
+              msg.id
+            );
+          }
+        }
+      } catch (error) {
+        logger.error('Moderation check failed', { error: errorMessage(error) });
+        // Continue processing. Do not treat API errors as moderation decisions.
+      }
+    });
+  },
+});
+```
+
+## Load the plugin
+
+Using the TypeScript setup in [Publishing a plugin](/docs/plugins/publishing), compile `src/moderation.ts` to `dist/moderation.js`. Save this configuration as `wa.config.mjs` beside `src` and `dist`:
+
+```js
+// wa.config.mjs
+export default {
+  plugins: [
+    new URL('./dist/moderation.js', import.meta.url).href,
+  ],
+  pluginConfig: {
+    'openai-moderation': {
+      apiKey: process.env.OPENAI_API_KEY,
+      groups: ['123456789@g.us'], // Specific group IDs
+      adminIds: ['1234567890@c.us'], // Exempt admin IDs
+      actions: {
+        delete: true,
+        warn: true,
+        log: true,
+      },
+    },
+  },
+};
+```
+
+From the directory containing `wa.config.mjs`, start the session with:
+
+```bash
+npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id moderation-example --host 127.0.0.1 --port 8080
+```
+
+## Bound concurrent moderation requests
+
+### Concurrent calls
+
+The moderation API is called for every message. If your group has high volume:
+
+```ts
+import PQueue from 'p-queue';
+const queue = new PQueue({ concurrency: 5 });
+
+events.on('message.received', async ({ message }) => {
+  const msg = getModeratableMessage(message);
+  if (!msg) return;
+  await queue.add(async () => {
+    const result = await checkModeration(msg.body, config.apiKey);
+    // ... handle result ...
+  }).catch(error => {
+    logger.error('Moderation request failed', { error: error.message });
+  });
+});
+```
+
+### Caching
+
+Cache recent moderation results for identical messages:
+
+```ts
+const cache = new Map<string, { flagged: boolean; timestamp: number }>();
+const CACHE_TTL = 60 * 1000; // 1 minute
+
+function getCached(text: string) {
+  const entry = cache.get(text);
+  if (entry && Date.now() - entry.timestamp < CACHE_TTL) {
+    return entry;
+  }
+  return null;
+}
+```
+
+## Related
+
+- **[Plugin getting started](/docs/plugins/getting-started)**, build your first plugin
+- **[Plugin security model](/docs/plugins/security-model)**, security boundaries
+- **[External API patterns](/docs/plugins/external-api-patterns)**, calling external services

@@ -1,0 +1,173 @@
+---
+title: "Client API"
+seoTitle: "WhatsApp Client API reference for Node.js | Eulab Open"
+description: "Client methods, return values, and examples."
+icon: "BookOpen"
+---
+
+# Client API
+
+<ClientReference />
+
+<details>
+<summary>Plain-text method index</summary>
+
+
+| Method | Namespace | Description | Access |
+| --- | --- | --- | --- |
+| [`acceptCall`](/docs/reference/client/client#acceptcall) | `calls` | Prepare media and accept this incoming call. | Open |
+| [`addLabel`](/docs/reference/client/client#addlabel) | `labels` | Add label to chat | Open |
+| [`addParticipant`](/docs/reference/client/client#addparticipant) | `groups` | Add participant to group | Open |
+| [`approveGroupJoinRequest`](/docs/reference/client/client#approvegroupjoinrequest) | `groups` | Approve group join request | Open |
+| [`archiveChat`](/docs/reference/client/client#archivechat) | `chats` | Archive a chat | Open |
+| [`blockContact`](/docs/reference/client/client#blockcontact) | `contacts` | Block a contact | Open |
+| [`cancelEvent`](/docs/reference/client/client#cancelevent) | `events` | Cancel an event created by this account using WhatsApp’s encrypted event edit action. | Open |
+| [`checkNumberStatus`](/docs/reference/client/client#checknumberstatus) | `contacts` | Check if number is on WhatsApp | Open |
+| [`checkReadReceipts`](/docs/reference/client/client#checkreadreceipts) | `contacts` | Check read receipts setting | Open |
+| [`clearCallAudio`](/docs/reference/client/client#clearcallaudio) | `calls` | Discard queued outgoing audio. | Open |
+| [`clearChat`](/docs/reference/client/client#clearchat) | `chats` | Clear chat history | Open |
+| [`createGroup`](/docs/reference/client/client#creategroup) | `groups` | Create new group | Open |
+| [`decryptMedia`](/docs/reference/client/client#decryptmedia) | `media` | Decrypts media from a message | Open |
+| [`deleteAllStatus`](/docs/reference/client/client#deleteallstatus) | `status` | Delete all statuses | Open |
+| [`deleteChat`](/docs/reference/client/client#deletechat) | `chats` | Delete a chat | Open |
+| [`deleteMessage`](/docs/reference/client/client#deletemessage) | `messages` | Deletes a message | Open |
+| [`deleteStatus`](/docs/reference/client/client#deletestatus) | `status` | Delete status | Open |
+| [`demoteParticipant`](/docs/reference/client/client#demoteparticipant) | `groups` | Demote participant from admin | Open |
+| [`downloadMedia`](/docs/reference/client/client#downloadmedia) | `media` | Downloads and decrypts media from a message to a file | Open |
+| [`editEvent`](/docs/reference/client/client#editevent) | `events` | Edit an event created by this account. Unspecified fields retain their current values; endTime: null removes the end time. | Open |
+| [`editMessage`](/docs/reference/client/client#editmessage) | `messages` | Edits the text of a message through the installed private patch | Open |
+| [`endCall`](/docs/reference/client/client#endcall) | `calls` | Request hangup for this call. | Open |
+| [`forwardMessages`](/docs/reference/client/client#forwardmessages) | `messages` | Forwards messages to a chat | Open |
+| [`getActiveCall`](/docs/reference/client/client#getactivecall) | `calls` | Get the current call snapshot. SDK clients hydrate its bound methods. | Open |
+| [`getAlbumMessages`](/docs/reference/client/client#getalbummessages) | `messages` | Returns currently loaded image and video messages associated with an album, including GIF videos. The album can arrive before its media, so the array may be incomplete. Returns false if the album is not loaded or the ID belongs to another message type. | Open |
+| [`getAllChatIds`](/docs/reference/client/client#getallchatids) | `chatIds` | Get all chat IDs | Open |
+| [`getAllChats`](/docs/reference/client/client#getallchats) | `chats` | Returns serialized Chat objects from the current session, optionally limited to chats with unread messages. | Open |
+| [`getAllCommunities`](/docs/reference/client/client#getallcommunities) | `communities` | Get all communities | Open |
+| [`getAllContacts`](/docs/reference/client/client#getallcontacts) | `contacts` | Retrieves all contacts | Open |
+| [`getAllGroups`](/docs/reference/client/client#getallgroups) | `groups` | Get all groups | Open |
+| [`getAllLabels`](/docs/reference/client/client#getalllabels) | `labels` | Get all labels | Open |
+| [`getAllMessages`](/docs/reference/client/client#getallmessages) | `messages` | Retrieves all messages in the session | Open |
+| [`getBatteryLevel`](/docs/reference/client/client#getbatterylevel) | `session` | Get phone battery level | Open |
+| [`getBlockedIds`](/docs/reference/client/client#getblockedids) | `contacts` | Get blocked contact IDs | Open |
+| [`getBusinessProducts`](/docs/reference/client/client#getbusinessproducts) | `business` | Get business products | Open |
+| [`getBusinessProfile`](/docs/reference/client/client#getbusinessprofile) | `business` | Get business profile | Open |
+| [`getCallCapabilities`](/docs/reference/client/client#getcallcapabilities) | `calls` | Optional calling availability for UI and diagnostics. Actions perform admission automatically. | Open |
+| [`getChat`](/docs/reference/client/client#getchat) | `chats` | Get specific chat by ID | Open |
+| [`getChatsByLabel`](/docs/reference/client/client#getchatsbylabel) | `labels` | Get chats by label | Open |
+| [`getChatWithNonContacts`](/docs/reference/client/client#getchatwithnoncontacts) | `chats` | Get chats with non-contacts | Open |
+| [`getCommonGroups`](/docs/reference/client/client#getcommongroups) | `contacts` | Get common groups with contact | Open |
+| [`getCommunityAdminIds`](/docs/reference/client/client#getcommunityadminids) | `communities` | Get community admin IDs | Open |
+| [`getCommunityAdmins`](/docs/reference/client/client#getcommunityadmins) | `communities` | Get community admins | Open |
+| [`getCommunityInfo`](/docs/reference/client/client#getcommunityinfo) | `communities` | Get community metadata | Open |
+| [`getCommunityParticipantIds`](/docs/reference/client/client#getcommunityparticipantids) | `communities` | Get community participant IDs | Open |
+| [`getCommunityParticipants`](/docs/reference/client/client#getcommunityparticipants) | `communities` | Get community participants | Open |
+| [`getConnectionState`](/docs/reference/client/client#getconnectionstate) | `session` | Get connection state | Open |
+| [`getContact`](/docs/reference/client/client#getcontact) | `contacts` | Get specific contact | Open |
+| [`getEvent`](/docs/reference/client/client#getevent) | `events` | Retrieve an event by message ID from WhatsApp local history. Returns null when absent. | Open |
+| [`getEventResponses`](/docs/reference/client/client#geteventresponses) | `events` | Get the latest decrypted RSVP per participant, including responses persisted in WhatsApp local history. | Open |
+| [`getEvents`](/docs/reference/client/client#getevents) | `events` | Page through a chat’s locally synced event history, newest first. Pass nextCursor as options.before to retrieve the next page. | Open |
+| [`getFeatures`](/docs/reference/client/client#getfeatures) | `session` | Get enabled features | Open |
+| [`getGroupAdmins`](/docs/reference/client/client#getgroupadmins) | `groups` | Get group admins | Open |
+| [`getGroupInfo`](/docs/reference/client/client#getgroupinfo) | `groups` | Get the group title and description through the installed private patch | Open |
+| [`getGroupInviteLink`](/docs/reference/client/client#getgroupinvitelink) | `groups` | Get group invite link | Open |
+| [`getGroupMembers`](/docs/reference/client/client#getgroupmembers) | `groups` | Retrieves members of a group | Open |
+| [`getGroupMembersId`](/docs/reference/client/client#getgroupmembersid) | `groups` | Get group member IDs | Open |
+| [`getHostNumber`](/docs/reference/client/client#gethostnumber) | `session` | Get host phone number | Open |
+| [`getKickedGroups`](/docs/reference/client/client#getkickedgroups) | `groups` | Get groups where kicked | Open |
+| [`getLicenseFeatures`](/docs/reference/client/client#getlicensefeatures) | `session` | Get enabled and disabled licensed features from the accepted licence patch. This reports licence access; actions check runtime availability automatically. | Open |
+| [`getLicenseType`](/docs/reference/client/client#getlicensetype) | `session` | Get license type | Open |
+| [`getLoadedMessageCount`](/docs/reference/client/client#getloadedmessagecount) | `session` | Get loaded message count | Open |
+| [`getMe`](/docs/reference/client/client#getme) | `session` | Get host account info | Open |
+| [`getMessageById`](/docs/reference/client/client#getmessagebyid) | `messages` | Retrieves a specific message by ID | Open |
+| [`getMessageInfo`](/docs/reference/client/client#getmessageinfo) | `messages` | Get message delivery info | Open |
+| [`getMessagesForLLM`](/docs/reference/client/client#getmessagesforllm) | `messages` | Get messages formatted for LLMs | Open |
+| [`getMyLastMessage`](/docs/reference/client/client#getmylastmessage) | `messages` | Get last message sent by host | Open |
+| [`getNumberProfile`](/docs/reference/client/client#getnumberprofile) | `contacts` | Get profile of number | Open |
+| [`getOrder`](/docs/reference/client/client#getorder) | `business` | Get order details | Open |
+| [`getPollResults`](/docs/reference/client/client#getpollresults) | `messages` | Hydrates the local poll vote store and returns synced counts, choices and votes. Hidden-voter polls omit voter identities and the votes array. Unsynced votes may be absent. | Open |
+| [`getProcessStats`](/docs/reference/client/client#getprocessstats) | `session` | Get process statistics | Open |
+| [`getProfilePicture`](/docs/reference/client/client#getprofilepicture) | `contacts` | Get profile picture from server | Open |
+| [`getSnapshot`](/docs/reference/client/client#getsnapshot) | `session` | Take screenshot | Open |
+| [`getStarredMessages`](/docs/reference/client/client#getstarredmessages) | `messages` | Get starred messages | Open |
+| [`getStatus`](/docs/reference/client/client#getstatus) | `mystatus` | Get specific status | Open |
+| [`getStories`](/docs/reference/client/client#getstories) | `status` | Get all stories | Open |
+| [`getUnsentMessages`](/docs/reference/client/client#getunsentmessages) | `messages` | Get unsent/pending messages | Open |
+| [`getUserAgent`](/docs/reference/client/client#getuseragent) | `session` | Get user agent | Open |
+| [`getVCards`](/docs/reference/client/client#getvcards) | `messages` | Extract vCards from message | Open |
+| [`getWAVersion`](/docs/reference/client/client#getwaversion) | `session` | Get WhatsApp Web version | Open |
+| [`healthCheck`](/docs/reference/client/client#healthcheck) | `session` | Health check | Open |
+| [`isChatOnline`](/docs/reference/client/client#ischatonline) | `chats` | Check if chat is online | Open |
+| [`isPlugged`](/docs/reference/client/client#isplugged) | `session` | Check if phone is charging | Open |
+| [`joinGroupViaLink`](/docs/reference/client/client#joingroupvialink) | `groups` | Join group via invite link | Open |
+| [`leaveGroup`](/docs/reference/client/client#leavegroup) | `groups` | Leave a group | Open |
+| [`loadEarlierMessages`](/docs/reference/client/client#loadearliermessages) | `messages` | Loads earlier messages from a chat | Open |
+| [`markAsRead`](/docs/reference/client/client#markasread) | `chats` | Mark chat as read | Open |
+| [`markAsUnread`](/docs/reference/client/client#markasunread) | `chats` | Mark chat as unread | Open |
+| [`muteCall`](/docs/reference/client/client#mutecall) | `calls` | Mute or unmute the microphone without ending reception. | Open |
+| [`muteChat`](/docs/reference/client/client#mutechat) | `chats` | Mute a chat | Open |
+| [`observeCallAudio`](/docs/reference/client/client#observecallaudio) | `calls` | Attach an isolated receive-only audio sink. Its failure does not interrupt the call owner. | Open |
+| [`pinChat`](/docs/reference/client/client#pinchat) | `chats` | Pin a chat | Open |
+| [`pinMessage`](/docs/reference/client/client#pinmessage) | `messages` | Pins a message in its chat for everyone, subject to native permissions. This differs from pinChat, which changes the current account chat list. | Open |
+| [`postImageStatus`](/docs/reference/client/client#postimagestatus) | `status` | Post image status | Open |
+| [`postTextStatus`](/docs/reference/client/client#posttextstatus) | `status` | Post text status | Open |
+| [`postVideoStatus`](/docs/reference/client/client#postvideostatus) | `status` | Post video status | Open |
+| [`promoteParticipant`](/docs/reference/client/client#promoteparticipant) | `groups` | Promote participant to admin | Open |
+| [`react`](/docs/reference/client/client#react) | `messages` | React to message with emoji | Open |
+| [`rejectCall`](/docs/reference/client/client#rejectcall) | `calls` | Reject this call with native state confirmation. | Open |
+| [`rejectGroupJoinRequest`](/docs/reference/client/client#rejectgroupjoinrequest) | `groups` | Reject group join request | Open |
+| [`removeLabel`](/docs/reference/client/client#removelabel) | `labels` | Remove label from chat | Open |
+| [`removeParticipant`](/docs/reference/client/client#removeparticipant) | `groups` | Remove participant from group | Open |
+| [`requestPhoneNumber`](/docs/reference/client/client#requestphonenumber) | `contacts` | Ask a direct LID chat to voluntarily share their phone number. A submitted request does not confirm sharing. | Open |
+| [`respondToEvent`](/docs/reference/client/client#respondtoevent) | `events` | RSVP through WhatsApp’s native encrypted event-response action. | Open |
+| [`revokeGroupInviteLink`](/docs/reference/client/client#revokegroupinvitelink) | `groups` | Revoke group invite link | Open |
+| [`sendAdvancedButtons`](/docs/reference/client/client#sendadvancedbuttons) | `messages` | Sends an advanced button message with media (deprecated) | Open |
+| [`sendAlbum`](/docs/reference/client/client#sendalbum) | `messages` | Sends images and videos together as a native WhatsApp album with one caption on its first item. GIFs use MP4 video data with isGif: true. Documents are rejected. Phone-number IDs are resolved to LIDs; the destination chat must already be loaded and allow sending. WhatsApp controls the minimum item count and upload limits. Runtime failures include the parent and submitted child IDs when available; inspect the chat before retrying. | Open |
+| [`sendAudio`](/docs/reference/client/client#sendaudio) | `messages` | Sends an audio attachment with an optional quoted message. Use sendPtt for voice notes and view-once audio. | Open |
+| [`sendBanner`](/docs/reference/client/client#sendbanner) | `messages` | Sends a banner image | Open |
+| [`sendButtons`](/docs/reference/client/client#sendbuttons) | `messages` | Sends a button message (deprecated) | Open |
+| [`sendContact`](/docs/reference/client/client#sendcontact) | `messages` | Sends a single contact | Open |
+| [`sendEvent`](/docs/reference/client/client#sendevent) | `events` | Send a native WhatsApp event with Unix-second times. Returns its submitted message ID; delivery is observed through ACKs. | Open |
+| [`sendFile`](/docs/reference/client/client#sendfile) | `messages` | Sends an image, video, audio file or document using MIME detection or an explicit typed presentation. Incompatible options are rejected before sending. Media is not transcoded. | Open |
+| [`sendFileFromUrl`](/docs/reference/client/client#sendfilefromurl) | `messages` | Downloads media and sends it through sendFile with the same typed presentation options. | Open |
+| [`sendImage`](/docs/reference/client/client#sendimage) | `messages` | Sends media through the native attachment pipeline, including images and videos. Options select presentation, view once, GIF playback or circular video notes; media is not transcoded. Returns submission status, not a delivery receipt. | Open |
+| [`sendInteractive`](/docs/reference/client/client#sendinteractive) | `messages` | Send a portable interactive message document (local development) | Open |
+| [`sendLinkWithAutoPreview`](/docs/reference/client/client#sendlinkwithautopreview) | `messages` | Sends a link with auto-generated preview | Open |
+| [`sendListMessage`](/docs/reference/client/client#sendlistmessage) | `messages` | Sends a list/menu message (deprecated) | Open |
+| [`sendLocation`](/docs/reference/client/client#sendlocation) | `messages` | Sends a location to a chat | Open |
+| [`sendMessageWithThumb`](/docs/reference/client/client#sendmessagewiththumb) | `messages` | Sends a link preview message with custom thumbnail | Open |
+| [`sendMultipleContacts`](/docs/reference/client/client#sendmultiplecontacts) | `messages` | Sends multiple contacts | Open |
+| [`sendPaymentRequest`](/docs/reference/client/client#sendpaymentrequest) | `messages` | Sends a payment request message | Open |
+| [`sendPoll`](/docs/reference/client/client#sendpoll) | `messages` | Sends a text poll with a selection limit, quote, optional closing time in Unix milliseconds and hidden voter names. Closing time and hidden names require native WhatsApp support for the sending account/chat. These fields select the native V6 poll payload. | Open |
+| [`sendPtt`](/docs/reference/client/client#sendptt) | `messages` | Sends prepared audio as a voice note, optionally view once. It does not transcode the input; use suitable voice-note audio such as Ogg Opus. | Open |
+| [`sendRawMessage`](/docs/reference/client/client#sendrawmessage) | `messages` | Send a constructed WhatsApp protobuf Message payload (local development); media must already be uploaded | Open |
+| [`sendReplyWithMentions`](/docs/reference/client/client#sendreplywithmentions) | `messages` | Sends a reply to a message that includes @mentions | Open |
+| [`sendSeen`](/docs/reference/client/client#sendseen) | `messages` | Mark message as seen | Open |
+| [`sendSticker`](/docs/reference/client/client#sendsticker) | `messages` | Render a sticker locally using automatic whole-job backend selection and ordered effects, then submit through the private donor finalizer. Author and pack labels are configurable; donor app links are owned by the installed patch. Returns a submitted message ID, not a delivery receipt. Unknown send outcomes must be reconciled before retrying. | Open |
+| [`sendText`](/docs/reference/client/client#sendtext) | `messages` | Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch. | Open |
+| [`sendTextWithMentions`](/docs/reference/client/client#sendtextwithmentions) | `messages` | Sends a text message that includes @mentions | Open |
+| [`sendVCard`](/docs/reference/client/client#sendvcard) | `messages` | Sends a contact card (vCard) | Open |
+| [`sendVideoAsGif`](/docs/reference/client/client#sendvideoasgif) | `messages` | Sends MP4 video with WhatsApp GIF playback. GIF is a video presentation flag; this method does not convert a GIF image or transcode video. | Open |
+| [`sendYouTubeLink`](/docs/reference/client/client#sendyoutubelink) | `messages` | Sends a YouTube link with auto-generated preview | Open |
+| [`setCallMedia`](/docs/reference/client/client#setcallmedia) | `calls` | Prepare a replacement before releasing the working media. | Open |
+| [`setChatEphemeral`](/docs/reference/client/client#setchatephemeral) | `chats` | Set ephemeral messages for chat | Open |
+| [`setGroupDescription`](/docs/reference/client/client#setgroupdescription) | `groups` | Set group description | Open |
+| [`setGroupEditToAdminsOnly`](/docs/reference/client/client#setgroupedittoadminsonly) | `groups` | Restrict group editing to admins only | Open |
+| [`setGroupIcon`](/docs/reference/client/client#setgroupicon) | `groups` | Set group icon | Open |
+| [`setGroupTitle`](/docs/reference/client/client#setgrouptitle) | `groups` | Set group title | Open |
+| [`setGroupToAdminsOnly`](/docs/reference/client/client#setgrouptoadminsonly) | `groups` | Restrict group to admins only | Open |
+| [`setMyName`](/docs/reference/client/client#setmyname) | `session` | Set host name | Open |
+| [`setMyStatus`](/docs/reference/client/client#setmystatus) | `session` | Set host status | Open |
+| [`setProfilePicture`](/docs/reference/client/client#setprofilepicture) | `session` | Set profile picture | Open |
+| [`sharePhoneNumber`](/docs/reference/client/client#sharephonenumber) | `contacts` | Share the signed-in account’s own phone number with a direct LID chat using WhatsApp’s native protocol. No arbitrary phone number is accepted. | Open |
+| [`starMessage`](/docs/reference/client/client#starmessage) | `messages` | Star a message | Open |
+| [`startCall`](/docs/reference/client/client#startcall) | `calls` | Prepare media and place an outgoing audio or video call. | Open |
+| [`stopCallAudioObserver`](/docs/reference/client/client#stopcallaudioobserver) | `calls` | Stop an audio observer and finalize its sink. | Open |
+| [`unarchiveChat`](/docs/reference/client/client#unarchivechat) | `chats` | Unarchive a chat | Open |
+| [`unblockContact`](/docs/reference/client/client#unblockcontact) | `contacts` | Unblock a contact | Open |
+| [`unmuteChat`](/docs/reference/client/client#unmutechat) | `chats` | Unmute a chat | Open |
+| [`unpinChat`](/docs/reference/client/client#unpinchat) | `chats` | Unpin a chat | Open |
+| [`unpinMessage`](/docs/reference/client/client#unpinmessage) | `messages` | Removes a message pin for everyone, subject to native chat permissions. | Open |
+| [`unstarMessage`](/docs/reference/client/client#unstarmessage) | `messages` | Unstar a message | Open |
+| [`voteOnPoll`](/docs/reference/client/client#voteonpoll) | `messages` | Votes using option IDs returned by getPollResults; an empty array removes the current vote. The poll must be open and allow this account to vote. | Open |
+
+</details>

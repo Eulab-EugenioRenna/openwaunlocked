@@ -1,0 +1,270 @@
+---
+title: "Business Client API"
+description: "Generated client method reference for the business namespace."
+icon: "BookOpen"
+---
+
+# Business Client API
+
+This page documents 3 schema-registry client methods in the `business` namespace.
+
+
+## `getBusinessProducts`
+
+Get business products
+
+**Signature** `client.getBusinessProducts(contactId: string): Promise<Product[] \| false>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getBusinessProducts({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/business/getProducts" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": []
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetBusinessProductsParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<Product[] \| false>` |
+| Product | [View fields](/docs/reference/client/return-types#product) |
+
+Resolves to `Product[] \| false`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `business` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `business.getProducts`, `business.getProfilesProducts`, `getBusinessProfilesProducts` |
+| Deprecated aliases | `business.getProfilesProducts`, `getBusinessProfilesProducts` |
+| Access | Open |
+| WAPI override | `getBusinessProfilesProducts` |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/business/getProducts` | `getBusinessProducts` | Active |
+| Deprecated alias | `GET` | `/api/business/getProfilesProducts` | `business.getProfilesProducts` | **Deprecated** |
+| Alias | `GET` | `/api/getBusinessProducts` | `getBusinessProducts` | Active |
+| Deprecated alias | `GET` | `/api/getBusinessProfilesProducts` | `getBusinessProfilesProducts` | **Deprecated** |
+
+</details>
+
+
+## `getBusinessProfile`
+
+Get business profile
+
+**Signature** `client.getBusinessProfile(contactId: string): Promise<BusinessProfile>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getBusinessProfile({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/business/getProfile" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "447123456789@c.us"
+  }
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetBusinessProfileParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<BusinessProfile>` |
+| BusinessProfile | [View fields](/docs/reference/client/return-types#businessprofile) |
+
+Resolves to `BusinessProfile`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `business` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `business.getProfile` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/business/getProfile` | `getBusinessProfile` | Active |
+| Alias | `GET` | `/api/getBusinessProfile` | `getBusinessProfile` | Active |
+
+</details>
+
+
+## `getOrder`
+
+Get order details
+
+**Signature** `client.getOrder(id: string): Promise<Order>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getOrder({
+  id: "id",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/business/getOrder" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "id=id"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "example",
+    "createdAt": 0,
+    "currency": "example",
+    "products": [],
+    "sellerJid": "example",
+    "subtotal": "example",
+    "total": "example"
+  }
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetOrderParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<Order>` |
+| Order | [View fields](/docs/reference/client/return-types#order) |
+
+Resolves to `Order`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `business` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `id` |
+| Aliases | `business.getOrder` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/business/getOrder` | `getOrder` | Active |
+| Alias | `GET` | `/api/getOrder` | `getOrder` | Active |
+
+</details>

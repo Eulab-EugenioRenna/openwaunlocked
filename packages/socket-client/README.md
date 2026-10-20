@@ -1,0 +1,41 @@
+# @open-wa/socket-client
+
+Use `@open-wa/socket-client` from a Node.js application to call a running `@open-wa/wa-automate` API server and receive its runtime events. Commands use the server's HTTP API, and event subscriptions use Server-Sent Events (SSE).
+
+## Start the API server
+
+```bash
+npx @open-wa/wa-automate@5.1.0 --session-id main --host 127.0.0.1 --port 8002 --api-key replace-this-key
+```
+
+Keep the server on loopback or a private network unless you have configured an appropriate access boundary. The API key is sent by the client in the `X-API-Key` header for commands and as an `api_key` query parameter for the SSE connection.
+
+## Connect and send a message
+
+```bash
+npm install @open-wa/socket-client@5.1.0
+```
+
+```typescript
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://127.0.0.1:8002', 'replace-this-key');
+
+client.onAnyMessage((message) => {
+  console.log(message.id, message.body);
+});
+
+await client.sendText('447700900123@c.us', 'Hello from a remote client');
+
+client.close();
+```
+
+`SocketClient.connect` waits for the event stream to connect before returning. The client provides typed convenience methods for the API, along with `ask` for calling a method by name.
+
+## Documentation
+
+See the [socket client guide](https://openwa.dev/docs/client-and-integrations/socket-client) for setup and available methods.
+
+## License
+
+[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

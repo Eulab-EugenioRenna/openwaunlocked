@@ -1,0 +1,25 @@
+{
+  "title": "Plugins",
+  "icon": "Puzzle",
+  "defaultOpen": false,
+  "pages": [
+    "---Start here---",
+    "getting-started",
+    "security-model",
+    "reference-plugin-walkthrough",
+    "---Examples---",
+    "example-dictation",
+    "example-moderation",
+    "---Reference---",
+    "plugin-input",
+    "hooks-reference",
+    "plugin-client",
+    "---Advanced surfaces---",
+    "dashboard-pages",
+    "hono-routes",
+    "ai-tools",
+    "external-api-patterns",
+    "---Publishing---",
+    "publishing"
+  ]
+}

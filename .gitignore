@@ -1,0 +1,178 @@
+node_modules
+dist
+# Runtime browser session data / Chrome userData — NEVER commit these. The
+# runtime's default userDataDir is _IGNORE_<sessionId> (see **_IGNORE_** below);
+# these also catch session dirs a user points userDataDir at.
+session/
+sessions/
+newsession/
+# ...but wa-automate's source `session` directory is real code, not data:
+!packages/wa-automate/src/session/
+!packages/wa-automate/src/session/**
+**buttons.js
+**req.ts
+**qr_code_session.png
+**.re.js
+**.postman_collection.json
+**.sw_col.json
+tempchangelog.txt
+
+.DS_Store
+demo/buttons.js
+demo/**.jpeg
+demo/**.png
+demo/**.mp4
+**.ignore.ts
+**.ignore**
+**_IGNORE_**
+**docs-v2**
+# **docs-v3**
+.vscode/launch.json
+**logs**
+bin/cli.config.json
+
+# managed by open-wa
+**.data.json
+**.node-persist**
+# end managed by open-wa
+**.log
+**.log.gz
+**-audit.json
+# Monorepo specific
+node_modules/
+.turbo/
+dist/
+build/
+*.log
+.env
+.env.*
+!.env.example
+
+# Package specific
+packages/legacy-documented/
+packages/legacy/
+packages/orchestrator/
+apps/orchestrator-cli/
+!apps/orchestrator-cli/
+apps/orchestrator-cli/*
+!apps/orchestrator-cli/README.md
+apps/orchestrator-dashboard/
+!apps/orchestrator-dashboard/
+apps/orchestrator-dashboard/*
+!apps/orchestrator-dashboard/README.md
+apps/registry/
+!apps/registry/
+apps/registry/*
+!apps/registry/README.md
+packages/*/dist
+packages/*/build
+apps/*/dist
+apps/*/build
+apps/*/.next
+apps/*/.output
+apps/*/.tanstack
+
+# Testing
+coverage/
+*.test.js
+
+# Build artifacts (TypeScript compilation)
+*.tsbuildinfo
+**/.tsbuildinfo
+
+# Generated files should not be committed
+packages/*/generated/
+**/generated/*.js
+**/generated/*.d.ts
+**/generated/*.map
+
+# Compiled JavaScript files in source directories
+# packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.map
+apps/*/src/**/*.js
+apps/*/src/**/*.d.ts
+apps/*/src/**/*.map
+
+# Exclude JS config files and scripts from ignore
+!*.config.js
+!**/scripts/**/*.js
+!jest.config.js
+!vitest.config.js
+
+# Switchboard kanban database — machine-local, do not commit.
+.switchboard/kanban.db
+.switchboard/*.db-shm
+.switchboard/*.db-wal
+.switchboard/**/*
+**.docx
+
+**.switchboard**
+
+# Local development and temporary release artifacts
+.changeset/dry-run-changeset.md
+tools/release/publish-packages-local.sh
+packages/api/dashboard-neo/
+RELEASE_BODY.md
+release-notes-detailed.md
+/release.png
+/release-[0-9]*.png
+apps/docs/.fumadocs-typescript/
+apps/docs/.wrangler/
+# AsyncAPI documentation artifacts are produced by the source generators.
+/apps/docs/src/generated/asyncapi.json
+/apps/docs/public/asyncapi.json
+/apps/docs/content/docs/reference/event-contracts/generated/
+/packages/schema/src/generated/asyncapi.json
+apps/docs/types_error.txt
+.open-wa/
+
+# Removed folders
+.sisyphus/
+.sysiphys/
+.switchboard/
+.vscode/
+ai-notes/
+docs-legacy/
+notes/
+.fumadocs-typescript/
+**/.fumadocs-typescript/
+
+# >>> Switchboard managed exclusions >>>
+# Switchboard runtime state (per-session, not shareable)
+.switchboard/*
+!.switchboard/reviews/
+!.switchboard/plans/
+!.switchboard/sessions/
+!.switchboard/CLIENT_CONFIG.md
+!.switchboard/README.md
+!.switchboard/SWITCHBOARD_PROTOCOL.md
+
+# ClickUp integration config (workspace-specific IDs)
+.switchboard/clickup-config.json
+
+# Linear integration config (workspace-specific IDs and sync map)
+.switchboard/linear-config.json
+.switchboard/linear-sync.json
+
+# Notion integration config and page content cache
+.switchboard/notion-config.json
+.switchboard/notion-cache.md
+
+# kanban.db is already excluded by .switchboard/* above — explicit entry for documentation clarity.
+# Never commit the kanban database: it contains machine-local state that differs per developer.
+.switchboard/kanban.db
+.switchboard/*.db-shm
+.switchboard/*.db-wal
+# <<< Switchboard managed exclusions <<<
+# Image-gen MCP temporary outputs
+output/Users*projectstoolswaappsdocspublicmascots*.png
+.omo/run-continuation
+.omo/boulder.json
+.codegraph
+.omo
+
+# Generated local development patch; rebuild from dev/patches/src.
+/packages/core/src/transport/assets/dev-premium.js
+
+/.pnpm-store/

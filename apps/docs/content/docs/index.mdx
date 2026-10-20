@@ -1,0 +1,66 @@
+---
+title: WhatsApp API documentation for Node.js | open-wa
+description: Set up the self-hosted open-wa WhatsApp API. Send messages from Node.js or HTTP, receive webhooks, connect integrations, and browse the API reference.
+---
+
+# open-wa / wa-automate
+
+open-wa is a self-hosted WhatsApp API and Node.js library for developers. Use these docs to link a WhatsApp account, send messages from your application, receive events, and connect your helpdesk.
+
+## Start here
+
+- Use **[Quick start](/docs/getting-started/quickstart)** if you want to start the API, authenticate WhatsApp, and send your first message.
+- Use **[Custom Code](/docs/getting-started/custom-code)** if you are embedding the library in your own Node.js project.
+- Use **[Socket Client](/docs/client-and-integrations/socket-client)** if you want to connect to a remote Easy API instance.
+- Use **[Cloudflare Session Proxy](/docs/client-and-integrations/cf-proxy)** if you want remote session access without exposing a public port.
+
+## What you can build
+
+- Customer support inboxes that sync WhatsApp into your own tools
+- Order, booking, and delivery notifications from internal systems
+- Bots that react to messages, group activity, and runtime events
+- Webhook bridges for CRMs, helpdesks, automations, and low-code tools
+- Multi-session automations with named accounts and isolated consumers
+- AI-agent workflows through the built-in Model Context Protocol server
+
+## Prerequisites
+
+- **Node.js** >= 22.21.1
+- **npm** for released packages, or **pnpm 11.9.0** for repo development
+- A WhatsApp account on a phone that can stay connected
+
+## Version covered by these docs
+
+These docs cover **v5**, which has stable releases. See the [changelog](/changelog) for the current release and its changes.
+
+Use the version installed in your application when comparing method contracts. Choose the `alpha` tag only for deliberate prerelease work.
+
+## Documentation map
+
+- **Getting Started**, first-run guides for Quick start, Easy API, Docker, custom code, and link-code login.
+- **Guides**, practical guides for config, events, sessions, messages, media, and groups.
+- **Client & Integrations**, SocketClient, Chatwoot, proxying, and Cloudflare session proxy.
+- **Concepts**, the runtime model and core terminology.
+- **API Reference**, generated API docs from the active reference set.
+- **Operations & Troubleshooting**, error handling, logout recovery, and production best practices.
+- **Licensing**, licensed features and feature-availability notes.
+
+## Legal and Risk Context
+
+<Callout type="danger">
+This project is unofficial and has no affiliation with WhatsApp or Meta. You accept the risk when you use it. When you use this project, you agree to the Terms of Service.
+</Callout>
+
+- Automation tools can cause an account restriction or ban
+- Check your local laws regarding cryptographic software before use
+- See the [Hippocratic + Do Not Harm License](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) for full terms
+
+## Support
+
+- **Documentation**: https://openwa.dev
+- **Discord**: https://discord.gg/dnpp72a
+- **Get a license key**: [Licence options](/docs/licensing/pricing)
+
+## If you came from the old docs
+
+Start from the task you need to finish. Use Easy API for a running local API, Custom Code for `createClient`, Socket Client for remote consumers, and the generated reference for exact methods.

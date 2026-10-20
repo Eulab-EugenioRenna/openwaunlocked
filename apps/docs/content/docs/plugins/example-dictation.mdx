@@ -1,0 +1,262 @@
+---
+title: "Example: voice note transcription"
+description: Build a plugin that detects voice notes, sends audio to a speech-to-text provider, and replies with the text.
+---
+
+# Example: voice note transcription
+
+This example makes a plugin that listens for WhatsApp voice notes. It sends decrypted audio to the OpenAI transcription API. Then, it sends the transcription to the sender.
+
+## Detect voice notes
+
+Voice notes arrive as messages with specific properties:
+
+```ts
+type VoiceNoteMessage = {
+  type: 'audio';
+  mimetype: string;
+  from: string;
+  id: string;
+};
+
+function getVoiceNote(message: unknown): VoiceNoteMessage | null {
+  if (!message || typeof message !== 'object') return null;
+
+  const candidate = message as {
+    type?: unknown;
+    mimetype?: unknown;
+    from?: unknown;
+    id?: unknown;
+  };
+
+  if (candidate.type !== 'audio') return null;
+  if (typeof candidate.mimetype !== 'string' || !candidate.mimetype.includes('ogg')) return null;
+  if (typeof candidate.from !== 'string' || typeof candidate.id !== 'string') return null;
+
+  return {
+    type: 'audio',
+    mimetype: candidate.mimetype,
+    from: candidate.from,
+    id: candidate.id,
+  };
+}
+
+'message.received': async ({ message, logger }) => {
+  const voiceNote = getVoiceNote(message);
+
+  if (!voiceNote) return;
+
+  logger.info('Voice note received');
+}
+```
+
+## Decrypt media
+
+`client.decryptMedia` returns the decrypted media as a data URL. Decode its base64 content before uploading the audio:
+
+```ts
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+'message.received': async ({ message, client, logger }) => {
+  const voiceNote = getVoiceNote(message);
+
+  if (!voiceNote) return;
+
+  try {
+    const mediaData = await client.decryptMedia(message);
+    // mediaData is a data:audio/ogg;base64,... URL.
+    logger.info('Media decrypted', { hasMedia: mediaData.startsWith('data:') });
+  } catch (error) {
+    logger.error('Failed to decrypt media', { error: errorMessage(error) });
+  }
+}
+```
+
+## Call the transcription API
+
+Send the audio to a speech-to-text service. This example uses OpenAI's audio transcription endpoint:
+
+```ts
+async function transcribe(audioDataUrl: string, apiKey: string): Promise<string> {
+  const match = /^data:([^;,]+);base64,(.+)$/.exec(audioDataUrl);
+  if (!match) throw new Error('Decrypted media was not a base64 data URL');
+
+  const [, mimeType, encodedAudio] = match;
+  const audioBuffer = Buffer.from(encodedAudio, 'base64');
+  const formData = new FormData();
+  formData.append('file', new Blob([new Uint8Array(audioBuffer)], { type: mimeType }), 'audio.ogg');
+  formData.append('model', 'whisper-1');
+
+  const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`STT API error: ${response.status}`);
+  }
+
+  const result = await response.json() as { text?: unknown };
+
+  if (typeof result.text !== 'string') {
+    throw new Error('STT API response did not include text');
+  }
+
+  return result.text;
+}
+```
+
+## Complete plugin
+
+```ts
+// src/voice-transcriber.ts
+import { createPlugin, z } from '@open-wa/plugin-sdk';
+
+type VoiceNoteMessage = {
+  type: 'audio';
+  mimetype: string;
+  from: string;
+  id: string;
+};
+
+function getVoiceNote(message: unknown): VoiceNoteMessage | null {
+  if (!message || typeof message !== 'object') return null;
+
+  const candidate = message as {
+    type?: unknown;
+    mimetype?: unknown;
+    from?: unknown;
+    id?: unknown;
+  };
+
+  if (candidate.type !== 'audio') return null;
+  if (typeof candidate.mimetype !== 'string' || !candidate.mimetype.includes('ogg')) return null;
+  if (typeof candidate.from !== 'string' || typeof candidate.id !== 'string') return null;
+
+  return {
+    type: 'audio',
+    mimetype: candidate.mimetype,
+    from: candidate.from,
+    id: candidate.id,
+  };
+}
+
+function errorMessage(error: unknown) {
+  return error instanceof Error ? error.message : String(error);
+}
+
+const configSchema = z.object({
+  apiKey: z.string().min(1, 'STT API key is required'),
+  language: z.string().default('en'),
+  enabled: z.boolean().default(true),
+});
+
+async function transcribe(audioDataUrl: string, apiKey: string, language: string): Promise<string> {
+  const match = /^data:([^;,]+);base64,(.+)$/.exec(audioDataUrl);
+  if (!match) throw new Error('Decrypted media was not a base64 data URL');
+
+  const [, mimeType, encodedAudio] = match;
+  const audioBuffer = Buffer.from(encodedAudio, 'base64');
+  const formData = new FormData();
+  formData.append('file', new Blob([new Uint8Array(audioBuffer)], { type: mimeType }), 'audio.ogg');
+  formData.append('model', 'whisper-1');
+  formData.append('language', language);
+
+  const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`STT API error: ${response.status} ${response.statusText}`);
+  }
+
+  const result = await response.json() as { text?: unknown };
+
+  if (typeof result.text !== 'string') {
+    throw new Error('STT API response did not include text');
+  }
+
+  return result.text;
+}
+
+export default createPlugin({
+  meta: { name: 'voice-transcriber' },
+  configSchema,
+  init: async ({ events, logger, config, client }) => {
+    if (!config.enabled) {
+      logger.info('Voice transcriber disabled');
+      return;
+    }
+
+    logger.info('Voice transcriber loaded');
+
+    events.on('message.received', async ({ message }) => {
+      const voiceNote = getVoiceNote(message);
+
+      if (!voiceNote) return;
+
+      try {
+        const mediaData = await client.decryptMedia(message);
+        logger.info('Media decrypted', { hasMedia: mediaData.startsWith('data:') });
+
+        const transcription = await transcribe(mediaData, config.apiKey, config.language);
+        logger.info('Transcription complete', { length: transcription.length });
+
+        await client.reply(voiceNote.from, transcription, voiceNote.id);
+      } catch (error) {
+        logger.error('Transcription failed', { error: errorMessage(error) });
+      }
+    });
+  },
+});
+```
+
+## Compile and load it
+
+Using the TypeScript setup in [Publishing a plugin](/docs/plugins/publishing), compile `src/voice-transcriber.ts` to `dist/voice-transcriber.js`. Save this configuration as `wa.config.mjs` beside `src` and `dist`:
+
+```js
+export default {
+  plugins: [
+    new URL('./dist/voice-transcriber.js', import.meta.url).href,
+  ],
+  pluginConfig: {
+    'voice-transcriber': {
+      apiKey: process.env.STT_API_KEY,
+      language: 'en',
+      enabled: true,
+    },
+  },
+};
+```
+
+Start a named session with this config:
+
+```bash
+npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id dictation-test --host 127.0.0.1 --port 8080
+```
+
+Send an OGG voice note to the connected account. The plugin replies with the transcription; if it does not, check the Easy API logs and confirm that `STT_API_KEY` is set.
+
+## What can go wrong
+
+The example logs per-message failures and continues handling later events:
+
+- **Decryption failure**: Logged, message skipped
+- **API failure**: Logged, message skipped
+- **Empty transcription**: The API's empty text is still sent as a reply.
+
+## Related
+
+- **[Plugin getting started](/docs/plugins/getting-started)**, build your first plugin
+- **[PluginClient reference](/docs/plugins/plugin-client)**, available client methods
+- **[External API patterns](/docs/plugins/external-api-patterns)**, calling external services

@@ -1,0 +1,34 @@
+---
+title: Funzioni Eulab Open
+description: Accesso Open alle API del fork Eulab e disponibilità effettiva.
+---
+
+# Funzioni Eulab Open
+
+Autore e manutentore del fork: **Eulab**. Questa pagina descrive il branch locale `dev/free-use-offline`, non la versione
+pubblicata su npm. Il runtime non richiede chiavi, non valida licenze in rete,
+non esegue payload del servizio di licenza e non applica scadenze o rinnovi.
+Le definizioni dei metodi e degli eventi nello schema sono impostate a `none`.
+
+Le patch sono locali e il browser blocca le richieste ai servizi OpenWA.
+WhatsApp richiede comunque una connessione a Internet. I file di licenza e le
+attribuzioni del progetto restano presenti.
+
+## Disponibilità effettiva
+
+Le implementazioni ricostruite comprendono interattivi, stati, contatti, ordini,
+profilo, gruppi e provider chiamate. Rimuovere un gate non dimostra che i moduli
+nativi siano disponibili né che il destinatario riceva correttamente un messaggio.
+La verifica live completa è ancora aperta.
+
+I form dev sono sequenze di domande in chat con risposta aggregata. Le prenotazioni
+sono eventi WhatsApp con dettagli nella descrizione. Non riproducono le schermate
+proprietarie illustrate nella documentazione originaria.
+
+Le chiamate espongono solo le capacità del provider e dell'host media disponibili;
+l'iniezione video non è implementata dall'host attuale.
+
+Per stato dei test, pipeline, Docker e attività successive consultare nel checkout
+`docs/development/free-use-offline.md` e `docs/development/NEXT-IMPLEMENTATION.md`.
+Vedi anche [messaggi interattivi](/docs/guides/interactive-messages) e
+[metodi del branch dev](/docs/reference/client/licensed-methods).

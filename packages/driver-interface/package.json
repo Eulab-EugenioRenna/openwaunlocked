@@ -1,0 +1,42 @@
+{
+  "name": "@open-wa/driver-interface",
+  "author": "Eulab",
+  "version": "5.6.6",
+  "description": "Browser driver abstraction interfaces for open-wa",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "bun": "./src/index.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.cjs",
+      "types": "./dist/index.d.cts"
+    }
+  },
+  "scripts": {
+    "build": "tsdown src/index.ts --format cjs",
+    "dev": "tsdown src/index.ts --format cjs --watch",
+    "lint": "oxlint src"
+  },
+  "publishConfig": {
+    "access": "public",
+    "exports": {
+      ".": {
+        "require": "./dist/index.cjs",
+        "import": "./dist/index.cjs",
+        "types": "./dist/index.d.cts"
+      }
+    }
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "files": [
+    "dist"
+  ]
+}

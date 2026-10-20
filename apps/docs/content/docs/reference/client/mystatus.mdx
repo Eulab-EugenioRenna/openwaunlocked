@@ -1,0 +1,95 @@
+---
+title: "Mystatus Client API"
+description: "Generated client method reference for the mystatus namespace."
+icon: "BookOpen"
+---
+
+# Mystatus Client API
+
+This page documents 1 schema-registry client methods in the `mystatus` namespace.
+
+
+## `getStatus`
+
+Get specific status
+
+**Signature** `client.getStatus(contactId: string): Promise<ContactStatus>`
+
+### Usage
+
+<InterfaceTabs>
+  <InterfaceTab value="SocketClient">
+
+```ts
+import { SocketClient } from '@open-wa/socket-client';
+
+const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
+const result = await client.getStatus({
+  contactId: "447123456789@c.us",
+});
+```
+
+  </InterfaceTab>
+  <InterfaceTab value="Easy API">
+
+```bash
+curl -G "http://localhost:8080/api/mystatus/getStatus" \
+  -H "x-api-key: YOUR_API_KEY" \
+  --data-urlencode "contactId=447123456789@c.us"
+```
+
+Example response envelope:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "example",
+    "status": "example"
+  }
+}
+```
+
+  </InterfaceTab>
+</InterfaceTabs>
+
+### Parameters
+
+<AutoTypeTable path="./generated-method-params.ts" name="GetStatusParams" />
+
+### Returns
+
+| Prop | Value |
+| --- | --- |
+| Return type | `Promise<ContactStatus>` |
+| ContactStatus | [View fields](/docs/reference/client/return-types#contactstatus) |
+
+Resolves to `ContactStatus`. A rejected Promise indicates input validation or dispatch failure.
+
+This method is not declared on the in-process Client facade. Use the remote Node.js client or HTTP API.
+
+<details>
+<summary>Advanced method metadata</summary>
+
+### Overview
+
+| Prop | Value |
+| --- | --- |
+| Namespace | `mystatus` |
+| Action | `read` |
+| Functionality | `both` |
+| Positional parameter order | `contactId` |
+| Aliases | `mystatus.getStatus` |
+| Deprecated aliases | - |
+| Access | Open |
+| WAPI override | - |
+| Deprecated | No |
+
+### Routes
+
+| Type | Method | Path | Name | Status |
+| --- | --- | --- | --- | --- |
+| Primary | `GET` | `/api/mystatus/getStatus` | `getStatus` | Active |
+| Alias | `GET` | `/api/getStatus` | `getStatus` | Active |
+
+</details>
