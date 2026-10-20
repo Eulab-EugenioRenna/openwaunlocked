@@ -1,6 +1,6 @@
 import { Effect } from 'effect';
 import { describe, expect, it, vi } from 'vitest';
-import { defaultChatSandboxPolicy } from '@open-wa/runtime-core';
+import { defaultChatSandboxPolicy } from '@eulab/openwaunlocked-runtime-core';
 import { makeNodeExecutionSandbox } from './execution-sandbox';
 
 describe('Node execution sandbox', () => {

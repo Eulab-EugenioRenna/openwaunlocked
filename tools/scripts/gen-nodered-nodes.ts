@@ -9,7 +9,7 @@
 
 import { promises as fs } from 'node:fs/promises';
 import path from 'node:path';
-import type { registry } from '@open-wa/schema';
+import type { registry } from '@eulab/openwaunlocked-schema';
 
 interface NodeRedNode {
     category: string;
@@ -219,7 +219,7 @@ async function main() {
         version: '1.0.0',
         description: 'Node-RED nodes for open-wa v5 automation',
         keywords: ['node-red', 'open-wa', 'whatsapp', 'automation'],
-        repository: 'https://github.com/open-wa/wa-automate-nodejs',
+        repository: 'https://github.com/Eulab-EugenioRenna/openwaunlocked',
         license: 'MIT',
         dependencies: {
             'node-red': '^3.0.0'

@@ -11,11 +11,11 @@
  * This replaces the old manually-curated CATCHABLE_EVENTS allowlist
  * with a policy derived from the source of truth.
  */
-import type { HyperEmitter } from '@open-wa/hyperemitter';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import type { OpenWAEventMap } from '../events/eventMap';
 import { OpenWAEventMetaMap } from '../events/eventMap';
-import type { Logger } from '@open-wa/logger';
-import type { PluginEventEmitter } from '@open-wa/plugin-sdk';
+import type { Logger } from '@eulab/openwaunlocked-logger';
+import type { PluginEventEmitter } from '@eulab/openwaunlocked-plugin-sdk';
 
 /**
  * Creates a security-filtered event emitter for a plugin.

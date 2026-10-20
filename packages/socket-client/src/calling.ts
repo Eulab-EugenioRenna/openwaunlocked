@@ -1,7 +1,7 @@
-import type { Call, CallIdentity, CallSnapshot, CallActionResult, CallMediaOptions, AudioInput, AudioOutput, VideoInput, CallAudioObserver } from '@open-wa/schema';
-import { normalizeCallMedia, describeCallMediaFailure, decodeAudioPacket } from '@open-wa/schema/calling-media';
-import { prepareLocalMedia } from '@open-wa/socket-client/calling-platform';
-import { ScopedTaskQueue, QueueOverloadedError } from '@open-wa/runtime-core';
+import type { Call, CallIdentity, CallSnapshot, CallActionResult, CallMediaOptions, AudioInput, AudioOutput, VideoInput, CallAudioObserver } from '@eulab/openwaunlocked-schema';
+import { normalizeCallMedia, describeCallMediaFailure, decodeAudioPacket } from '@eulab/openwaunlocked-schema/calling-media';
+import { prepareLocalMedia } from '@eulab/openwaunlocked-socket-client/calling-platform';
+import { ScopedTaskQueue, QueueOverloadedError } from '@eulab/openwaunlocked-runtime-core';
 
 export type CallRpc = (method: string, args: unknown[]) => Promise<any>;
 export class RemoteCalls {

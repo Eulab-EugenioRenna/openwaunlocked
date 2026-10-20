@@ -1,10 +1,10 @@
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 import { EasyAPIServer } from './../../shared/types';
 import { Node, NodeDef } from "node-red";
 import { OwaServerOptions } from "../shared/types";
 
 // Legacy compatibility surface: these names are retained for Node-RED, but the
-// underlying client is the v5 remote transport wrapper rather than @open-wa/api
+// underlying client is the v5 remote transport wrapper rather than @eulab/openwaunlocked-api
 // SocketManager.
 
 export interface OwaServerNodeDef extends NodeDef, OwaServerOptions, EasyAPIServer {}

@@ -39,11 +39,11 @@ jobs:
 
       - name: Build schema dependencies
         run: |
-          pnpm --filter @open-wa/config build
-          pnpm --filter @open-wa/utils build
+          pnpm --filter @eulab/openwaunlocked-config build
+          pnpm --filter @eulab/openwaunlocked-utils build
 
       - name: Build schema (the parity tool reads its built dist)
-        run: pnpm --filter @open-wa/schema build
+        run: pnpm --filter @eulab/openwaunlocked-schema build
 
       - name: Check v4 parity did not regress
         run: pnpm tsx tools/v4-compat-bench/static/parity.ts --check

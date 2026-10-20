@@ -7,13 +7,13 @@ import type {
   GroupInfo,
   Chat,
   DataURL,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 import {
   implementMethod,
   setGroupTitle as setGroupTitleSchema,
   setGroupDescription as setGroupDescriptionSchema,
   getGroupInfo as getGroupInfoSchema,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 
 declare const WAPI: {
   createGroup: (groupName: string, contactId: string | string[]) => Promise<any>;

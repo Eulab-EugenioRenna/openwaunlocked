@@ -2,7 +2,7 @@ import { NodeHttpClient, NodeServices } from '@effect/platform-node';
 import {
   InMemoryObservabilityLayer,
   runtimeCapabilitiesLayer,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Layer } from 'effect';
 
 export const NodeRuntimeLayer = Layer.mergeAll(

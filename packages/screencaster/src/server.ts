@@ -1,12 +1,12 @@
 // ────────────────────────────────────────────────────────────
-//  @open-wa/screencaster/server
+//  @eulab/openwaunlocked-screencaster/server
 //
 //  Server-side screencast orchestrator using Hono's WebSocket
 //  helpers. Runtime-agnostic — works on Node.js, Bun, Deno, etc.
 //
 //  Usage:
 //    import { createNodeWebSocket } from '@hono/node-ws';
-//    import { createScreencastRoute, ScreencastManager } from '@open-wa/screencaster/server';
+//    import { createScreencastRoute, ScreencastManager } from '@eulab/openwaunlocked-screencaster/server';
 //
 //    const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
 //    const manager = new ScreencastManager();

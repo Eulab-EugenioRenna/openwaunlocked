@@ -1,5 +1,5 @@
-import { fileToDataUrlCodec, MediaSendOptionsSchema } from '@open-wa/schema';
-import type { ChatId, MessageId, MediaSendOptions } from '@open-wa/schema';
+import { fileToDataUrlCodec, MediaSendOptionsSchema } from '@eulab/openwaunlocked-schema';
+import type { ChatId, MessageId, MediaSendOptions } from '@eulab/openwaunlocked-schema';
 import type { Client } from './Client';
 
 /** A data URL, base64 string, URL, local path or Buffer. */

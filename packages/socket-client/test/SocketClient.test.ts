@@ -1,4 +1,4 @@
-import { Message } from "@open-wa/wa-automate-types-only";
+import { Message } from "@eulab/openwaunlocked-types-only";
 import { SocketClient } from "../src/index";
 import { config } from "./config"; // Make sure to create a 'config.ts' file with your open-wa API URL and any necessary API key
 

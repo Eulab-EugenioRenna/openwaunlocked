@@ -39,15 +39,15 @@ export interface HyperEmitterOptions {
   captureRejections?: boolean;
   onError?: (error: unknown) => void;
   /**
-   * Enable debug logging (uses @open-wa/logger).
+   * Enable debug logging (uses @eulab/openwaunlocked-logger).
    */
   debug?: boolean;
   /**
    * Optional logger instance; if omitted, a child logger will be created.
    */
-  logger?: import('@open-wa/logger').Logger;
+  logger?: import('@eulab/openwaunlocked-logger').Logger;
   /**
    * Additional bound context for logger child.
    */
-  loggerContext?: import('@open-wa/logger').LogContext;
+  loggerContext?: import('@eulab/openwaunlocked-logger').LogContext;
 }

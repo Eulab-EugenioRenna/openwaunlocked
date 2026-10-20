@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { HyperEmitter } from '@open-wa/hyperemitter';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Client } from '../Client';
-import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@open-wa/core';
+import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@eulab/openwaunlocked-core';
 
 function createTestClient(evaluate = vi.fn()) {
   const events = new HyperEmitter<OpenWAEventMap>({ delimiter: '.', captureRejections: true });

@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@open-wa/stickers':
+      '@eulab/openwaunlocked-stickers':
         specifier: file:../../packages/stickers
         version: file:../../packages/stickers
       astro:
@@ -373,7 +373,7 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@open-wa/stickers@file:../../packages/stickers':
+  '@eulab/openwaunlocked-stickers@file:../../packages/stickers':
     resolution: {directory: ../../packages/stickers, type: directory}
     engines: {node: '>=22.21.1'}
     hasBin: true
@@ -1534,7 +1534,7 @@ snapshots:
       '@tybys/wasm-util': 0.10.4
     optional: true
 
-  '@open-wa/stickers@file:../../packages/stickers': {}
+  '@eulab/openwaunlocked-stickers@file:../../packages/stickers': {}
 
   '@oslojs/encoding@1.1.0': {}
 

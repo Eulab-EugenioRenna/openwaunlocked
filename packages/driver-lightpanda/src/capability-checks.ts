@@ -1,4 +1,4 @@
-import { requireCapability } from '@open-wa/driver-interface';
+import { requireCapability } from '@eulab/openwaunlocked-driver-interface';
 import { LightpandaRenderingError } from './errors';
 
 export function requireRendering(driver: any): void {

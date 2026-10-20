@@ -5,11 +5,11 @@
     "badge": "Custom session encryption",
     "notesFile": "v5.4-release-notes.md",
     "packages": [
-      "@open-wa/core",
-      "@open-wa/config",
-      "@open-wa/wa-automate",
-      "@open-wa/client",
-      "@open-wa/api"
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked-config",
+      "@eulab/openwaunlocked",
+      "@eulab/openwaunlocked-client",
+      "@eulab/openwaunlocked-api"
     ]
   },
   "5.1.0": {
@@ -17,11 +17,11 @@
     "summary": "Reply buttons, forms, carousels and booking cards. One API, with structured answers your code can use.",
     "badge": "Available to Insiders and above",
     "packages": [
-      "@open-wa/client",
-      "@open-wa/schema",
-      "@open-wa/api",
-      "@open-wa/core",
-      "@open-wa/wa-automate"
+      "@eulab/openwaunlocked-client",
+      "@eulab/openwaunlocked-schema",
+      "@eulab/openwaunlocked-api",
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked"
     ]
   },
   "5.0.0": {
@@ -29,9 +29,9 @@
     "summary": "Three years in the making. A new foundation for everyone coming from v4.",
     "badge": "A guide for v4 users",
     "packages": [
-      "@open-wa/wa-automate",
-      "@open-wa/core",
-      "@open-wa/client"
+      "@eulab/openwaunlocked",
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked-client"
     ]
   },
   "5.3.0": {
@@ -40,12 +40,12 @@
     "badge": "Compact auth by default",
     "notesFile": "v5.3-release-notes.md",
     "packages": [
-      "@open-wa/core",
-      "@open-wa/wa-automate",
-      "@open-wa/client",
-      "@open-wa/session-sync",
-      "@open-wa/config",
-      "@open-wa/api"
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked",
+      "@eulab/openwaunlocked-client",
+      "@eulab/openwaunlocked-session-sync",
+      "@eulab/openwaunlocked-config",
+      "@eulab/openwaunlocked-api"
     ]
   },
   "5.5.0": {
@@ -54,11 +54,11 @@
     "badge": "OpenWA 5.5",
     "notesFile": "v5.5-release-notes.md",
     "packages": [
-      "@open-wa/client",
-      "@open-wa/core",
-      "@open-wa/stickers",
-      "@open-wa/schema",
-      "@open-wa/wa-automate"
+      "@eulab/openwaunlocked-client",
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked-stickers",
+      "@eulab/openwaunlocked-schema",
+      "@eulab/openwaunlocked"
     ]
   },
   "5.6.1": {
@@ -66,7 +66,7 @@
     "summary": "CommonJS create() now resolves the packaged runtime assets through the ESM core and reaches QR pairing.",
     "badge": "OpenWA 5.6.1 patch",
     "notesFile": "v5.6.1-release-notes.md",
-    "packages": ["@open-wa/core", "@open-wa/wa-automate", "@open-wa/driver-puppeteer"]
+    "packages": ["@eulab/openwaunlocked-core", "@eulab/openwaunlocked", "@eulab/openwaunlocked-driver-puppeteer"]
   },
   "5.6.0": {
     "headline": "Events you can build on",
@@ -74,13 +74,13 @@
     "badge": "OpenWA 5.6",
     "notesFile": "v5.6-release-notes.md",
     "packages": [
-      "@open-wa/hyperemitter",
-      "@open-wa/core",
-      "@open-wa/mcp",
-      "@open-wa/schema",
-      "@open-wa/api",
-      "@open-wa/socket-client",
-      "@open-wa/wa-automate"
+      "@eulab/openwaunlocked-hyperemitter",
+      "@eulab/openwaunlocked-core",
+      "@eulab/openwaunlocked-mcp",
+      "@eulab/openwaunlocked-schema",
+      "@eulab/openwaunlocked-api",
+      "@eulab/openwaunlocked-socket-client",
+      "@eulab/openwaunlocked"
     ]
   }
 }

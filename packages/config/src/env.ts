@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Environment Variable Loader
+ * @eulab/openwaunlocked-config - Environment Variable Loader
  *
  * Loads configuration from environment variables with WA_ prefix.
  * Converts WA_SESSION_ID to sessionId, WA_PORT to port, etc.

@@ -1,13 +1,13 @@
 /**
- * Configuration schema and types - re-exported from @open-wa/config
+ * Configuration schema and types - re-exported from @eulab/openwaunlocked-config
  * 
- * This file provides backward compatibility for code that imports from @open-wa/schema.
- * New code should import directly from @open-wa/config.
+ * This file provides backward compatibility for code that imports from @eulab/openwaunlocked-schema.
+ * New code should import directly from @eulab/openwaunlocked-config.
  * 
- * @deprecated Import from '@open-wa/config' instead
+ * @deprecated Import from '@eulab/openwaunlocked-config' instead
  */
 
-// Re-export everything from @open-wa/config
+// Re-export everything from @eulab/openwaunlocked-config
 export {
   // Enums
   QRFormat,
@@ -44,4 +44,4 @@ export {
   validateConfig,
   parseConfig,
   getDefaultConfig,
-} from '@open-wa/config';
+} from '@eulab/openwaunlocked-config';

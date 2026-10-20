@@ -11,7 +11,7 @@ import {
     type NavigationWaitUntil,
     type PageEventHandler,
     type WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 import type { ConsoleMessage, Frame, HTTPRequest, Page, CDPSession } from 'puppeteer-core';
 import { PuppeteerElementHandle } from './PuppeteerElementHandle';
 

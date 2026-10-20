@@ -1,9 +1,9 @@
-import { createClient } from '@open-wa/core';
-import { Client as ClientFacade } from '@open-wa/client';
+import { createClient } from '@eulab/openwaunlocked-core';
+import { Client as ClientFacade } from '@eulab/openwaunlocked-client';
 import { selectRuntimeDriver as selectSharedRuntimeDriver, resolveExecutablePath as resolveSharedExecutablePath, makeDefaultCallMediaHost, type DriverSelection } from './runtime-client';
-import { eventRegistry } from '@open-wa/schema';
+import { eventRegistry } from '@eulab/openwaunlocked-schema';
 import { WAServer } from './server/hono-server';
-import { resolveConfig, type PartialConfig, type Config, type TrackedConfig } from '@open-wa/config';
+import { resolveConfig, type PartialConfig, type Config, type TrackedConfig } from '@eulab/openwaunlocked-config';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -12,8 +12,8 @@ import {
     defaultChatSandboxPolicy,
     type ChatSandboxPolicy,
     type SandboxIsolation,
-} from '@open-wa/runtime-core';
-import { makeNodeExecutionSandbox, observeBrowserProcessMemory } from '@open-wa/runtime-node';
+} from '@eulab/openwaunlocked-runtime-core';
+import { makeNodeExecutionSandbox, observeBrowserProcessMemory } from '@eulab/openwaunlocked-runtime-node';
 
 export interface CliRuntimeResult {
     server: WAServer;
@@ -718,6 +718,20 @@ export async function main(argv: string[] = process.argv.slice(2)): Promise<CliR
     if (argv[0] === 'init') {
         const { initProject } = await import('./cli/init');
         await initProject(argv.slice(1));
+        return;
+    }
+    if (argv.includes('--help')) {
+        getCliOutputSink().write({ level: 'info', message: [
+            'EULAB OpenWAUnlocked',
+            'Usage: openwaunlocked [init] [options]',
+            '--session-id <id>    Session identifier',
+            '--port <port>        API port',
+            '--host <host>        API bind address',
+            '--api-key <key>      API authentication key',
+            '--use-chrome | --use-chromium | --use-lightpanda',
+            '--headless | --headful',
+            '--help               Show this help without starting WhatsApp',
+        ].join('\n') });
         return;
     }
     const parsedArgs = parseCliArgs(argv);

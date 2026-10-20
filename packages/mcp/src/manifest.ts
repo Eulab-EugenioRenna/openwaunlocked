@@ -1,4 +1,4 @@
-import { getHttpMethodDefinitions, type HttpMethodDefinition } from '@open-wa/schema/http-manifest';
+import { getHttpMethodDefinitions, type HttpMethodDefinition } from '@eulab/openwaunlocked-schema/http-manifest';
 import { getCanonicalToolName } from './tool-naming';
 
 /**

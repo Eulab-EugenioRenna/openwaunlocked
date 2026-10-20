@@ -1,4 +1,4 @@
-import { normalizeParameterKeys, z, type HttpMethodDefinition } from '@open-wa/schema';
+import { normalizeParameterKeys, z, type HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 
 function mapArrayArgs(def: HttpMethodDefinition, args: unknown[]): Record<string, unknown> {
   return def.parameterOrder.reduce<Record<string, unknown>>((acc, key, index) => {

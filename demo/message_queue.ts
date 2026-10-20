@@ -6,7 +6,7 @@
  * https://www.npmjs.com/package/p-queue
  */
 
-// import { create, Client, SimpleListener  } from '@open-wa/wa-automate';
+// import { create, Client, SimpleListener  } from '@eulab/openwaunlocked';
 import { create, Client } from '../src/index';
 
 const { default: PQueue } = require("p-queue");

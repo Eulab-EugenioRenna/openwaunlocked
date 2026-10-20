@@ -1,5 +1,5 @@
 // const wa = require('../dist/index');
-// var create = require("@open-wa/wa-automate").create;
+// var create = require("@eulab/openwaunlocked").create;
 // import { create, Client, decryptMedia, ev } from '../dist/index';
 import { create, Client, decryptMedia, ev, smartUserAgent, NotificationLanguage } from '../src/index';
 const mime = require('mime-types');

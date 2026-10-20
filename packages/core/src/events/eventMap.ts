@@ -1,7 +1,7 @@
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { z } from 'zod';
-import type { ParticipantChange } from '@open-wa/schema';
+import type { ParticipantChange } from '@eulab/openwaunlocked-schema';
 
 export interface EventContext {
   correlationId: string;
@@ -41,7 +41,7 @@ export type PersistenceArtifact = unknown;
 export type STATE = 'STARTING' | 'AUTHENTICATING' | 'READY' | 'DISCONNECTED' | 'STOPPED';
 
 export interface OpenWAEventMap {
-  'session.refresh.progress': { ctx: EventContext; refresh: import('@open-wa/schema').SessionRefreshSnapshot };
+  'session.refresh.progress': { ctx: EventContext; refresh: import('@eulab/openwaunlocked-schema').SessionRefreshSnapshot };
   'launch.create.start': StepEvent<{ configSummary?: Record<string, unknown> }>;
   'launch.create.retry': StepEvent<{ reason: string; nextAttempt: number }>;
   'launch.create.ready': StepEvent<{ state: STATE }>;
@@ -175,9 +175,9 @@ export interface OpenWAEventMap {
   'message.received': { ctx: EventContext; message: Message };
   'message.any': { ctx: EventContext; message: Message };
   'interactive.response': { ctx: EventContext; response: unknown };
-  'poll.vote': { ctx: EventContext; vote: import('@open-wa/schema').PollVote };
-  'event.changed': { ctx: EventContext; event: import('@open-wa/schema').WhatsAppEvent };
-  'event.response': { ctx: EventContext; response: import('@open-wa/schema').EventResponse };
+  'poll.vote': { ctx: EventContext; vote: import('@eulab/openwaunlocked-schema').PollVote };
+  'event.changed': { ctx: EventContext; event: import('@eulab/openwaunlocked-schema').WhatsAppEvent };
+  'event.response': { ctx: EventContext; response: import('@eulab/openwaunlocked-schema').EventResponse };
   'message.deleted': { ctx: EventContext; messageId: string; chatId: string; by?: string };
 
   'ack.changed': { ctx: EventContext; ack: Ack };

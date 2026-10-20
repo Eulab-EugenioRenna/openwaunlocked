@@ -1,13 +1,14 @@
 {
-  "name": "@open-wa/stickers",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-stickers",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Local sticker rendering with automatic browser or standalone WASM execution",
   "type": "module",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/stickers"
   },
   "engines": {
     "node": ">=22.21.1"
@@ -36,7 +37,7 @@
     }
   },
   "bin": {
-    "openwa-sticker": "./src/cli.mjs"
+    "openwaunlocked-sticker": "./src/cli.mjs"
   },
   "files": [
     "src",
@@ -47,6 +48,11 @@
     "licenses"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
   }
 }

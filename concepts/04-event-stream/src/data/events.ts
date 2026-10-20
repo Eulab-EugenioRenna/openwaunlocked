@@ -79,13 +79,13 @@ export const events: ExampleEvent[] = [
 export type RouteId = "code" | "webhook" | "chatwoot" | "nodered" | "s3";
 
 export const routes: { id: RouteId; label: string; pkg: string; file: string; lang: string; config: string }[] = [
-  { id: "code", label: "Your code", pkg: "@open-wa/socket-client", file: "", lang: "ts", config: "" },
+  { id: "code", label: "Your code", pkg: "@eulab/openwaunlocked-socket-client", file: "", lang: "ts", config: "" },
   {
-    id: "webhook", label: "Webhook", pkg: "@open-wa/integration-webhook", file: "wa.config.mjs", lang: "js",
+    id: "webhook", label: "Webhook", pkg: "@eulab/openwaunlocked-integration-webhook", file: "wa.config.mjs", lang: "js",
     config: `export default {
   apiKey: process.env.WA_API_KEY,
   port: 8080,
-  plugins: ['@open-wa/integration-webhook'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook'],
   pluginConfig: {
     webhook: {
       url: 'https://hooks.example.com/whatsapp',
@@ -95,11 +95,11 @@ export const routes: { id: RouteId; label: string; pkg: string; file: string; la
 };`,
   },
   {
-    id: "chatwoot", label: "Chatwoot", pkg: "@open-wa/integration-chatwoot", file: "wa.config.mjs", lang: "js",
+    id: "chatwoot", label: "Chatwoot", pkg: "@eulab/openwaunlocked-integration-chatwoot", file: "wa.config.mjs", lang: "js",
     config: `export default {
   apiKey: process.env.WA_API_KEY,
   port: 8080,
-  plugins: ['@open-wa/integration-chatwoot'],
+  plugins: ['@eulab/openwaunlocked-integration-chatwoot'],
   pluginConfig: {
     chatwoot: {
       chatwootUrl: 'https://app.chatwoot.com/api/v1/accounts/123',
@@ -110,20 +110,20 @@ export const routes: { id: RouteId; label: string; pkg: string; file: string; la
 };`,
   },
   {
-    id: "nodered", label: "Node-RED", pkg: "@open-wa/node-red", file: "terminal", lang: "bash",
+    id: "nodered", label: "Node-RED", pkg: "@eulab/openwaunlocked-node-red", file: "terminal", lang: "bash",
     config: `# Easy API keeps running; Node-RED connects to it
 cd ~/.node-red
-npm install @open-wa/node-red
+npm install @eulab/openwaunlocked-node-red
 node-red
 # Add an owa-server node (http://localhost:8080 + your key),
 # then a Listen node on the handler shown here`,
   },
   {
-    id: "s3", label: "S3", pkg: "@open-wa/integration-s3", file: "wa.config.mjs", lang: "js",
+    id: "s3", label: "S3", pkg: "@eulab/openwaunlocked-integration-s3", file: "wa.config.mjs", lang: "js",
     config: `export default {
   apiKey: process.env.WA_API_KEY,
   port: 8080,
-  plugins: ['@open-wa/integration-s3'],
+  plugins: ['@eulab/openwaunlocked-integration-s3'],
   pluginConfig: {
     s3: {
       provider: 'aws',

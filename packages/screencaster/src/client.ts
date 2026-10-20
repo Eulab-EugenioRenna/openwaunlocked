@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────
-//  @open-wa/screencaster/client
+//  @eulab/openwaunlocked-screencaster/client
 //
 //  Framework-agnostic browser-side screencast viewer.
 //  Zero Node.js deps — runs in any modern browser.

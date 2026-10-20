@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import axios from 'axios';
-import { decryptMedia as decryptMediaBuffer } from '@open-wa/decrypt';
+import { decryptMedia as decryptMediaBuffer } from '@eulab/openwaunlocked-decrypt';
 import { Client } from '../Client';
-import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@open-wa/core';
-import { HyperEmitter } from '@open-wa/hyperemitter';
+import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@eulab/openwaunlocked-core';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 
 vi.mock('axios');
-vi.mock('@open-wa/decrypt', () => ({
+vi.mock('@eulab/openwaunlocked-decrypt', () => ({
   decryptMedia: vi.fn(),
 }));
 

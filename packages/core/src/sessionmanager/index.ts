@@ -1,5 +1,5 @@
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { OpenWAEventMap, STATE } from '../events/eventMap';
 
 export type SessionValidationStage = 'post_injection' | 'post_patch' | 'post_overlay';

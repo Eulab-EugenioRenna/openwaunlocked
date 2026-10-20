@@ -4,7 +4,7 @@ import {
     DriverCapabilityKey,
     IBrowser,
     IPage,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 import { LightpandaPage } from './LightpandaPage';
 import { installTransferablePorts } from './transferablePorts';
 import { compressionPrelude } from './compressionStreams';

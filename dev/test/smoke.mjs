@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const requireDriver = createRequire(require.resolve('@open-wa/driver-puppeteer'));
+const requireDriver = createRequire(require.resolve('@eulab/openwaunlocked-driver-puppeteer'));
 const puppeteer = requireDriver('puppeteer-core');
 const base = process.env.DEV_TEST_URL ?? 'http://127.0.0.1:8099';
 const health = await (await fetch(`${base}/health`)).json();

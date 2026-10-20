@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Configuration Precedence Test Suite
+ * @eulab/openwaunlocked-config - Configuration Precedence Test Suite
  *
  * Tests the config merging order:
  *

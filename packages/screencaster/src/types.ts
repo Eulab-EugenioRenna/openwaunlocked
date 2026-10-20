@@ -1,5 +1,5 @@
 // ────────────────────────────────────────────────────────────
-//  @open-wa/screencaster — Shared Protocol Types
+//  @eulab/openwaunlocked-screencaster — Shared Protocol Types
 //
 //  Consumed by both the server (Node.js) and client (browser).
 //  This file has ZERO runtime deps — pure type definitions + enums.
@@ -154,7 +154,7 @@ export type ClientMessage =
 
 /**
  * A minimal CDP-capable page interface.
- * This is a subset of IPage from @open-wa/driver-interface
+ * This is a subset of IPage from @eulab/openwaunlocked-driver-interface
  * that captures exactly what the screencaster needs.
  *
  * Consumers pass in an IPage from driver-interface; the factory

@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import type { Config } from '@open-wa/schema';
+import type { Config } from '@eulab/openwaunlocked-schema';
 import type { ClientMethodMap } from '../types';
 import { apiKeyMiddleware } from '../auth/api-key';
 import { rateLimitMiddleware } from '../middleware/rate-limit';

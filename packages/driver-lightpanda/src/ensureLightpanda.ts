@@ -6,7 +6,7 @@ import { homedir } from 'node:os';
 import { delimiter, join, resolve } from 'node:path';
 import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
-import { toPublicError, type BrowserProvisionOptions, type IDriverContext } from '@open-wa/driver-interface';
+import { toPublicError, type BrowserProvisionOptions, type IDriverContext } from '@eulab/openwaunlocked-driver-interface';
 
 const VERSION = '1.0.0';
 

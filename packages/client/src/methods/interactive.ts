@@ -2,7 +2,7 @@ import type { Client } from '../Client';
 import {
   SendInteractiveInputSchema, SendRawMessageInputSchema, fileToDataUrlCodec,
   type InteractiveContent, type InteractiveHeader, type JsonValue, type MessageId,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 
 declare const WAPI: {
   sendInteractive?: (to: string, content: InteractiveContent) => Promise<string>;

@@ -37,17 +37,17 @@ jobs:
 
       - name: Build schema dependencies
         run: |
-          pnpm --filter @open-wa/config build
-          pnpm --filter @open-wa/utils build
+          pnpm --filter @eulab/openwaunlocked-config build
+          pnpm --filter @eulab/openwaunlocked-utils build
 
       - name: OG helper tests
         run: pnpm --filter docs test:og
 
       - name: Generated client docs are idempotent
         run: |
-          pnpm --filter @open-wa/schema generate
+          pnpm --filter @eulab/openwaunlocked-schema generate
           if ! git diff --exit-code -- apps/docs/content/docs/reference/client; then
-            echo "::error::Generated client reference docs are stale. Run 'pnpm --filter @open-wa/schema generate' and commit the result."
+            echo "::error::Generated client reference docs are stale. Run 'pnpm --filter @eulab/openwaunlocked-schema generate' and commit the result."
             exit 1
           fi
 

@@ -8,9 +8,9 @@ import { getCanonicalToolName } from '../src/tool-naming';
 describe('getMcpToolDefinitions', () => {
   let tools: McpToolDefinition[];
 
-  // We import @open-wa/schema/methods to populate the registry
+  // We import @eulab/openwaunlocked-schema/methods to populate the registry
   beforeAll(async () => {
-    await import('@open-wa/schema/methods');
+    await import('@eulab/openwaunlocked-schema/methods');
     tools = getMcpToolDefinitions();
   });
 

@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/driver-playwright",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-driver-playwright",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Playwright driver implementation for open-wa",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
@@ -20,7 +20,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@open-wa/driver-interface": "workspace:*",
+    "@eulab/openwaunlocked-driver-interface": "workspace:*",
     "playwright": "^1.63.0"
   },
   "devDependencies": {
@@ -36,14 +36,20 @@
         "import": "./dist/index.cjs",
         "types": "./dist/index.d.cts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/driver-playwright"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "files": [
     "dist"
-  ]
+  ],
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

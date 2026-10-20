@@ -1,4 +1,4 @@
-import { RuntimeCapabilities } from '@open-wa/runtime-core';
+import { RuntimeCapabilities } from '@eulab/openwaunlocked-runtime-core';
 import { Effect, Exit } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { EdgeRuntimeLayer } from './index';

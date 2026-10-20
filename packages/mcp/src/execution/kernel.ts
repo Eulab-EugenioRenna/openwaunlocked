@@ -1,4 +1,4 @@
-import type { HttpMethodDefinition } from '@open-wa/schema';
+import type { HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 import { normalizeMethodPayload } from './args';
 import { invokeClientMethod } from './invoke';
 

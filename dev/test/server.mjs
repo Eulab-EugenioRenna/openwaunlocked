@@ -6,10 +6,10 @@ import { mkdir, readFile, writeFile, access, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { randomBytes } from 'node:crypto';
 import { createRequire } from 'node:module';
-import { createClient } from '@open-wa/core';
-import { Client } from '@open-wa/client';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
-import { clientRegistry } from '@open-wa/schema';
+import { createClient } from '@eulab/openwaunlocked-core';
+import { Client } from '@eulab/openwaunlocked-client';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
+import { clientRegistry } from '@eulab/openwaunlocked-schema';
 const require = createRequire(import.meta.url);
 const port = Number(process.env.DEV_PORT ?? 8099);
 const statePath = process.env.DEV_STATE_PATH ?? '/state';
@@ -55,7 +55,7 @@ async function connect() {
       browserArgs: ['--no-sandbox', '--disable-dev-shm-usage', '--use-fake-ui-for-media-stream'], allowDangerousBrowserArgs: true,
       qrTimeoutMs: 0, authTimeoutMs: 0,
       callMediaHost: { async prepare(...args) {
-        const { makeNodeCallMediaHost } = await import('@open-wa/runtime-node');
+        const { makeNodeCallMediaHost } = await import('@eulab/openwaunlocked-runtime-node');
         return makeNodeCallMediaHost().prepare(...args);
       } },
       logConsole: false, logConsoleErrors: false,

@@ -1,5 +1,5 @@
-import { successResponseSchema } from '@open-wa/schema';
-import type { HttpMethodDefinition } from '@open-wa/schema';
+import { successResponseSchema } from '@eulab/openwaunlocked-schema';
+import type { HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 import { API_VERSION } from '../version';
 
 function schemaToOpenApi(schema: { toJSONSchema?: (params?: unknown) => unknown }) {

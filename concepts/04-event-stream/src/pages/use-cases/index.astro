@@ -2,10 +2,10 @@
 import Page from "../../layouts/Page.astro";
 import { useCases, href } from "../../data/site";
 const map = [
-  { path: "SocketClient + Chatwoot plugin", methods: ["onMessage", "sendText", "@open-wa/integration-chatwoot"], link: "integrations/#chatwoot" },
+  { path: "SocketClient + Chatwoot plugin", methods: ["onMessage", "sendText", "@eulab/openwaunlocked-integration-chatwoot"], link: "integrations/#chatwoot" },
   { path: "Easy API", methods: ["sendText", "sendEvent", "onAck"], link: "quickstart/", note: "Messaging numbers that are not already contacts needs a Restricted key." },
   { path: "SocketClient", methods: ["onMessage", "onGlobalParticipantsChanged", "onPollVote", "onEventResponse"], link: "features/" },
-  { path: "Easy API + Webhook plugin or Node-RED", methods: ["@open-wa/integration-webhook", "@open-wa/node-red"], link: "integrations/#webhooks" },
+  { path: "Easy API + Webhook plugin or Node-RED", methods: ["@eulab/openwaunlocked-integration-webhook", "@eulab/openwaunlocked-node-red"], link: "integrations/#webhooks" },
   { path: "Easy API, one sessionId per number", methods: ["--session-id", "sessionDataEncryptionKeyFile"], link: "features/#multi" },
   { path: "MCP server", methods: ["mcp.enabled", "exposeToolsMeta"], link: "ai-agents/" },
 ];

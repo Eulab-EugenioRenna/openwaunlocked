@@ -2,7 +2,7 @@ import { constants } from 'node:fs';
 import { access, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { delimiter, dirname, join } from 'node:path';
-import { toPublicError } from '@open-wa/driver-interface';
+import { toPublicError } from '@eulab/openwaunlocked-driver-interface';
 import { getCliOutputSink, promptChoice } from './cli/output-sink';
 
 export type BrowserChoice = 'chrome' | 'chromium' | 'lightpanda';

@@ -2,7 +2,7 @@ import { constants } from 'node:fs';
 import { access, mkdir, mkdtemp, readdir, rename, rm, stat } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { toPublicError, type BrowserProvisionOptions, type IDriverContext } from '@open-wa/driver-interface';
+import { toPublicError, type BrowserProvisionOptions, type IDriverContext } from '@eulab/openwaunlocked-driver-interface';
 
 export interface EnsureBrowserOptions {
     executablePath?: string;

@@ -60,7 +60,7 @@ export const jobCard: Record<string, { line: string; preview: string }> = {
   stickers: { line: "Turn a photo into a WebP sticker with effects such as comic and sparkle, rendered locally.", preview: "comic, sparkle" },
   media: { line: "Images with captions, voice notes, PDFs, video notes and view-once media.", preview: "invoice-1042.pdf" },
   "order-updates": { line: "Your shop's webhook calls the API when an order ships; the customer can reply.", preview: "Order 1042 is on its way." },
-  "support-inbox": { line: "Messages appear as Chatwoot conversations and agents reply from there.", preview: "@open-wa/integration-chatwoot" },
+  "support-inbox": { line: "Messages appear as Chatwoot conversations and agents reply from there.", preview: "@eulab/openwaunlocked-integration-chatwoot" },
   "ai-agent": { line: "Turn on the built-in MCP server and each method becomes a tool your agent can call.", preview: "http://localhost:8080/mcp" },
 };
 

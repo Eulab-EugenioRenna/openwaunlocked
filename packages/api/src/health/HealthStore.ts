@@ -10,7 +10,7 @@
  * only stores small summaries — no message payloads.
  */
 
-import type { SessionRefreshSnapshot } from '@open-wa/schema';
+import type { SessionRefreshSnapshot } from '@eulab/openwaunlocked-schema';
 
 const MAX_RECONNECTIONS = 100;
 const MAX_TIMELINE_STEPS = 50;

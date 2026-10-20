@@ -17,7 +17,7 @@ import type { DecryptableMessage, DecryptOptions } from './types';
  *
  * @example
  * ```ts
- * import { decryptMedia } from '@open-wa/decrypt';
+ * import { decryptMedia } from '@eulab/openwaunlocked-decrypt';
  *
  * const buffer = await decryptMedia(message);
  * ```
@@ -61,7 +61,7 @@ function validateMessage(message: DecryptableMessage): void {
   if (missing.length === 1 && missing[0] === 'size') {
     if (!NON_SIZE_TYPES.includes(message.type as (typeof NON_SIZE_TYPES)[number])) {
       console.warn(
-        '@open-wa/decrypt: size property is missing. File will fail an integrity check.',
+        '@eulab/openwaunlocked-decrypt: size property is missing. File will fail an integrity check.',
       );
     }
     return;

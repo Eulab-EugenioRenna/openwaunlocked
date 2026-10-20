@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "author": "Eulab",
+  "author": "EULAB",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -30,7 +30,7 @@
     "@ai-sdk/react": "4.0.125",
     "@base-ui/react": "catalog:",
     "@cloudflare/vite-plugin": "^1.62.0",
-    "@open-wa/ui-components": "workspace:*",
+    "@eulab/openwaunlocked-ui-components": "workspace:*",
     "@openrouter/ai-sdk-provider": "3.1.0",
     "@paper-design/shaders-react": "0.0.81",
     "@radix-ui/react-presence": "^1.1.10",

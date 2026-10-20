@@ -20,7 +20,7 @@ const jsonSchema = zodToJsonSchema(ConfigSchema, {
 const schemaWithMeta = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   title: 'open-wa Configuration',
-  description: 'Configuration schema for @open-wa/config (wa.config.json)',
+  description: 'Configuration schema for @eulab/openwaunlocked-config (wa.config.json)',
   ...jsonSchema,
 };
 

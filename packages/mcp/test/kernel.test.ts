@@ -7,7 +7,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { executeCapability, type ExecutionContext } from '../src/execution/kernel';
 import { z } from 'zod';
-import type { HttpMethodDefinition } from '@open-wa/schema';
+import type { HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 
 /**
  * Helper to create a minimal HttpMethodDefinition-like object for testing.

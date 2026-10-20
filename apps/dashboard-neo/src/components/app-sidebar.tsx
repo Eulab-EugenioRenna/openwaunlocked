@@ -190,7 +190,7 @@ export function AppSidebar({
           to="/"
           search={search}
           onClick={onClose}
-          aria-label="Eulab Open overview"
+          aria-label="EULAB Open overview"
           className="flex min-w-0 items-center gap-2.5 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-border-focus-ring"
         >
           <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-accent-600 font-semibold text-text-white">
@@ -198,7 +198,7 @@ export function AppSidebar({
           </span>
           {!rail && (
             <span className="text-title-3-semibold text-text-primary">
-              Eulab Open
+              EULAB Open
             </span>
           )}
         </Link>

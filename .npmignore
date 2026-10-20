@@ -52,3 +52,8 @@ docs*
 **/bin/localhost.crt
 **/bin/localhost.key
 **/bin/session.data.zst
+
+.env
+.env.*
+.npmrc
+.release

@@ -1,6 +1,6 @@
 // Read-only audit. Never sends, changes a profile, publishes status, joins groups or starts calls.
 import assert from 'node:assert/strict';
-import { clientRegistry } from '@open-wa/schema';
+import { clientRegistry } from '@eulab/openwaunlocked-schema';
 const base = process.env.DEV_TEST_URL ?? 'http://127.0.0.1:8099';
 const clean = text => String(text).replace(/\d{7,}/g, '[redacted]');
 async function request(method, params) {

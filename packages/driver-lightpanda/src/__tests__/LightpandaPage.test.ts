@@ -1,4 +1,4 @@
-import type { DriverCapabilities } from '@open-wa/driver-interface';
+import type { DriverCapabilities } from '@eulab/openwaunlocked-driver-interface';
 import { describe, expect, it } from 'vitest';
 import { LightpandaPage } from '../LightpandaPage';
 import { LightpandaRenderingError } from '../errors';

@@ -1,4 +1,4 @@
-import type { Logger } from '@open-wa/logger';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { ChatwootConfig } from './config';
 
 interface Contact {

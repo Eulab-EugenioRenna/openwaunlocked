@@ -3,7 +3,7 @@ import type {
   ChatId,
   Chat,
   Message,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 import { createUnsupportedMethodStub } from '../runtimeSurface';
 
 type ChatMuteDuration = 'FOREVER' | 'EIGHT_HOURS' | 'ONE_WEEK' | number;

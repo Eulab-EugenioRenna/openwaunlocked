@@ -1,4 +1,4 @@
-import type { SessionRefreshSnapshot } from '@open-wa/socket-client';
+import type { SessionRefreshSnapshot } from '@eulab/openwaunlocked-socket-client';
 
 const labels = {
   idle: '', preparing: 'Downloading patches…',

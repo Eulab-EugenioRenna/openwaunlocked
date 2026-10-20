@@ -56,5 +56,5 @@ export const generalFaqs = [
   { q: "Can my WhatsApp account get banned?", a: "It can. Automation tools can cause a WhatsApp account to be restricted or banned, and you accept that risk when you use open-wa. It's unofficial and isn't affiliated with WhatsApp or Meta. If you need an officially supported route, compare it with the WhatsApp Business Platform." },
   { q: "Which languages can I use?", a: "The runtime is Node.js. Anything that can make HTTP requests can use the Easy API, and every instance serves Swagger and Postman files you can generate clients from." },
   { q: "How is it different from the official Cloud API?", a: "The official WhatsApp Business Platform needs a Meta business account, approved templates for conversations you start and per-message pricing, and it's officially supported. open-wa uses the number you already have, is free for most methods, and is unofficial with account-ban risk." },
-  { q: "I'm on v4. What happens if I upgrade?", a: "Version 5 is the current release line and unqualified installs get v5. Pin v4 with npm install @open-wa/wa-automate@4 while you follow the migration guide." },
+  { q: "I'm on v4. What happens if I upgrade?", a: "Version 5 is the current release line and unqualified installs get v5. Pin v4 with npm install @eulab/openwaunlocked@4 while you follow the migration guide." },
 ];

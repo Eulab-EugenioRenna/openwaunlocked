@@ -1,4 +1,4 @@
-import { IBrowser, IPage, DriverCapabilities } from '@open-wa/driver-interface';
+import { IBrowser, IPage, DriverCapabilities } from '@eulab/openwaunlocked-driver-interface';
 import type { Browser } from 'puppeteer-core';
 import { PuppeteerPage } from './PuppeteerPage';
 

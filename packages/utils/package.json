@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/utils",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-utils",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Shared utility functions for open-wa",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -43,7 +43,8 @@
         "import": "./dist/index.mjs",
         "require": "./dist/index.cjs"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "open-wa",
@@ -52,7 +53,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/utils"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

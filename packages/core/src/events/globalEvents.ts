@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { Effect, Exit, Scope } from 'effect';
-import { EventEmitter, HyperEmitter, type EventCallback, type EventName } from '@open-wa/hyperemitter';
+import { EventEmitter, HyperEmitter, type EventCallback, type EventName } from '@eulab/openwaunlocked-hyperemitter';
 import type { OpenWAEventMap } from './eventMap';
-import { eventRegistry } from '@open-wa/schema';
+import { eventRegistry } from '@eulab/openwaunlocked-schema';
 
 type SessionBridge = { hasMessageListeners: () => boolean; detach: () => Promise<void> };
 type GlobalEvents = {
@@ -12,7 +12,7 @@ type GlobalEvents = {
 
 // ESM and CommonJS entry points must share the same emitter. Do not tie the
 // singleton to a session scope: consumers use it between modules before create().
-const globalKey = Symbol.for('@open-wa/core/global-events/effect-hyperemitter');
+const globalKey = Symbol.for('@eulab/openwaunlocked-core/global-events/effect-hyperemitter');
 const globals = globalThis as typeof globalThis & { [globalKey]?: GlobalEvents };
 const shared: GlobalEvents = globals[globalKey] ??= {
   emitter: new EventEmitter({ delimiter: '.', ignoreErrors: true }),

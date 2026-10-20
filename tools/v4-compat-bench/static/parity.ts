@@ -15,9 +15,9 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-// The v5 method surface is read from the BUILT @open-wa/schema dist by relative
+// The v5 method surface is read from the BUILT @eulab/openwaunlocked-schema dist by relative
 // path, so this dev tool does not need to be a workspace member. CI must build
-// @open-wa/schema before running this (see the workflow step).
+// @eulab/openwaunlocked-schema before running this (see the workflow step).
 type SchemaModule = {
   clientRegistry: {
     getAll(): Array<{
@@ -35,7 +35,7 @@ const REPO_ROOT = path.resolve(HERE, '../../..');
 // v4 is frozen. Its public method surface is captured once into a committed
 // snapshot so this harness does not need any v4 source in the tree. The
 // snapshot is regenerated with `--snapshot` from the documented legacy client
-// (kept in `@open-wa/legacy-documented`) only if the v4 surface ever changes.
+// (kept in `@eulab/openwaunlocked-legacy-documented`) only if the v4 surface ever changes.
 const LEGACY_DOCUMENTED_CLIENT = path.join(
   REPO_ROOT,
   'packages/legacy-documented/src/api/Client.ts',
@@ -180,7 +180,7 @@ export async function buildReport(): Promise<ParityReport> {
   return {
     generatedFrom: {
       v4: 'tools/v4-compat-bench/static/v4-surface.json (snapshot of the v4 Client)',
-      v5: '@open-wa/schema clientRegistry.getAll()',
+      v5: '@eulab/openwaunlocked-schema clientRegistry.getAll()',
     },
     totals: {
       v4Methods: v4.length,

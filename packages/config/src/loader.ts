@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Config Loader
+ * @eulab/openwaunlocked-config - Config Loader
  *
  * Uses cosmiconfig to discover and load configuration files.
  * Supports: wa.config.js, wa.config.ts, wa.config.json, .warc, package.json#wa

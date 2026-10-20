@@ -1,4 +1,4 @@
-import type { HostAccount } from '@open-wa/schema';
+import type { HostAccount } from '@eulab/openwaunlocked-schema';
 import type { Client } from '../Client';
 import { createUnsupportedMethodStub } from '../runtimeSurface';
 

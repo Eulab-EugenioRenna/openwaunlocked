@@ -7,7 +7,7 @@ const editorial = require("./image-highlights.json");
 
 function renderMarkdown(text) {
   return execFileSync("gh", ["api", "markdown", "--method", "POST", "--input", "-", "-H", "Accept: text/html"], {
-    input: JSON.stringify({ text, mode: "gfm", context: "open-wa/wa-automate-nodejs" }),
+    input: JSON.stringify({ text, mode: "gfm", context: "Eulab-EugenioRenna/openwaunlocked" }),
     encoding: "utf8", maxBuffer: 10 * 1024 * 1024, timeout: 60000,
   });
 }

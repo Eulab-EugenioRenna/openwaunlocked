@@ -25,7 +25,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@open-wa/ui-components/popover"
+} from "@eulab/openwaunlocked-ui-components/popover"
 
 export const Route = createRootRoute({
   validateSearch: (search: Record<string, unknown>) => {

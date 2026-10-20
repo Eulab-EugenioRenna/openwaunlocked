@@ -1,5 +1,5 @@
 /**
- * @open-wa/decrypt — WhatsApp media decryption with zero external dependencies.
+ * @eulab/openwaunlocked-decrypt — WhatsApp media decryption with zero external dependencies.
  *
  * All crypto uses node:crypto builtins (hkdfSync, createDecipheriv).
  * HTTP fetching uses the global fetch API (Bun/Node 18+).

@@ -1,15 +1,15 @@
 {
   "name": "openwa-free-dev-test-harness",
-  "author": "Eulab",
+  "author": "EULAB",
   "private": true,
   "type": "module",
   "dependencies": {
     "qrcode": "1.5.4",
-    "@open-wa/client": "workspace:*",
-    "@open-wa/core": "workspace:*",
-    "@open-wa/driver-puppeteer": "workspace:*",
-    "@open-wa/runtime-node": "workspace:*",
-    "@open-wa/schema": "workspace:*"
+    "@eulab/openwaunlocked-client": "workspace:*",
+    "@eulab/openwaunlocked-core": "workspace:*",
+    "@eulab/openwaunlocked-driver-puppeteer": "workspace:*",
+    "@eulab/openwaunlocked-runtime-node": "workspace:*",
+    "@eulab/openwaunlocked-schema": "workspace:*"
   },
   "files": [
     "server.mjs",

@@ -1,7 +1,7 @@
 import type { Client } from './Client';
-import type { StickerInput, StickerJob, StickerRuntime } from '@open-wa/stickers';
-import type { MessageId } from '@open-wa/schema';
-import { SendTextResultSchema } from '@open-wa/schema';
+import type { StickerInput, StickerJob, StickerRuntime } from '@eulab/openwaunlocked-stickers';
+import type { MessageId } from '@eulab/openwaunlocked-schema';
+import { SendTextResultSchema } from '@eulab/openwaunlocked-schema';
 import { SendStickerError } from './SendStickerError';
 
 type StickerSendResult = { ok: true; messageId: string } | { ok: false; code: string; message: string; outcome: 'not_sent' | 'unknown' };
@@ -23,7 +23,7 @@ export async function sendClientSticker(client: Client, to: string, input: Stick
   let pending = runtimes.get(client);
   if (!pending) {
     pending = (async () => {
-      const [{ createStickerRuntime }, { createBrowserBackend }] = await Promise.all([import('@open-wa/stickers'), import('@open-wa/stickers/browser')]);
+      const [{ createStickerRuntime }, { createBrowserBackend }] = await Promise.all([import('@eulab/openwaunlocked-stickers'), import('@eulab/openwaunlocked-stickers/browser')]);
       return createStickerRuntime({ browser: createBrowserBackend({ evaluate: (fn, arg) => client.evaluate(fn, arg) }) });
     })();
     runtimes.set(client, pending);

@@ -1,6 +1,6 @@
 export { createClient } from './createClient';
 export type { CreateClientOptions, OpenWAClient } from './createClient';
-export type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@open-wa/schema';
+export type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@eulab/openwaunlocked-schema';
 export { CallingService } from './calling/CallingService';
 export type { CallMediaHost, PreparedCallMedia, AudioFrame } from './calling/ports';
 

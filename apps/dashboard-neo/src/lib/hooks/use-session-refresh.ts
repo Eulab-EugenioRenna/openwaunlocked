@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { SessionRefreshOptions, SessionRefreshSnapshot } from '@open-wa/socket-client';
+import type { SessionRefreshOptions, SessionRefreshSnapshot } from '@eulab/openwaunlocked-socket-client';
 import { getApiKey, getApiUrl, getClient } from '@/lib/api-client';
 import { useDemo } from '@/lib/demo/use-demo';
 import { useSocket } from './use-socket';

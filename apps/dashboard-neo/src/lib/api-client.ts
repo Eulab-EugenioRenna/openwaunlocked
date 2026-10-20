@@ -1,7 +1,7 @@
 /**
  * Dashboard API Client
  *
- * Wraps @open-wa/socket-client's SocketClient for use in the dashboard.
+ * Wraps @eulab/openwaunlocked-socket-client's SocketClient for use in the dashboard.
  * The SocketClient uses a Proxy to expose all Client methods directly,
  * so `client.sendText(...)` works out of the box.
  *
@@ -12,17 +12,17 @@
  * 4. meta tag (owa-api-url)
  * 5. Current window origin (same host:port)
  */
-export { SocketClient } from "@open-wa/socket-client"
-export type { Client, ClientMethods } from "@open-wa/socket-client"
+export { SocketClient } from "@eulab/openwaunlocked-socket-client"
+export type { Client, ClientMethods } from "@eulab/openwaunlocked-socket-client"
 
-import { SocketClient } from "@open-wa/socket-client"
+import { SocketClient } from "@eulab/openwaunlocked-socket-client"
 
 const STORAGE_KEY = "wa-dashboard-connection"
 const API_KEY_STORAGE_KEY = "wa-dashboard-api-key"
 
 // We lazy-connect so SSR doesn't try to open a socket.
-let _client: (SocketClient & import("@open-wa/socket-client").Client) | null = null
-let _connecting: Promise<SocketClient & import("@open-wa/socket-client").Client> | null = null
+let _client: (SocketClient & import("@eulab/openwaunlocked-socket-client").Client) | null = null
+let _connecting: Promise<SocketClient & import("@eulab/openwaunlocked-socket-client").Client> | null = null
 
 /**
  * Get or create the singleton SocketClient instance.

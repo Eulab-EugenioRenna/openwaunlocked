@@ -1,14 +1,14 @@
 import { SessionRefreshController } from './livePatch/SessionRefreshController';
 import { installDocumentRuntime } from './livePatch/installDocument';
-import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@open-wa/schema';
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import { createLogger, Logger } from '@open-wa/logger';
-import type { IDriver, LightpandaOptions, BrowserProvisionOptions } from '@open-wa/driver-interface';
-import { requireCapability, type CapabilitySubject } from '@open-wa/driver-interface';
+import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@eulab/openwaunlocked-schema';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import { createLogger, Logger } from '@eulab/openwaunlocked-logger';
+import type { IDriver, LightpandaOptions, BrowserProvisionOptions } from '@eulab/openwaunlocked-driver-interface';
+import { requireCapability, type CapabilitySubject } from '@eulab/openwaunlocked-driver-interface';
 import { OpenWAEventMap, STATE } from './events/eventMap';
 import { attachGlobalEvents } from './events/globalEvents';
 import { PluginHost, loadPlugins } from './plugins/index';
-import type { Plugin, PluginClient } from '@open-wa/plugin-sdk';
+import type { Plugin, PluginClient } from '@eulab/openwaunlocked-plugin-sdk';
 import {
   SessionManager,
   SessionStore,
@@ -21,7 +21,7 @@ import type {
   LicenseServerConfig,
 } from './transport/index';
 import { Effect } from 'effect';
-import type { CallingOptions } from '@open-wa/schema';
+import type { CallingOptions } from '@eulab/openwaunlocked-schema';
 import type { CallMediaHost } from './calling/ports';
 import {
   SessionScope,
@@ -33,7 +33,7 @@ import {
   type RuntimeObservabilityShape,
   type RuntimeCauseRecord,
   makeInMemoryObservability,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 
 import type { SessionPersistenceConfig } from './transport/sessionPersistence';
 import type { SessionEncryptionOptions } from './transport/sessionEncryption';
@@ -57,7 +57,7 @@ export interface CreateClientOptions extends SessionPersistenceConfig, SessionEn
    * Config-driven plugin loading: array of npm package names or file paths.
    * These are dynamically imported at startup.
    *
-   * @example ['@open-wa/integration-chatwoot', './my-local-plugin']
+   * @example ['@eulab/openwaunlocked-integration-chatwoot', './my-local-plugin']
    */
   pluginRefs?: string[];
 

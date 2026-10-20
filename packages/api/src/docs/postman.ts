@@ -1,4 +1,4 @@
-import type { HttpMethodDefinition } from '@open-wa/schema';
+import type { HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 
 export function createPostmanCollection(
   methodDefinitions: HttpMethodDefinition[],

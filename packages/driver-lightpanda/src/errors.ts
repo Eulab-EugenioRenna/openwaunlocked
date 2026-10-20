@@ -1,4 +1,4 @@
-import { DriverCapabilityError, DriverCapabilityKey } from '@open-wa/driver-interface';
+import { DriverCapabilityError, DriverCapabilityKey } from '@eulab/openwaunlocked-driver-interface';
 
 const LIGHTPANDA_RENDERING_REASON = 'Lightpanda has no rendering engine';
 

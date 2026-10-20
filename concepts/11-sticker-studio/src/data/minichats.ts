@@ -51,7 +51,7 @@ export const miniChats: Record<string, { who: string; lines: Line[]; call: strin
   },
   "support-inbox": {
     who: "Help desk",
-    call: "plugins: ['@open-wa/integration-chatwoot']",
+    call: "plugins: ['@eulab/openwaunlocked-integration-chatwoot']",
     lines: [
       { kind: "in", text: "My parcel says delivered but it isn't here", time: "14:02" },
       { kind: "out", text: "Sorry about that. Checking with the courier now. (Sent from Chatwoot)", time: "14:04" },

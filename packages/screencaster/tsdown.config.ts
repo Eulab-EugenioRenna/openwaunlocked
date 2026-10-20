@@ -11,7 +11,7 @@ export default defineConfig({
     clean: true,
     deps: {
         neverBundle: [
-            '@open-wa/driver-interface',
+            '@eulab/openwaunlocked-driver-interface',
             'hono',
             'hono/*',
         ],

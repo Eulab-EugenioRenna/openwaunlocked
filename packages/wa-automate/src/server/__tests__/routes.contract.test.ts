@@ -1,7 +1,7 @@
 // import { Hono } from 'hono';
 import { describe, it, expect } from 'vitest';
-import { clientRegistry } from '@open-wa/schema';
-import '@open-wa/schema/methods';
+import { clientRegistry } from '@eulab/openwaunlocked-schema';
+import '@eulab/openwaunlocked-schema/methods';
 
 describe('server route registration', () => {
     it('should register routes for all methods', () => {

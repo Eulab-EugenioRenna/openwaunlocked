@@ -1,7 +1,7 @@
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { OpenWAEventMap } from '@open-wa/core';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { OpenWAEventMap } from '@eulab/openwaunlocked-core';
 import type { BrokerEntry } from '../runtime/output-broker';
-import type { CliQrPayload, CliStatusUpdate } from '@open-wa/wa-automate';
+import type { CliQrPayload, CliStatusUpdate } from '@eulab/openwaunlocked';
 
 export interface ProjectionSnapshot {
   phase: string;

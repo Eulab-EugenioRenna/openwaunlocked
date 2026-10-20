@@ -9,3 +9,5 @@ const targetDir = resolve(packageRoot, 'dist/transport/assets');
 
 await mkdir(targetDir, { recursive: true });
 await cp(sourceDir, targetDir, { recursive: true });
+// The npm package must carry the common patch bundle alongside WAPI.
+await cp(resolve(packageRoot, '../../patches.json'), resolve(targetDir, 'patches.json'));

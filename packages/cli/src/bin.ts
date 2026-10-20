@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { resetCliOutputSink, runCli, setCliOutputSink, type CliRuntimeResult } from '@open-wa/wa-automate';
+import { resetCliOutputSink, runCli, setCliOutputSink, type CliRuntimeResult } from '@eulab/openwaunlocked';
 import { TunnelClient } from './tunnel-client';
 import { parseCliLocalFlags } from './config/cli-flags-schema';
 import { performGracefulShutdown, writeVisibleFatalError } from './runtime/cli-termination';

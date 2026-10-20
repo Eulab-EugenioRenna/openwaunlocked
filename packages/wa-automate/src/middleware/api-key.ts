@@ -1,1 +1,1 @@
-export { apiKeyMiddleware } from '@open-wa/api';
+export { apiKeyMiddleware } from '@eulab/openwaunlocked-api';

@@ -1,1 +1,1 @@
-export { normalizeMethodPayload } from '@open-wa/mcp';
+export { normalizeMethodPayload } from '@eulab/openwaunlocked-mcp';

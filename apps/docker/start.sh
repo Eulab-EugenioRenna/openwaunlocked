@@ -25,10 +25,10 @@ echo "Using version: $WA_AUTOMATE_VERSION"
 echo $@
 if [[ $@ == *"--no-update"* ]]; then
   echo "Skipping update"
-  else eval "PUPPETEER_SKIP_DOWNLOAD=true npm i @open-wa/wa-automate@$WA_AUTOMATE_VERSION --ignore-scripts"
+  else eval "PUPPETEER_SKIP_DOWNLOAD=true npm i @eulab/openwaunlocked@$WA_AUTOMATE_VERSION --ignore-scripts"
 fi
 exec node $@
-# exec dumb-init -- node ./node_modules/@open-wa/wa-automate/bin/server.js $@
+# exec dumb-init -- node ./node_modules/@eulab/openwaunlocked/bin/server.js $@
 # node=$!
 # echo "PID: $node"
 # wait $node

@@ -17,7 +17,7 @@ try {
   await writeFile(candidate, `import { Deferred, Effect, Exit, PubSub, Scope } from 'effect';\nexport ${report.implementations.find(i => i.name === 'pubsub-bounded-256-batched').source}\n`);
   const { PubSubEmitter } = await import(pathToFileURL(candidate).href);
   const outfile = join(scratch, 'hyper.mjs');
-  await build({ entryPoints: [join(root, 'packages/hyperemitter/src/index.ts')], outfile, bundle: true, packages: 'external', platform: 'node', format: 'esm', logLevel: 'silent', plugins: [{ name: 'logger', setup(c) { c.onResolve({ filter: /^@open-wa\/logger$/ }, () => ({ path: require.resolve('@open-wa/logger'), external: true })); } }] });
+  await build({ entryPoints: [join(root, 'packages/hyperemitter/src/index.ts')], outfile, bundle: true, packages: 'external', platform: 'node', format: 'esm', logLevel: 'silent', plugins: [{ name: 'logger', setup(c) { c.onResolve({ filter: /^@eulab\/openwaunlocked-logger$/ }, () => ({ path: require.resolve('@eulab/openwaunlocked-logger'), external: true })); } }] });
   const { EventEmitter } = await import(pathToFileURL(outfile).href);
   const pubsub = await PubSubEmitter.make(true);
   const gate = Deferred.makeUnsafe(), firstStarted = Deferred.makeUnsafe();

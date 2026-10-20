@@ -5,7 +5,7 @@ const compressionStop = vi.fn();
 const compressionCompress = vi.fn(async () => undefined);
 const backupSession = vi.fn(async () => 'session.data.zst');
 
-vi.mock('@open-wa/logger', () => ({
+vi.mock('@eulab/openwaunlocked-logger', () => ({
     createLogger: () => ({
         debug: vi.fn(),
         info: vi.fn(),
@@ -14,7 +14,7 @@ vi.mock('@open-wa/logger', () => ({
     }),
 }));
 
-vi.mock('@open-wa/session-sync', () => ({
+vi.mock('@eulab/openwaunlocked-session-sync', () => ({
     LocalSessionCompression: class {
         start = compressionStart;
         stop = compressionStop;

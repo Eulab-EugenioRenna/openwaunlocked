@@ -1,6 +1,6 @@
-import type { CreateClientOptions, OpenWAEventMap } from '@open-wa/core';
-import type { Client } from '@open-wa/client';
-import { ConfigSchema, resolveConfig, type PartialConfig, type Config, type TrackedConfig } from '@open-wa/config';
+import type { CreateClientOptions, OpenWAEventMap } from '@eulab/openwaunlocked-core';
+import type { Client } from '@eulab/openwaunlocked-client';
+import { ConfigSchema, resolveConfig, type PartialConfig, type Config, type TrackedConfig } from '@eulab/openwaunlocked-config';
 import { accessSync, constants, existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { getCliOutputSink } from './cli/output-sink';
@@ -217,7 +217,7 @@ export async function selectRuntimeDriver(
     }
     if (!kind && executableResolution.executablePath === undefined && options.promptForMissingBrowser) {
         // A pre-provisioned Chrome cache is usable even without a remembered choice.
-        const { ensureBrowser } = await import('@open-wa/driver-puppeteer');
+        const { ensureBrowser } = await import('@eulab/openwaunlocked-driver-puppeteer');
         try {
             const executablePath = await ensureBrowser({ browser: { ...config.browser, kind: 'chrome', download: 'never' } });
             executableResolution = { source: 'managed_browser', executablePath };
@@ -248,7 +248,7 @@ export async function selectRuntimeDriver(
         ...(kind !== 'lightpanda' ? { kind } : {}),
     };
     if (kind === 'lightpanda') {
-        const { LightpandaDriver, ensureLightpanda } = await import('@open-wa/driver-lightpanda');
+        const { LightpandaDriver, ensureLightpanda } = await import('@eulab/openwaunlocked-driver-lightpanda');
         config.lightpanda = ConfigSchema.shape.lightpanda.parse({ ...config.lightpanda, experimentalWhatsApp: config.lightpanda?.experimentalWhatsApp ?? true });
         config.browser = browser;
         const executablePath = await ensureLightpanda({
@@ -271,7 +271,7 @@ export async function selectRuntimeDriver(
         };
     }
     config.browser = browser;
-    const { PuppeteerDriver, ensureBrowser } = await import('@open-wa/driver-puppeteer');
+    const { PuppeteerDriver, ensureBrowser } = await import('@eulab/openwaunlocked-driver-puppeteer');
     const executablePath = await ensureBrowser({ executablePath: executableResolution.executablePath, browser }, ctx);
     if (!executableResolution.executablePath) executableResolution = { source: 'managed_browser', executablePath };
     if (options.promptForMissingBrowser) {
@@ -289,7 +289,7 @@ export async function selectRuntimeDriver(
 export function makeDefaultCallMediaHost(): NonNullable<CreateClientOptions['callMediaHost']> {
     return {
         async prepare(...args) {
-            const { makeNodeCallMediaHost } = await import('@open-wa/runtime-node');
+            const { makeNodeCallMediaHost } = await import('@eulab/openwaunlocked-runtime-node');
             return makeNodeCallMediaHost({ log: message => getCliOutputSink().write({ level: 'info', message }) }).prepare(...args);
         },
     };
@@ -344,7 +344,7 @@ export function toCreateClientOptions(
 
 /** Options for the ready-to-use messaging client. */
 export type CreateOptions = Omit<PartialConfig, 's3Sync' | 'calling'> & {
-    calling?: import('@open-wa/schema').CallingOptions;
+    calling?: import('@eulab/openwaunlocked-schema').CallingOptions;
     s3Sync?: Omit<NonNullable<PartialConfig['s3Sync']>, 'region' | 'syncInterval'> & {
         region?: string;
         syncInterval?: number;
@@ -355,8 +355,8 @@ export type CreateOptions = Omit<PartialConfig, 's3Sync' | 'calling'> & {
 
 /** Start WhatsApp, display QR login when needed, and return a ready messaging client. */
 export async function create(options: CreateOptions = {}): Promise<Client> {
-    const { createClient: createCoreClient } = await import('@open-wa/core');
-    const { Client } = await import('@open-wa/client');
+    const { createClient: createCoreClient } = await import('@eulab/openwaunlocked-core');
+    const { Client } = await import('@eulab/openwaunlocked-client');
     const { driver, sessionData, sessionDataBucketAuth, s3Sync, calling,
         sessionDataEncryptionKey, sessionDataEncryptionKeyFile, ...configOverrides } = options;
     const { config, rawConfigs } = await resolveConfig({

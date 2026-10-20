@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { Server, createMcpHandler, type ServerCapabilities } from '@modelcontextprotocol/server';
 import { z } from 'zod';
 import type { Hono, Context } from 'hono';
-import { eventJsonSchema, getHttpMethodDefinitions, type Config } from '@open-wa/schema';
+import { eventJsonSchema, getHttpMethodDefinitions, type Config } from '@eulab/openwaunlocked-schema';
 import { getMcpToolDefinitions } from '../manifest';
 import { executeCapability } from '../execution/kernel';
 import { McpEventsService } from '../events/service';

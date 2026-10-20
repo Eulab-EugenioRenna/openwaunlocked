@@ -1,5 +1,5 @@
 /**
- * @open-wa/plugin-sdk — defineConfig()
+ * @eulab/openwaunlocked-plugin-sdk — defineConfig()
  *
  * Helper for defining typed plugin configuration schemas.
  * This is a thin wrapper around Zod that provides better plugin-specific naming.
@@ -16,7 +16,7 @@ import { z } from 'zod';
  *
  * @example
  * ```ts
- * import { defineConfig } from '@open-wa/plugin-sdk';
+ * import { defineConfig } from '@eulab/openwaunlocked-plugin-sdk';
  *
  * export const config = defineConfig(z => z.object({
  *   apiUrl: z.string().url().describe('Chatwoot API URL'),

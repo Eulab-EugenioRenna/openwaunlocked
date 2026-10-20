@@ -4,7 +4,7 @@ import {
   decodeWhatsAppEvent, decodeEventResponse, chatIdCodec, messageIdCodec, MessageIdSchema,
   type EventInput, type EventUpdate, type WhatsAppEvent, type EventResponse,
   type EventResponseType, type EventPage, type EventListOptions, type MessageId,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 import type { Client } from '../Client';
 import { invokePatch } from '../patchRuntime';
 

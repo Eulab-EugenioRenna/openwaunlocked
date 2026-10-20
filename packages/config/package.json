@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/config",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-config",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Configuration management for open-wa - schemas, loading, merging, and validation",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -62,7 +62,8 @@
         "import": "./dist/schema.mjs",
         "require": "./dist/schema.cjs"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "open-wa",
@@ -74,7 +75,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/config"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

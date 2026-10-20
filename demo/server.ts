@@ -5,7 +5,7 @@
 
 //Please see these docs: https://open-wa.github.io/wa-automate-nodejs/classes/client.html#middleware
 
-// import { create, Client, SimpleListener  } from '@open-wa/wa-automate';
+// import { create, Client, SimpleListener  } from '@eulab/openwaunlocked';
 import { create, Client, SimpleListener } from '../src/index';
 
 const express = require('express');

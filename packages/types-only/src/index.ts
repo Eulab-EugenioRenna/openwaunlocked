@@ -1,7 +1,7 @@
 /**
- * @open-wa/wa-automate-types-only
+ * @eulab/openwaunlocked-types-only
  *
- * Lightweight type-only re-exports from @open-wa/schema.
+ * Lightweight type-only re-exports from @eulab/openwaunlocked-schema.
  * This package ships ZERO runtime code — only .d.ts declarations.
  * Use it when you need open-wa types without pulling in zod, codecs, or other runtime deps.
  */
@@ -55,9 +55,9 @@ export type {
   // === Schema inference helpers ===
   InferInput,
   InferOutput,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 
-export type { BaseClient, BaseNamespacedClient } from '@open-wa/schema/generated';
+export type { BaseClient, BaseNamespacedClient } from '@eulab/openwaunlocked-schema/generated';
 
 // === Value re-exports (enums, constants needed at type-level) ===
 export {
@@ -73,7 +73,7 @@ export {
   StateEnum,
   NotificationLanguage,
   QRFormat,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 
-export type { Call, CallAudioObserver, CallSnapshot, CallActionResult, CallCapabilities, CallIdentity, CallMediaOptions, CallingOptions, AudioInput, AudioOutput, VideoInput, MediaDescriptor, RawAudioFormat } from '@open-wa/schema';
-export { DEFAULT_MIC, DEFAULT_SPEAKER, DEFAULT_CAM, normalizeCallMedia } from '@open-wa/schema/calling-media';
+export type { Call, CallAudioObserver, CallSnapshot, CallActionResult, CallCapabilities, CallIdentity, CallMediaOptions, CallingOptions, AudioInput, AudioOutput, VideoInput, MediaDescriptor, RawAudioFormat } from '@eulab/openwaunlocked-schema';
+export { DEFAULT_MIC, DEFAULT_SPEAKER, DEFAULT_CAM, normalizeCallMedia } from '@eulab/openwaunlocked-schema/calling-media';

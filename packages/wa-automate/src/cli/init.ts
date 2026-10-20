@@ -4,7 +4,7 @@ import { basename, resolve } from 'node:path';
 import packageJson from '../../package.json';
 import { getCliOutputSink } from './output-sink';
 
-const starter = `import { create } from '@open-wa/wa-automate';
+const starter = `import { create } from '@eulab/openwaunlocked';
 
 const recipient = 'REPLACE_WITH_RECIPIENT_CHAT_ID';
 const message = 'Hello from open-wa!';
@@ -49,12 +49,12 @@ async function install(directory: string): Promise<void> {
 export async function initProject(args: string[]): Promise<void> {
     const sink = getCliOutputSink();
     if (args.includes('--help') || args.includes('-h')) {
-        sink.write({ level: 'info', message: 'Usage: bunx --bun @open-wa/wa-automate init <directory> [--no-install]\nUse . for the current directory. Existing starter files are never overwritten.' });
+        sink.write({ level: 'info', message: 'Usage: bunx --bun @eulab/openwaunlocked init <directory> [--no-install]\nUse . for the current directory. Existing starter files are never overwritten.' });
         return;
     }
     const positional = args.filter((arg) => !arg.startsWith('-'));
     if (positional.length > 1 || args.some((arg) => arg.startsWith('-') && arg !== '--no-install')) {
-        throw new Error('Usage: bunx --bun @open-wa/wa-automate init <directory> [--no-install]');
+        throw new Error('Usage: bunx --bun @eulab/openwaunlocked init <directory> [--no-install]');
     }
     const directory = resolve(positional[0] ?? '.');
     const name = basename(directory).toLowerCase().replace(/[^a-z0-9._-]/g, '-').replace(/^[._-]+/, '') || 'my-bot';
@@ -63,7 +63,7 @@ export async function initProject(args: string[]): Promise<void> {
         'package.json': json({
             name, version: '0.0.0', private: true, type: 'module',
             scripts: { start: 'bun run index.ts' },
-            dependencies: { '@open-wa/wa-automate': packageJson.version },
+            dependencies: { '@eulab/openwaunlocked': packageJson.version },
             devDependencies: { '@types/bun': 'latest' },
         }),
         'index.ts': starter,
@@ -78,7 +78,7 @@ export async function initProject(args: string[]): Promise<void> {
         if (await exists(resolve(directory, file))) conflicts.push(file);
     }
     if (conflicts.length) {
-        throw new Error(`Cannot initialize ${directory}: ${conflicts.join(', ')} already exist. Use a new directory, or add open-wa to your existing project with bun add @open-wa/wa-automate. No files were changed.`);
+        throw new Error(`Cannot initialize ${directory}: ${conflicts.join(', ')} already exist. Use a new directory, or add open-wa to your existing project with bun add @eulab/openwaunlocked. No files were changed.`);
     }
     await mkdir(directory, { recursive: true });
     const created: string[] = [];

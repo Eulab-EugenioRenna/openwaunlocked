@@ -1,4 +1,4 @@
-import type { Plugin, PluginInput, Hooks } from '@open-wa/core';
+import type { Plugin, PluginInput, Hooks } from '@eulab/openwaunlocked-core';
 import type { S3Config } from './config';
 import { Effect, ManagedRuntime } from 'effect';
 import { S3UploaderService, s3UploaderLayer } from './service';

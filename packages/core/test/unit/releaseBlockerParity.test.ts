@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import { Transport } from '../../src/transport/Transport';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 import type {
@@ -16,7 +16,7 @@ import type {
   IRequest,
   LaunchOptions,
   WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 
 type MatrixEntry = {
   id: string;

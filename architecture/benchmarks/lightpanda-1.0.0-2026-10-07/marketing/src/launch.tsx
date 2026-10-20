@@ -9,7 +9,7 @@ loadFont({family:'Inter', url:staticFile('Inter.ttf'), weight:'100 900'});
 const GREEN = '#adffd6';
 const WHITE = '#f5f7f7';
 const MUTED = '#8b9692';
-const CTA_COMMAND = 'npx @open-wa/wa-automate --lightpanda';
+const CTA_COMMAND = 'npx @eulab/openwaunlocked --lightpanda';
 const ease = Easing.bezier(0.16, 1, 0.3, 1);
 const clamped = {extrapolateLeft:'clamp', extrapolateRight:'clamp'} as const;
 const progress = (time:number, start:number, end:number) => interpolate(time,[start,end],[0,1],{...clamped,easing:ease});

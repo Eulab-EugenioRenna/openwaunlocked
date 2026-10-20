@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { CalendarDays, ClipboardList, Copy, ExternalLink, List, Phone, Reply } from "lucide-react"
-import type { InteractiveContent, InteractiveAction, InteractiveHeader } from "@open-wa/schema/interactive"
+import type { InteractiveContent, InteractiveAction, InteractiveHeader } from "@eulab/openwaunlocked-schema/interactive"
 import { DetailSheet } from "@/components/application/detail-sheet"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

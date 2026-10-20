@@ -1,5 +1,5 @@
-import { listEffects, STICKER_PROFILE } from "@open-wa/stickers/browser"
-import type { StickerJob, StickerEffect } from "@open-wa/stickers"
+import { listEffects, STICKER_PROFILE } from "@eulab/openwaunlocked-stickers/browser"
+import type { StickerJob, StickerEffect } from "@eulab/openwaunlocked-stickers"
 import { portableFilename } from "./files"
 
 export const availableEffects = listEffects({ backend: "browser", availableOnly: true })

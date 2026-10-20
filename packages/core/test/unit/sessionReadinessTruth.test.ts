@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { HyperEmitter } from '@open-wa/hyperemitter';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { SessionManager } from '../../src/sessionmanager/index';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 

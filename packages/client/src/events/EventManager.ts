@@ -1,14 +1,14 @@
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { OpenWAEventMap, STATE } from '@open-wa/core';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { OpenWAEventMap, STATE } from '@eulab/openwaunlocked-core';
 import {
   ScopedTaskQueue,
   queueMetricsObserver,
   type RuntimeObservabilityShape,
-} from '@open-wa/runtime-core';
-import { eventRegistry, type QueueOptions } from '@open-wa/schema';
-import type { Message, InteractiveResponse, FormResponse, ParticipantChange } from '@open-wa/schema';
-import type { CallSnapshot } from '@open-wa/schema';
-import type { WhatsAppEvent, EventResponse } from '@open-wa/schema';
+} from '@eulab/openwaunlocked-runtime-core';
+import { eventRegistry, type QueueOptions } from '@eulab/openwaunlocked-schema';
+import type { Message, InteractiveResponse, FormResponse, ParticipantChange } from '@eulab/openwaunlocked-schema';
+import type { CallSnapshot } from '@eulab/openwaunlocked-schema';
+import type { WhatsAppEvent, EventResponse } from '@eulab/openwaunlocked-schema';
 
 export interface EventContext {
   sessionId: string;
@@ -30,7 +30,7 @@ export interface ListenerManagerConfig {
 }
 
 type EventPayloadMap = {
-  pollVote: import('@open-wa/schema').PollVote;
+  pollVote: import('@eulab/openwaunlocked-schema').PollVote;
   event: WhatsAppEvent;
   eventResponse: EventResponse;
   incomingCall: CallSnapshot;

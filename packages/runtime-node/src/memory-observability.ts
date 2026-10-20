@@ -1,4 +1,4 @@
-import type { RuntimeObservabilityShape } from '@open-wa/runtime-core';
+import type { RuntimeObservabilityShape } from '@eulab/openwaunlocked-runtime-core';
 import { execFile } from 'node:child_process';
 import { Effect } from 'effect';
 

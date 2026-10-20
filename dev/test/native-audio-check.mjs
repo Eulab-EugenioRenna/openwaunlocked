@@ -4,7 +4,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 const requireApp = createRequire(import.meta.url);
-const puppeteer = createRequire(requireApp.resolve('@open-wa/driver-puppeteer'))('puppeteer-core');
+const puppeteer = createRequire(requireApp.resolve('@eulab/openwaunlocked-driver-puppeteer'))('puppeteer-core');
 let browser, page;
 for (const entry of fs.readdirSync('/tmp', { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;

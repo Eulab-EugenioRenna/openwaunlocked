@@ -1,7 +1,7 @@
 {
   "generatedFrom": {
     "v4": "tools/v4-compat-bench/static/v4-surface.json (snapshot of the v4 Client)",
-    "v5": "@open-wa/schema clientRegistry.getAll()"
+    "v5": "@eulab/openwaunlocked-schema clientRegistry.getAll()"
   },
   "totals": {
     "v4Methods": 259,

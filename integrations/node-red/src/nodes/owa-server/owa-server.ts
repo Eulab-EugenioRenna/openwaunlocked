@@ -1,4 +1,4 @@
-import { SocketClient } from "@open-wa/socket-client";
+import { SocketClient } from "@eulab/openwaunlocked-socket-client";
 import { NodeContextData, NodeInitializer } from "node-red";
 import { ClientStore, CLIENT_STORE } from '../shared/types';
 import { OwaServerNode, OwaServerNodeDef } from "./modules/types";
@@ -13,7 +13,7 @@ const nodeInit: NodeInitializer = async (RED): Promise<void> => {
      *
      * Legacy note: the surrounding Node-RED API still uses "socket" naming for
      * backward compatibility, but the v5 runtime is backed by the remote client
-     * transport wrapper instead of @open-wa/api SocketManager.
+     * transport wrapper instead of @eulab/openwaunlocked-api SocketManager.
      */
     RED.nodes.createNode(this, config);
     this.name = config.name;

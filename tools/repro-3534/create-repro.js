@@ -1,5 +1,5 @@
 const path = require("node:path");
-const { create, ev } = require("@open-wa/wa-automate");
+const { create, ev } = require("@eulab/openwaunlocked");
 const qrcode = require("qrcode-terminal");
 
 ev.on("qr.**", function (qr, sessionId, namespace) {

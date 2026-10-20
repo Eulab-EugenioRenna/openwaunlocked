@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createApiServer } from '../src/createApiServer';
-import type { Config } from '@open-wa/config';
+import type { Config } from '@eulab/openwaunlocked-config';
 
 describe('MCP API Integration', () => {
   it('starts and stops the Node adapter cleanly', async () => {

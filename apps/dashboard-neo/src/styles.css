@@ -1,6 +1,6 @@
 @layer scalar-base, scalar-theme, scalar-config, theme, base, components, utilities;
 @import "tailwindcss";
-@import "@open-wa/ui-components/theme.css";
+@import "@eulab/openwaunlocked-ui-components/theme.css";
 @import "@fontsource-variable/geist";
 @import "./styles/boardui-theme.css";
 @import "./styles/boardui-typography.css";

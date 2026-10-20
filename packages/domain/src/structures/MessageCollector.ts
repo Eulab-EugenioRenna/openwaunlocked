@@ -1,5 +1,5 @@
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Message, MessageId, ChatId, Chat } from '@open-wa/schema';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Message, MessageId, ChatId, Chat } from '@eulab/openwaunlocked-schema';
 import { Collector, CollectorFilter, CollectorOptions, Collection } from './Collector';
 
 export interface MessageCollectorOptions extends CollectorOptions {

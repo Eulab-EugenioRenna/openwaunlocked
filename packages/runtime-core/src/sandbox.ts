@@ -57,7 +57,7 @@ export interface ExecutionSandboxShape {
 }
 
 export const ExecutionSandbox =
-  Context.Service<ExecutionSandboxShape>('@open-wa/ExecutionSandbox');
+  Context.Service<ExecutionSandboxShape>('@eulab/openwaunlocked-ExecutionSandbox');
 
 /** Cause capture only. This function does not provide a security boundary. */
 export const captureSandboxCause = <A, E, R>(effect: Effect.Effect<A, E, R>) =>

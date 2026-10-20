@@ -1,6 +1,6 @@
 import { describe, it, expect, vi as jest } from 'vitest';
 import { WAServer } from '../hono-server';
-import { ConfigSchema } from '@open-wa/config';
+import { ConfigSchema } from '@eulab/openwaunlocked-config';
 
 describe('Hono Middleware', () => {
   describe('API Lifecycle', () => {

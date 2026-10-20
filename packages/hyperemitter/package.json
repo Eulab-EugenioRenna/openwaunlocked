@@ -1,6 +1,6 @@
 {
-  "name": "@open-wa/hyperemitter",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-hyperemitter",
+  "version": "1.0.0",
   "description": "HyperEmitter: high-performance, schema-driven event emitter for the open-wa v5 stack.",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -32,7 +32,7 @@
     "hyperemitter",
     "open-wa"
   ],
-  "author": "Eulab",
+  "author": "EULAB",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public",
@@ -42,10 +42,11 @@
         "require": "./dist/index.cjs",
         "types": "./dist/index.d.mts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@open-wa/logger": "workspace:*",
+    "@eulab/openwaunlocked-logger": "workspace:*",
     "effect": "catalog:"
   },
   "devDependencies": {
@@ -60,6 +61,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/hyperemitter"
+  },
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
   }
 }

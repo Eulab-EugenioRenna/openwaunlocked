@@ -1,5 +1,5 @@
-import { ApiServer, createApiServer as createSharedApiServer } from '@open-wa/api';
-import type { Config } from '@open-wa/config';
+import { ApiServer, createApiServer as createSharedApiServer } from '@eulab/openwaunlocked-api';
+import type { Config } from '@eulab/openwaunlocked-config';
 
 export class WAServer extends ApiServer {
   constructor(config: Config, verbose = false) {

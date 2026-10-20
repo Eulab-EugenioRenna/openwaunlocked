@@ -1,8 +1,8 @@
 {
-  "name": "@open-wa/screencaster",
-  "author": "Eulab",
-  "version": "5.6.6",
-  "description": "Headless browser screencasting for open-wa \u2014 treeshakable server + client",
+  "name": "@eulab/openwaunlocked-screencaster",
+  "author": "EULAB",
+  "version": "1.0.0",
+  "description": "Headless browser screencasting for open-wa — treeshakable server + client",
   "type": "module",
   "exports": {
     "./server": {
@@ -38,15 +38,15 @@
     "hono": "catalog:"
   },
   "peerDependencies": {
-    "@open-wa/driver-interface": "workspace:*"
+    "@eulab/openwaunlocked-driver-interface": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@open-wa/driver-interface": {
+    "@eulab/openwaunlocked-driver-interface": {
       "optional": true
     }
   },
   "devDependencies": {
-    "@open-wa/driver-interface": "workspace:*",
+    "@eulab/openwaunlocked-driver-interface": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
   },
@@ -68,7 +68,8 @@
         "import": "./dist/types.mjs",
         "require": "./dist/types.cjs"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "open-wa",
@@ -79,7 +80,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/screencaster"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

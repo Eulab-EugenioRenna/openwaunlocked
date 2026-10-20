@@ -81,7 +81,7 @@ export const useCaseDetail = [
   { path: "SocketClient + Chatwoot", methods: ["onMessage", "sendText", "getAllChats"], slug: "support-inbox" },
   { path: "Easy API", methods: ["sendText", "sendFile", "sendEvent"], slug: "notifications" },
   { path: "SocketClient or embedded", methods: ["onMessage", "onEventResponse", "sendText"], slug: "bots" },
-  { path: "Webhooks plugin", methods: ["@open-wa/integration-webhook"], slug: "webhooks" },
+  { path: "Webhooks plugin", methods: ["@eulab/openwaunlocked-integration-webhook"], slug: "webhooks" },
   { path: "Embedded, several sessionIds", methods: ["createClient", "sessionId"], slug: "multi-session" },
   { path: "MCP server", methods: ["chats.getAllChats", "messages.sendText"], slug: "ai-agents" },
 ];

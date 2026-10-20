@@ -16,14 +16,14 @@ export interface RuntimeCapabilitiesShape {
 }
 
 export const RuntimeCapabilities =
-  Context.Service<RuntimeCapabilitiesShape>('@open-wa/RuntimeCapabilities');
+  Context.Service<RuntimeCapabilitiesShape>('@eulab/openwaunlocked-RuntimeCapabilities');
 
 export interface BrowserDriverShape {
   readonly launch: (options?: unknown) => Effect.Effect<unknown, unknown>;
 }
 
 export const BrowserDriver =
-  Context.Service<BrowserDriverShape>('@open-wa/BrowserDriver');
+  Context.Service<BrowserDriverShape>('@eulab/openwaunlocked-BrowserDriver');
 
 export interface BrowserSessionShape {
   readonly page: unknown;
@@ -31,14 +31,14 @@ export interface BrowserSessionShape {
 }
 
 export const BrowserSession =
-  Context.Service<BrowserSessionShape>('@open-wa/BrowserSession');
+  Context.Service<BrowserSessionShape>('@eulab/openwaunlocked-BrowserSession');
 
 export interface PatchSourceShape<Artifact = unknown> {
   readonly preload: Effect.Effect<Artifact, unknown>;
 }
 
 export const PatchSource =
-  Context.Service<PatchSourceShape>('@open-wa/PatchSource');
+  Context.Service<PatchSourceShape>('@eulab/openwaunlocked-PatchSource');
 
 export interface LicenseServiceShape<Artifact = unknown, Identity = unknown> {
   readonly preflight: Effect.Effect<Artifact | null, unknown>;
@@ -49,7 +49,7 @@ export interface LicenseServiceShape<Artifact = unknown, Identity = unknown> {
 }
 
 export const LicenseService =
-  Context.Service<LicenseServiceShape>('@open-wa/LicenseService');
+  Context.Service<LicenseServiceShape>('@eulab/openwaunlocked-LicenseService');
 
 export interface SessionStoreShape {
   readonly get: (key: string) => Effect.Effect<unknown, unknown>;
@@ -58,7 +58,7 @@ export interface SessionStoreShape {
 }
 
 export const SessionStore =
-  Context.Service<SessionStoreShape>('@open-wa/SessionStore');
+  Context.Service<SessionStoreShape>('@eulab/openwaunlocked-SessionStore');
 
 export interface PluginRegistryShape {
   readonly names: Effect.Effect<ReadonlyArray<string>>;
@@ -66,7 +66,7 @@ export interface PluginRegistryShape {
 }
 
 export const PluginRegistry =
-  Context.Service<PluginRegistryShape>('@open-wa/PluginRegistry');
+  Context.Service<PluginRegistryShape>('@eulab/openwaunlocked-PluginRegistry');
 
 export interface ChatExecutorShape {
   readonly execute: (
@@ -78,7 +78,7 @@ export interface ChatExecutorShape {
 }
 
 export const ChatExecutor =
-  Context.Service<ChatExecutorShape>('@open-wa/ChatExecutor');
+  Context.Service<ChatExecutorShape>('@eulab/openwaunlocked-ChatExecutor');
 
 export interface SessionAdmissionLease {
   readonly memoryMb: number;
@@ -97,7 +97,7 @@ export interface SessionAdmissionShape {
 }
 
 export const SessionAdmission =
-  Context.Service<SessionAdmissionShape>('@open-wa/SessionAdmission');
+  Context.Service<SessionAdmissionShape>('@eulab/openwaunlocked-SessionAdmission');
 
 export interface RuntimeObservabilityShape {
   readonly increment: (
@@ -148,7 +148,7 @@ export type RuntimeMetric =
   | 'startup_critical_path_ms';
 
 export const RuntimeObservability =
-  Context.Service<RuntimeObservabilityShape>('@open-wa/RuntimeObservability');
+  Context.Service<RuntimeObservabilityShape>('@eulab/openwaunlocked-RuntimeObservability');
 
 export const serviceLayer = <I, S>(key: Context.Key<I, S>, service: S) =>
   Layer.succeed(key, service);

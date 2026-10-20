@@ -1,8 +1,8 @@
 {
-  "name": "@open-wa/decrypt",
-  "author": "Eulab",
-  "version": "5.6.6",
-  "description": "Lightweight WhatsApp media decryption \u2014 zero external dependencies",
+  "name": "@eulab/openwaunlocked-decrypt",
+  "author": "EULAB",
+  "version": "1.0.0",
+  "description": "Lightweight WhatsApp media decryption — zero external dependencies",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -28,16 +28,16 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@open-wa/schema": "workspace:*",
+    "@eulab/openwaunlocked-schema": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@open-wa/schema": "workspace:*"
+    "@eulab/openwaunlocked-schema": "workspace:*"
   },
   "peerDependenciesMeta": {
-    "@open-wa/schema": {
+    "@eulab/openwaunlocked-schema": {
       "optional": true
     }
   },
@@ -49,7 +49,8 @@
         "import": "./dist/index.mjs",
         "require": "./dist/index.cjs"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "open-wa",
@@ -59,7 +60,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/decrypt"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

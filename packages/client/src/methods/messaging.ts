@@ -11,10 +11,10 @@ import type {
   AlbumMedia,
   AlbumSendResult,
   MediaSendOptions, AudioAttachmentOptions, VoiceNoteOptions, GifSendOptions, PollSendOptions, PollResults, PinDuration,
-} from '@open-wa/schema';
-import { implementMethod, editMessage as editMessageSchema, react as reactSchema, SendTextResultSchema, AlbumSendResultSchema, sendAlbum as sendAlbumSchema, sendPoll as sendPollSchema, AudioAttachmentOptionsSchema, VoiceNoteOptionsSchema, GifSendOptionsSchema, PollResultsSchema, voteOnPoll as voteOnPollSchema, getPollResults as getPollResultsMethodSchema, pinMessage as pinMessageSchema, unpinMessage as unpinMessageSchema } from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
+import { implementMethod, editMessage as editMessageSchema, react as reactSchema, SendTextResultSchema, AlbumSendResultSchema, sendAlbum as sendAlbumSchema, sendPoll as sendPollSchema, AudioAttachmentOptionsSchema, VoiceNoteOptionsSchema, GifSendOptionsSchema, PollResultsSchema, voteOnPoll as voteOnPollSchema, getPollResults as getPollResultsMethodSchema, pinMessage as pinMessageSchema, unpinMessage as unpinMessageSchema } from '@eulab/openwaunlocked-schema';
 import { SendTextError } from '../SendTextError';
-import type { StickerInput, StickerJob } from '@open-wa/stickers';
+import type { StickerInput, StickerJob } from '@eulab/openwaunlocked-stickers';
 import { sendClientSticker } from '../stickers';
 import { invokePatch } from '../patchRuntime';
 import { sendMedia, mediaSendResult, type MediaInput, type MediaSendResult } from '../mediaInput';

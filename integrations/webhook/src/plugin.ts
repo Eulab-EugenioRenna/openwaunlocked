@@ -4,7 +4,7 @@
  * Forwards public WA events to an external URL via HTTP POST.
  * Supports event filtering, retry with exponential backoff, and concurrent delivery.
  */
-import { createPlugin, z } from '@open-wa/plugin-sdk';
+import { createPlugin, z } from '@eulab/openwaunlocked-plugin-sdk';
 import { Effect, ManagedRuntime } from 'effect';
 import { WebhookDelivererService, webhookDelivererLayer } from './service';
 
@@ -50,7 +50,7 @@ export default createPlugin({
     name: 'webhook',
     version: '5.0.0-alpha.1',
     description: 'Forward WhatsApp events to an external URL via HTTP POST',
-    author: 'Mohammed Shah <@smashah>',
+    author: 'EULAB',
   },
 
   configSchema,

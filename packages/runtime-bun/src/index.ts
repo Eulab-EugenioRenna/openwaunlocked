@@ -3,7 +3,7 @@ import * as BunServices from '@effect/platform-bun/BunServices';
 import {
   InMemoryObservabilityLayer,
   runtimeCapabilitiesLayer,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Layer } from 'effect';
 
 export const BunRuntimeLayer = Layer.mergeAll(

@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Config Merger
+ * @eulab/openwaunlocked-config - Config Merger
  *
  * Merges configuration from multiple sources with proper precedence.
  *

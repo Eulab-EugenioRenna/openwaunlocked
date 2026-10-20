@@ -14,7 +14,7 @@ import { promisify } from 'node:util';
 const run = promisify(execFile);
 const repoRoot = fileURLToPath(new URL('../../', import.meta.url));
 const marker = 'OPENWA_STARTUP_RESULT ';
-const roots = ['@open-wa/core', '@open-wa/wa-automate', '@open-wa/client', '@open-wa/cli', '@open-wa/driver-puppeteer'];
+const roots = ['@eulab/openwaunlocked-core', '@eulab/openwaunlocked', '@eulab/openwaunlocked-client', '@eulab/openwaunlocked-cli', '@eulab/openwaunlocked-driver-puppeteer'];
 const runtimes = [
   { name: 'Node', executable: process.execPath },
   { name: 'Bun', executable: process.env.OPENWA_TEST_BUN || 'bun' },
@@ -23,15 +23,15 @@ const formats = ['commonjs', 'module'];
 const runtimeEnv = Object.fromEntries(Object.entries(process.env).filter(([key]) =>
   !/^(WA_|OPENWA_|OPEN_WA_)/.test(key) && !['NODE_OPTIONS', 'NODE_PATH', 'BUN_OPTIONS'].includes(key)));
 const entrypoints = [
-  { package: '@open-wa/wa-automate', method: 'create', kind: 'create' },
-  { package: '@open-wa/wa-automate', method: 'createClient', kind: 'core' },
-  { package: '@open-wa/core', method: 'createClient', kind: 'core' },
-  { package: '@open-wa/wa-automate', method: 'Client.start', kind: 'facade' },
-  { package: '@open-wa/client', method: 'Client.start', kind: 'facade' },
-  { package: '@open-wa/wa-automate', method: 'runCli', kind: 'cli-main' },
-  { package: '@open-wa/wa-automate', method: 'startCli', kind: 'cli-start' },
-  { package: '@open-wa/cli', method: 'main', kind: 'cli-main' },
-  { package: '@open-wa/cli', method: 'start', kind: 'cli-start' },
+  { package: '@eulab/openwaunlocked', method: 'create', kind: 'create' },
+  { package: '@eulab/openwaunlocked', method: 'createClient', kind: 'core' },
+  { package: '@eulab/openwaunlocked-core', method: 'createClient', kind: 'core' },
+  { package: '@eulab/openwaunlocked', method: 'Client.start', kind: 'facade' },
+  { package: '@eulab/openwaunlocked-client', method: 'Client.start', kind: 'facade' },
+  { package: '@eulab/openwaunlocked', method: 'runCli', kind: 'cli-main' },
+  { package: '@eulab/openwaunlocked', method: 'startCli', kind: 'cli-start' },
+  { package: '@eulab/openwaunlocked-cli', method: 'main', kind: 'cli-main' },
+  { package: '@eulab/openwaunlocked-cli', method: 'start', kind: 'cli-start' },
 ];
 let installation;
 let chrome;
@@ -111,10 +111,10 @@ before(async () => {
       }
     }
   }
-  const sdkRequire = createRequire(installedRequire.resolve('@open-wa/wa-automate'));
+  const sdkRequire = createRequire(installedRequire.resolve('@eulab/openwaunlocked'));
   chrome = process.env.OPENWA_TEST_CHROME || sdkRequire('chrome-launcher').Launcher.getInstallations()[0];
   assert.ok(chrome, 'Install Chrome or set OPENWA_TEST_CHROME to its executable.');
-  for (const name of ['@open-wa/wa-automate', '@open-wa/cli']) {
+  for (const name of ['@eulab/openwaunlocked', '@eulab/openwaunlocked-cli']) {
     const pkg = JSON.parse(await readFile(join(installation, 'node_modules', name, 'package.json'), 'utf8'));
     // Derive this inventory from the packed manifests, including every alias.
     for (const [command, path] of Object.entries(pkg.bin)) {
@@ -134,8 +134,8 @@ for (const runtime of runtimes) {
   for (const format of formats) {
     test(`${runtime.name} ${format} core resolves readable packaged assets from an escaped path`, async () => {
       const load = format === 'module'
-        ? "import { Transport } from '@open-wa/core'; import { readFileSync } from 'node:fs';"
-        : "const { Transport } = require('@open-wa/core'); const { readFileSync } = require('node:fs');";
+        ? "import { Transport } from '@eulab/openwaunlocked-core'; import { readFileSync } from 'node:fs';"
+        : "const { Transport } = require('@eulab/openwaunlocked-core'); const { readFileSync } = require('node:fs');";
       const script = `${load}
         const paths = [Transport.resolveWapiScriptPath(), Transport.resolveLaunchScriptPath()];
         for (const path of paths) {
@@ -146,7 +146,7 @@ for (const runtime of runtimes) {
       await writeFile(fixture, script);
       const { stdout } = await run(runtime.executable, [fixture], { cwd: installation, env: runtimeEnv, timeout: 20_000, maxBuffer: 1024 * 1024 });
       assert.deepEqual(JSON.parse(stdout.trim()), ['wapi.js', 'launch.js'].map(name =>
-        join(installation, 'node_modules', '@open-wa', 'core', 'dist', 'transport', 'assets', name)));
+        join(installation, 'node_modules', '@eulab', 'openwaunlocked-core', 'dist', 'transport', 'assets', name)));
     });
   }
 }

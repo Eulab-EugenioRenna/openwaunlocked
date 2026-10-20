@@ -4,7 +4,7 @@
  * Loads plugins from references specified in the global config.
  *
  * Supported reference formats:
- * - NPM scoped: "@open-wa/integration-chatwoot"
+ * - NPM scoped: "@eulab/openwaunlocked-integration-chatwoot"
  * - NPM community: "openwa-plugin-calorie-tracker"
  * - Local relative: "./plugins/my-plugin"
  * - Local absolute: "/path/to/plugin"
@@ -12,8 +12,8 @@
  * Each reference is dynamically imported. The module must export
  * a Plugin as its default export, or as a named `plugin` export.
  */
-import type { Plugin } from '@open-wa/plugin-sdk';
-import type { Logger } from '@open-wa/logger';
+import type { Plugin } from '@eulab/openwaunlocked-plugin-sdk';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 
 export interface LoadedPlugin {
   /** The original reference string from config */
@@ -32,8 +32,8 @@ export interface LoadedPlugin {
  * @example
  * ```ts
  * const plugins = await loadPlugins([
- *   '@open-wa/integration-chatwoot',
- *   '@open-wa/integration-webhook',
+ *   '@eulab/openwaunlocked-integration-chatwoot',
+ *   '@eulab/openwaunlocked-integration-webhook',
  *   './my-local-plugin',
  * ], logger);
  * ```

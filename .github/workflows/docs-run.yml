@@ -73,7 +73,7 @@ jobs:
       # Build schema and its workspace deps first — schema's build runs its
       # code generation, which (re)produces openapi.json before the docs build.
       - name: Build schema (generates OpenAPI spec)
-        run: pnpm --filter @open-wa/schema... build
+        run: pnpm --filter @eulab/openwaunlocked-schema... build
         env:
           PUPPETEER_SKIP_DOWNLOAD: '1'
 

@@ -1,9 +1,9 @@
 import { Data, Effect, Schema } from 'effect';
-import type { IPage } from '@open-wa/driver-interface';
-import type { Logger } from '@open-wa/logger';
-import { SessionScope, ScopedTaskQueue, QueueOverloadedError } from '@open-wa/runtime-core';
-import { DEFAULT_MIC, DEFAULT_SPEAKER, DEFAULT_CAM, MediaDescriptorSchema, CallMediaOptionsSchema, describeCallMediaFailure } from '@open-wa/schema';
-import type { CallActionResult, CallCapabilities, CallEndReason, CallIdentity, CallMediaOptions, CallingOptions, CallSnapshot } from '@open-wa/schema';
+import type { IPage } from '@eulab/openwaunlocked-driver-interface';
+import type { Logger } from '@eulab/openwaunlocked-logger';
+import { SessionScope, ScopedTaskQueue, QueueOverloadedError } from '@eulab/openwaunlocked-runtime-core';
+import { DEFAULT_MIC, DEFAULT_SPEAKER, DEFAULT_CAM, MediaDescriptorSchema, CallMediaOptionsSchema, describeCallMediaFailure } from '@eulab/openwaunlocked-schema';
+import type { CallActionResult, CallCapabilities, CallEndReason, CallIdentity, CallMediaOptions, CallingOptions, CallSnapshot } from '@eulab/openwaunlocked-schema';
 import { runToPromise } from '../effect/errors';
 import type { AudioFrame, CallMediaHost, CallingProviderEvent, CallingProviderInfo, PreparedCallMedia } from './ports';
 import { RemoteMediaReservation, type RemoteMediaRequest, type RemoteAudioConnection } from './RemoteMedia';

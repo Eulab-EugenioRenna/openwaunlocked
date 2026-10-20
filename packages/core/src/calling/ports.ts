@@ -1,5 +1,5 @@
-import type { CallIdentity, CallMediaOptions, CallSnapshot, RawAudioFormat } from '@open-wa/schema';
-import type { SessionScope } from '@open-wa/runtime-core';
+import type { CallIdentity, CallMediaOptions, CallSnapshot, RawAudioFormat } from '@eulab/openwaunlocked-schema';
+import type { SessionScope } from '@eulab/openwaunlocked-runtime-core';
 
 export interface AudioFrame { samples: number[]; sampleRate: number; sequence: number; timestampMs?: number; }
 export interface PreparedCallMedia {

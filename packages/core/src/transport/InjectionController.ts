@@ -1,5 +1,5 @@
-import type { DisposableHandle, IFrame, IPage } from '@open-wa/driver-interface';
-import type { Logger } from '@open-wa/logger';
+import type { DisposableHandle, IFrame, IPage } from '@eulab/openwaunlocked-driver-interface';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 
 export type InjectionPhase =
   | 'idle'

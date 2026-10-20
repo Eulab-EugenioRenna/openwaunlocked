@@ -6,8 +6,8 @@ import type {
   NumberCheck,
   GroupId,
   MessageId,
-} from '@open-wa/schema';
-import { chatIdCodec, MessageIdSchema } from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
+import { chatIdCodec, MessageIdSchema } from '@eulab/openwaunlocked-schema';
 import { invokePatch } from '../patchRuntime';
 import { createUnsupportedMethodStub } from '../runtimeSurface';
 

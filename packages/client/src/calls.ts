@@ -1,5 +1,5 @@
-import type { Call, CallActionResult, CallIdentity, CallMediaOptions, CallSnapshot, AudioOutput } from '@open-wa/schema';
-import { normalizeCallMedia } from '@open-wa/schema';
+import type { Call, CallActionResult, CallIdentity, CallMediaOptions, CallSnapshot, AudioOutput } from '@eulab/openwaunlocked-schema';
+import { normalizeCallMedia } from '@eulab/openwaunlocked-schema';
 
 export interface CallActions {
   acceptCall(call: CallIdentity, media?: CallMediaOptions): Promise<CallActionResult>;

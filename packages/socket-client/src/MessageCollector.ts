@@ -1,6 +1,6 @@
-import type { EventEmitter } from '@open-wa/hyperemitter';
+import type { EventEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Effect, Exit, Scope } from 'effect';
-import type { SimpleListener, Chat, ChatId, Message, MessageId  } from '@open-wa/wa-automate-types-only';
+import type { SimpleListener, Chat, ChatId, Message, MessageId  } from '@eulab/openwaunlocked-types-only';
 import { Collector, CollectorOptions } from './Collector';
 /**
  * @typedef {CollectorOptions} MessageCollectorOptions

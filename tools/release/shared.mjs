@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, mkdtempSync, writeFileSync, rmSy
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-export const repo = process.env.GITHUB_REPOSITORY || 'open-wa/wa-automate-nodejs';
+export const repo = process.env.GITHUB_REPOSITORY || 'Eulab-EugenioRenna/openwaunlocked';
 export const source = resolve(process.env.RELEASE_SOURCE_DIR || '.');
 export const runUrl = `https://github.com/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 export function command(binary, args, options = {}) {

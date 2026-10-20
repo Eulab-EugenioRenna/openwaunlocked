@@ -1,6 +1,6 @@
 {
   "name": "openwa-issue-3534-repro",
-  "author": "Eulab",
+  "author": "EULAB",
   "private": true,
   "type": "commonjs",
   "scripts": {
@@ -8,8 +8,8 @@
     "visual": "OPENWA_REPRO_HEADLESS=false node create-repro.ts"
   },
   "dependencies": {
-    "@open-wa/wa-automate": "5.6.0",
-    "@open-wa/driver-puppeteer": "5.6.0",
+    "@eulab/openwaunlocked": "1.0.0",
+    "@eulab/openwaunlocked-driver-puppeteer": "1.0.0",
     "qrcode-terminal": "0.12.0"
   }
 }

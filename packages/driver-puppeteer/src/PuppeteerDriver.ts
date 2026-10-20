@@ -1,4 +1,4 @@
-import { IDriver, IBrowser, LaunchOptions, ConnectOptions, IDriverContext, DriverCapabilities } from '@open-wa/driver-interface';
+import { IDriver, IBrowser, LaunchOptions, ConnectOptions, IDriverContext, DriverCapabilities } from '@eulab/openwaunlocked-driver-interface';
 import { PuppeteerBrowser } from './PuppeteerBrowser';
 import { ensureBrowser } from './ensureBrowser';
 

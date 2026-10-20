@@ -1,5 +1,5 @@
 import { AudioResampler, decodePcm, encodePcm } from './audio';
-import type { Call, CallActionResult, CallMediaOptions } from '@open-wa/schema';
+import type { Call, CallActionResult, CallMediaOptions } from '@eulab/openwaunlocked-schema';
 
 /** Application audio is always raw signed PCM16 little-endian, 16 kHz, mono. */
 export const VOICE_CALL_AUDIO_FORMAT = Object.freeze({ encoding: 'pcm16le', sampleRate: 16_000, channels: 1 } as const);

@@ -1,11 +1,11 @@
 /**
- * @open-wa/config
+ * @eulab/openwaunlocked-config
  *
  * Configuration management for open-wa - schemas, loading, merging, and validation.
  *
  * @example
  * // In wa.config.ts
- * import { defineConfig } from '@open-wa/config';
+ * import { defineConfig } from '@eulab/openwaunlocked-config';
  *
  * export default defineConfig({
  *   sessionId: 'my-session',
@@ -15,7 +15,7 @@
  *
  * @example
  * // In your application
- * import { resolveConfig } from '@open-wa/config';
+ * import { resolveConfig } from '@eulab/openwaunlocked-config';
  *
  * const { config, sources } = await resolveConfig({
  *   cliOverrides: { debug: true },

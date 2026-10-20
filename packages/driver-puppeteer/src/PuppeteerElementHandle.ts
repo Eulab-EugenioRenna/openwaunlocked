@@ -1,4 +1,4 @@
-import { IElementHandle } from '@open-wa/driver-interface';
+import { IElementHandle } from '@eulab/openwaunlocked-driver-interface';
 import type { ElementHandle } from 'puppeteer-core';
 
 export class PuppeteerElementHandle implements IElementHandle {

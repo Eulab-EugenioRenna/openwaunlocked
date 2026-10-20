@@ -15,7 +15,7 @@ export default defineConfig({
   external: [],
   esbuildOptions(options) {
     options.banner = {
-      js: '// @open-wa/config - Configuration management for open-wa',
+      js: '// @eulab/openwaunlocked-config - Configuration management for open-wa',
     };
   },
 });

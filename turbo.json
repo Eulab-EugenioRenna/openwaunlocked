@@ -39,7 +39,7 @@
     "typecheck": {
       "outputs": []
     },
-    "@open-wa/cf-proxy#build": {
+    "@eulab/openwaunlocked-cf-proxy#build": {
       "dependsOn": ["^build"],
       "outputs": []
     },

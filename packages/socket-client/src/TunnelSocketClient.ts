@@ -1,10 +1,10 @@
-import { EventEmitter } from '@open-wa/hyperemitter';
+import { EventEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Effect } from 'effect';
-import type { SimpleListener } from "@open-wa/wa-automate-types-only";
-import type { BaseClient as _Client } from "@open-wa/wa-automate-types-only";
+import type { SimpleListener } from "@eulab/openwaunlocked-types-only";
+import type { BaseClient as _Client } from "@eulab/openwaunlocked-types-only";
 import makeDebug from 'debug';
 import WebSocket from 'isomorphic-ws';
-import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@open-wa/schema';
+import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@eulab/openwaunlocked-schema';
 
 const debug = makeDebug('wa:socket:tunnel');
 const uuidv4 = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);

@@ -8,7 +8,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@open-wa/ui-components/popover"
+} from "@eulab/openwaunlocked-ui-components/popover"
 
 const STORAGE_KEY = "wa-dashboard-connection"
 

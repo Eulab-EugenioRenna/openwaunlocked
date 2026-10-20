@@ -2,7 +2,7 @@ import type { Client } from '../Client';
 import {
   implementMethod, getNumberProfile, getOrder, getStories, getStatus, deleteStatus, deleteAllStatus,
   getStarredMessages, setProfilePicture, sendButtons, sendAdvancedButtons, sendListMessage,
-} from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
 import { invokePatch } from '../patchRuntime';
 
 export interface DevelopmentPremiumMethods {

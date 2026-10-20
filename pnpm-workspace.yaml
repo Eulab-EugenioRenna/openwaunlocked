@@ -113,7 +113,7 @@ allowBuilds:
   sharp: true
   unix-dgram: true
   workerd: true
-  '@open-wa/wa-automate': false
+  '@eulab/openwaunlocked': false
   '@firebase/util': false
   '@scarf/scarf': false
   msw: false

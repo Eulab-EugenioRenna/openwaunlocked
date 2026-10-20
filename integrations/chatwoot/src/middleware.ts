@@ -6,7 +6,7 @@
  */
 import { Hono } from 'hono';
 import type { ChatwootClient } from './client';
-import type { PluginClient, PluginLogger } from '@open-wa/plugin-sdk';
+import type { PluginClient, PluginLogger } from '@eulab/openwaunlocked-plugin-sdk';
 
 interface WebhookBody {
   source_id?: string;

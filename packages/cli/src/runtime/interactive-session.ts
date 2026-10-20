@@ -1,5 +1,5 @@
-import type { CliOutputEntry, CliOutputSink, CliQrPayload, CliStatusUpdate } from '@open-wa/wa-automate';
-import { createConsoleOutputSink } from '@open-wa/wa-automate';
+import type { CliOutputEntry, CliOutputSink, CliQrPayload, CliStatusUpdate } from '@eulab/openwaunlocked';
+import { createConsoleOutputSink } from '@eulab/openwaunlocked';
 import type { OutputBroker } from './output-broker';
 import { createOutputBroker } from './output-broker';
 import type { EventProjectionStore } from '../state/event-projection-store';

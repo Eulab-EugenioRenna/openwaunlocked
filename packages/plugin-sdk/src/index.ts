@@ -1,11 +1,11 @@
 /**
- * @open-wa/plugin-sdk
+ * @eulab/openwaunlocked-plugin-sdk
  *
  * The official SDK for building open-wa plugins.
  *
  * @example Quick Start
  * ```ts
- * import { createPlugin } from '@open-wa/plugin-sdk';
+ * import { createPlugin } from '@eulab/openwaunlocked-plugin-sdk';
  *
  * export default createPlugin({
  *   meta: { name: 'my-plugin', version: '1.0.0' },

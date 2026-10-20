@@ -1,5 +1,5 @@
 /**
- * @open-wa/core — Plugin System
+ * @eulab/openwaunlocked-core — Plugin System
  *
  * Re-exports the plugin SDK types for internal consumers,
  * plus core-only infrastructure (EventGateway, PluginLoader, PluginHost).
@@ -19,7 +19,7 @@ export type {
   ToolContext,
   PluginManifest,
   PluginManifestEntry,
-} from '@open-wa/plugin-sdk';
+} from '@eulab/openwaunlocked-plugin-sdk';
 
 // Core-only exports
 export { PluginHost } from './PluginHost';

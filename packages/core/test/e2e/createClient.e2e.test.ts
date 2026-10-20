@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { createClient, OpenWAClient } from '../../src/createClient';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
 import { homedir } from 'node:os';

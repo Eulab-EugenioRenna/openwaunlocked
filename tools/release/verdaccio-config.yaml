@@ -14,7 +14,7 @@ uplinks:
     cache: false
 
 packages:
-  '@open-wa/*':
+  '@eulab/openwaunlocked-*':
     access: $all
     publish: $all
     unpublish: $all

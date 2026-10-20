@@ -1,7 +1,7 @@
-import { SessionScope } from '@open-wa/runtime-core';
-import { makeNodeCallMediaHost } from '@open-wa/runtime-node';
-import type { CallMediaOptions } from '@open-wa/schema';
-import { DEFAULT_MIC, DEFAULT_SPEAKER } from '@open-wa/schema/calling-media';
+import { SessionScope } from '@eulab/openwaunlocked-runtime-core';
+import { makeNodeCallMediaHost } from '@eulab/openwaunlocked-runtime-node';
+import type { CallMediaOptions } from '@eulab/openwaunlocked-schema';
+import { DEFAULT_MIC, DEFAULT_SPEAKER } from '@eulab/openwaunlocked-schema/calling-media';
 
 /** Node sources are opened on the machine running this helper. */
 export async function prepareLocalMedia(media: CallMediaOptions) {

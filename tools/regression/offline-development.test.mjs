@@ -101,14 +101,19 @@ test('offline enforcement fails if browser interception is unavailable', async (
   }), /requires browser request interception/);
 });
 
-test('both ordinary and fresh patch loads use the actual local bundle', async () => {
+test('both ordinary and fresh patch loads use the module asset directory', async () => withDirectory(async directory => {
+  await writeFile(join(directory, 'patches.json'), readFileSync(new URL('../../patches.json', import.meta.url)));
+  const original = Transport.resolveWapiScriptPath;
+  Transport.resolveWapiScriptPath = () => join(directory, 'wapi.js');
+  try {
   const transport = Object.create(Transport.prototype);
   const normal = await transport.fetchLivePatchesWithCache();
   const fresh = await transport.fetchFreshLivePatches(undefined, true);
   assert.equal(normal.source, 'cached');
   assert.equal(normal.tag, fresh.tag);
   assert.ok(normal.data.length > 0);
-});
+  } finally { Transport.resolveWapiScriptPath = original; }
+}));
 
 test('calling accepts an installed provider regardless of license expiry', () => {
   const { CallingService } = loadSource('../../packages/core/src/calling/CallingService.ts', {

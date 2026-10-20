@@ -23,7 +23,7 @@ export function findDashboardDir(): string | null {
   }
 
   try {
-    const pkgPath = require.resolve('@open-wa/dashboard-neo/package.json');
+    const pkgPath = require.resolve('@eulab/openwaunlocked-dashboard-neo/package.json');
     return dirname(pkgPath);
   } catch {
     // Not installed

@@ -1,4 +1,4 @@
-import type { Config, HttpMethodDefinition } from '@open-wa/schema';
+import type { Config, HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 import type { Hono } from 'hono';
 import type { ElasticEmitter } from './monitoring/elastic';
 import type { EventBroadcaster } from './events/EventBroadcaster';

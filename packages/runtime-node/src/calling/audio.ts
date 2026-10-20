@@ -1,4 +1,4 @@
-import type { RawAudioFormat } from '@open-wa/schema';
+import type { RawAudioFormat } from '@eulab/openwaunlocked-schema';
 
 export const RAW_AUDIO_DEFAULT: RawAudioFormat = { encoding: 'pcm16le', sampleRate: 16_000, channels: 1 };
 export const HOST_AUDIO_RATE = 48_000;

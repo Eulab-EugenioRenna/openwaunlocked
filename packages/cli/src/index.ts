@@ -1,4 +1,4 @@
-export { runCli as main, startCli as start, parseCliArgs } from '@open-wa/wa-automate';
+export { runCli as main, startCli as start, parseCliArgs } from '@eulab/openwaunlocked';
 export { parseCliLocalFlags } from './config/cli-flags-schema';
 export { createOutputBroker, OutputBroker } from './runtime/output-broker';
 export { CliShutdownError, performGracefulShutdown, writeVisibleFatalError } from './runtime/cli-termination';

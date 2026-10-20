@@ -1,10 +1,10 @@
 import type { Hono } from 'hono';
-import type { Config } from '@open-wa/schema';
-import type { CallingService } from '@open-wa/core';
+import type { Config } from '@eulab/openwaunlocked-schema';
+import type { CallingService } from '@eulab/openwaunlocked-core';
 import type { upgradeWebSocket } from '@hono/node-server';
 import { z } from 'zod';
 import { getConnInfo } from '@hono/node-server/conninfo';
-import { encodeAudioPacket } from '@open-wa/schema';
+import { encodeAudioPacket } from '@eulab/openwaunlocked-schema';
 
 const requestSchema = z.object({
   call: z.object({ id: z.string(), sessionId: z.string(), generation: z.string() }).optional(),

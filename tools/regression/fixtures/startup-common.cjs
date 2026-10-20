@@ -4,13 +4,13 @@ async function start(load) {
   const entry = JSON.parse(process.env.OPENWA_STARTUP_ENTRY);
   const api = await load(entry.package);
   // Load the tested entrypoint first: preloading core can hide ESM load failures.
-  const coreApi = entry.package === '@open-wa/core' ? api : await load('@open-wa/core');
+  const coreApi = entry.package === '@eulab/openwaunlocked-core' ? api : await load('@eulab/openwaunlocked-core');
   observe(coreApi.ev);
   if (entry.kind === 'create') {
     await api.create(config);
   } else if (entry.kind === 'core' || entry.kind === 'facade') {
-    const { PuppeteerDriver } = await load('@open-wa/driver-puppeteer');
-    const { createClient } = entry.kind === 'core' ? api : await load('@open-wa/core');
+    const { PuppeteerDriver } = await load('@eulab/openwaunlocked-driver-puppeteer');
+    const { createClient } = entry.kind === 'core' ? api : await load('@eulab/openwaunlocked-core');
     const core = await createClient({
       sessionId: config.sessionId,
       sessionDataPath: config.sessionDataPath,
@@ -30,7 +30,7 @@ async function start(load) {
       : core;
     await client.start();
   } else {
-    const { parseCliArgs } = await load('@open-wa/wa-automate');
+    const { parseCliArgs } = await load('@eulab/openwaunlocked');
     const argv = ['--config', process.env.OPENWA_STARTUP_CONFIG, '--non-interactive'];
     await api[entry.method](entry.kind === 'cli-start' ? parseCliArgs(argv) : argv);
   }

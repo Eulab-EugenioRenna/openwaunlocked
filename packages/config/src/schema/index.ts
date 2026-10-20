@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Schema exports
+ * @eulab/openwaunlocked-config - Schema exports
  */
 export * from './config';
 export { LightpandaOptionsSchema } from './config';

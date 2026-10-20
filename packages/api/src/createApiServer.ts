@@ -4,14 +4,14 @@ import { logger } from 'hono/logger';
 import { createAdaptorServer, upgradeWebSocket } from '@hono/node-server';
 import { createServer, type Server } from 'node:http';
 import { WebSocketServer } from 'ws';
-import { getHttpMethodDefinitions, type Config } from '@open-wa/schema';
-import '@open-wa/schema';
+import { getHttpMethodDefinitions, type Config } from '@eulab/openwaunlocked-schema';
+import '@eulab/openwaunlocked-schema';
 import {
   createScreencastRoute,
   ScreencastManager,
-} from '@open-wa/screencaster/server';
+} from '@eulab/openwaunlocked-screencaster/server';
 import { createApiMiddleware } from './createApiMiddleware';
-import { createHonoMcpAdapter } from '@open-wa/mcp';
+import { createHonoMcpAdapter } from '@eulab/openwaunlocked-mcp';
 import { registerMetaRoutes } from './routes/meta';
 import { registerDebugRoutes } from './routes/debug';
 import { registerCallingRoutes } from './routes/calls';
@@ -28,8 +28,8 @@ import {
   mountDashboardProduction,
 } from './dashboard/middleware';
 import type { ApiServerOptions, ClientMethodMap } from './types';
-import type { IScreencastPage } from '@open-wa/screencaster/server';
-import type { PluginHost } from '@open-wa/core';
+import type { IScreencastPage } from '@eulab/openwaunlocked-screencaster/server';
+import type { PluginHost } from '@eulab/openwaunlocked-core';
 
 function parseCorsOrigin(corsConfig: string | string[]): string | string[] {
   if (corsConfig === '*') {

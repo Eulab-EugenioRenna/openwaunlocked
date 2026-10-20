@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { getHttpMethodDefinitions, type HttpMethodDefinition } from '@open-wa/schema';
-import '@open-wa/schema/methods';
+import { getHttpMethodDefinitions, type HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
+import '@eulab/openwaunlocked-schema/methods';
 import { apiKeyMiddleware } from './auth/api-key';
 import { rateLimitMiddleware } from './middleware/rate-limit';
 import { normalizeMethodPayload } from './compat/args';

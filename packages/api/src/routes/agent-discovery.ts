@@ -1,4 +1,4 @@
-import type { Config, HttpMethodDefinition } from '@open-wa/schema';
+import type { Config, HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
 
 function getExternalBase(c: any) {
   return c.req.header('x-openwa-external-base') || '';

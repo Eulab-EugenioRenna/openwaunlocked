@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/plugin-sdk",
-  "version": "5.6.6",
-  "description": "SDK for building open-wa plugins \u2014 types, helpers, and the createPlugin() factory",
+  "name": "@eulab/openwaunlocked-plugin-sdk",
+  "version": "1.0.0",
+  "description": "SDK for building open-wa plugins — types, helpers, and the createPlugin() factory",
   "type": "module",
   "exports": {
     ".": {
@@ -22,7 +22,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@open-wa/schema": "workspace:*",
+    "@eulab/openwaunlocked-schema": "workspace:*",
     "hono": "catalog:",
     "zod": "catalog:"
   },
@@ -37,9 +37,10 @@
         "import": "./dist/index.mjs",
         "types": "./dist/index.d.mts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
-  "author": "Eulab",
+  "author": "EULAB",
   "license": "SEE LICENSE IN LICENSE.md",
   "keywords": [
     "open-wa",
@@ -49,6 +50,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/plugin-sdk"
+  },
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
   }
 }

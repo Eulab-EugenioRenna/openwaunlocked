@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/dashboard-neo",
-  "author": "Eulab",
-  "version": "5.0.0",
+  "name": "@eulab/openwaunlocked-dashboard-neo",
+  "author": "EULAB",
+  "version": "1.0.0",
   "private": true,
   "description": "Static dashboard UI for the open-wa v5 Easy API.",
   "type": "module",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked.git"
   },
   "license": "Apache-2.0",
   "devDependencies": {
@@ -24,11 +24,11 @@
     "@fontsource-variable/geist": "^5.3.0",
     "@hugeicons/core-free-icons": "^4.3.5",
     "@hugeicons/react": "^1.1.10",
-    "@open-wa/schema": "workspace:*",
-    "@open-wa/screencaster": "workspace:*",
-    "@open-wa/socket-client": "workspace:*",
-    "@open-wa/stickers": "workspace:*",
-    "@open-wa/ui-components": "workspace:*",
+    "@eulab/openwaunlocked-schema": "workspace:*",
+    "@eulab/openwaunlocked-screencaster": "workspace:*",
+    "@eulab/openwaunlocked-socket-client": "workspace:*",
+    "@eulab/openwaunlocked-stickers": "workspace:*",
+    "@eulab/openwaunlocked-ui-components": "workspace:*",
     "@scalar/api-reference-react": "^0.9.74",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/devtools-vite": "^0.8.5",

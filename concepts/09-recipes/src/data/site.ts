@@ -248,7 +248,7 @@ const pres: Record<string, Omit<Job, "id" | "name" | "who" | "flow" | "methods" 
     priceLine: "Follows the methods used. Plain chat needs no key.",
     contact: { name: "Kettle & Co", number: "+44 7700 900652" },
     steps: [
-      "Add @open-wa/integration-chatwoot to your plugins.",
+      "Add @eulab/openwaunlocked-integration-chatwoot to your plugins.",
       "Messages to the business number appear as Chatwoot conversations.",
       "Agents reply from Chatwoot and the customer gets the reply on WhatsApp.",
     ],

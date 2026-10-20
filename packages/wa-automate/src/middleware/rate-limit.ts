@@ -1,1 +1,1 @@
-export { rateLimitMiddleware } from '@open-wa/api';
+export { rateLimitMiddleware } from '@eulab/openwaunlocked-api';

@@ -1,4 +1,4 @@
-import type { IPage } from '@open-wa/driver-interface';
+import type { IPage } from '@eulab/openwaunlocked-driver-interface';
 import { ScriptLoader } from './ScriptLoader';
 
 /**

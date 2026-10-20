@@ -1,5 +1,5 @@
 /**
- * @open-wa/plugin-sdk — createPlugin()
+ * @eulab/openwaunlocked-plugin-sdk — createPlugin()
  *
  * Type-safe plugin factory. This is the recommended way to create plugins.
  * It handles metadata attachment, config schema binding, and proper typing.
@@ -34,7 +34,7 @@ export interface CreatePluginOptions<TConfig> {
  *
  * @example
  * ```ts
- * import { createPlugin } from '@open-wa/plugin-sdk';
+ * import { createPlugin } from '@eulab/openwaunlocked-plugin-sdk';
  * import { z } from 'zod';
  *
  * export default createPlugin({
@@ -66,7 +66,7 @@ export interface CreatePluginOptions<TConfig> {
  *
  * @example Hono routes
  * ```ts
- * import { createPlugin } from '@open-wa/plugin-sdk';
+ * import { createPlugin } from '@eulab/openwaunlocked-plugin-sdk';
  * import { Hono } from 'hono';
  *
  * export default createPlugin({

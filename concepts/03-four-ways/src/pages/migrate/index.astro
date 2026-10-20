@@ -5,8 +5,8 @@ import Command from "../../components/Command.astro";
 import { migration, product, commands, links, releases, href } from "../../data/site";
 const changes = [
   ["Node.js", `v5 needs Node.js ${product.node.replace(">=", "")} or later.`],
-  ["Browser drivers", "The embedded runtime takes a driver package, such as @open-wa/driver-puppeteer, passed to createClient."],
-  ["Remote consumers", "SocketClient (@open-wa/socket-client) connects to a running Easy API over HTTP RPC and Server-Sent Events."],
+  ["Browser drivers", "The embedded runtime takes a driver package, such as @eulab/openwaunlocked-driver-puppeteer, passed to createClient."],
+  ["Remote consumers", "SocketClient (@eulab/openwaunlocked-socket-client) connects to a running Easy API over HTTP RPC and Server-Sent Events."],
   ["MCP server", "Built in since v5: each Easy API method can be exposed as a tool at /mcp."],
   ["Sessions", "Compact encrypted session files with your own encryption key (5.4)."],
   ["Live refresh", "Refresh a session or apply a licence without restarting the Node process (5.5)."],

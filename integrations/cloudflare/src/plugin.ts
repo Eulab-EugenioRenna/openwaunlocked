@@ -1,4 +1,4 @@
-import type { Plugin, PluginInput, Hooks } from '@open-wa/core';
+import type { Plugin, PluginInput, Hooks } from '@eulab/openwaunlocked-core';
 import type { CloudflareConfig } from './config';
 import { createTunnel, type TunnelResult } from './tunnel';
 

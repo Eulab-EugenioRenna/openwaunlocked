@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/integration-chatwoot",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-integration-chatwoot",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Chatwoot integration plugin for open-wa",
   "type": "module",
   "exports": {
@@ -20,12 +20,12 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@open-wa/plugin-sdk": "workspace:*",
+    "@eulab/openwaunlocked-plugin-sdk": "workspace:*",
     "effect": "catalog:",
     "hono": "catalog:"
   },
   "devDependencies": {
-    "@open-wa/logger": "workspace:*",
+    "@eulab/openwaunlocked-logger": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
@@ -37,14 +37,20 @@
         "import": "./dist/index.mjs",
         "types": "./dist/index.d.mts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "integrations/chatwoot"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "files": [
     "dist"
-  ]
+  ],
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

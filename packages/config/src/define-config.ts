@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - defineConfig helper
+ * @eulab/openwaunlocked-config - defineConfig helper
  *
  * Provides type-safe configuration definition for users.
  * Pattern inspired by Vite, Vitest, and Playwright configs.
@@ -19,7 +19,7 @@ export type ConfigInput = PartialConfig | (() => PartialConfig) | (() => Promise
  *
  * @example
  * // wa.config.ts
- * import { defineConfig } from '@open-wa/config';
+ * import { defineConfig } from '@eulab/openwaunlocked-config';
  *
  * export default defineConfig({
  *   sessionId: 'my-session',
@@ -29,7 +29,7 @@ export type ConfigInput = PartialConfig | (() => PartialConfig) | (() => Promise
  *
  * @example
  * // Async config for dynamic values
- * import { defineConfig } from '@open-wa/config';
+ * import { defineConfig } from '@eulab/openwaunlocked-config';
  *
  * export default defineConfig(async () => ({
  *   sessionId: 'my-session',

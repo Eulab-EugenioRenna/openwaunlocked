@@ -1,5 +1,5 @@
 /**
- * The sticker studio. It renders for real with @open-wa/stickers in this page
+ * The sticker studio. It renders for real with @eulab/openwaunlocked-stickers in this page
  * (the package's browser backend uses the page's own canvas and WebP encoder),
  * so the module is loaded on first use or when the browser is idle. Until then
  * the sticker is the CLI pre-render for the default sample. Reduced motion or
@@ -7,13 +7,13 @@
  */
 import { shouldAnimate } from "./runtime";
 
-type StickerModule = typeof import("@open-wa/stickers");
+type StickerModule = typeof import("@eulab/openwaunlocked-stickers");
 
 const MAX_EFFECTS = 8;
 const esc = (s: string) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]!);
 
 /**
- * @open-wa/stickers 5.5.1 probes WebP support by calling convertToBlob on a
+ * @eulab/openwaunlocked-stickers 5.5.1 probes WebP support by calling convertToBlob on a
  * 1×1 OffscreenCanvas that never had a context. Chrome rejects that ("has no
  * rendering context"), so the browser backend reports itself unavailable. Give
  * a context-less canvas a 2D context first; canvases that have one are unchanged.
@@ -54,7 +54,7 @@ export function initStudio(root: HTMLElement) {
   let currentUrl: string | undefined;
   const cache = new Map<string, Uint8Array>();
 
-  const loadModule = () => (mod ??= (patchOffscreenProbe(), import("@open-wa/stickers")));
+  const loadModule = () => (mod ??= (patchOffscreenProbe(), import("@eulab/openwaunlocked-stickers")));
 
   function sampleFromRadio() {
     const r = root.querySelector<HTMLInputElement>('input[name="st-sample"]:checked');
@@ -90,8 +90,8 @@ export function initStudio(root: HTMLElement) {
     const file = source.file;
     if (mode === "cli") {
       const fx = stack.length ? ` --effects ${stack.join(",")}` : "";
-      const text = `npx --package @open-wa/stickers@5.5.0 openwa-sticker ${file} --output sticker.webp${fx}`;
-      return { text, html: `<span class="f">npx</span> --package @open-wa/stickers@5.5.0 <span class="f">openwa-sticker</span> <span class="s">${esc(file)}</span> --output <span class="s">sticker.webp</span>${stack.length ? ` --effects <span class="s">${esc(stack.join(","))}</span>` : ""}` };
+      const text = `npx --package @eulab/openwaunlocked-stickers@5.5.0 openwa-sticker ${file} --output sticker.webp${fx}`;
+      return { text, html: `<span class="f">npx</span> --package @eulab/openwaunlocked-stickers@5.5.0 <span class="f">openwa-sticker</span> <span class="s">${esc(file)}</span> --output <span class="s">sticker.webp</span>${stack.length ? ` --effects <span class="s">${esc(stack.join(","))}</span>` : ""}` };
     }
     const list = stack.map((e) => `'${e}'`).join(", ");
     const text = `await client.sendSticker(chatId, './${file}', {\n  effects: [${list}],\n  pack: 'Rosa Salon',\n});`;

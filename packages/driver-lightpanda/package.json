@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/driver-lightpanda",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-driver-lightpanda",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Lightpanda browser driver for open-wa",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
@@ -20,7 +20,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@open-wa/driver-interface": "workspace:*",
+    "@eulab/openwaunlocked-driver-interface": "workspace:*",
     "effect": "catalog:",
     "fflate": "^0.8.3",
     "proper-lockfile": "^4.1.2",
@@ -41,14 +41,20 @@
         "import": "./dist/index.cjs",
         "types": "./dist/index.d.cts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/driver-lightpanda"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "files": [
     "dist"
-  ]
+  ],
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/cf-proxy",
-  "author": "Eulab",
-  "version": "5.0.0",
+  "name": "@eulab/openwaunlocked-cf-proxy",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Cloudflare Worker Reverse-Tunnel Proxy for Open-WA Sessions",
   "main": "./src/index.ts",
   "type": "module",
@@ -18,7 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/cf-proxy"
   },
-  "private": true
+  "private": true,
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

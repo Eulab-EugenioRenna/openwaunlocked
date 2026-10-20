@@ -19,14 +19,14 @@ const config = defineConfig({
       // The checkout can run the dashboard before workspace packages have been
       // built. Resolve browser-safe package entry points to their TypeScript
       // sources so Vite can transpile them in the dev server.
-      { find: /^@open-wa\/logger$/, replacement: resolve(repoRoot, "packages/logger/src/browser.ts") },
-      { find: /^@open-wa\/hyperemitter$/, replacement: resolve(repoRoot, "packages/hyperemitter/src/index.ts") },
-      { find: /^@open-wa\/screencaster\/client$/, replacement: resolve(repoRoot, "packages/screencaster/src/client.ts") },
-      { find: /^@open-wa\/socket-client\/calling-platform$/, replacement: resolve(repoRoot, 'packages/socket-client/src/calling-platform.browser.ts') },
-      { find: /^@open-wa\/schema\/calling-media$/, replacement: resolve(repoRoot, 'packages/schema/src/calling-media.ts') },
-      { find: /^@open-wa\/schema\/interactive$/, replacement: resolve(repoRoot, 'packages/schema/src/interactive.ts') },
-      { find: /^@open-wa\/runtime-core$/, replacement: resolve(repoRoot, 'packages/runtime-core/src/index.ts') },
-      { find: /^@open-wa\/socket-client$/, replacement: resolve(repoRoot, "packages/socket-client/src/index.ts") },
+      { find: /^@eulab\/openwaunlocked-logger$/, replacement: resolve(repoRoot, "packages/logger/src/browser.ts") },
+      { find: /^@eulab\/openwaunlocked-hyperemitter$/, replacement: resolve(repoRoot, "packages/hyperemitter/src/index.ts") },
+      { find: /^@eulab\/openwaunlocked-screencaster\/client$/, replacement: resolve(repoRoot, "packages/screencaster/src/client.ts") },
+      { find: /^@eulab\/openwaunlocked-socket-client\/calling-platform$/, replacement: resolve(repoRoot, 'packages/socket-client/src/calling-platform.browser.ts') },
+      { find: /^@eulab\/openwaunlocked-schema\/calling-media$/, replacement: resolve(repoRoot, 'packages/schema/src/calling-media.ts') },
+      { find: /^@eulab\/openwaunlocked-schema\/interactive$/, replacement: resolve(repoRoot, 'packages/schema/src/interactive.ts') },
+      { find: /^@eulab\/openwaunlocked-runtime-core$/, replacement: resolve(repoRoot, 'packages/runtime-core/src/index.ts') },
+      { find: /^@eulab\/openwaunlocked-socket-client$/, replacement: resolve(repoRoot, "packages/socket-client/src/index.ts") },
       { find: "react/jsx-runtime", replacement: resolvePackageExport("react/jsx-runtime") },
       { find: "react/jsx-dev-runtime", replacement: resolvePackageExport("react/jsx-dev-runtime") },
       { find: "react-dom/client", replacement: resolvePackageExport("react-dom/client") },
@@ -47,9 +47,9 @@ const config = defineConfig({
   build: {
     rollupOptions: {
       external: [
-        "@open-wa/schema",
-        "@open-wa/utils",
-        "@open-wa/config",
+        "@eulab/openwaunlocked-schema",
+        "@eulab/openwaunlocked-utils",
+        "@eulab/openwaunlocked-config",
         "jiti"
       ],
       onwarn(warning, warn) {
@@ -61,7 +61,7 @@ const config = defineConfig({
     },
   },
   ssr: {
-    noExternal: ['@open-wa/utils', 'jiti']
+    noExternal: ['@eulab/openwaunlocked-utils', 'jiti']
   },
   test: {
     environment: "jsdom",

@@ -11,7 +11,7 @@ import type {
   IPage,
   IRequest,
   WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 
 type RecordedEvent = {

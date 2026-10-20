@@ -1,7 +1,7 @@
 import {
   InMemoryObservabilityLayer,
   runtimeCapabilitiesLayer,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Layer } from 'effect';
 import { FetchHttpClient } from 'effect/http';
 

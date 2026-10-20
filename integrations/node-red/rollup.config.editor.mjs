@@ -72,7 +72,7 @@ const makeConfigItem = (nodeType) => ({
     clearScreen: false,
   },
   external: [
-    /^@open-wa\//,
+    /^@eulab\/openwaunlocked-/,
   ]
 });
 

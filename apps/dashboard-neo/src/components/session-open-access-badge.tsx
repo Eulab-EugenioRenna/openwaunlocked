@@ -1,6 +1,6 @@
 import { Unlock } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@open-wa/ui-components/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@eulab/openwaunlocked-ui-components/popover"
 import { useRuntimeFeatures } from "@/lib/hooks/use-runtime-features"
 import { useSession } from "@/lib/hooks/use-session"
 
@@ -9,13 +9,13 @@ export function SessionOpenAccessBadge() {
   const { session } = useSession()
   return <Popover>
     <PopoverTrigger asChild>
-      <Button type="button" variant="outline" size="sm" className="ow-license-foil shadow-none" aria-label="Eulab Open API access">
+      <Button type="button" variant="outline" size="sm" className="ow-license-foil shadow-none" aria-label="EULAB Open API access">
         <Unlock size={14} /><span className="hidden sm:inline">Open</span>
       </Button>
     </PopoverTrigger>
     <PopoverContent align="end" sideOffset={8} className="w-80 max-w-[calc(100vw-1rem)] rounded-2xl p-4 text-popover-foreground">
-      <p className="text-sm font-semibold">Eulab Open</p>
-      <p className="mt-2 text-xs text-muted-foreground">Open API access in this development branch. No activation key or purchase is required. Maintained by Eulab.</p>
+      <p className="text-sm font-semibold">EULAB Open</p>
+      <p className="mt-2 text-xs text-muted-foreground">Open API access in this development branch. No activation key or purchase is required. Maintained by EULAB.</p>
       <p className="mt-3 text-xs">Session: <code>{session.sessionId || "Unavailable"}</code></p>
       <p className="mt-2 text-xs text-muted-foreground">Availability depends on the connected WhatsApp session and native provider. Open access does not certify physical test results.</p>
       {runtime.source === "demo" && <p className="mt-2 text-xs text-muted-foreground">Demo data. No live session is verified.</p>}

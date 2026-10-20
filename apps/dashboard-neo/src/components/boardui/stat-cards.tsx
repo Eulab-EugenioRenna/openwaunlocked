@@ -7,7 +7,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@open-wa/ui-components/popover"
+} from "@eulab/openwaunlocked-ui-components/popover"
 import { cx } from "@/utils/cx"
 
 /**

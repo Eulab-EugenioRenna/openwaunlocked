@@ -1,1 +1,1 @@
-export { ElasticEmitter, type ElasticConfig, type ElasticDoc } from '@open-wa/api';
+export { ElasticEmitter, type ElasticConfig, type ElasticDoc } from '@eulab/openwaunlocked-api';

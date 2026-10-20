@@ -1,5 +1,5 @@
 import { tunnel } from 'cloudflared';
-import type { Logger } from '@open-wa/logger';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { CloudflareConfig } from './config';
 
 export interface TunnelResult {

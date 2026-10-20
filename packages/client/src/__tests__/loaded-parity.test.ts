@@ -2,9 +2,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { HyperEmitter } from '@open-wa/hyperemitter';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Client } from '../Client';
-import type { OpenWAClient, STATE, Transport } from '@open-wa/core';
+import type { OpenWAClient, STATE, Transport } from '@eulab/openwaunlocked-core';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '../../../../');

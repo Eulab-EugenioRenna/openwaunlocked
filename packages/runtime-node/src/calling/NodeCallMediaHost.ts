@@ -3,10 +3,10 @@ import { access, open, mkdir } from 'node:fs/promises';
 import { dirname, extname, resolve } from 'node:path';
 import { Effect, Stream, FileSystem } from 'effect';
 import { NodeServices } from '@effect/platform-node';
-import type { CallMediaHost, PreparedCallMedia, AudioFrame } from '@open-wa/core';
-import type { SessionScope } from '@open-wa/runtime-core';
-import { DEFAULT_MIC, DEFAULT_CAM, DEFAULT_SPEAKER, encodeAudioPacket, decodeAudioPacket } from '@open-wa/schema';
-import type { CallMediaOptions, MediaDescriptor, RawAudioFormat } from '@open-wa/schema';
+import type { CallMediaHost, PreparedCallMedia, AudioFrame } from '@eulab/openwaunlocked-core';
+import type { SessionScope } from '@eulab/openwaunlocked-runtime-core';
+import { DEFAULT_MIC, DEFAULT_CAM, DEFAULT_SPEAKER, encodeAudioPacket, decodeAudioPacket } from '@eulab/openwaunlocked-schema';
+import type { CallMediaOptions, MediaDescriptor, RawAudioFormat } from '@eulab/openwaunlocked-schema';
 import { AudioResampler, decodePcm, encodePcm, HOST_AUDIO_RATE, RAW_AUDIO_DEFAULT, wavHeader } from './audio';
 
 export class CallMediaError extends Error {

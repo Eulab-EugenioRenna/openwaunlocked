@@ -1,5 +1,5 @@
-import { DEFAULT_MIC, DEFAULT_SPEAKER } from '@open-wa/schema/calling-media';
-import type { CallMediaOptions } from '@open-wa/schema/calling-media';
+import { DEFAULT_MIC, DEFAULT_SPEAKER } from '@eulab/openwaunlocked-schema/calling-media';
+import type { CallMediaOptions } from '@eulab/openwaunlocked-schema/calling-media';
 
 const processor = `
 class OpenWACallAudio extends AudioWorkletProcessor {

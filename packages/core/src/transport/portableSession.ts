@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Effect, Exit, Scope, Semaphore } from 'effect';
 import { portableFailure, portableIO, runPortable, validatePortablePayload, type PortableSessionFailure } from './portableSessionEffects';
-import type { IPage } from '@open-wa/driver-interface';
+import type { IPage } from '@eulab/openwaunlocked-driver-interface';
 import { resolveSessionEncryption, type SessionEncryptionOptions, type SessionEncryptionCredentials } from './sessionEncryption';
 
 /** Opaque, encrypted values. Only the baked pre-init patch interprets them. */

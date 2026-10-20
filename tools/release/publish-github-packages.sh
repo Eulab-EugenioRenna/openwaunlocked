@@ -9,7 +9,7 @@ cd "$repo_root"
 
 temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/open-wa-github-packages.XXXXXX")"
 trap 'rm -rf "$temp_dir"' EXIT
-printf '%s\n' '@open-wa:registry=https://npm.pkg.github.com' > "$temp_dir/npmrc"
+printf '%s\n' '@eulab:registry=https://npm.pkg.github.com' > "$temp_dir/npmrc"
 printf '%s\n' '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' >> "$temp_dir/npmrc"
 chmod 600 "$temp_dir/npmrc"
 

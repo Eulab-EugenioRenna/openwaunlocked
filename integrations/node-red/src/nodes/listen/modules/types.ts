@@ -1,4 +1,4 @@
-import { SimpleListener } from '@open-wa/wa-automate-types-only';
+import { SimpleListener } from '@eulab/openwaunlocked-types-only';
 import { OwaServerNode } from './../../owa-server/modules/types';
 import { ServerSubscriber } from '../../shared/types';
 import { Node, NodeDef } from "node-red";

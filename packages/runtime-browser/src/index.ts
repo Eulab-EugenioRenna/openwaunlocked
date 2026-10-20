@@ -2,7 +2,7 @@ import { BrowserHttpClient } from '@effect/platform-browser';
 import {
   InMemoryObservabilityLayer,
   runtimeCapabilitiesLayer,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Layer } from 'effect';
 
 export const BrowserRuntimeLayer = Layer.mergeAll(

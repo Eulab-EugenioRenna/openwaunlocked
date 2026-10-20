@@ -2,7 +2,7 @@ import { chmodSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync 
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ConfigSchema, type TrackedConfig } from '@open-wa/config';
+import { ConfigSchema, type TrackedConfig } from '@eulab/openwaunlocked-config';
 
 class FakeEmitter {
   private handlers = new Map<string, Array<(payload: unknown) => void>>();
@@ -45,12 +45,12 @@ function createTempExecutable(rootDir: string, fileName: string): string {
 }
 
 async function importCliRuntimeUtilityModule() {
-  vi.doMock('@open-wa/core', () => ({ createClient: vi.fn() }));
-  vi.doMock('@open-wa/client', () => ({ Client: class MockClient {} }));
-  vi.doMock('@open-wa/schema', () => ({ eventRegistry: { getAll: () => [] } }));
+  vi.doMock('@eulab/openwaunlocked-core', () => ({ createClient: vi.fn() }));
+  vi.doMock('@eulab/openwaunlocked-client', () => ({ Client: class MockClient {} }));
+  vi.doMock('@eulab/openwaunlocked-schema', () => ({ eventRegistry: { getAll: () => [] } }));
   vi.doMock('../server/hono-server', () => ({ WAServer: class MockWAServer {} }));
-  vi.doMock('@open-wa/driver-puppeteer', () => ({ PuppeteerDriver: class MockPuppeteerDriver {} }));
-  vi.doMock('@open-wa/driver-lightpanda', () => ({ LightpandaDriver: class MockLightpandaDriver {} }));
+  vi.doMock('@eulab/openwaunlocked-driver-puppeteer', () => ({ PuppeteerDriver: class MockPuppeteerDriver {} }));
+  vi.doMock('@eulab/openwaunlocked-driver-lightpanda', () => ({ LightpandaDriver: class MockLightpandaDriver {} }));
   return await import('../cli-runtime');
 }
 
@@ -70,12 +70,12 @@ describe('cli runtime chrome resolution', () => {
   afterEach(() => {
     findSystemBrowserMock.mockReset();
     vi.resetModules();
-    vi.doUnmock('@open-wa/core');
-    vi.doUnmock('@open-wa/client');
+    vi.doUnmock('@eulab/openwaunlocked-core');
+    vi.doUnmock('@eulab/openwaunlocked-client');
     vi.doUnmock('../server/hono-server');
-    vi.doUnmock('@open-wa/driver-lightpanda');
-    vi.doUnmock('@open-wa/driver-puppeteer');
-    vi.doUnmock('@open-wa/config');
+    vi.doUnmock('@eulab/openwaunlocked-driver-lightpanda');
+    vi.doUnmock('@eulab/openwaunlocked-driver-puppeteer');
+    vi.doUnmock('@eulab/openwaunlocked-config');
     vi.doUnmock('../browser-choice');
     while (tempDirs.length) {
       const dir = tempDirs.pop();
@@ -260,15 +260,15 @@ describe('cli runtime chrome resolution', () => {
       return { name: 'lightpanda' };
     });
 
-    vi.doMock('@open-wa/core', () => ({ createClient: createClientMock }));
-    vi.doMock('@open-wa/client', () => ({
+    vi.doMock('@eulab/openwaunlocked-core', () => ({ createClient: createClientMock }));
+    vi.doMock('@eulab/openwaunlocked-client', () => ({
       Client: class MockClient {
         start = clientStartMock;
         stop = vi.fn();
         getState = clientGetStateMock;
       },
     }));
-    vi.doMock('@open-wa/schema', () => ({ eventRegistry: { getAll: () => [] } }));
+    vi.doMock('@eulab/openwaunlocked-schema', () => ({ eventRegistry: { getAll: () => [] } }));
     vi.doMock('../server/hono-server', () => ({
       WAServer: class MockWAServer {
         start = vi.fn();
@@ -278,13 +278,13 @@ describe('cli runtime chrome resolution', () => {
         setClient = vi.fn();
       },
     }));
-    vi.doMock('@open-wa/driver-puppeteer', () => ({
+    vi.doMock('@eulab/openwaunlocked-driver-puppeteer', () => ({
       PuppeteerDriver: PuppeteerDriverMock,
       ensureBrowser: vi.fn(async ({ executablePath }: { executablePath?: string }) => executablePath ?? '/tmp/managed-chrome'),
     }));
-    vi.doMock('@open-wa/driver-lightpanda', () => ({ LightpandaDriver: LightpandaDriverMock }));
-    vi.doMock('@open-wa/config', async () => {
-      const actual = await vi.importActual<typeof import('@open-wa/config')>('@open-wa/config');
+    vi.doMock('@eulab/openwaunlocked-driver-lightpanda', () => ({ LightpandaDriver: LightpandaDriverMock }));
+    vi.doMock('@eulab/openwaunlocked-config', async () => {
+      const actual = await vi.importActual<typeof import('@eulab/openwaunlocked-config')>('@eulab/openwaunlocked-config');
       return {
         ...actual,
         resolveConfig: resolveConfigMock,
@@ -366,15 +366,15 @@ describe('cli runtime chrome resolution', () => {
       return { name: 'lightpanda' };
     });
 
-    vi.doMock('@open-wa/core', () => ({ createClient: createClientMock }));
-    vi.doMock('@open-wa/client', () => ({
+    vi.doMock('@eulab/openwaunlocked-core', () => ({ createClient: createClientMock }));
+    vi.doMock('@eulab/openwaunlocked-client', () => ({
       Client: class MockClient {
         start = clientStartMock;
         stop = vi.fn();
         getState = clientGetStateMock;
       }
     }));
-    vi.doMock('@open-wa/schema', () => ({ eventRegistry: { getAll: () => [] } }));
+    vi.doMock('@eulab/openwaunlocked-schema', () => ({ eventRegistry: { getAll: () => [] } }));
     vi.doMock('../server/hono-server', () => ({
       WAServer: class MockWAServer {
         start = vi.fn();
@@ -384,13 +384,13 @@ describe('cli runtime chrome resolution', () => {
         setClient = vi.fn();
       }
     }));
-    vi.doMock('@open-wa/driver-puppeteer', () => ({ PuppeteerDriver: PuppeteerDriverMock }));
-    vi.doMock('@open-wa/driver-lightpanda', () => ({
+    vi.doMock('@eulab/openwaunlocked-driver-puppeteer', () => ({ PuppeteerDriver: PuppeteerDriverMock }));
+    vi.doMock('@eulab/openwaunlocked-driver-lightpanda', () => ({
       LightpandaDriver: LightpandaDriverMock,
       ensureLightpanda: vi.fn(async ({ executablePath }: { executablePath?: string }) => executablePath ?? '/tmp/managed-lightpanda'),
     }));
-    vi.doMock('@open-wa/config', async () => {
-      const actual = await vi.importActual<typeof import('@open-wa/config')>('@open-wa/config');
+    vi.doMock('@eulab/openwaunlocked-config', async () => {
+      const actual = await vi.importActual<typeof import('@eulab/openwaunlocked-config')>('@eulab/openwaunlocked-config');
       return {
         ...actual,
         resolveConfig: resolveConfigMock,

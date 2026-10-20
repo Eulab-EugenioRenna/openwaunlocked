@@ -18,7 +18,7 @@ RUN apt upgrade -y
 # skip the puppeteer browser download
 ENV PUPPETEER_SKIP_DOWNLOAD true
 
-RUN npm i @open-wa/wa-automate@latest
+RUN npm i @eulab/openwaunlocked@latest
     # Add user so we don't need --no-sandbox.
     # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
@@ -44,4 +44,4 @@ ENV WA_EXECUTABLE_PATH /usr/bin/google-chrome-stable
 
 EXPOSE $PORT
 
-ENTRYPOINT [ "node", "./node_modules/@open-wa/wa-automate/bin/server.js", "--in-docker", "--qr-timeout", "0", "--popup", "--debug"]
+ENTRYPOINT [ "node", "./node_modules/@eulab/openwaunlocked/bin/server.js", "--in-docker", "--qr-timeout", "0", "--popup", "--debug"]

@@ -1,5 +1,5 @@
-import { SessionScope } from '@open-wa/runtime-core';
-import type { CallIdentity, CallMediaOptions } from '@open-wa/schema';
+import { SessionScope } from '@eulab/openwaunlocked-runtime-core';
+import type { CallIdentity, CallMediaOptions } from '@eulab/openwaunlocked-schema';
 
 export interface RemoteMediaRequest { call?: CallIdentity; to?: string; mode: 'accept' | 'start' | 'replace' | 'observe'; microphone: boolean; speaker: boolean; replacesId?: string; onMediaFailure?: 'end' | 'keep-open'; }
 export interface RemoteAudioConnection { send(bytes: Uint8Array, timestampMs?: number): Promise<void>; activate(callId: string): void; close(): void; }

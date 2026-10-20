@@ -9,7 +9,7 @@ import {
     NavigationWaitUntil,
     PageEventHandler,
     WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 import { requireScreenshot } from './capability-checks';
 import { LightpandaRenderingError } from './errors';
 
@@ -235,7 +235,7 @@ export class LightpandaPage implements IPage {
         await this.requirePage().exposeFunction(name, fn);
     }
 
-    on<K extends keyof import('@open-wa/driver-interface').IPageEventMap>(_event: K, _handler: PageEventHandler<K>): DisposableHandle;
+    on<K extends keyof import('@eulab/openwaunlocked-driver-interface').IPageEventMap>(_event: K, _handler: PageEventHandler<K>): DisposableHandle;
     on(_event: string, _handler: (...args: any[]) => void | Promise<void>): DisposableHandle;
     on(event: string, handler: ((...args: any[]) => void | Promise<void>) | PageEventHandler<any>): DisposableHandle {
         const page = this.requirePage();
@@ -256,7 +256,7 @@ export class LightpandaPage implements IPage {
         });
     }
 
-    off<K extends keyof import('@open-wa/driver-interface').IPageEventMap>(_event: K, _handler: PageEventHandler<K>): void;
+    off<K extends keyof import('@eulab/openwaunlocked-driver-interface').IPageEventMap>(_event: K, _handler: PageEventHandler<K>): void;
     off(_event: string, _handler: (...args: any[]) => void | Promise<void>): void;
     off(event: string, handler: ((...args: any[]) => void | Promise<void>) | PageEventHandler<any>): void {
         const page = this.requirePage();

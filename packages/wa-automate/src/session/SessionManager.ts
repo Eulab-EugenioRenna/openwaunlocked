@@ -1,6 +1,6 @@
-import { LocalSessionCompression, S3SyncManager } from '@open-wa/session-sync';
-import type { ClientConfig } from '@open-wa/schema';
-import { createLogger } from '@open-wa/logger';
+import { LocalSessionCompression, S3SyncManager } from '@eulab/openwaunlocked-session-sync';
+import type { ClientConfig } from '@eulab/openwaunlocked-schema';
+import { createLogger } from '@eulab/openwaunlocked-logger';
 
 export interface SessionManagerConfig {
   sessionId: string;

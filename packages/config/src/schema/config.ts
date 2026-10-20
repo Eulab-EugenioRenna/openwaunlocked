@@ -1,5 +1,5 @@
 /**
- * @open-wa/config - Zod Schemas for open-wa configuration
+ * @eulab/openwaunlocked-config - Zod Schemas for open-wa configuration
  *
  * This module contains all Zod schema definitions for configuration objects.
  * Schemas are the single source of truth for both TypeScript types and runtime validation.
@@ -545,7 +545,7 @@ export const ConfigSchema = z.object({
   // ── Plugin System ──────────────────────────────────────────
   /**
    * Plugins to load. Can be npm package names or local file paths.
-   * @example ['@open-wa/integration-chatwoot', './my-local-plugin']
+   * @example ['@eulab/openwaunlocked-integration-chatwoot', './my-local-plugin']
    */
   plugins: z.array(z.string()).default([]).describe('Plugin references to load (npm packages or file paths).'),
 

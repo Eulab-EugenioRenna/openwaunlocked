@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
-import { InteractiveContentSchema, type InteractiveContent } from "@open-wa/schema/interactive"
+import { InteractiveContentSchema, type InteractiveContent } from "@eulab/openwaunlocked-schema/interactive"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { DetailSheet, DetailSheetClose } from "@/components/application/detail-sheet"

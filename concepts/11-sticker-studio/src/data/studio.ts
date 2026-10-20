@@ -1,4 +1,4 @@
-/** Studio samples and the curated effect shelf. Effect names are real recipes from @open-wa/stickers 5.5. */
+/** Studio samples and the curated effect shelf. Effect names are real recipes from @eulab/openwaunlocked-stickers 5.5. */
 export const samples = [
   { id: "dog", label: "Dog", file: "dog.jpg", alt: "Sample photo: a scruffy terrier on a lilac backdrop (generated illustration)" },
   { id: "coffee", label: "Coffee", file: "coffee.jpg", alt: "Sample photo: a latte with a heart on a yellow backdrop (generated illustration)" },

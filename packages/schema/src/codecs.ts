@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { assertFile, getDUrl } from '@open-wa/utils';
+import { assertFile, getDUrl } from '@eulab/openwaunlocked-utils';
 
 const chatIdPattern = /^\d+(-\d+)?@(c|g)\.us$|^\d+@lid$/;
 const contactIdPattern = /^\d+@c\.us$/;

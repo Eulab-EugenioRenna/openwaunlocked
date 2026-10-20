@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import { createLogger } from '@open-wa/logger';
-import type { IDriver } from '@open-wa/driver-interface';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import { createLogger } from '@eulab/openwaunlocked-logger';
+import type { IDriver } from '@eulab/openwaunlocked-driver-interface';
 import { Transport } from '../../src/transport/Transport';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 

@@ -1,7 +1,7 @@
 /**
- * @open-wa/core — Plugin Types
+ * @eulab/openwaunlocked-core — Plugin Types
  *
- * @deprecated Import from '@open-wa/plugin-sdk' directly.
+ * @deprecated Import from '@eulab/openwaunlocked-plugin-sdk' directly.
  * This file is kept for backward compatibility and re-exports everything.
  */
 export type {
@@ -17,4 +17,4 @@ export type {
   ToolContext,
   PluginManifest,
   PluginManifestEntry,
-} from '@open-wa/plugin-sdk';
+} from '@eulab/openwaunlocked-plugin-sdk';

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@open-wa/core';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { OpenWAClient, OpenWAEventMap, STATE, Transport } from '@eulab/openwaunlocked-core';
 import { Client } from '../Client';
 
 function createTestClient(killClientOnLogout: boolean) {

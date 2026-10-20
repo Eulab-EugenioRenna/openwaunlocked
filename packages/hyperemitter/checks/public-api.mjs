@@ -25,8 +25,8 @@ try {
   const compile = async (entry, name, format, extra = {}) => {
     const outfile = join(scratch, `${name}.${format === 'esm' ? 'mjs' : 'cjs'}`);
     await build({ entryPoints: [join(root, entry)], outfile, bundle: true, packages: 'external', platform: 'node', format, target: 'node22', logLevel: 'silent', plugins: [{ name: 'workspaces', setup(c) {
-      c.onResolve({ filter: /^@open-wa\/hyperemitter$/ }, () => ({ path: join(root, 'packages/hyperemitter/src/index.ts') }));
-      c.onResolve({ filter: /^@open-wa\/(logger|schema)$/ }, args => ({ path: require.resolve(args.path), external: true }));
+      c.onResolve({ filter: /^@eulab\/openwaunlocked-hyperemitter$/ }, () => ({ path: join(root, 'packages/hyperemitter/src/index.ts') }));
+      c.onResolve({ filter: /^@eulab\/openwaunlocked-(logger|schema)$/ }, args => ({ path: require.resolve(args.path), external: true }));
     } }], ...extra });
     bundleHashes[`${name}-${format}`] = createHash('sha256').update(await readFile(outfile)).digest('hex');
     return format === 'esm' ? import(pathToFileURL(outfile).href) : require(outfile);

@@ -1,4 +1,4 @@
-import { DriverCapabilityError } from '@open-wa/driver-interface';
+import { DriverCapabilityError } from '@eulab/openwaunlocked-driver-interface';
 import { describe, expect, it } from 'vitest';
 import {
     LightpandaConnectError,

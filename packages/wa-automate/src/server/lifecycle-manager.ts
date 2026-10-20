@@ -1,5 +1,5 @@
 import { WAServer } from './hono-server';
-import type { Config } from '@open-wa/config';
+import type { Config } from '@eulab/openwaunlocked-config';
 import { getCliOutputSink } from '../cli/output-sink';
 
 export class APILifecycleManager {

@@ -1,17 +1,17 @@
 /**
- * Client configuration types - re-exported from @open-wa/config
+ * Client configuration types - re-exported from @eulab/openwaunlocked-config
  * 
- * @deprecated Import from '@open-wa/config' instead
+ * @deprecated Import from '@eulab/openwaunlocked-config' instead
  */
 
-export { ConfigSchema as ClientConfigSchema, type Config as ClientConfig } from '@open-wa/config';
+export { ConfigSchema as ClientConfigSchema, type Config as ClientConfig } from '@eulab/openwaunlocked-config';
 
 /**
  * Migrates a v4 configuration object to the v5 schema format.
  * Currently, most v4 options are compatible with v5.
  * This function serves as a placeholder for any future transformations.
  * 
- * @deprecated This is a legacy compatibility function. Use @open-wa/config directly.
+ * @deprecated This is a legacy compatibility function. Use @eulab/openwaunlocked-config directly.
  */
 export function migrateV4Config(oldConfig: Record<string, unknown>): Record<string, unknown> {
     // Deep clone to avoid mutating original

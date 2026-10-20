@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
-import type { SessionRefreshOptions, SessionRefreshSnapshot, SessionRefreshResult } from '@open-wa/schema';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
+import type { SessionRefreshOptions, SessionRefreshSnapshot, SessionRefreshResult } from '@eulab/openwaunlocked-schema';
 import type { SessionManager } from '../sessionmanager';
 import type { OpenWAEventMap } from '../events/eventMap';
 import type { Transport, LivePatchPreloadResult, LicensePreloadResult, SessionDebugInfo } from '../transport/Transport';

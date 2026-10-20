@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/runtime-browser",
-  "author": "Eulab",
-  "version": "5.0.2",
+  "name": "@eulab/openwaunlocked-runtime-browser",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Browser Effect runtime Layer for open-wa control-plane clients",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@effect/platform-browser": "catalog:",
-    "@open-wa/runtime-core": "workspace:*",
+    "@eulab/openwaunlocked-runtime-core": "workspace:*",
     "effect": "catalog:"
   },
   "devDependencies": {
@@ -40,7 +40,8 @@
         "require": "./dist/index.cjs",
         "types": "./dist/index.d.mts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "files": [
@@ -48,6 +49,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/runtime-browser"
+  },
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
   }
 }

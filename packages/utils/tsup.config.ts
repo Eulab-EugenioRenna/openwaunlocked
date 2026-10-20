@@ -12,7 +12,7 @@ export default defineConfig({
     external: [],
     esbuildOptions(options) {
         options.banner = {
-            js: '// @open-wa/utils - Shared generic utilities for open-wa',
+            js: '// @eulab/openwaunlocked-utils - Shared generic utilities for open-wa',
         };
     },
 });

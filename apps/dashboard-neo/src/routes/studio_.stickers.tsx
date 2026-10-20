@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
-import { validateStickerJob } from "@open-wa/stickers/browser"
+import { validateStickerJob } from "@eulab/openwaunlocked-stickers/browser"
 import { ChevronRight, Code2, Copy, Download, Film, Send, SlidersHorizontal, Tag, X } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"

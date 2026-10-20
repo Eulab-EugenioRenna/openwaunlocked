@@ -1,7 +1,7 @@
 {
-  "name": "@open-wa/api",
-  "author": "Eulab",
-  "version": "5.6.6",
+  "name": "@eulab/openwaunlocked-api",
+  "author": "EULAB",
+  "version": "1.0.0",
   "description": "Reusable Easy API transport and runtime explorer layer for open-wa",
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
@@ -28,9 +28,9 @@
   "dependencies": {
     "@elastic/elasticsearch": "catalog:",
     "@hono/node-server": "catalog:",
-    "@open-wa/mcp": "workspace:*",
-    "@open-wa/schema": "workspace:*",
-    "@open-wa/screencaster": "workspace:*",
+    "@eulab/openwaunlocked-mcp": "workspace:*",
+    "@eulab/openwaunlocked-schema": "workspace:*",
+    "@eulab/openwaunlocked-screencaster": "workspace:*",
     "hono": "catalog:",
     "tree-kill": "^1.2.2",
     "ws": "^8.22.0"
@@ -39,7 +39,7 @@
     "vite": "*"
   },
   "devDependencies": {
-    "@open-wa/dashboard-neo": "workspace:*",
+    "@eulab/openwaunlocked-dashboard-neo": "workspace:*",
     "@types/node": "catalog:",
     "@types/ws": "^8.18.1",
     "typescript": "catalog:",
@@ -53,11 +53,17 @@
         "require": "./dist/index.cjs",
         "types": "./dist/index.d.cts"
       }
-    }
+    },
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/api"
   },
-  "license": "SEE LICENSE IN LICENSE.md"
+  "license": "SEE LICENSE IN LICENSE.md",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

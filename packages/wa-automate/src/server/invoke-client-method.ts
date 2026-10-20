@@ -1,1 +1,1 @@
-export { invokeClientMethod, type ClientMethodDefinitionLike } from '@open-wa/api';
+export { invokeClientMethod, type ClientMethodDefinitionLike } from '@eulab/openwaunlocked-api';

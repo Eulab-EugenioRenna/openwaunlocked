@@ -15,7 +15,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { getApiUrl, getClient } from "@/lib/api-client"
-import type { SessionRefreshSnapshot } from '@open-wa/socket-client'
+import type { SessionRefreshSnapshot } from '@eulab/openwaunlocked-socket-client'
 import { useDemo } from "@/lib/demo/use-demo"
 import {
   demoLaunchTimeline,

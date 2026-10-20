@@ -1,6 +1,6 @@
 import type { Hono } from 'hono';
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { OpenWAEventMap } from '../events/eventMap';
 import type {
   Plugin,
@@ -12,7 +12,7 @@ import type {
   PluginManifest,
   PluginManifestEntry,
   PluginClient,
-} from '@open-wa/plugin-sdk';
+} from '@eulab/openwaunlocked-plugin-sdk';
 import { createEventGateway, getPublicEvents } from './EventGateway';
 import { validatePluginConfig } from './PluginLoader';
 

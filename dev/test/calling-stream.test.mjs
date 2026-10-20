@@ -2,9 +2,9 @@
 // calling provider is simulated. No WhatsApp recipient is contacted.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Client } from '@open-wa/client';
-import { CallingService } from '@open-wa/core';
-import { makeNodeCallMediaHost, createVoiceCallAudio } from '@open-wa/runtime-node';
+import { Client } from '@eulab/openwaunlocked-client';
+import { CallingService } from '@eulab/openwaunlocked-core';
+import { makeNodeCallMediaHost, createVoiceCallAudio } from '@eulab/openwaunlocked-runtime-node';
 import { createConversation } from './conversation.mjs';
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const pcm=(value,samples=320)=>{const bytes=new Uint8Array(samples*2),view=new DataView(bytes.buffer);for(let n=0;n<samples;n++)view.setInt16(n*2,value,true);return bytes};

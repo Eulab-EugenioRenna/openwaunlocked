@@ -4,7 +4,7 @@
  * Provides memory metrics, runtime config dump, and integration config CRUD.
  * These are consumed by the dashboard-neo debug and integrations pages.
  */
-import type { Config } from '@open-wa/schema';
+import type { Config } from '@eulab/openwaunlocked-schema';
 
 export function registerDebugRoutes(
   app: any,

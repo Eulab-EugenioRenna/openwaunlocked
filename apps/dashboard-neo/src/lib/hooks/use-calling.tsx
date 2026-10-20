@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import type { Call, CallActionResult, CallMediaOptions } from '@open-wa/socket-client';
+import type { Call, CallActionResult, CallMediaOptions } from '@eulab/openwaunlocked-socket-client';
 import { toast } from 'sonner';
 import { useSocket } from './use-socket';
 import { usePrivacy } from './use-privacy';

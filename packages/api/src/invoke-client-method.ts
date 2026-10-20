@@ -1,1 +1,1 @@
-export { invokeClientMethod, type ClientMethodDefinitionLike } from '@open-wa/mcp';
+export { invokeClientMethod, type ClientMethodDefinitionLike } from '@eulab/openwaunlocked-mcp';

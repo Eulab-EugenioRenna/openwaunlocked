@@ -85,7 +85,7 @@ async function compile(snapshot, name) {
     const target = join(dir, file); await mkdir(dirname(target), { recursive: true }); await writeFile(target, contents);
   }
   const outfile = join(scratch, `${name}.mjs`);
-  await build({ entryPoints: [join(dir, 'index.ts')], outfile, bundle: true, packages: 'external', platform: 'node', format: 'esm', target: 'node22', logLevel: 'silent', plugins: [{ name: 'logger', setup(c) { c.onResolve({ filter: /^@open-wa\/logger$/ }, () => ({ path: require.resolve('@open-wa/logger'), external: true })); } }] });
+  await build({ entryPoints: [join(dir, 'index.ts')], outfile, bundle: true, packages: 'external', platform: 'node', format: 'esm', target: 'node22', logLevel: 'silent', plugins: [{ name: 'logger', setup(c) { c.onResolve({ filter: /^@eulab\/openwaunlocked-logger$/ }, () => ({ path: require.resolve('@eulab/openwaunlocked-logger'), external: true })); } }] });
   const module = await import(pathToFileURL(outfile).href);
   return { name, HyperEmitter: name === 'public-event-emitter' ? module.EventEmitter : module.HyperEmitter, sourceSha256: snapshot.sourceSha256, sourceFiles: snapshot.sourceFiles };
 }

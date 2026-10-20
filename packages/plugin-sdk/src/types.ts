@@ -1,12 +1,12 @@
 /**
- * @open-wa/plugin-sdk — Plugin Type Definitions
+ * @eulab/openwaunlocked-plugin-sdk — Plugin Type Definitions
  *
  * This module defines the complete contract between plugins and the open-wa host.
  * Plugin developers should use `createPlugin()` instead of implementing these directly.
  */
 import type { Hono } from 'hono';
 import type { z } from 'zod';
-import type { MediaSendOptions } from '@open-wa/schema';
+import type { MediaSendOptions } from '@eulab/openwaunlocked-schema';
 
 // ============================================================================
 // Plugin Input — What plugins receive from the host
@@ -79,7 +79,7 @@ export interface PluginInput<TConfig = unknown> {
  * - reply(to, content, quotedMsgId) → messageId
  * - forwardMessages(to, messages, skipMyMessages?) → boolean
  *
- * See the full Client interface in @open-wa/wa-automate-types-only.
+ * See the full Client interface in @eulab/openwaunlocked-types-only.
  */
 export interface PluginClient {
   /**

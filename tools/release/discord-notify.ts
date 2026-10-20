@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Discord webhook notification for @open-wa releases
+ * Discord webhook notification for EULAB Open releases
  *
  * Posts a cover and numbered changelog pages to Discord.
  *
@@ -102,7 +102,7 @@ function buildEmbed(version: string, notes: string, isTest: boolean): DiscordEmb
   const pkgCount = extractPackageCount(notes);
   const commitCount = extractCommitCount(notes);
   const isPreRelease = version.includes("-");
-  const releaseUrl = `https://github.com/open-wa/wa-automate-nodejs/releases/tag/v${version}`;
+  const releaseUrl = `https://github.com/Eulab-EugenioRenna/openwaunlocked/releases/tag/v${version}`;
 
   // Truncate highlights if too long for Discord (max 4096 for description)
   const maxDescLen = 2000;
@@ -142,12 +142,12 @@ function buildEmbed(version: string, notes: string, isTest: boolean): DiscordEmb
       },
       {
         name: "Install",
-        value: `\`pnpm add @open-wa/wa-automate@${version}\``,
+        value: `\`pnpm add @eulab/openwaunlocked@${version}\``,
         inline: false,
       },
     ],
     footer: {
-      text: "open-wa/wa-automate-nodejs",
+      text: "Eulab-EugenioRenna/openwaunlocked",
     },
     timestamp: new Date().toISOString(),
   };

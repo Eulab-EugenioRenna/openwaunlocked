@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { StickerResult } from "@open-wa/stickers"
+import type { StickerResult } from "@eulab/openwaunlocked-stickers"
 import { Button } from "@/components/ui/button"
 import { useStickerResultUrl, useStickerStillUrl } from "@/lib/studio/use-sticker-render"
 import { EmptyStudio, StudioChoices } from "./shared"

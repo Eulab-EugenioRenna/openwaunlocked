@@ -1,7 +1,7 @@
 import { createHash, randomUUID, timingSafeEqual } from 'node:crypto';
 import { ProtocolError, ProtocolErrorCode } from '@modelcontextprotocol/server';
-import { getEventContract, getMcpEventDefinitions } from '@open-wa/schema';
-import { ScopedTaskQueue } from '@open-wa/runtime-core';
+import { getEventContract, getMcpEventDefinitions } from '@eulab/openwaunlocked-schema';
+import { ScopedTaskQueue } from '@eulab/openwaunlocked-runtime-core';
 import { Webhook } from 'standardwebhooks';
 import { callbackUrl, postCallback } from './callback';
 import { canonicalJson, type SubscribeParams, type UnsubscribeParams } from './protocol';

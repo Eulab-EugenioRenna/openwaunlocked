@@ -4,7 +4,7 @@ import { chmod, mkdir, mkdtemp, readFile, rename, rm, writeFile } from 'node:fs/
 import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { promisify } from 'node:util';
-import type { BrowserProvisionOptions, IDriverContext } from '@open-wa/driver-interface';
+import type { BrowserProvisionOptions, IDriverContext } from '@eulab/openwaunlocked-driver-interface';
 
 const run = promisify(execFile);
 const RECIPE = 'whatsapp-ua-v1';

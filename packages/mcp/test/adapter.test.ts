@@ -7,7 +7,7 @@
 import { describe, it, expect, vi, beforeAll } from 'vitest';
 import { Hono } from 'hono';
 import { createHonoMcpAdapter } from '../src/adapter/hono-mcp';
-import type { Config } from '@open-wa/schema';
+import type { Config } from '@eulab/openwaunlocked-schema';
 
 function createTestConfig(overrides: Partial<Config> = {}): Config {
   return {

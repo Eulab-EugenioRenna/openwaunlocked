@@ -1,7 +1,7 @@
-import type { Config, HttpMethodDefinition } from '@open-wa/schema';
-import { eventRegistry, createAsyncApiDocument } from '@open-wa/schema';
+import type { Config, HttpMethodDefinition } from '@eulab/openwaunlocked-schema';
+import { eventRegistry, createAsyncApiDocument } from '@eulab/openwaunlocked-schema';
 import { API_VERSION } from '../version';
-import { getMcpToolDefinitions } from '@open-wa/mcp';
+import { getMcpToolDefinitions } from '@eulab/openwaunlocked-mcp';
 import { deprecatedJson, applyDeprecationHeaders } from '../compat/deprecation';
 import { createOpenApiDocument } from '../docs/openapi';
 import { createPostmanCollection } from '../docs/postman';

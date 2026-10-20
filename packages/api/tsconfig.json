@@ -4,10 +4,10 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "paths": {
-      "@open-wa/schema": [
+      "@eulab/openwaunlocked-schema": [
         "../schema/dist/index.d.ts"
       ],
-      "@open-wa/schema/*": [
+      "@eulab/openwaunlocked-schema/*": [
         "../schema/dist/*"
       ]
     }

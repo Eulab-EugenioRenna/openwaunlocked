@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { decryptMedia as decryptMediaBuffer } from '@open-wa/decrypt';
+import { decryptMedia as decryptMediaBuffer } from '@eulab/openwaunlocked-decrypt';
 import type { Client } from '../Client';
-import type { DataURL, Message, MessageId } from '@open-wa/schema';
-import { implementMethod, sendFileFromUrl as sendFileFromUrlSchema } from '@open-wa/schema';
+import type { DataURL, Message, MessageId } from '@eulab/openwaunlocked-schema';
+import { implementMethod, sendFileFromUrl as sendFileFromUrlSchema } from '@eulab/openwaunlocked-schema';
 
 export interface MediaMethods {
   decryptMedia(message: Message | MessageId): Promise<DataURL>;

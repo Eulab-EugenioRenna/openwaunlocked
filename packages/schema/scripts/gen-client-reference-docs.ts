@@ -471,7 +471,7 @@ function buildOutputBlock(outputSummary: string, notes?: string): string {
 
 function buildReturnNotes(def: MethodDefinition, outputSummary: string): string {
   if (def.meta.functionName === 'sendText') {
-    return 'Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@open-wa/wa-automate` and `@open-wa/client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the Eulab development branch. HTTP and remote clients expose failures through their own error envelopes.';
+    return 'Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@eulab/openwaunlocked` and `@eulab/openwaunlocked-client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the EULAB development branch. HTTP and remote clients expose failures through their own error envelopes.';
   }
 
   if (def.meta.functionName === 'deleteMessage') {
@@ -653,7 +653,7 @@ function buildUsageTabs(def: MethodDefinition, route: HttpMethodDefinition | und
     '  <InterfaceTab value="SocketClient">',
     '',
     '```ts',
-    "import { SocketClient } from '@open-wa/socket-client';",
+    "import { SocketClient } from '@eulab/openwaunlocked-socket-client';",
     '',
     "const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');",
     exampleCall,
@@ -726,7 +726,7 @@ function buildCanonicalMethodRecord(
           : buildPositionalCall(sdkAliases[def.meta.functionName] ?? def.meta.functionName, exampleParameters),
       nodeCall: exampleCall,
       nodeClient: [
-        "import { SocketClient } from '@open-wa/socket-client';",
+        "import { SocketClient } from '@eulab/openwaunlocked-socket-client';",
         '',
         "const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');",
         exampleCall,
@@ -825,20 +825,20 @@ function buildClientIndexPage(methods: MethodDefinition[]): string {
       ...rows,
       '\n</details>',
     ].join('\n'),
-    'WhatsApp Client API reference for Node.js | Eulab Open',
+    'WhatsApp Client API reference for Node.js | EULAB Open',
   );
 }
 
 // Open access is an attribute of this development branch, not a source license.
 function buildLicensedMethodsPage(methods: MethodDefinition[]): string {
   if (methods.some(def => def.meta.license && def.meta.license !== 'none')) {
-    throw new Error('Eulab Open documentation requires an ungated method registry.');
+    throw new Error('EULAB Open documentation requires an ungated method registry.');
   }
   return buildGeneratedPage(
-    'Metodi Eulab Open',
-    'Accesso Open alle API del fork Eulab.',
+    'Metodi EULAB Open',
+    'Accesso Open alle API del fork EULAB.',
     [
-      'Tutti i metodi del registro hanno accesso **Open** nel branch `dev/free-use-offline`, mantenuto da Eulab.',
+      'Tutti i metodi del registro hanno accesso **Open** nel branch `dev/free-use-offline`, mantenuto da EULAB.',
       '',
       'Le implementazioni locali richiedono ancora accettazione live su WhatsApp. La classificazione non prova consegna, rendering o disponibilità dei moduli nativi.',
       '',
@@ -987,7 +987,7 @@ function buildInternalsPages(
     ].join('\n')),
 
     'generated-types': buildGeneratedPage('Generated types', 'Where the generated input/output type aliases come from.', [
-      '`gen-types.ts` emits input and output type aliases for every method from its `inputSchema` and `outputSchema` into `packages/schema/src/generated/types.ts`. `@open-wa/wa-automate-types-only` re-exposes this generated surface so consumers can import method types without the runtime.',
+      '`gen-types.ts` emits input and output type aliases for every method from its `inputSchema` and `outputSchema` into `packages/schema/src/generated/types.ts`. `@eulab/openwaunlocked-types-only` re-exposes this generated surface so consumers can import method types without the runtime.',
     ].join('\n')),
 
     'send-text-worked-example': buildGeneratedPage('Trace sendText through the runtime', 'Contributor walkthrough of how sendText is defined and dispatched.', [
@@ -998,7 +998,7 @@ function buildInternalsPages(
             '## Consumer usage',
             '',
             '```ts',
-            "import { create } from '@open-wa/wa-automate';",
+            "import { create } from '@eulab/openwaunlocked';",
             '',
             "const client = await create({ sessionId: 'docs-example' });",
             'try {',

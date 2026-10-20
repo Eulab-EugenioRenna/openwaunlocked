@@ -8,5 +8,5 @@
   "benchmark": "Cloudinary (cloudinary.com)",
   "floor": ["/", "/recipes/", "/recipes/salon-bookings/", "/recipes/hotel-notifications/", "/recipes/otp/", "/recipes/pbx-calls/", "/recipes/stickers/", "/recipes/media/", "/recipes/order-updates/", "/recipes/support-inbox/", "/recipes/ai-agent/", "/quickstart/", "/features/", "/integrations/", "/pricing/", "/compare/", "/migrate/", "/support/", "/community/", "/changelog/", "/legal/", "/404"],
   "fonts": ["Bagel Fat One (OFL)", "DM Sans (OFL)", "Azeret Mono (OFL)"],
-  "libraries": ["astro", "@open-wa/stickers (local package, real in-page rendering)"]
+  "libraries": ["astro", "@eulab/openwaunlocked-stickers (local package, real in-page rendering)"]
 }

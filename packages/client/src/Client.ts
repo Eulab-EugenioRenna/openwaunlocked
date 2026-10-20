@@ -1,7 +1,7 @@
 import { developmentPremiumMethods, type DevelopmentPremiumMethods } from './methods/development-premium';
 import { disposeClientStickers } from './stickers';
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type {
   OpenWAClient,
   OpenWAEventMap,
@@ -12,7 +12,7 @@ import type {
   SessionRefreshOptions,
   SessionRefreshResult,
   SessionRefreshSnapshot,
-} from '@open-wa/core';
+} from '@eulab/openwaunlocked-core';
 import type {
   ChatId,
   GroupId,
@@ -26,8 +26,8 @@ import type {
   WhatsAppEvent,
   EventResponse,
   ParticipantChange,
-} from '@open-wa/schema';
-import { groupIdParam } from '@open-wa/schema';
+} from '@eulab/openwaunlocked-schema';
+import { groupIdParam } from '@eulab/openwaunlocked-schema';
 import {
   MessageCollector,
   MessageCollectorEvents,
@@ -36,13 +36,13 @@ import {
   awaitMessages,
   Collection,
   CollectorFilter,
-} from '@open-wa/domain';
+} from '@eulab/openwaunlocked-domain';
 import { ListenerManager, type ListenerHandle } from './events/index';
 import { throwUnsupportedListener } from './runtimeSurface';
 import { hydrateCall } from './calls';
-import { normalizeCallMedia } from '@open-wa/schema';
-import type { Call, CallActionResult, CallCapabilities, CallIdentity, CallMediaOptions, AudioInput, AudioOutput, VideoInput } from '@open-wa/schema';
-import type { QueueOptions } from '@open-wa/schema';
+import { normalizeCallMedia } from '@eulab/openwaunlocked-schema';
+import type { Call, CallActionResult, CallCapabilities, CallIdentity, CallMediaOptions, AudioInput, AudioOutput, VideoInput } from '@eulab/openwaunlocked-schema';
+import type { QueueOptions } from '@eulab/openwaunlocked-schema';
 
 import { interactiveMethods, type InteractiveMethods } from './methods/interactive';
 import { messagingMethods, type MessagingMethods } from './methods/messaging';
@@ -59,7 +59,7 @@ import { whatsappEventMethods, type WhatsAppEventMethods } from './methods/whats
  */
 export interface ClientConfig {
   /**
-   * The OpenWAClient instance from @open-wa/core.
+   * The OpenWAClient instance from @eulab/openwaunlocked-core.
    */
   client: OpenWAClient;
   
@@ -82,14 +82,14 @@ export type EvaluateFn = <Arg, Ret>(
  * Client - High-level facade for WhatsApp Web automation.
  * 
  * Composes:
- * - OpenWAClient from @open-wa/core (lifecycle, events, plugins)
+ * - OpenWAClient from @eulab/openwaunlocked-core (lifecycle, events, plugins)
  * - Transport for WAPI method calls
  * - Domain-specific method modules (messaging, groups, chats, contacts)
  * 
  * @example
  * ```typescript
- * import { createClient } from '@open-wa/core';
- * import { Client } from '@open-wa/client';
+ * import { createClient } from '@eulab/openwaunlocked-core';
+ * import { Client } from '@eulab/openwaunlocked-client';
  * 
  * const openwa = await createClient({ driver, plugins: [] });
  * 
@@ -344,7 +344,7 @@ export class Client implements DevelopmentPremiumMethods, InteractiveMethods, Me
   }
 
   /** Decrypted votes from the synced store; history hydration can emit votes too. */
-  onPollVote(callback: (vote: import('@open-wa/schema').PollVote) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
+  onPollVote(callback: (vote: import('@eulab/openwaunlocked-schema').PollVote) => void | Promise<void>, options?: QueueOptions): ListenerHandle {
     return this._listenerManager.on('pollVote', callback, options);
   }
 
@@ -427,7 +427,7 @@ export class Client implements DevelopmentPremiumMethods, InteractiveMethods, Me
   
   getCallCapabilities(): Promise<CallCapabilities> { return this._transport.calling.capabilities(); }
   /** Access selected by the accepted licence payload; no capability preflight is required. */
-  async getLicenseFeatures(): Promise<import('@open-wa/schema').LicenseFeatures> { return this._transport.getLicenseFeatures(); }
+  async getLicenseFeatures(): Promise<import('@eulab/openwaunlocked-schema').LicenseFeatures> { return this._transport.getLicenseFeatures(); }
   /** Used by the bundled API's authenticated binary media route. */
   getCallingService() { return this._transport.calling; }
   async getActiveCall(): Promise<Call | null> {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Combobox } from "@base-ui/react/combobox"
 import { Check, ChevronDown } from "lucide-react"
-import { InteractiveResponseSchema } from "@open-wa/schema/interactive"
+import { InteractiveResponseSchema } from "@eulab/openwaunlocked-schema/interactive"
 import { DetailSheet } from "@/components/application/detail-sheet"
 import { Button } from "@/components/ui/button"
 import { useSocket } from "@/lib/hooks/use-socket"

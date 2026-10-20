@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { main } from '@open-wa/cli';
+import { main } from '@eulab/openwaunlocked-cli';
 
 main(process.argv.slice(2)).catch((err) => {
     console.error('Fatal error:', err);

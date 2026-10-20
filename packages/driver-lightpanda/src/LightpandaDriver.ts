@@ -7,7 +7,7 @@ import {
     IDriver,
     IDriverContext,
     LaunchOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 import { LightpandaBrowser } from './LightpandaBrowser';
 import { LightpandaConnectError, LightpandaInvalidExecutableError, LightpandaPortExhaustionError, LightpandaRenderingError, LightpandaStartupError } from './errors';
 import { LightpandaProcessManager } from './process-manager';

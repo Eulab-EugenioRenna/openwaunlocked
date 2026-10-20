@@ -16,9 +16,9 @@ import type {
   LightpandaOptions,
   BrowserProvisionOptions,
   WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
-import type { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+} from '@eulab/openwaunlocked-driver-interface';
+import type { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { OpenWAEventMap, STATE } from '../events/eventMap';
 import { loadOfflinePatches, isOpenWaServiceUrl } from './offlineDevelopment';
 import { installDocumentRuntime } from '../livePatch/installDocument';
@@ -28,8 +28,8 @@ import { getRuntimeListenerSurfaceEntry, runtimeListenerSurface } from './runtim
 import { auditWapiHelperAssetRequirements, ScriptLoader } from './ScriptLoader';
 import { chromiumConfig, sanitizeBrowserArgs } from './browserConfig';
 import { CallingService } from '../calling/CallingService';
-import type { LicenseFeatures } from '@open-wa/schema';
-import { ParticipantChangePatchSchema } from '@open-wa/schema';
+import type { LicenseFeatures } from '@eulab/openwaunlocked-schema';
+import { ParticipantChangePatchSchema } from '@eulab/openwaunlocked-schema';
 
 export interface PatchFetchConfig {
   /** Use GitHub raw patches as the primary source instead of the default CDN. */
@@ -82,7 +82,7 @@ export interface TransportOptions extends SessionPersistenceConfig, SessionEncry
   lightpanda?: LightpandaOptions;
   patchConfig?: PatchFetchConfig;
   licenseConfig?: LicenseServerConfig;
-  calling?: import('@open-wa/schema').CallingOptions;
+  calling?: import('@eulab/openwaunlocked-schema').CallingOptions;
   callMediaHost?: import('../calling/ports').CallMediaHost;
 }
 
@@ -675,21 +675,21 @@ export class Transport {
     const pollSurface = getRuntimeListenerSurfaceEntry('poll.vote');
     await this.injectionController.registerRuntimeWapiBridge(
       pollSurface.event, pollSurface.bindingName,
-      (vote: import('@open-wa/schema').PollVote) => {
+      (vote: import('@eulab/openwaunlocked-schema').PollVote) => {
         this.events.emit('poll.vote', { ctx: { correlationId: 'runtime-poll-vote', ts: Date.now() }, vote });
       }, { wapiMethod: pollSurface.wapiMethod, required: pollSurface.required },
     );
     const eventSurface = getRuntimeListenerSurfaceEntry('event.changed');
     await this.injectionController.registerRuntimeWapiBridge(
       eventSurface.event, eventSurface.bindingName,
-      (event: import('@open-wa/schema').WhatsAppEvent) => {
+      (event: import('@eulab/openwaunlocked-schema').WhatsAppEvent) => {
         this.events.emit('event.changed', { ctx: { correlationId: 'runtime-event', ts: Date.now() }, event });
       }, { wapiMethod: eventSurface.wapiMethod, required: eventSurface.required },
     );
     const eventResponseSurface = getRuntimeListenerSurfaceEntry('event.response');
     await this.injectionController.registerRuntimeWapiBridge(
       eventResponseSurface.event, eventResponseSurface.bindingName,
-      (response: import('@open-wa/schema').EventResponse) => {
+      (response: import('@eulab/openwaunlocked-schema').EventResponse) => {
         this.events.emit('event.response', { ctx: { correlationId: 'runtime-event-response', ts: Date.now() }, response });
       }, { wapiMethod: eventResponseSurface.wapiMethod, required: eventResponseSurface.required },
     );
@@ -2457,12 +2457,12 @@ export class Transport {
   private async fetchLivePatchesWithCache(
     _sessionInfo?: SessionDebugInfo,
   ): Promise<LivePatchFetchResult> {
-    const result = await loadOfflinePatches(process.cwd());
+    const result = await loadOfflinePatches(dirname(Transport.resolveWapiScriptPath()));
     return { ...result, source: 'cached' };
   }
 
   private async fetchFreshLivePatches(_sessionInfo?: SessionDebugInfo, _fresh = false): Promise<{ data: string[]; tag: string }> {
-    return loadOfflinePatches(process.cwd());
+    return loadOfflinePatches(dirname(Transport.resolveWapiScriptPath()));
   }
 
   // ─── Session Debug Info ───────────────────────────────────────────────────

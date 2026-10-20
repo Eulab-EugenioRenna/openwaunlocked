@@ -1,7 +1,7 @@
 /** Effect remains internal; normalize failures at the public Promise boundary. */
 import { Effect } from 'effect';
-import { toPublicError } from '@open-wa/driver-interface';
-export { OpenWAError, TAG_STATUS, toPublicError, type OpenWAErrorInit } from '@open-wa/driver-interface';
+import { toPublicError } from '@eulab/openwaunlocked-driver-interface';
+export { OpenWAError, TAG_STATUS, toPublicError, type OpenWAErrorInit } from '@eulab/openwaunlocked-driver-interface';
 
 /**
  * Run an Effect and return a Promise whose rejection is always a public

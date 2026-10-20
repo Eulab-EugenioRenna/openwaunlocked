@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react"
-import type { InteractiveAction, InteractiveContent, FormQuestion } from "@open-wa/schema/interactive"
+import type { InteractiveAction, InteractiveContent, FormQuestion } from "@eulab/openwaunlocked-schema/interactive"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/boardui/checkbox"

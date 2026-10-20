@@ -1,12 +1,12 @@
-import { EventEmitter } from '@open-wa/hyperemitter';
+import { EventEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Effect } from 'effect';
 import { EventSource as EventSourcePolyfill } from 'eventsource';
-import type { SimpleListener, Chat, ChatId, Message } from "@open-wa/wa-automate-types-only";
-import type { BaseClient as _Client } from "@open-wa/wa-automate-types-only";
+import type { SimpleListener, Chat, ChatId, Message } from "@eulab/openwaunlocked-types-only";
+import type { BaseClient as _Client } from "@eulab/openwaunlocked-types-only";
 import { RemoteCalls } from './calling';
-import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@open-wa/schema';
-import { normalizeCallMedia } from '@open-wa/schema/calling-media';
-import type { Call, CallSnapshot, CallCapabilities, CallActionResult, CallMediaOptions, AudioInput, AudioOutput, VideoInput } from '@open-wa/schema';
+import type { SessionRefreshOptions, SessionRefreshResult, SessionRefreshSnapshot } from '@eulab/openwaunlocked-schema';
+import { normalizeCallMedia } from '@eulab/openwaunlocked-schema/calling-media';
+import type { Call, CallSnapshot, CallCapabilities, CallActionResult, CallMediaOptions, AudioInput, AudioOutput, VideoInput } from '@eulab/openwaunlocked-schema';
 import { TunnelSocketClient } from './TunnelSocketClient';
 const uuidv4 = () => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 import { MessageCollector } from './MessageCollector';
@@ -181,7 +181,7 @@ export type Client = _Client;
  * 2. Use this in your code:
  * 
  *      ```javascript
- *          import { SocketClient } from "@open-wa/wa-automate";
+ *          import { SocketClient } from "@eulab/openwaunlocked";
  *          
  *          SocketClient.connect("http://localhost:8080").then(async client => {
  *              //now you can use the client similar to how you would use the EASY API client surface.
@@ -591,7 +591,7 @@ export class SocketClient {
     // }
 
     public async getCallCapabilities(): Promise<CallCapabilities> { return this.ask('getCallCapabilities' as any) as Promise<CallCapabilities>; }
-    public async getLicenseFeatures(): Promise<import('@open-wa/schema').LicenseFeatures> { return this.ask('getLicenseFeatures' as any) as Promise<import('@open-wa/schema').LicenseFeatures>; }
+    public async getLicenseFeatures(): Promise<import('@eulab/openwaunlocked-schema').LicenseFeatures> { return this.ask('getLicenseFeatures' as any) as Promise<import('@eulab/openwaunlocked-schema').LicenseFeatures>; }
     public async getActiveCall(): Promise<Call | null> { const snapshot = await this.ask('getActiveCall' as any) as CallSnapshot | null; return snapshot ? this.calls.hydrate(snapshot) : null; }
     private async logCallingAvailability() {
         const capabilities = await this.getCallCapabilities();

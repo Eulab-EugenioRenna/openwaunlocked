@@ -106,7 +106,7 @@ export const sendAlbum = defineMethodV2('sendAlbum', {
  */
 export const sendText = defineMethodV2('sendText', {
     meta: {
-        description: 'Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch.',
+        description: 'Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the EULAB development branch.',
         action: 'send',
         namespace: 'messages',
         license: 'none',

@@ -8,7 +8,7 @@ export const capabilityList = [
   { id: "groups", title: "Groups", text: capabilities.groups, methods: ["createGroup", "joinGroupViaLink"] },
   { id: "polls", title: "Polls", text: capabilities.polls },
   { id: "events", title: "Event cards", text: capabilities.events, methods: ["sendEvent", "onEventResponse"] },
-  { id: "stickers", title: "Stickers", text: "Render WebP stickers locally with @open-wa/stickers: 62 recipes, with resources loaded only when used." },
+  { id: "stickers", title: "Stickers", text: "Render WebP stickers locally with @eulab/openwaunlocked-stickers: 62 recipes, with resources loaded only when used." },
   { id: "multiSession", title: "Multiple sessions", text: capabilities.multiSession },
   { id: "sessions", title: "Portable sessions", text: capabilities.sessions },
   { id: "refresh", title: "Live refresh", text: capabilities.refresh, methods: ["client.refresh()"] },
@@ -27,7 +27,7 @@ export const useCaseList = [
 
 export const wayTable = [
   { id: "easy-api", name: "Easy API", runs: "open-wa runs as its own process and serves an HTTP API on the port you choose.", code: "Anything that speaks HTTP.", start: commands.easyApi },
-  { id: "socket-client", name: "SocketClient", runs: "An Easy API instance runs separately; your Node.js app connects to it as a remote consumer.", code: "Node.js with @open-wa/socket-client.", start: commands.socketClientInstall },
+  { id: "socket-client", name: "SocketClient", runs: "An Easy API instance runs separately; your Node.js app connects to it as a remote consumer.", code: "Node.js with @eulab/openwaunlocked-socket-client.", start: commands.socketClientInstall },
   { id: "embedded", name: "Embedded runtime", runs: "The runtime and its browser run inside your own Node.js process.", code: "Node.js with createClient.", start: commands.embeddedInstall },
   { id: "mcp", name: "MCP server", runs: "An Easy API instance with the MCP server turned on at /mcp.", code: "None. Your agent calls the tools.", start: commands.mcpEndpoint },
 ];

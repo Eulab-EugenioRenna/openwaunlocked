@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import { createLogger } from '@open-wa/logger';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import { createLogger } from '@eulab/openwaunlocked-logger';
 import { PluginHost } from '../../src/plugins/PluginHost';
-import { createPlugin } from '@open-wa/plugin-sdk';
+import { createPlugin } from '@eulab/openwaunlocked-plugin-sdk';
 import type { PluginClient, PluginInput } from '../../src/plugins/types';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 

@@ -1,7 +1,7 @@
 // Run with Node 24.21.0. CommonJS imports and config from GitHub issue #3534.
 // Set OPENWA_REPRO_HEADLESS=false for the otherwise identical visible run.
 const path = require("node:path");
-const { create } = require("@open-wa/wa-automate");
+const { create } = require("@eulab/openwaunlocked");
 
 const configObject = {
   sessionId: "bug-repro",
@@ -27,7 +27,7 @@ console.log({
 console.log("Starting WhatsApp. Pairing is required before create() resolves.");
 
 if (process.env.OPENWA_REPRO_CHECK_QR === "true") {
-  const { ev } = require("@open-wa/wa-automate");
+  const { ev } = require("@eulab/openwaunlocked");
   let nativeQr: string | undefined;
   ev.on("launch.auth.qr.generated", function (event: any, sessionId: string, namespace: string) {
     nativeQr = event.details?.qr;

@@ -176,3 +176,8 @@ output/Users*projectstoolswaappsdocspublicmascots*.png
 /packages/core/src/transport/assets/dev-premium.js
 
 /.pnpm-store/
+
+# Local npm authentication and package archives.
+/.env.npm.local
+/.release/
+*.tgz

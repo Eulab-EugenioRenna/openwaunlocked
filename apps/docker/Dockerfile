@@ -39,7 +39,7 @@ COPY --from=deps /app ./
 COPY . .
 ENV PUPPETEER_SKIP_DOWNLOAD=true
 RUN pnpm install --offline --frozen-lockfile
-RUN pnpm exec turbo build --filter=@open-wa/wa-automate...
+RUN pnpm exec turbo build --filter=@eulab/openwaunlocked...
 
 # Stage 3: Runtime
 FROM node:22-bookworm-slim

@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { Tv, ArrowLeft, ArrowRight, XCircle } from "lucide-react"
 import { useSocket } from "@/lib/hooks/use-socket"
 import { useHealth } from "@/lib/hooks/use-health"
-import { ScreencastClient } from "@open-wa/screencaster/client"
-import type { NavStateMessage } from "@open-wa/screencaster/client"
+import { ScreencastClient } from "@eulab/openwaunlocked-screencaster/client"
+import type { NavStateMessage } from "@eulab/openwaunlocked-screencaster/client"
 import { getApiUrl } from "@/lib/api-client"
 import { z } from "zod"
 
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/portal")({
  *
  * Streams the browser page using CDP Page.startScreencast and forwards
  * user input events back through the ScreencastClient from
- * @open-wa/screencaster/client.
+ * @eulab/openwaunlocked-screencaster/client.
  *
  * All coordinates are sent as normalized (0-1) values — the server
  * converts them to absolute pixel coordinates based on the viewport.

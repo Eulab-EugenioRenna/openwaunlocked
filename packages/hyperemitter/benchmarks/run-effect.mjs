@@ -77,8 +77,8 @@ const compile = async (name, directory) => {
     plugins: [{
       name: 'workspace-logger',
       setup(context) {
-        context.onResolve({ filter: /^@open-wa\/logger$/ }, () => ({
-          path: workspaceRequire.resolve('@open-wa/logger'),
+        context.onResolve({ filter: /^@eulab\/openwaunlocked-logger$/ }, () => ({
+          path: workspaceRequire.resolve('@eulab/openwaunlocked-logger'),
           external: true,
         }));
       },

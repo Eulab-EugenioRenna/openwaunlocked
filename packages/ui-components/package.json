@@ -1,6 +1,6 @@
 {
-  "name": "@open-wa/ui-components",
-  "author": "Eulab",
+  "name": "@eulab/openwaunlocked-ui-components",
+  "author": "EULAB",
   "version": "1.0.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -44,8 +44,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git",
+    "directory": "packages/ui-components"
   },
   "private": true,
-  "description": "Reusable React UI components for open-wa web applications"
+  "description": "Reusable React UI components for open-wa web applications",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
+  }
 }

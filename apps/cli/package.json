@@ -1,24 +1,24 @@
 {
-    "name": "@open-wa/cli-app",
-    "author": "Eulab",
-    "version": "5.0.0",
-    "private": true,
-    "description": "WhatsApp CLI - Easy API mode for @open-wa/wa-automate",
-    "bin": {
-        "wa": "./dist/index.cjs",
-        "wa-automate": "./dist/index.cjs"
-    },
-    "scripts": {
-        "build": "tsdown src/index.ts --format cjs",
-        "dev": "tsdown src/index.ts --format cjs --watch",
-        "lint": "oxlint src",
-        "start": "node dist/index.cjs"
-    },
-    "dependencies": {
-        "@open-wa/cli": "workspace:*"
-    },
-    "devDependencies": {
-        "typescript": "catalog:",
-        "@types/node": "catalog:"
-    }
+  "name": "@eulab/openwaunlocked-cli-app",
+  "author": "EULAB",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WhatsApp CLI - Easy API mode for @eulab/openwaunlocked",
+  "bin": {
+    "wa": "./dist/index.cjs",
+    "wa-automate": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "tsdown src/index.ts --format cjs",
+    "dev": "tsdown src/index.ts --format cjs --watch",
+    "lint": "oxlint src",
+    "start": "node dist/index.cjs"
+  },
+  "dependencies": {
+    "@eulab/openwaunlocked-cli": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/node": "catalog:"
+  }
 }

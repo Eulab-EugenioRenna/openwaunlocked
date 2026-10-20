@@ -85,7 +85,7 @@ const bundleBytes = async (contents) => {
     plugins: [{
       name: 'openwa-logger-stub',
       setup(context) {
-        context.onResolve({ filter: /^@open-wa\/logger$/ }, () => ({
+        context.onResolve({ filter: /^@eulab\/openwaunlocked-logger$/ }, () => ({
           path: 'logger-stub',
           namespace: 'openwa-benchmark',
         }));

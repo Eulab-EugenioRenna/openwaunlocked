@@ -4,7 +4,7 @@
  * Bridges WhatsApp messages with Chatwoot CRM via the plugin SDK.
  * Provides a webhook endpoint for Chatwoot to send outbound messages.
  */
-import { createPlugin, z } from '@open-wa/plugin-sdk';
+import { createPlugin, z } from '@eulab/openwaunlocked-plugin-sdk';
 import { createChatwootRouter } from './middleware';
 import { Effect, ManagedRuntime } from 'effect';
 import { ChatwootClientService, chatwootClientLayer } from './service';
@@ -38,9 +38,9 @@ export default createPlugin({
   meta: {
     name: 'chatwoot',
     version: '5.0.0-alpha.1',
-    description: 'Chatwoot CRM integration for open-wa — bidirectional message sync',
-    author: 'Mohammed Shah <@smashah>',
-    homepage: 'https://github.com/open-wa/wa-automate-nodejs',
+    description: 'Chatwoot CRM integration for EULAB OpenWAUnlocked — bidirectional message sync',
+    author: 'EULAB',
+    homepage: 'https://github.com/Eulab-EugenioRenna/openwaunlocked',
   },
 
   configSchema,

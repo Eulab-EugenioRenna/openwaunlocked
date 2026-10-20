@@ -1,13 +1,13 @@
 {
-  "name": "@open-wa/monorepo",
-  "version": "5.0.0",
+  "name": "@eulab/openwaunlocked-monorepo",
+  "version": "1.0.0",
   "private": true,
   "description": "The most reliable WhatsApp automation library - v5 Monorepo",
   "license": "SEE LICENSE IN LICENSE.md",
-  "author": "Eulab",
+  "author": "EULAB",
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git"
   },
   "workspaces": [
     "packages/*",
@@ -20,13 +20,13 @@
     "build": "turbo build --filter='!docs'",
     "dev": "turbo dev --concurrency 100",
     "test": "turbo test",
-    "test:startup": "turbo build --filter=@open-wa/cli... --output-logs=errors-only && node --test tools/regression/runtime-startup.test.mjs",
+    "test:startup": "turbo build --filter=@eulab/openwaunlocked-cli... --output-logs=errors-only && node --test tools/regression/runtime-startup.test.mjs",
     "lint": "oxlint .",
     "lint:fix": "oxlint . --fix",
     "clean": "turbo clean && rimraf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "typecheck": "turbo typecheck",
-    "check:effect-contracts": "pnpm build && pnpm --filter './packages/runtime-*' test && pnpm --filter './packages/runtime-*' typecheck && pnpm --filter @open-wa/integration-webhook test && pnpm --filter @open-wa/integration-webhook typecheck && pnpm --filter @open-wa/integration-s3 test && pnpm --filter @open-wa/integration-s3 typecheck && pnpm --filter @open-wa/integration-chatwoot test && pnpm --filter @open-wa/integration-chatwoot typecheck && pnpm --filter @open-wa/client test && pnpm --filter @open-wa/client typecheck && pnpm --filter @open-wa/config typecheck && pnpm --filter @open-wa/core exec vitest run test/unit/bootstrapContract.test.ts test/unit/sessionReadinessTruth.test.ts && pnpm --filter @open-wa/config exec vitest run src/__tests__/schema.test.ts && pnpm --filter @open-wa/wa-automate exec vitest run src/__tests__/cli-runtime.test.ts && node tools/check-portable-imports.mjs && node tools/check-effect-pins.mjs && node tools/check-effect-evidence.mjs && node tools/bench-effect-startup.mjs",
+    "check:effect-contracts": "pnpm build && pnpm --filter './packages/runtime-*' test && pnpm --filter './packages/runtime-*' typecheck && pnpm --filter @eulab/openwaunlocked-integration-webhook test && pnpm --filter @eulab/openwaunlocked-integration-webhook typecheck && pnpm --filter @eulab/openwaunlocked-integration-s3 test && pnpm --filter @eulab/openwaunlocked-integration-s3 typecheck && pnpm --filter @eulab/openwaunlocked-integration-chatwoot test && pnpm --filter @eulab/openwaunlocked-integration-chatwoot typecheck && pnpm --filter @eulab/openwaunlocked-client test && pnpm --filter @eulab/openwaunlocked-client typecheck && pnpm --filter @eulab/openwaunlocked-config typecheck && pnpm --filter @eulab/openwaunlocked-core exec vitest run test/unit/bootstrapContract.test.ts test/unit/sessionReadinessTruth.test.ts && pnpm --filter @eulab/openwaunlocked-config exec vitest run src/__tests__/schema.test.ts && pnpm --filter @eulab/openwaunlocked exec vitest run src/__tests__/cli-runtime.test.ts && node tools/check-portable-imports.mjs && node tools/check-effect-pins.mjs && node tools/check-effect-evidence.mjs && node tools/bench-effect-startup.mjs",
     "bench:runtime:real": "node tools/bench-real-runtime.mjs",
     "bench:effect:replacements": "node tools/bench-effect-replacements.mjs",
     "bump": "bumpy add",
@@ -35,7 +35,11 @@
     "publish-packages": "bumpy publish",
     "release-image": "node tools/release-image.js",
     "dev:patches": "node dev/patches/build.mjs",
-    "test:dev": "node --test dev/patches/test.mjs tools/regression/offline-development.test.mjs"
+    "test:dev": "node --test dev/patches/test.mjs tools/regression/offline-development.test.mjs",
+    "release:npm:build": "node tools/release/prepare-eulab-npm.mjs build",
+    "release:npm:pack": "node tools/release/prepare-eulab-npm.mjs pack",
+    "release:npm:check": "node tools/release/publish-eulab-npm.mjs --dry-run",
+    "release:npm:publish": "node tools/release/publish-eulab-npm.mjs --publish"
   },
   "devDependencies": {
     "@types/node": "catalog:",
@@ -57,5 +61,9 @@
   "packageManager": "pnpm@11.25.0",
   "dependencies": {
     "@elastic/elasticsearch": "catalog:"
+  },
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
+  "bugs": {
+    "url": "https://github.com/Eulab-EugenioRenna/openwaunlocked/issues"
   }
 }

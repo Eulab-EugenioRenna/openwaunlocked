@@ -1,1 +1,1 @@
-export { executeCapability, type ExecutionContext, type ExecutionResult } from '@open-wa/mcp';
+export { executeCapability, type ExecutionContext, type ExecutionResult } from '@eulab/openwaunlocked-mcp';

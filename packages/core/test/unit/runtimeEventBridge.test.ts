@@ -8,9 +8,9 @@ import type {
   IPage,
   IRequest,
   WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
-import { HyperEmitter } from '@open-wa/hyperemitter';
-import type { Logger } from '@open-wa/logger';
+} from '@eulab/openwaunlocked-driver-interface';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import type { OpenWAEventMap } from '../../src/events/eventMap';
 import { Transport } from '../../src/transport/Transport';
 

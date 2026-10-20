@@ -1,5 +1,5 @@
 {
-  "name": "@open-wa/wa-automate",
+  "name": "@eulab/openwaunlocked",
   "version": "4.76.0",
   "licenseCheckUrl": "https://funcs.openwa.dev/license-check",
   "brokenMethodReportUrl": "https://funcs.openwa.dev/report-bm",
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/open-wa/wa-automate-nodejs.git"
+    "url": "git+https://github.com/Eulab-EugenioRenna/openwaunlocked.git"
   },
   "keywords": [
     "whatsapp",
@@ -55,7 +55,7 @@
   "bugs": {
     "url": "https://github.com/open-wa/wa-automate-nodejs/issues"
   },
-  "homepage": "https://github.com/open-wa/wa-automate-nodejs#readme",
+  "homepage": "https://github.com/Eulab-EugenioRenna/openwaunlocked#readme",
   "engines": {
     "node": ">=12.18.3",
     "npm": ">=7.9.0"
@@ -105,8 +105,8 @@
   "dependencies": {
     "@brillout/import": "^0.2.1",
     "@discordjs/collection": "0.8.0",
-    "@open-wa/wa-automate-socket-client": "^3.3.0",
-    "@open-wa/wa-decrypt": "^4.3.1",
+    "@eulab/openwaunlocked-socket-client": "^3.3.0",
+    "@eulab/openwaunlocked-wa-decrypt": "^4.3.1",
     "atob": "^2.1.2",
     "aws4": "^1.11.0",
     "axios": "^1.4.0",

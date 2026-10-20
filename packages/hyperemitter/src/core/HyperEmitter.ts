@@ -10,8 +10,8 @@ import {
   cleanupAbort,
   createRecord
 } from '../utils/listener';
-import { createLogger, Logger } from '@open-wa/logger';
-import type { LogContext } from '@open-wa/logger';
+import { createLogger, Logger } from '@eulab/openwaunlocked-logger';
+import type { LogContext } from '@eulab/openwaunlocked-logger';
 
 type AnyFn = (...args: any[]) => any;
 const emitted = Effect.succeed(true);

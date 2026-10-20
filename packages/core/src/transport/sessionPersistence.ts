@@ -1,4 +1,4 @@
-import type { S3Config } from '@open-wa/session-sync';
+import type { S3Config } from '@eulab/openwaunlocked-session-sync';
 import { acquirePortableSessionStorage, type PortableSessionStorageOptions } from './portableSessionStorage';
 
 export interface SessionPersistenceConfig extends Omit<PortableSessionStorageOptions, 'acquireRemote'> {
@@ -19,7 +19,7 @@ export const acquireSessionPersistence = (config: SessionPersistenceConfig, onRe
       if (encoded && encoded.length > 64 * 1024) throw new Error('SESSION_S3_CONFIG_INVALID');
       const legacy: unknown = encoded ? JSON.parse(Buffer.from(encoded, 'base64').toString('utf8')) : {};
       if (!legacy || typeof legacy !== 'object' || Array.isArray(legacy)) throw new Error('SESSION_S3_CONFIG_INVALID');
-      const { S3SyncManager } = await import('@open-wa/session-sync');
+      const { S3SyncManager } = await import('@eulab/openwaunlocked-session-sync');
       return new S3SyncManager({ ...legacy, ...config.s3Sync } as S3Config).acquireSessionFile(filename);
     },
   } : {}),

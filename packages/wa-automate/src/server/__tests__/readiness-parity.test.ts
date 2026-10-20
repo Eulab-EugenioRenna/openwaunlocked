@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { ConfigSchema } from '@open-wa/config';
+import { ConfigSchema } from '@eulab/openwaunlocked-config';
 import { WAServer } from '../hono-server';
 
 type MatrixEntry = {

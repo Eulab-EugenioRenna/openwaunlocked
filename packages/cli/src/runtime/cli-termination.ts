@@ -1,4 +1,4 @@
-import type { CliRuntimeResult } from '@open-wa/wa-automate';
+import type { CliRuntimeResult } from '@eulab/openwaunlocked';
 import type { EventProjectionStore } from '../state/event-projection-store';
 
 export interface ShutdownRuntimeState {

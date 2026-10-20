@@ -1,10 +1,10 @@
-import type { Logger } from '@open-wa/logger';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import {
   makeInMemoryObservability,
   queueMetricsObserver,
   ScopedTaskQueue,
   type RuntimeObservabilityShape,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Effect } from 'effect';
 import type { WebhookConfig, WebhookPayload } from './config';
 import {

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import type { StickerJob, StickerResult, StickerRuntime } from "@open-wa/stickers"
+import type { StickerJob, StickerResult, StickerRuntime } from "@eulab/openwaunlocked-stickers"
 import { newStudioKey } from "./files"
 
 type RenderState = { key: string; result?: StickerResult; error?: string; invalidSource?: boolean; rendering?: boolean }
@@ -20,7 +20,7 @@ export function useStickerRender(source: File | null, job: StickerJob) {
     setState({ key, rendering: true })
     const timer = setTimeout(() => {
       if (abort.signal.aborted) return
-      runtime.current ??= import("@open-wa/stickers/browser").then(module => module.createBrowserStickerRuntime()).catch(error => { runtime.current = null; throw error })
+      runtime.current ??= import("@eulab/openwaunlocked-stickers/browser").then(module => module.createBrowserStickerRuntime()).catch(error => { runtime.current = null; throw error })
       void runtime.current.then(value => value.createSticker(source, { ...job, backend: "browser", signal: abort.signal })).then(result => {
         if (!abort.signal.aborted && revision === version.current) setState({ key, result })
       }).catch((error: unknown) => {

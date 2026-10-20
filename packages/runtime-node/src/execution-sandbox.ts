@@ -5,7 +5,7 @@ import {
   ScopedTaskQueue,
   type ExecutionSandboxShape,
   type SandboxRequest,
-} from '@open-wa/runtime-core';
+} from '@eulab/openwaunlocked-runtime-core';
 import { Effect } from 'effect';
 
 const SANDBOX_PROGRAM = String.raw`

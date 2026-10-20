@@ -16,9 +16,9 @@ import { migration, commands, snippets, support, href } from "../data/site";
     <CodeBlock code={migration.v4Pin} lang="bash" title="Terminal" />
     <h2>What v5 looks like</h2>
     <ul>
-      <li>Drivers are separate packages. The embedded runtime takes a driver, for example <code>@open-wa/driver-puppeteer</code>.</li>
+      <li>Drivers are separate packages. The embedded runtime takes a driver, for example <code>@eulab/openwaunlocked-driver-puppeteer</code>.</li>
       <li><code>createClient</code> starts an embedded client inside your app.</li>
-      <li>Remote consumers use <code>@open-wa/socket-client</code> against a running Easy API.</li>
+      <li>Remote consumers use <code>@eulab/openwaunlocked-socket-client</code> against a running Easy API.</li>
       <li>The built-in MCP server and plugins are configured in <code>wa.config.mjs</code>.</li>
       <li>Node.js 22.21.1 or newer.</li>
     </ul>

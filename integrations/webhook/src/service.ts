@@ -1,10 +1,10 @@
-import type { Logger } from '@open-wa/logger';
+import type { Logger } from '@eulab/openwaunlocked-logger';
 import { Context, Effect, Layer } from 'effect';
 import type { WebhookConfig } from './config';
 import { WebhookDeliverer } from './deliverer';
 
 export const WebhookDelivererService =
-  Context.Service<WebhookDeliverer>('@open-wa/integration-webhook/WebhookDeliverer');
+  Context.Service<WebhookDeliverer>('@eulab/openwaunlocked-integration-webhook/WebhookDeliverer');
 
 export const webhookDelivererTestLayer = (deliverer: WebhookDeliverer) =>
   Layer.succeed(WebhookDelivererService, deliverer);

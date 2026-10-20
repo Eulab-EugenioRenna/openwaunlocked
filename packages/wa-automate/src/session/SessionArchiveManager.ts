@@ -1,6 +1,6 @@
 import { dirname, join } from 'node:path';
-import { createLogger } from '@open-wa/logger';
-import { LocalSessionCompression, S3SyncManager, type S3Config } from '@open-wa/session-sync';
+import { createLogger } from '@eulab/openwaunlocked-logger';
+import { LocalSessionCompression, S3SyncManager, type S3Config } from '@eulab/openwaunlocked-session-sync';
 
 export interface SessionArchiveManagerConfig {
     sessionId: string;

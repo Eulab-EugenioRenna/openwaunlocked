@@ -16,7 +16,7 @@ const packages = new Map();
 const sha = value => createHash('sha256').update(value).digest('hex');
 try {
   const modules = join(scratch, 'node_modules');
-  await mkdir(join(modules, '@open-wa'), { recursive: true });
+  await mkdir(join(modules, '@eulab'), { recursive: true });
   await writeFile(join(scratch, 'package.json'), JSON.stringify({ private: true, type: 'module' }));
   for (const workspaceRoot of ['packages', 'integrations']) {
     for (const entry of await readdir(join(root, workspaceRoot), { withFileTypes: true })) {
@@ -32,7 +32,7 @@ try {
     execFileSync('pnpm', ['--config.verify-deps-before-run=false', 'pack', '--pack-destination', scratch], {
       cwd: join(root, 'packages', dir), stdio: 'pipe', timeout: 60000,
     });
-    const { manifest } = packages.get(`@open-wa/${dir}`);
+    const { manifest } = packages.get(`@eulab/openwaunlocked-${dir}`);
     const tarball = `${manifest.name.replace('@', '').replace('/', '-')}-${manifest.version}.tgz`;
     packs.push({ name: manifest.name, tarball, sha256: sha(await readFile(join(scratch, tarball))) });
   }
@@ -72,17 +72,17 @@ try {
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { Effect, PubSub } from 'effect';
-import { EventEmitter, HyperEmitter } from '@open-wa/hyperemitter';
-import * as core from '@open-wa/core';
-import * as sdk from '@open-wa/wa-automate';
-import * as sockets from '@open-wa/socket-client';
+import { EventEmitter, HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
+import * as core from '@eulab/openwaunlocked-core';
+import * as sdk from '@eulab/openwaunlocked';
+import * as sockets from '@eulab/openwaunlocked-socket-client';
 const require = createRequire(import.meta.url);
 for (const name of ${JSON.stringify(packs.map(p => p.name))}) {
   assert.ok(await import(name)); assert.ok(require(name));
 }
-assert.equal(core.ev, require('@open-wa/core').ev);
+assert.equal(core.ev, require('@eulab/openwaunlocked-core').ev);
 assert.equal(core.ev, sdk.ev);
-assert.equal(core.ev, require('@open-wa/wa-automate').ev);
+assert.equal(core.ev, require('@eulab/openwaunlocked').ev);
 assert.equal(typeof sdk.create, 'function');
 assert.equal(typeof core.createClient, 'function');
 assert.equal(core.ev instanceof EventEmitter, true);

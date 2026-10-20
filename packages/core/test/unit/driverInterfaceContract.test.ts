@@ -6,7 +6,7 @@ import type {
   IPage,
   IRequest,
   WaitForFunctionOptions,
-} from '@open-wa/driver-interface';
+} from '@eulab/openwaunlocked-driver-interface';
 
 class ContractPage implements IPage {
   readonly name = 'contract-driver';

@@ -1,4 +1,4 @@
-import { InteractiveContentSchema, type InteractiveContent, type InteractiveAction } from "@open-wa/schema/interactive"
+import { InteractiveContentSchema, type InteractiveContent, type InteractiveAction } from "@eulab/openwaunlocked-schema/interactive"
 import type { FieldErrors } from "@/components/studio/shared"
 import { newStudioKey } from "./files"
 

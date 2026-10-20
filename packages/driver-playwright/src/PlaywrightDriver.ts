@@ -1,4 +1,4 @@
-import { IDriver, IBrowser, LaunchOptions, ConnectOptions, IDriverContext, DriverCapabilities } from '@open-wa/driver-interface';
+import { IDriver, IBrowser, LaunchOptions, ConnectOptions, IDriverContext, DriverCapabilities } from '@eulab/openwaunlocked-driver-interface';
 import { PlaywrightBrowser } from './PlaywrightBrowser';
 
 export type PlaywrightBrowserType = 'chromium' | 'firefox' | 'webkit' | 'chrome' | 'msedge';
