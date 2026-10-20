@@ -13,7 +13,7 @@ For a complete installation with the event hook, route, and dashboard declaratio
 
 ```js
 import { Hono } from 'hono';
-import { createPlugin } from '@open-wa/plugin-sdk';
+import { createPlugin } from '@eulab/openwaunlocked-plugin-sdk';
 
 export default createPlugin({
   meta: { name: 'greeting-bot', version: '1.0.0' },
@@ -69,7 +69,7 @@ For a shared-secret guard, close over validated plugin configuration from `init(
 
 ```js
 import { Hono } from 'hono';
-import { createPlugin, defineConfig } from '@open-wa/plugin-sdk';
+import { createPlugin, defineConfig } from '@eulab/openwaunlocked-plugin-sdk';
 
 const configSchema = defineConfig((z) => z.object({
   webhookSecret: z.string().min(1),

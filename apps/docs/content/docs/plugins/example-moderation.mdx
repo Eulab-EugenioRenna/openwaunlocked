@@ -201,7 +201,7 @@ const configSchema = z.object({
 
 ```ts
 // moderation.ts
-import { createPlugin, z } from '@open-wa/plugin-sdk';
+import { createPlugin, z } from '@eulab/openwaunlocked-plugin-sdk';
 
 type ModerationResult = {
   flagged: boolean;
@@ -367,7 +367,7 @@ export default {
 From the directory containing `wa.config.mjs`, start the session with:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id moderation-example --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id moderation-example --host 127.0.0.1 --port 8080
 ```
 
 ## Bound concurrent moderation requests

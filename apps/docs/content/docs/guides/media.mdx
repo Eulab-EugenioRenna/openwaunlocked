@@ -22,7 +22,7 @@ await client.sendVideoAsGif(chatId, './loop.mp4');
 
 ## Choose presentation
 
-Import `MediaSendOptions` from `@open-wa/client` or `@open-wa/schema`.
+Import `MediaSendOptions` from `@eulab/openwaunlocked-client` or `@eulab/openwaunlocked-schema`.
 The discriminator selects the options that apply to that media type;
 unknown fields and invalid combinations are rejected.
 
@@ -120,7 +120,7 @@ about one third, and decoding/uploading also consumes browser and host memory.
 ## Decrypt incoming media
 
 ```ts
-import { decryptMedia } from '@open-wa/wa-automate';
+import { decryptMedia } from '@eulab/openwaunlocked';
 
 client.onMessage(async (message) => {
   if (!message.mimetype) return;
@@ -136,7 +136,7 @@ The standalone `decryptMedia` helper from the decrypt package returns a Node.js 
 
 ```ts
 import { writeFile } from 'node:fs/promises';
-import { decryptMedia } from '@open-wa/decrypt';
+import { decryptMedia } from '@eulab/openwaunlocked-decrypt';
 
 const buffer = await decryptMedia(message);
 await writeFile('./incoming-media', buffer);
@@ -160,7 +160,7 @@ To save decrypted media to disk, convert the decrypted output into a buffer and 
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import mime from 'mime-types';
-import { decryptMedia } from '@open-wa/decrypt';
+import { decryptMedia } from '@eulab/openwaunlocked-decrypt';
 
 client.onMessage(async (message) => {
   if (!message.mimetype) return;
@@ -179,7 +179,7 @@ For S3, upload the same bytes and keep the MIME type as object metadata:
 
 ```ts
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { decryptMedia } from '@open-wa/decrypt';
+import { decryptMedia } from '@eulab/openwaunlocked-decrypt';
 
 const s3 = new S3Client({ region: 'us-east-1' });
 

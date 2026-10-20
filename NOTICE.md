@@ -1,7 +1,7 @@
-# Eulab Open
+# EULAB Open
 
-Autore e manutentore del fork: Eulab.
-Copyright (c) 2026 Eulab per le modifiche apportate al fork.
+Autore e manutentore del fork: EULAB.
+Copyright (c) 2026 EULAB per le modifiche apportate al fork.
 
 Questo progetto deriva da OpenWA / wa-automate-nodejs. Le attribuzioni del
 codice originale, comprese quelle di Mohammed Shah e degli altri contributori,

@@ -8,7 +8,7 @@ Apply this guide to the root README, the docs site, and workspace README files. 
 
 The docs generator copies workspace README files into the docs site. Change the source README, then run `pnpm --filter docs workspace-docs`.
 
-The schema generator creates the client reference. Change the schema source or generator, then run `pnpm --filter @open-wa/schema generate`.
+The schema generator creates the client reference. Change the schema source or generator, then run `pnpm --filter @eulab/openwaunlocked-schema generate`.
 
 ## Rules
 

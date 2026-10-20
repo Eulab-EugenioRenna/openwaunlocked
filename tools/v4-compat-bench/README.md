@@ -8,7 +8,7 @@ Three layers (only the first is built so far):
 - **`static/`** — no WhatsApp required, runs in CI. Compares the v4 public
   Client surface against the v5 schema registry.
 - `capture/` — _(planned, task C2)_ one-time capture of golden fixtures from a
-  real `@open-wa/wa-automate@4.76.0` run (CLI `--help`, HTTP envelopes, webhook
+  real `@eulab/openwaunlocked@1.0.0` run (CLI `--help`, HTTP envelopes, webhook
   bodies, message corpus).
 - `live/` — _(planned, task C5)_ runs the scenario scripts against a live v5
   session; gated behind `WA_BENCH_LIVE=1`.
@@ -16,7 +16,7 @@ Three layers (only the first is built so far):
 ## Static parity matrix (task C1)
 
 `static/parity.ts` diffs the **committed v4 surface snapshot**
-(`static/v4-surface.json`) against `@open-wa/schema`'s `clientRegistry.getAll()`.
+(`static/v4-surface.json`) against `@eulab/openwaunlocked-schema`'s `clientRegistry.getAll()`.
 The snapshot is self-contained, so the check runs in CI without any v4 source in
 the tree (the legacy v4 packages are gitignored and absent on a clean checkout).
 
@@ -39,7 +39,7 @@ It classifies every v4 method as:
 
 ```bash
 # regenerate the committed report from the snapshot + current schema
-pnpm --filter @open-wa/schema build   # the tool reads the built schema dist
+pnpm --filter @eulab/openwaunlocked-schema build   # the tool reads the built schema dist
 pnpm tsx tools/v4-compat-bench/static/parity.ts
 
 # CI gate: fail if `missing` or `arityMismatch` grew vs the committed report

@@ -15,7 +15,7 @@ Set an API key and start the server on a local address:
 export OPENWA_API_URL='http://127.0.0.1:8080'
 export WA_API_KEY='REPLACE_WITH_YOUR_API_KEY'
 
-npx @open-wa/wa-automate@5.5.1 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales --host 127.0.0.1 --port 8080 \
   --api-key "$WA_API_KEY"
 ```
@@ -107,7 +107,7 @@ export default {
   host: '127.0.0.1',
   port: 8080,
   apiKey: process.env.WA_API_KEY,
-  plugins: ['@open-wa/integration-webhook'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook'],
   pluginConfig: {
     webhook: {
       url: 'https://your-app.example/webhooks/open-wa',
@@ -120,7 +120,7 @@ export default {
 };
 ```
 
-Load it with `npx @open-wa/wa-automate@5.5.1 --config ./wa.config.mjs`. See [webhook payloads](/docs/client-and-integrations/webhook-payloads) for event bodies and delivery behavior.
+Load it with `npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs`. See [webhook payloads](/docs/client-and-integrations/webhook-payloads) for event bodies and delivery behavior.
 
 ## Use media, events, and calls
 

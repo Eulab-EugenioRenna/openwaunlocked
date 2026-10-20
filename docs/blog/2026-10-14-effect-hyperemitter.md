@@ -2,7 +2,7 @@
 title: "OpenWA events: familiar callbacks, optional Effect streams"
 description: "Why we're replacing EventEmitter2, keeping the shared ev API, and adding scoped event work and native PubSub access."
 slug: effect-hyperemitter
-author: open-wa
+author: EULAB
 status: published
 release: 5.6.0
 audience: SDK and SocketClient developers
@@ -13,8 +13,8 @@ HyperEmitter. Your existing `ev.on()` and `ev.emit()` calls keep their callback
 behavior, and applications that need a queued consumer can opt into a native
 Effect PubSub on the same emitter.
 
-Upgrade with `npm install @open-wa/wa-automate@5.6.0` and the matching browser
-driver, or install `@open-wa/hyperemitter@5.6.0` to use the standalone emitter.
+Upgrade with `npm install @eulab/openwaunlocked@1.0.0` and the matching browser
+driver, or install `@eulab/openwaunlocked-hyperemitter@1.0.0` to use the standalone emitter.
 
 ## Fix the package boundary first
 
@@ -37,7 +37,7 @@ Ordinary listeners run during `emit()`, and `emitAsync()` waits for direct
 listener work and returns its results.
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.on('app.job.finished', ({ jobId }, sessionId) => {
   console.log('Finished:', jobId, sessionId);
@@ -64,7 +64,7 @@ exposes the feed for Stream filtering, batching, and sequential work.
 access.
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 import { Effect, PubSub } from 'effect';
 
 await Effect.runPromise(Effect.scoped(Effect.gen(function* () {
@@ -109,7 +109,7 @@ sharing jobs. SubscriptionRef fits consumers that need current state, while a
 scoped Stream fits consumers that need transformations and controlled work.
 They solve different application problems, so the emitter shouldn't force one
 delivery model onto all of them. The
-[architecture review](https://github.com/open-wa/wa-automate-nodejs/blob/master/docs/research/2026-10-14-effect-event-system-designs.md)
+[architecture review](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/docs/research/2026-10-14-effect-event-system-designs.md)
 records those tradeoffs against the pinned Effect source and official docs.
 
 Start with the [Effect event guide](https://openwa.dev/docs/guides/effect-event-streams)
@@ -118,5 +118,5 @@ for a runnable example, use the
 method and buffer semantics, or keep the
 [session event guide](https://openwa.dev/docs/guides/session-events) handy for
 native payloads and global aliases. The
-[benchmark methodology and reports](https://github.com/open-wa/wa-automate-nodejs/blob/master/packages/hyperemitter/benchmarks/README.md)
+[benchmark methodology and reports](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/packages/hyperemitter/benchmarks/README.md)
 are available alongside the implementation.

@@ -75,5 +75,5 @@ pnpm install && pnpm build && pnpm typecheck && pnpm test && pnpm lint
 ```
 
 If a docs-affecting change touches the schema/registry or generated reference,
-regenerate docs (`pnpm --filter @open-wa/schema generate`) and commit the
+regenerate docs (`pnpm --filter @eulab/openwaunlocked-schema generate`) and commit the
 result — do not hand-edit generated files.

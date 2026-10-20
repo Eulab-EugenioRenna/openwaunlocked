@@ -21,7 +21,7 @@ Delete all statuses
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.deleteAllStatus();
@@ -103,7 +103,7 @@ Delete status
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.deleteStatus({
@@ -188,7 +188,7 @@ Get all stories
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getStories();
@@ -281,7 +281,7 @@ const result = await client.postImageStatus("image");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.postImageStatus({
@@ -374,7 +374,7 @@ const result = await client.postTextStatus("text");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.postTextStatus({
@@ -467,7 +467,7 @@ const result = await client.postVideoStatus("video");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.postVideoStatus({

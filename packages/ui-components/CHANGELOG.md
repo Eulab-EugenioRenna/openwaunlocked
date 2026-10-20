@@ -1,4 +1,4 @@
-# @open-wa/ui-components
+# @eulab/openwaunlocked-ui-components
 
 ## 6.0.0-alpha.2
 

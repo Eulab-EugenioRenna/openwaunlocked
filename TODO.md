@@ -20,8 +20,8 @@
 
 ## Research: Management Plane / Orchestrator
 
-- [ ] Reconcile the documented `@open-wa/orchestrator` design with current `master`: verify whether it should be created, removed from docs, or represented by existing `@open-wa/api` / `@open-wa/core` lifecycle surfaces.
+- [ ] Reconcile the documented `@eulab/openwaunlocked-orchestrator` design with current `master`: verify whether it should be created, removed from docs, or represented by existing `@eulab/openwaunlocked-api` / `@eulab/openwaunlocked-core` lifecycle surfaces.
 - [ ] Research multi-key API auth for the current architecture: roles, key hashing, expiry, CIDR allowlists, session scoping, and whether this belongs in the planned orchestrator management plane versus the per-session Easy API.
 - [ ] Research webhook management improvements in the current architecture: keep delivery as a plugin/integration, but add HMAC signing, deterministic idempotency keys, delivery IDs, and observability on top of the existing retry/concurrency implementation.
-- [ ] Research audit logging using existing infrastructure: define an audit event schema and writer that reuses `@open-wa/logger`, core events, Hono middleware, and Elastic/file transports instead of creating a greenfield audit subsystem.
+- [ ] Research audit logging using existing infrastructure: define an audit event schema and writer that reuses `@eulab/openwaunlocked-logger`, core events, Hono middleware, and Elastic/file transports instead of creating a greenfield audit subsystem.
 - [ ] Research aggregated operational stats as a management-plane concern: decide what belongs in per-session `/health` versus a future orchestrator-level multi-session stats surface.

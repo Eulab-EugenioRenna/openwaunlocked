@@ -68,7 +68,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   tools: [
                     {
                       name: "search_docs",
-                      description: "Search Eulab Open developer documentation",
+                      description: "Search EULAB Open developer documentation",
                       inputSchema: {
                         type: "object",
                         properties: {

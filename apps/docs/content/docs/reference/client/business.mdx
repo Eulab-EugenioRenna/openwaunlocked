@@ -21,7 +21,7 @@ Get business products
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getBusinessProducts({
@@ -106,7 +106,7 @@ Get business profile
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getBusinessProfile({
@@ -191,7 +191,7 @@ Get order details
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getOrder({

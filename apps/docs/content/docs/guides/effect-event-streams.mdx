@@ -17,13 +17,13 @@ OpenWA's pinned `effect@4.0.2`.
 Install the standalone emitter and matching Effect version:
 
 ```sh
-npm install @open-wa/hyperemitter@5.6.0 effect@4.0.2
+npm install @eulab/openwaunlocked-hyperemitter@1.0.0 effect@4.0.2
 ```
 
 Save this as `events.mjs`. It doesn't require a WhatsApp session:
 
 ```js
-import { EventEmitter } from '@open-wa/hyperemitter';
+import { EventEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Effect, PubSub } from 'effect';
 
 const events = new EventEmitter();
@@ -56,13 +56,13 @@ and scoped callback; the finalizer closes this application-owned emitter.
 
 ## Use OpenWA's shared feed
 
-Replace the standalone emitter with `ev` from `@open-wa/wa-automate` when
+Replace the standalone emitter with `ev` from `@eulab/openwaunlocked` when
 observing sessions or sharing events across files. Acquire the subscription
 before starting `create()` if you need authentication events, because the
 default feed has no replay. Inside your application's Effect scope:
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 import { Effect, PubSub } from 'effect';
 
 const observeReady = Effect.gen(function* () {
@@ -93,7 +93,7 @@ forwarding connection; don't close the shared `ev` as a consumer finalizer.
 without connecting a session. Save it as `typed-events.ts`:
 
 ```ts
-import { HyperEmitter } from '@open-wa/hyperemitter';
+import { HyperEmitter } from '@eulab/openwaunlocked-hyperemitter';
 import { Effect, Stream } from 'effect';
 
 type Events = {

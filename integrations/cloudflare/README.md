@@ -1,6 +1,6 @@
-# @open-wa/cf-proxy
+# @eulab/openwaunlocked-cf-proxy
 
-`@open-wa/cf-proxy` is the Cloudflare Worker reverse tunnel for open-wa Easy API sessions. The local runtime opens an outbound WebSocket to the Worker, so the local machine does not need an inbound port. The Worker remains a remotely reachable authenticated entry point.
+`@eulab/openwaunlocked-cf-proxy` is the Cloudflare Worker reverse tunnel for open-wa Easy API sessions. The local runtime opens an outbound WebSocket to the Worker, so the local machine does not need an inbound port. The Worker remains a remotely reachable authenticated entry point.
 
 The package is private to the open-wa monorepo. It is not an npm consumer package, so deployment starts from this repository's `packages/cf-proxy` entrypoint.
 
@@ -22,7 +22,7 @@ The Worker routes each session ID to a Durable Object. An absent upstream return
 From a clean checkout:
 
 ```bash
-git clone https://github.com/open-wa/wa-automate-nodejs.git
+git clone https://github.com/Eulab-EugenioRenna/openwaunlocked.git
 cd wa-automate-nodejs
 corepack enable
 pnpm install
@@ -43,7 +43,7 @@ pnpm exec wrangler deploy
 
 Record the deployed hostname as `OPENWA_PROXY_HOST`, for example `https://open-wa-proxy.<account>.workers.dev`. The local runtime needs the upstream value; remote callers need the consumer value.
 
-Contributors with an existing checkout can run `pnpm install` from the repository root and use `pnpm --filter @open-wa/cf-proxy exec wrangler whoami` followed by `pnpm --filter @open-wa/cf-proxy exec wrangler deploy`. Run `secret put` again only when rotating a value.
+Contributors with an existing checkout can run `pnpm install` from the repository root and use `pnpm --filter @eulab/openwaunlocked-cf-proxy exec wrangler whoami` followed by `pnpm --filter @eulab/openwaunlocked-cf-proxy exec wrangler deploy`. Run `secret put` again only when rotating a value.
 
 ## Attach a local session
 
@@ -51,7 +51,7 @@ Run the CLI on the machine that owns the WhatsApp browser session:
 
 ```bash
 export OPENWA_PROXY_HOST='https://open-wa-proxy.<account>.workers.dev'
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales \
   --port 8080 \
   --proxy-host "$OPENWA_PROXY_HOST" \
@@ -84,7 +84,7 @@ curl -i -X POST \
 Node clients can use the compatibility URL. The client converts it to the tunnel WebSocket and sends the consumer token to `/sessions/<sessionId>/connect`:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect(
   `cf-proxy://open-wa-proxy.<account>.workers.dev?sessionId=sales&token=${encodeURIComponent(process.env.OPENWA_PROXY_CONSUMER_TOKEN)}`,
@@ -107,7 +107,7 @@ The remote caller still receives the local Easy API's authentication or readines
 ## Development
 
 ```bash
-pnpm --filter @open-wa/cf-proxy dev
+pnpm --filter @eulab/openwaunlocked-cf-proxy dev
 ```
 
 The Worker entrypoint is `packages/cf-proxy/src/index.ts`; the Durable Object is `src/tunnel-do.ts`.
@@ -118,4 +118,4 @@ See the [Cloudflare Session Proxy guide](https://openwa.dev/docs/client-and-inte
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

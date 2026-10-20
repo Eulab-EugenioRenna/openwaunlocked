@@ -40,7 +40,7 @@ The workflow is:
     "dist"
   ],
   "peerDependencies": {
-    "@open-wa/plugin-sdk": ">=5.0.0 <6.0.0"
+    "@eulab/openwaunlocked-plugin-sdk": ">=5.0.0 <6.0.0"
   },
   "scripts": {
     "build": "tsc",
@@ -96,7 +96,7 @@ Note which versions of open-wa your plugin is compatible with:
 ```json
 {
   "peerDependencies": {
-    "@open-wa/plugin-sdk": ">=5.0.0 <6.0.0"
+    "@eulab/openwaunlocked-plugin-sdk": ">=5.0.0 <6.0.0"
   },
   "engines": {
     "node": ">=22.21.1"
@@ -222,7 +222,7 @@ export default {
 Use a named session while trying the plugin:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id plugin-test --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id plugin-test --host 127.0.0.1 --port 8080
 ```
 
 ### Multi-Session Compatibility

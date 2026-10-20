@@ -1,7 +1,7 @@
 # Issue #3534: CommonJS create startup
 
 `create-repro.ts` uses the report's `require("node:path")` and
-`require("@open-wa/wa-automate")` imports and its configuration. Run it with
+`require("@eulab/openwaunlocked")` imports and its configuration. Run it with
 Node **24.21.0**. The fixture installs the released SDK and Puppeteer driver
 at **5.6.0** from npm, independently of this repository's workspaces.
 
@@ -58,7 +58,7 @@ the published correction, install the matching patch packages, then use
 the plain CommonJS JavaScript entry:
 
 ```sh
-npm install --save-exact @open-wa/wa-automate@5.6.1 @open-wa/driver-puppeteer@5.6.1
+npm install --save-exact @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0
 node create-repro.js
 ```
 

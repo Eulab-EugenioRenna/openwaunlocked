@@ -1,15 +1,15 @@
-# @open-wa/cf-proxy
+# @eulab/openwaunlocked-cf-proxy
 
 Cloudflare Worker Reverse-Tunnel Proxy for open-wa Sessions
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
-- `pnpm --filter @open-wa/cf-proxy dev`
-- `pnpm --filter @open-wa/cf-proxy deploy`
-- `pnpm --filter @open-wa/cf-proxy typecheck`
-- `pnpm --filter @open-wa/cf-proxy build`
+- `pnpm --filter @eulab/openwaunlocked-cf-proxy dev`
+- `pnpm --filter @eulab/openwaunlocked-cf-proxy deploy`
+- `pnpm --filter @eulab/openwaunlocked-cf-proxy typecheck`
+- `pnpm --filter @eulab/openwaunlocked-cf-proxy build`
 
 ## Documentation
 
@@ -17,4 +17,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

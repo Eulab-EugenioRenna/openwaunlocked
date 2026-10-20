@@ -42,7 +42,7 @@ For agent integrations, Easy API can expose that schema as MCP tools at `/mcp`. 
 
 1. **Keep existing deployments pinned while migrating.** Pin `4.76.0` for an application that still uses V4, and run V5 separately until you've moved its configuration and workflows.
 2. **Choose the right consumer.** Move remote consumers to SocketClient and embedded applications to `createClient`. Check the methods and schemas your application calls against `/api-docs/` on your running Easy API.
-3. **Update webhook configuration and receivers.** Configure `@open-wa/integration-webhook` through `wa.config.*`. The V5 CLI accepts `--webhook` but doesn't register delivery. Receivers now read `payload` from `{ webhookId, sessionId, event, payload, timestamp }`, rather than V4-style `data`.
+3. **Update webhook configuration and receivers.** Configure `@eulab/openwaunlocked-integration-webhook` through `wa.config.*`. The V5 CLI accepts `--webhook` but doesn't register delivery. Receivers now read `payload` from `{ webhookId, sessionId, event, payload, timestamp }`, rather than V4-style `data`.
 
 The [webhook guide](/docs/guides/webhooks-for-business) covers the new delivery path. Move one workflow at a time, including its login, named session and recovery behaviour, before switching production traffic.
 

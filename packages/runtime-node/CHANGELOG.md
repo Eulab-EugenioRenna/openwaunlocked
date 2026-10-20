@@ -1,4 +1,4 @@
-# @open-wa/runtime-node
+# @eulab/openwaunlocked-runtime-node
 
 
 
@@ -14,42 +14,42 @@
 ## 5.1.8
 <sub>2026-10-16</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.6
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.6
 
 ## 5.1.7
 <sub>2026-10-16</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.5
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.5
 
 ## 5.1.6
 <sub>2026-10-16</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.4
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.4
 
 ## 5.1.5
 <sub>2026-10-16</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.3
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.3
 
 ## 5.1.4
 <sub>2026-10-15</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.2
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.2
 
 ## 5.1.3
 <sub>2026-10-14</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.6.1
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.6.1
 
 ## 5.1.2
 <sub>2026-10-14</sub>
 
-- *(patch)* Updated dependency `@open-wa/schema` v5.6.0
+- *(patch)* Updated dependency `@eulab/openwaunlocked-schema` v5.6.0
 
 ## 5.1.1
 <sub>2026-10-12</sub>
 
-- *(patch)* Updated dependency `@open-wa/core` v5.5.1
+- *(patch)* Updated dependency `@eulab/openwaunlocked-core` v5.5.1
 
 ## 5.1.0
 <sub>2026-10-12</sub>
@@ -80,4 +80,4 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/runtime-core@5.0.0
+  - @eulab/openwaunlocked-runtime-core@1.0.0

@@ -76,7 +76,7 @@ type BlogSummary = Pick<EditorialEntry, 'title' | 'description' | 'publishedAt' 
 
 export function BlogIndex({ articles }: { articles: BlogSummary[] }) {
   return <>
-    <header className="blog-index-header"><p>WhatsApp automation, maintained since 2019.</p><h1>Build with open-wa.</h1><p>Practical guides, useful examples, and the details that make an integration work.</p></header>
+    <header className="blog-index-header"><p>WhatsApp automation, maintained since 2019.</p><h1>Build with EULAB.</h1><p>Practical guides, useful examples, and the details that make an integration work.</p></header>
     {articles.length ? <div className="blog-index-list">{articles.map(article => <article className={`blog-index-row ${article.image ? 'blog-row-with-cover' : ''}`} key={article.url}><div>{article.publishedAt && <div className="blog-byline"><ReleaseDate date={article.publishedAt} /><span aria-hidden="true">·</span><span>OpenWA team</span></div>}<h2><a href={article.url}>{article.title}</a></h2><p>{article.description}</p><a className="blog-read" href={article.url}>Read the article <ArrowRight size={15} /></a></div>{article.image && <a className="blog-index-cover" href={article.url} tabIndex={-1} aria-hidden="true"><img src={article.image} alt={article.title} loading="lazy" /></a>}</article>)}</div> : <section className="blog-empty"><h2>New guides are on the way.</h2><p>Start with the <a href="/docs/getting-started/quickstart">quickstart</a> or browse the <a href="/docs">documentation</a>.</p></section>}
   </>;
 }

@@ -1,16 +1,16 @@
-# @open-wa/runtime-edge
+# @eulab/openwaunlocked-runtime-edge
 
 Web API Effect runtime Layer for open-wa edge control planes
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
-- `pnpm --filter @open-wa/runtime-edge build`
-- `pnpm --filter @open-wa/runtime-edge test`
-- `pnpm --filter @open-wa/runtime-edge lint`
-- `pnpm --filter @open-wa/runtime-edge typecheck`
-- `pnpm --filter @open-wa/runtime-edge clean`
+- `pnpm --filter @eulab/openwaunlocked-runtime-edge build`
+- `pnpm --filter @eulab/openwaunlocked-runtime-edge test`
+- `pnpm --filter @eulab/openwaunlocked-runtime-edge lint`
+- `pnpm --filter @eulab/openwaunlocked-runtime-edge typecheck`
+- `pnpm --filter @eulab/openwaunlocked-runtime-edge clean`
 
 ## Documentation
 
@@ -18,4 +18,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

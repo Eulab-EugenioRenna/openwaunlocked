@@ -11,7 +11,7 @@ This contributor walkthrough follows `sendText` from its schema definition to ru
 ## Consumer usage
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({ sessionId: 'docs-example' });
 try {
@@ -28,7 +28,7 @@ try {
 
 ```ts
 export const sendText = defineMethodV2('sendText', {
-  meta: { description: "Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch.", namespace: "messages", httpMethod: "POST" },
+  meta: { description: "Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the EULAB development branch.", namespace: "messages", httpMethod: "POST" },
   parameterOrder: ["to","content","options"],
   // input: z.object({ to, content, options }), output: SendTextResultSchema
 });

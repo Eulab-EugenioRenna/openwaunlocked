@@ -93,7 +93,7 @@ export function InterfacePreference() {
     <div className="not-prose my-4 flex flex-col gap-2 rounded-lg border border-fd-border p-4">
       <span className="text-sm font-medium">Preferred interface</span>
       <p className="text-sm text-fd-muted-foreground">
-        Choose how you want to use open-wa. Code examples across the docs follow this choice. The
+        Choose how you want to use EULAB OpenWAUnlocked. Code examples across the docs follow this choice. The
         SocketClient protocol is the basis for clients in other languages.
       </p>
       <TabBar options={INTERFACES} value={pref} onChange={setPref} />

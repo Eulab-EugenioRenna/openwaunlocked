@@ -4,7 +4,7 @@ import * as React from 'react';
 import {
   Button as SharedButton,
   type ButtonProps as SharedButtonProps,
-} from '@open-wa/ui-components/button';
+} from '@eulab/openwaunlocked-ui-components/button';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '../../lib/cn';

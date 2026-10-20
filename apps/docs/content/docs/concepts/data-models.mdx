@@ -91,7 +91,7 @@ To access the raw bytes, pass the whole message to `decryptMedia` after you
 have checked that the message has media metadata.
 
 ```ts
-import { decryptMedia } from '@open-wa/wa-automate';
+import { decryptMedia } from '@eulab/openwaunlocked';
 
 client.onMessage(async (message) => {
   if (!message.isMedia && !message.mimetype) return;

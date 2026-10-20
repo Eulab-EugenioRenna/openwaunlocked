@@ -1,13 +1,13 @@
-# @open-wa/driver-puppeteer
+# @eulab/openwaunlocked-driver-puppeteer
 
 Puppeteer driver implementation for open-wa
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-bun add @open-wa/driver-puppeteer
+bun add @eulab/openwaunlocked-driver-puppeteer
 ```
 
 ## Browser setup
@@ -22,7 +22,7 @@ interrupted download is retried on the next start.
 Use the same resolver to pre-provision a deployment cache:
 
 ```typescript
-import { ensureBrowser } from '@open-wa/driver-puppeteer';
+import { ensureBrowser } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const executablePath = await ensureBrowser({
   browser: { cacheDirectory: '/app/browser-cache', download: 'auto' },
@@ -53,4 +53,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

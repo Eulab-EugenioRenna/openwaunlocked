@@ -28,7 +28,7 @@ const result = await client.addParticipant("447123456789-1445627445@g.us", "4471
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.addParticipant({
@@ -116,7 +116,7 @@ Approve group join request
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.approveGroupJoinRequest({
@@ -210,7 +210,7 @@ const result = await client.createGroup("name", ["447123456789@c.us"]);
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.createGroup({
@@ -309,7 +309,7 @@ const result = await client.demoteParticipant("447123456789-1445627445@g.us", "4
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.demoteParticipant({
@@ -397,7 +397,7 @@ Get all groups
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getAllGroups();
@@ -483,7 +483,7 @@ Get group admins
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getGroupAdmins({
@@ -567,7 +567,7 @@ Get the group title and description through the installed private patch
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getGroupInfo({
@@ -658,7 +658,7 @@ const result = await client.getGroupInviteLink("447123456789-1445627445@g.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getGroupInviteLink({
@@ -747,7 +747,7 @@ const result = await client.getGroupMembers("447123456789-1445627445@g.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getGroupMembers({
@@ -837,7 +837,7 @@ const result = await client.getGroupMembersId("447123456789-1445627445@g.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getGroupMembersId({
@@ -923,7 +923,7 @@ Get groups where kicked
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getKickedGroups();
@@ -1013,7 +1013,7 @@ const result = await client.joinGroupViaLink("link");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.joinGroupViaLink({
@@ -1109,7 +1109,7 @@ const result = await client.leaveGroup("447123456789-1445627445@g.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.leaveGroup({
@@ -1200,7 +1200,7 @@ const result = await client.promoteParticipant("447123456789-1445627445@g.us", "
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.promoteParticipant({
@@ -1288,7 +1288,7 @@ Reject group join request
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.rejectGroupJoinRequest({
@@ -1382,7 +1382,7 @@ const result = await client.removeParticipant("447123456789-1445627445@g.us", "4
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.removeParticipant({
@@ -1477,7 +1477,7 @@ const result = await client.revokeGroupInviteLink("447123456789-1445627445@g.us"
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.revokeGroupInviteLink({
@@ -1562,7 +1562,7 @@ Set group description
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.setGroupDescription({
@@ -1649,7 +1649,7 @@ Restrict group editing to admins only
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.setGroupEditToAdminsOnly({
@@ -1744,7 +1744,7 @@ const result = await client.setGroupIcon("447123456789-1445627445@g.us", "image"
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.setGroupIcon({
@@ -1831,7 +1831,7 @@ Set group title
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.setGroupTitle({
@@ -1918,7 +1918,7 @@ Restrict group to admins only
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.setGroupToAdminsOnly({

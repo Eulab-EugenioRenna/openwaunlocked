@@ -5,11 +5,11 @@ Welcome to the `open-wa` / `wa-automate-nodejs` documentation. This is a high-de
 ## Core Package Ecosystem
 
 The project uses a monorepo structure in `v5` containing the following packages:
-- **`@open-wa/core`**: Core runtime package providing `createClient()`.
-- **`@open-wa/plugin-sdk`**: SDK for building pluggable runtime extensions.
-- **`@open-wa/integration-webhook`**: Webhook dispatcher integration.
-- **`@open-wa/integration-s3`**: Amazon S3 storage integration for decrypted media.
-- **`@open-wa/node-red-contrib-wa-automate`**: Node-RED visual integration.
+- **`@eulab/openwaunlocked-core`**: Core runtime package providing `createClient()`.
+- **`@eulab/openwaunlocked-plugin-sdk`**: SDK for building pluggable runtime extensions.
+- **`@eulab/openwaunlocked-integration-webhook`**: Webhook dispatcher integration.
+- **`@eulab/openwaunlocked-integration-s3`**: Amazon S3 storage integration for decrypted media.
+- **`@eulab/openwaunlocked-node-red-contrib-wa-automate`**: Node-RED visual integration.
 
 ---
 
@@ -20,7 +20,7 @@ The project uses a monorepo structure in `v5` containing the following packages:
 - **[Quick start](/docs/getting-started/quickstart)**: Fastest path to spin up the local Easy API, scan the authentication QR code, verify Swagger docs at `http://localhost:8080/api-docs/`, and send a first test message using `curl` or the Swagger UI.
 - **[v5 Alpha Status](/docs/getting-started/v5-alpha)**: Understand the v5 monorepo architecture, how pluggable browser drivers (Puppeteer, Playwright, Lightpanda) work, legal/ToS context, Wassenaar encryption guidelines, and when to use v5 vs the stable v4 (`4.76.0`).
 - **[Easy API Server](/docs/getting-started/easy-api)**: Detailed guide on running the standalone Hono HTTP server. Explains port allocation, starting with `--api-key`, dynamic `/health` capabilities, and generating OpenAPI schemas `/meta/swagger.json` or Postman collections `/meta/postman.json`.
-- **[Custom Code embedding](/docs/getting-started/custom-code)**: Learn how to embed the library in direct Node.js processes using `createClient()` from `@open-wa/core` instead of CLI execution. Covers type safety, lifecycle callbacks, and correct client shutdown workflows.
+- **[Custom Code embedding](/docs/getting-started/custom-code)**: Learn how to embed the library in direct Node.js processes using `createClient()` from `@eulab/openwaunlocked-core` instead of CLI execution. Covers type safety, lifecycle callbacks, and correct client shutdown workflows.
 - **[Docker Deployment](/docs/getting-started/docker)**: Comprehensive deployment parameters for running within Docker. Documents image tags, volume mounts for session persistence, mandatory environment variables prefixed with `WA_*`, init systems, and custom browser drivers.
 - **[Link-code login](/docs/getting-started/link-code)**: Authenticate host devices directly via an 8-character phone pairing code instead of scanning QR codes. Useful for headless servers or remote terminal environments.
 
@@ -36,7 +36,7 @@ The project uses a monorepo structure in `v5` containing the following packages:
 ### 3. Plugin SDK System
 
 Plugins run **inside the Easy API process** for maximum performance and low latency.
-- **[Plugin Getting Started](/docs/plugins/getting-started)**: Scaffold plugins using `@open-wa/plugin-sdk` with `createPlugin()`. Covers dynamic loading `.mjs` files from `wa.config.mjs` and validating plugin parameters using Zod-driven `defineConfig()`.
+- **[Plugin Getting Started](/docs/plugins/getting-started)**: Scaffold plugins using `@eulab/openwaunlocked-plugin-sdk` with `createPlugin()`. Covers dynamic loading `.mjs` files from `wa.config.mjs` and validating plugin parameters using Zod-driven `defineConfig()`.
 - **[Hooks Reference](/docs/plugins/hooks-reference)**: Lifecyle hooks (`core.starting`, `core.started`, `client.ready`), message events (`message.received`, `message.sent`), interceptors (`message.send.before` to scan or drop outbound data), custom HTTP routes, and AI tool registries.
 - **[PluginClient Reference](/docs/plugins/plugin-client)**: Details the proxy methods available inside a plugin via `client` (`sendText`, `reply`, `decryptMedia`, `sendImage`).
 - **[PluginInput Reference](/docs/plugins/plugin-input)**: Details the inputs provided to the plugin (`events`, `logger`, `config`, `sessionId`, `client`).
@@ -55,7 +55,7 @@ Plugins run **inside the Easy API process** for maximum performance and low late
 
 ```mermaid
 graph TD
-  A[WhatsApp Web / Browser Engine] <-->|driver| B[@open-wa/core Client]
+  A[WhatsApp Web / Browser Engine] <-->|driver| B[@eulab/openwaunlocked-core Client]
   B <-->|RPC / SSE| C[Easy API Server Hono]
   C <-->|HTTP JSON-RPC| D[SocketClient / External Apps]
   C <-->|Webhook POST| E[CRM / Make.com / Low-Code]

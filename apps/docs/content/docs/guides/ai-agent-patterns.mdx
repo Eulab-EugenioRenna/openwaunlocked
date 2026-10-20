@@ -40,8 +40,8 @@ Expected behavior with the stubs: a message comes in, the bot sends a determinis
 The simplest AI agent receives messages, sends them to an LLM helper, and replies with the response.
 
 ```ts
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 type ChatTurn = {
   role: 'user' | 'assistant';
@@ -271,7 +271,7 @@ Expected behavior: group messages only continue when the bot is mentioned. Direc
 ### Buttons and Lists
 
 Use these sends when you want your agent to offer fixed choices instead of free-form text.
-`sendButtons` and `sendListMessage` have Open access in the Eulab branch. The alias `sendList` refers to `sendListMessage` on
+`sendButtons` and `sendListMessage` have Open access in the EULAB branch. The alias `sendList` refers to `sendListMessage` on
 surfaces that expose aliases.
 
 ```ts
@@ -354,14 +354,14 @@ ordering or a separate outbound schedule.
 Install the runtime, driver, and queue package in your application before you use this skeleton:
 
 ```bash
-npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0 p-queue
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0 p-queue
 ```
 
 Save the following JavaScript as `ai-agent.mjs`. The local `callLLM` stub returns a placeholder response, so the example does not call an AI provider.
 
 ```js
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 import PQueue from 'p-queue';
 
 async function callLLM(input) {

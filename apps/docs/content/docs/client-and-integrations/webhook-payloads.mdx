@@ -12,7 +12,7 @@ description: Receive, authenticate, validate, and deduplicate open-wa webhook ev
 This page is the reference for the v5 webhook integration. It shows the envelope, a bounded authenticated receiver, and the delivery limits that apply to the default configuration.
 
 <Callout type="warning" title="Load the plugin from config">
-The CLI still parses `--webhook`, but it does not register webhook delivery. Load `@open-wa/integration-webhook` from `wa.config.mjs` and configure it under `pluginConfig.webhook`.
+The CLI still parses `--webhook`, but it does not register webhook delivery. Load `@eulab/openwaunlocked-integration-webhook` from `wa.config.mjs` and configure it under `pluginConfig.webhook`.
 </Callout>
 
 ## Enable delivery
@@ -20,7 +20,7 @@ The CLI still parses `--webhook`, but it does not register webhook delivery. Loa
 Install the package in the project that runs the Easy API, then create `wa.config.mjs`:
 
 ```bash
-npm install @open-wa/integration-webhook@5.1.0
+npm install @eulab/openwaunlocked-integration-webhook@1.0.0
 ```
 
 ```js
@@ -32,7 +32,7 @@ export default {
   sessionId: 'sales',
   host: '127.0.0.1',
   port: 8080,
-  plugins: ['@open-wa/integration-webhook'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook'],
   pluginConfig: {
     webhook: {
       url: 'https://receiver.example/webhooks/open-wa',
@@ -59,7 +59,7 @@ Start the CLI from the directory containing the config:
 
 ```bash
 export OPEN_WA_WEBHOOK_SECRET='use-a-long-random-value'
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id sales --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id sales --host 127.0.0.1 --port 8080
 ```
 
 The receiver must be listening before open-wa starts sending events. A successful delivery is any HTTP `2xx` response; return it after storing the event or its deduplication key, then do slower work asynchronously.
@@ -270,7 +270,7 @@ Set `durability.enabled: true` to journal queued deliveries in SQLite. Pending r
 
 | Problem | Cause | Fix |
 | --- | --- | --- |
-| The receiver gets no requests | The integration is not in `plugins`, or the event is not in `events`. | Add `@open-wa/integration-webhook` to `plugins`. Add the event name to `events`. |
+| The receiver gets no requests | The integration is not in `plugins`, or the event is not in `events`. | Add `@eulab/openwaunlocked-integration-webhook` to `plugins`. Add the event name to `events`. |
 | The log shows connection errors | The receiver was not listening when open-wa started. | Start the receiver first. Check that open-wa can connect to the `url` value. |
 | The receiver returns `401` | The `X-Webhook-Secret` value does not match. | Use the same secret in the sender and in the receiver. |
 | The same event arrives two times | A timeout or a non-`2xx` response caused a retry. | Return `2xx` quickly. Store the `Idempotency-Key` value or the message ID, and ignore duplicates. |

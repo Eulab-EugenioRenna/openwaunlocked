@@ -40,8 +40,8 @@ records rejected jobs:
 
 ```ts
 import PQueue from 'p-queue';
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const runtime = await createClient({
   sessionId: 'paced-sender',
@@ -77,7 +77,7 @@ await client.start();
 await enqueueSend('447700900000@c.us', 'Hello');
 ```
 
-Install the example dependencies with `npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0 p-queue`. Complete the normal client authentication when it starts. This is a process-local schedule: it does not coordinate other sessions or senders and does not establish a provider quota. Choose the interval for your workflow, consent model, and operational budget, then stop or reclassify work when WhatsApp reports a restriction.
+Install the example dependencies with `npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0 p-queue`. Complete the normal client authentication when it starts. This is a process-local schedule: it does not coordinate other sessions or senders and does not establish a provider quota. Choose the interval for your workflow, consent model, and operational budget, then stop or reclassify work when WhatsApp reports a restriction.
 
 ## Safer workflow boundaries
 

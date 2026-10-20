@@ -5,21 +5,21 @@ description: Connect an app to a remote open-wa Easy API instance.
 
 # Socket Client
 
-Use `@open-wa/socket-client` in a separate Node.js app when Easy API owns the WhatsApp browser session. In the current v5 runtime, commands use HTTP RPC and events use Server-Sent Events (SSE); the package keeps the familiar `Client` method and listener surface.
+Use `@eulab/openwaunlocked-socket-client` in a separate Node.js app when Easy API owns the WhatsApp browser session. In the current v5 runtime, commands use HTTP RPC and events use Server-Sent Events (SSE); the package keeps the familiar `Client` method and listener surface.
 
 ## Install and connect
 
 Install the client and `tsx` in the Node.js app that will consume Easy API:
 
 ```bash
-npm install @open-wa/socket-client@5.1.0
+npm install @eulab/openwaunlocked-socket-client@1.0.0
 npm install --save-dev tsx
 ```
 
 Start or locate an Easy API session, then connect using its base URL. Pass the API key when the server requires one:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://127.0.0.1:8080', process.env.OPENWA_API_KEY);
 ```
@@ -31,7 +31,7 @@ Keep the key in server-side configuration. The client sends it as `X-API-Key` on
 Save this as `consumer.ts`. It logs incoming messages and does not send a WhatsApp message:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const url = process.env.OPENWA_API_URL;
 const apiKey = process.env.OPENWA_API_KEY;

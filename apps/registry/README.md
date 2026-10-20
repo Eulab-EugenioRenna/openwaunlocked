@@ -2,7 +2,7 @@
 
 Static component registry for open-wa UI assets, served from `public/registry.json`.
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
@@ -15,4 +15,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

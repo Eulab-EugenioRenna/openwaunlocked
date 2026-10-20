@@ -5,7 +5,7 @@ resta un servizio esterno e non è installato qui.
 
 ## Contratto
 
-`createVoiceCallAudio` è esportata da `@open-wa/runtime-node`.
+`createVoiceCallAudio` è esportata da `@eulab/openwaunlocked-runtime-node`.
 
 | Superficie | Uso |
 | --- | --- |
@@ -32,7 +32,7 @@ il contratto dell'applicazione esterna:
 la generazione. L'adattatore al protocollo effettivo del modello resta esterno.
 
 ```ts
-import { createVoiceCallAudio } from '@open-wa/runtime-node';
+import { createVoiceCallAudio } from '@eulab/openwaunlocked-runtime-node';
 
 await client.onIncomingCall(async call => {
   const audio = createVoiceCallAudio({ responseSampleRate: 24000 });

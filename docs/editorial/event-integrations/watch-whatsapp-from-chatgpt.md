@@ -25,7 +25,7 @@ export WA_API_KEY='REPLACE_WITH_YOUR_PRIVATE_API_KEY'
 export OPENWA_VERSION='5.6.0'
 export OPENWA_API_URL='http://127.0.0.1:8080'
 
-npx "@open-wa/wa-automate@$OPENWA_VERSION" --config ./wa.config.mjs
+npx "@eulab/openwaunlocked@$OPENWA_VERSION" --config ./wa.config.mjs
 ```
 
 On your phone, open **WhatsApp → Linked devices → Link a device** and scan the QR code. The dashboard is at `/dashboard/` on the printed server address. Keep the session file private and keep the same working directory when restarting.

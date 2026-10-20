@@ -30,7 +30,7 @@ The reference below lists supported configuration fields, types, defaults, and d
 ## Example
 
 ```ts
-import { createClient } from '@open-wa/wa-automate';
+import { createClient } from '@eulab/openwaunlocked';
 
 const client = await createClient({
   sessionId: 'sales',
@@ -101,7 +101,7 @@ Use JSON when your config is static:
 Use TypeScript or JavaScript when you need environment variables or computed values:
 
 ```ts
-import { defineConfig } from '@open-wa/config';
+import { defineConfig } from '@eulab/openwaunlocked-config';
 
 export default defineConfig({
   sessionId: process.env.WA_SESSION_ID ?? 'sales',
@@ -202,7 +202,7 @@ These are the major flags most users need when starting the Easy API from the co
 | `--port 8080`, `-p 8080` | `port` | Port for the Easy API server. |
 | `--api-key "key"`, `--key "key"`, `-k "key"` | `apiKey` | Protects API requests. Use this before exposing the API beyond localhost. |
 | `--session-id sales` | `sessionId` | Names the session and keeps auth state separate from other sessions. |
-| `--webhook "https://..."`, `-w "https://..."` | `webhook` | Parsed as a webhook target URL, but current v5 source warns that CLI webhook registration parity is not restored. Use `@open-wa/integration-webhook` in `plugins` plus `pluginConfig.webhook` for source-backed delivery. |
+| `--webhook "https://..."`, `-w "https://..."` | `webhook` | Parsed as a webhook target URL, but current v5 source warns that CLI webhook registration parity is not restored. Use `@eulab/openwaunlocked-integration-webhook` in `plugins` plus `pluginConfig.webhook` for source-backed delivery. |
 | `--pm2` | PM2 wrapper | Starts the CLI under PM2 instead of running directly. |
 | `linkCode` in library config | `linkCode` | Embedded `createClient` in `5.1.0` supports link-code login. The published Easy API CLI does not forward this setting and has no `--link-code` flag. |
 | `--tunnel` | transitional | Legacy tunnel flag. v5 currently warns that tunnel setup parity is not restored. |
@@ -230,21 +230,21 @@ requires an explicit browser flag. `browser.download: 'never'` disables download
 After the next minor release, start the experimental Lightpanda Easy API with:
 
 ```bash
-npx @open-wa/wa-automate --lightpanda
+npx @eulab/openwaunlocked --lightpanda
 ```
 
 Lightpanda mode downloads and caches the pinned 1.0.0 executable on first use, prepares a separate WhatsApp-capable copy, and enables the worker, service worker, and crypto bridges automatically. The original executable and existing installations are preserved. The normal terminal QR output and `/qr` endpoint remain available. Use `--qr-timeout 0` to keep waiting for a scan. A custom `lightpanda.executablePath` is still supported; that executable must honor the Chrome user agent override.
 
 This mode remains experimental. Custom native Debug runs reached authenticated library READY and loaded chats/contacts, but subsequent reload recovery failed with session takeover and initialization errors. The stock download has not been replaced. Reliable recovery, outbound delivery, long-session durability and full Chrome parity remain unconfirmed. Lightpanda has no graphical renderer, so screenshots, PDF rendering and Live Portal are unavailable. The controlled browser benchmark does not measure authenticated WhatsApp performance.
 
-The standalone `@open-wa/cli` entrypoint also accepts output-mode flags such as `--interactive`, `--non-interactive`, and `--output-mode plain`. Those affect terminal output before the runtime config is parsed.
+The standalone `@eulab/openwaunlocked-cli` entrypoint also accepts output-mode flags such as `--interactive`, `--non-interactive`, and `--output-mode plain`. Those affect terminal output before the runtime config is parsed.
 
 ## CLI-to-schema mapping
 
 Most CLI flags are thin aliases over config schema fields. For example:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales \
   --host 127.0.0.1 \
   --port 8080 \
@@ -296,8 +296,8 @@ Use `plugins` to load reusable integrations into the runtime process.
 ```ts
 export default {
   plugins: [
-    '@open-wa/integration-webhook',
-    '@open-wa/integration-chatwoot',
+    '@eulab/openwaunlocked-integration-webhook',
+    '@eulab/openwaunlocked-integration-chatwoot',
     './plugins/my-local-plugin',
     '/absolute/path/to/plugin.js',
   ],
@@ -314,7 +314,7 @@ Use `pluginConfig` for plugin-specific settings. The object is keyed by each plu
 
 ```ts
 export default {
-  plugins: ['@open-wa/integration-webhook', './plugins/moderation'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook', './plugins/moderation'],
   pluginConfig: {
     webhook: {
       url: 'https://your-app.example/webhooks/open-wa',
@@ -335,7 +335,7 @@ At startup, open-wa looks up `pluginConfig[plugin.meta.name]`. If the plugin def
 ## Example with plugin
 
 ```ts
-import { defineConfig } from '@open-wa/config';
+import { defineConfig } from '@eulab/openwaunlocked-config';
 
 export default defineConfig({
   sessionId: 'support',
@@ -344,7 +344,7 @@ export default defineConfig({
   apiKey: process.env.WA_API_KEY,
   webhook: process.env.WA_WEBHOOK,
   plugins: [
-    '@open-wa/integration-webhook',
+    '@eulab/openwaunlocked-integration-webhook',
     './plugins/internal-audit-plugin',
   ],
   pluginConfig: {

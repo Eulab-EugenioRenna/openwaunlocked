@@ -21,7 +21,7 @@ Get all communities
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getAllCommunities();
@@ -107,7 +107,7 @@ Get community admin IDs
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getCommunityAdminIds({
@@ -190,7 +190,7 @@ Get community admins
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getCommunityAdmins({
@@ -273,7 +273,7 @@ Get community metadata
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getCommunityInfo({
@@ -362,7 +362,7 @@ Get community participant IDs
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getCommunityParticipantIds({
@@ -445,7 +445,7 @@ Get community participants
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getCommunityParticipants({

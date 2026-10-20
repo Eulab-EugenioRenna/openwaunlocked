@@ -1,42 +1,42 @@
 import { CURRENT_VERSION, DOCS_PATHS, REPO_URL, SITE_ORIGIN } from './site';
 
-export const HOMEPAGE_TITLE = 'Eulab Open | Self-hosted WhatsApp API for Node.js';
-export const HOMEPAGE_DESCRIPTION = 'Eulab Open is a self-hosted WhatsApp API and Node.js library for developers. Send messages, receive events, and connect WhatsApp to your app on your own server.';
+export const HOMEPAGE_TITLE = 'EULAB Open | Self-hosted WhatsApp API for Node.js';
+export const HOMEPAGE_DESCRIPTION = 'EULAB Open is a self-hosted WhatsApp API and Node.js library for developers. Send messages, receive events, and connect WhatsApp to your app on your own server.';
 
 export const HOMEPAGE_FAQS = [
   {
-    question: 'What is Eulab Open?',
+    question: 'What is EULAB Open?',
     answer: HOMEPAGE_DESCRIPTION,
     href: DOCS_PATHS.runtimeModel,
-    label: 'How Eulab Open works',
+    label: 'How EULAB Open works',
   },
   {
-    question: 'Who is Eulab Open best for?',
+    question: 'Who is EULAB Open best for?',
     answer: 'Developers who want to connect an existing WhatsApp account to their own applications, support tools, or automation workflows through HTTP or Node.js.',
     href: DOCS_PATHS.integrationsOverview,
     label: 'Explore integrations',
   },
   {
     question: 'How do I send WhatsApp messages from Node.js?',
-    answer: 'Install @open-wa/wa-automate, create a connected client, link your WhatsApp account, and call client.sendText with the recipient and message. The Node.js guide walks through each step.',
+    answer: 'Install @eulab/openwaunlocked, create a connected client, link your WhatsApp account, and call client.sendText with the recipient and message. The Node.js guide walks through each step.',
     href: DOCS_PATHS.customCode,
     label: 'Send a message with Node.js',
   },
   {
-    question: 'Can I use Eulab Open from Python, PHP, or another language?',
+    question: 'Can I use EULAB Open from Python, PHP, or another language?',
     answer: 'Yes. Start the Easy API on a machine with Node.js, link WhatsApp, and call its HTTP endpoints from your application. Your application can use any language that makes HTTP requests.',
     href: DOCS_PATHS.quickstart,
     label: 'Start the WhatsApp HTTP API',
   },
   {
-    question: 'Does Eulab Open require an activation key?',
-    answer: 'Eulab Open provides API access without paid tiers or activation keys in this development branch. Runtime availability and physical acceptance remain separate from access. The original source license remains in effect.',
+    question: 'Does EULAB Open require an activation key?',
+    answer: 'EULAB Open provides API access without paid tiers or activation keys in this development branch. Runtime availability and physical acceptance remain separate from access. The original source license remains in effect.',
     href: '/docs/licensing/pricing',
     label: 'Open access and availability',
   },
   {
-    question: 'Is Eulab Open the official WhatsApp Business API?',
-    answer: 'No. Eulab Open is an unofficial fork with no affiliation to WhatsApp or Meta. It connects through WhatsApp Web, and using automation can lead to account restrictions or bans.',
+    question: 'Is EULAB Open the official WhatsApp Business API?',
+    answer: 'No. EULAB Open is an unofficial fork with no affiliation to WhatsApp or Meta. It connects through WhatsApp Web, and using automation can lead to account restrictions or bans.',
     href: DOCS_PATHS.bestPractices,
     label: 'Read the operating guidance',
   },
@@ -48,8 +48,8 @@ export const HOMEPAGE_SCHEMA = {
     {
       '@type': 'Organization',
       '@id': `${SITE_ORIGIN}/#organization`,
-      name: 'Eulab Open',
-      alternateName: 'Eulab',
+      name: 'EULAB Open',
+      alternateName: 'EULAB',
       url: SITE_ORIGIN,
       logo: `${SITE_ORIGIN}/logo.png`,
       sameAs: [],
@@ -57,8 +57,8 @@ export const HOMEPAGE_SCHEMA = {
     {
       '@type': 'WebSite',
       '@id': `${SITE_ORIGIN}/#website`,
-      name: 'Eulab Open',
-      alternateName: 'Eulab',
+      name: 'EULAB Open',
+      alternateName: 'EULAB',
       url: SITE_ORIGIN,
       description: HOMEPAGE_DESCRIPTION,
       publisher: { '@id': `${SITE_ORIGIN}/#organization` },
@@ -67,8 +67,8 @@ export const HOMEPAGE_SCHEMA = {
     {
       '@type': ['SoftwareApplication', 'SoftwareSourceCode'],
       '@id': `${SITE_ORIGIN}/#software`,
-      name: 'Eulab Open',
-      alternateName: ['OpenWA', '@open-wa/wa-automate'],
+      name: 'EULAB Open',
+      alternateName: ['OpenWA', '@eulab/openwaunlocked'],
       url: SITE_ORIGIN,
       description: HOMEPAGE_DESCRIPTION,
       applicationCategory: 'DeveloperApplication',

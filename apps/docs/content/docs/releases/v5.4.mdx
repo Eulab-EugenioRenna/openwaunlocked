@@ -18,7 +18,7 @@ Your compact session can travel with an encryption key you control. OpenWA 5.4 a
 ## 🔒️ Choose your key
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({
   sessionId: 'sales',
@@ -36,7 +36,7 @@ Compact authentication is the only path; `legacyDataDirAuth` is removed. Moving 
 
 Key settings are redacted from debug responses and startup events. Verbose environment logs show variable names only. Live browser/S3 acceptance for this integration remains unverified.
 
-Read the [session storage guide](https://github.com/open-wa/wa-automate-nodejs/blob/master/packages/wa-automate/PORTABLE_SESSIONS.md) for storage and pending-message replay details.
+Read the [session storage guide](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/packages/wa-automate/PORTABLE_SESSIONS.md) for storage and pending-message replay details.
 
 ## 🔖 Version alignment
 

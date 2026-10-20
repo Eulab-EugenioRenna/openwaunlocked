@@ -1,4 +1,4 @@
-# @open-wa/dashboard-neo
+# @eulab/openwaunlocked-dashboard-neo
 
 ## 5.0.0-alpha.4
 

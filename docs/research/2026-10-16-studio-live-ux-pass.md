@@ -20,7 +20,7 @@ Issue: [#3555](https://github.com/open-wa/wa-automate-nodejs/issues/3555). Revie
 
 ## Product artwork
 
-`apps/dashboard-neo/tools/generate-effect-previews.mjs` generates the source illustration and animation, then uses `@open-wa/stickers/browser` through the running dev server to render each effect with its default options. It resizes the actual output to 192 × 192 for gallery delivery and writes animation and still WebPs under `public/studio/effects/`. The source remains 512 × 512. The manifest records source SHA-256, output bytes, frame counts and durations.
+`apps/dashboard-neo/tools/generate-effect-previews.mjs` generates the source illustration and animation, then uses `@eulab/openwaunlocked-stickers/browser` through the running dev server to render each effect with its default options. It resizes the actual output to 192 × 192 for gallery delivery and writes animation and still WebPs under `public/studio/effects/`. The source remains 512 × 512. The manifest records source SHA-256, output bytes, frame counts and durations.
 
 There are 62 effect previews: 61 animated outputs and one static Freeze output. Animation totals about 4.25 MB across the whole catalogue. Tiles load lazily, and only visible tiles decode animation. Pause previews switches to still WebPs; reduced-motion preferences start paused. The sample artwork is original SVG drawing code in the generator, with no externally sourced photo.
 

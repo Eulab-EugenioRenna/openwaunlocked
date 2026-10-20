@@ -1,4 +1,4 @@
-# @open-wa/runtime-core
+# @eulab/openwaunlocked-runtime-core
 
 
 

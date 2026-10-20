@@ -8,7 +8,7 @@ description: Route WhatsApp conversations into a Chatwoot inbox and let agents r
 
 Use this integration when you want support agents to handle WhatsApp conversations from a Chatwoot inbox. Incoming WhatsApp messages create or reopen Chatwoot conversations. Chatwoot replies return through the connected open-wa session.
 
-The current plugin package is `@open-wa/integration-chatwoot@5.1.0`. Chatwoot's account and API behavior can vary by self-hosted release, so record the Chatwoot version alongside your deployment runbook and verify the token permissions against that release.
+The current plugin package is `@eulab/openwaunlocked-integration-chatwoot@1.0.0`. Chatwoot's account and API behavior can vary by self-hosted release, so record the Chatwoot version alongside your deployment runbook and verify the token permissions against that release.
 
 ## Chatwoot-side setup
 
@@ -48,7 +48,7 @@ Load Chatwoot as a plugin and place the Chatwoot settings under `pluginConfig.ch
 Install the plugin in the Easy API project first:
 
 ```bash
-npm install @open-wa/integration-chatwoot@5.1.0
+npm install @eulab/openwaunlocked-integration-chatwoot@1.0.0
 export OPENWA_CALLBACK_KEY='replace-with-a-long-random-value'
 export CHATWOOT_API_ACCESS_TOKEN='replace-with-a-Chatwoot-user-token'
 ```
@@ -63,7 +63,7 @@ export default {
   port: 8080,
   host: '0.0.0.0',
   apiKey: callbackKey,
-  plugins: ['@open-wa/integration-chatwoot'],
+  plugins: ['@eulab/openwaunlocked-integration-chatwoot'],
   pluginConfig: {
     chatwoot: {
       chatwootUrl: 'https://app.chatwoot.com/api/v1/accounts/123',
@@ -81,7 +81,7 @@ The plugin appends `callbackKey` as `api_key` to Chatwoot's webhook URL. The Cha
 Save this as `wa.config.mjs`, then start the matching session:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id sales --host 0.0.0.0 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id sales --host 0.0.0.0 --port 8080
 ```
 
 If you want to bind the plugin to an existing Chatwoot inbox, include the inbox ID in `chatwootUrl`:

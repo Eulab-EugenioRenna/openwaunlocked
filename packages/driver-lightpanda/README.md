@@ -1,13 +1,13 @@
-# @open-wa/driver-lightpanda
+# @eulab/openwaunlocked-driver-lightpanda
 
 Lightpanda browser driver for open-wa
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-pnpm add @open-wa/driver-lightpanda
+pnpm add @eulab/openwaunlocked-driver-lightpanda
 ```
 
 ## Documentation
@@ -30,4 +30,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

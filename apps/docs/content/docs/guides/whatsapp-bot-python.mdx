@@ -90,7 +90,7 @@ python bot.py
 In a new directory, install the webhook integration:
 
 ```bash
-npm install @open-wa/integration-webhook
+npm install @eulab/openwaunlocked-integration-webhook
 ```
 
 Create `wa.config.mjs`:
@@ -103,7 +103,7 @@ export default {
   sessionId: 'python-bot',
   host: '127.0.0.1',
   port: 8080,
-  plugins: ['@open-wa/integration-webhook'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook'],
   pluginConfig: {
     webhook: {
       url: 'http://127.0.0.1:5000/webhooks/open-wa',
@@ -121,7 +121,7 @@ Set the same two values in this terminal. Then start the Easy API:
 ```bash
 export OPEN_WA_API_KEY='use-a-long-random-value'
 export OPEN_WA_WEBHOOK_SECRET='use-a-different-long-random-value'
-npx @open-wa/wa-automate --config ./wa.config.mjs --session-id python-bot --host 127.0.0.1 --port 8080 --api-key "$OPEN_WA_API_KEY"
+npx @eulab/openwaunlocked --config ./wa.config.mjs --session-id python-bot --host 127.0.0.1 --port 8080 --api-key "$OPEN_WA_API_KEY"
 ```
 
 Scan the QR code with WhatsApp on your phone. Then send `!help` to the linked account from another phone. The bot replies in the same chat.

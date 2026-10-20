@@ -115,7 +115,7 @@ async function transcribe(audioDataUrl: string, apiKey: string): Promise<string>
 
 ```ts
 // src/voice-transcriber.ts
-import { createPlugin, z } from '@open-wa/plugin-sdk';
+import { createPlugin, z } from '@eulab/openwaunlocked-plugin-sdk';
 
 type VoiceNoteMessage = {
   type: 'audio';
@@ -242,7 +242,7 @@ export default {
 Start a named session with this config:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id dictation-test --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id dictation-test --host 127.0.0.1 --port 8080
 ```
 
 Send an OGG voice note to the connected account. The plugin replies with the transcription; if it does not, check the Easy API logs and confirm that `STT_API_KEY` is set.

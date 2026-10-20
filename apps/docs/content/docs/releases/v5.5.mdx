@@ -13,7 +13,7 @@ release:
     - "Render WebP stickers locally with lazily loaded resources."
 ---
 
-OpenWA 5.5 adds native event APIs, refresh controls for running sessions and a local sticker renderer. Upgrade with `npm install @open-wa/wa-automate@5.5.0`.
+OpenWA 5.5 adds native event APIs, refresh controls for running sessions and a local sticker renderer. Upgrade with `npm install @eulab/openwaunlocked@1.0.0`.
 
 ## ✨ Events and attendance
 
@@ -36,13 +36,13 @@ Use **Refresh patches** or **Apply license** in the dashboard, or call `client.r
 
 ## 🎨 Local stickers
 
-Install `@open-wa/stickers@5.5.0` to render WebP files locally:
+Install `@eulab/openwaunlocked-stickers@1.0.0` to render WebP files locally:
 
 ```sh
-npx --package @open-wa/stickers@5.5.0 openwa-sticker photo.jpg --output sticker.webp --effects comic,sparkle
+npx --package @eulab/openwaunlocked-stickers@1.0.0 openwa-sticker photo.jpg --output sticker.webp --effects comic,sparkle
 ```
 
-The SDK lazily loads the package. It selects the existing browser if that browser can complete the whole job; otherwise it selects standalone execution for the whole job. Effects preserve their specified order, and compositor, encoder and font resources download on demand. This first slice contains 62 recipes; the remaining historical effects and background removal are separate work. [Package usage and resource limits](https://github.com/open-wa/wa-automate-nodejs/blob/master/packages/stickers/README.md).
+The SDK lazily loads the package. It selects the existing browser if that browser can complete the whole job; otherwise it selects standalone execution for the whole job. Effects preserve their specified order, and compositor, encoder and font resources download on demand. This first slice contains 62 recipes; the remaining historical effects and background removal are separate work. [Package usage and resource limits](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/packages/stickers/README.md).
 
 Local rendering ships independently of sending. `client.sendSticker` requires the private donor finalizer, whose deployment remains separate from this public package release.
 

@@ -16,7 +16,7 @@ The two paths use a WhatsApp account that you link to your own server. open-wa i
 - Keep a phone with WhatsApp near you to link the account.
 - Get the phone number of a test recipient that already has a chat with your account.
 
-Starting a chat has **Open** access in the Eulab development branch. WhatsApp account rules and recipient availability still apply. See [Open access](/docs/licensing/licensed-features).
+Starting a chat has **Open** access in the EULAB development branch. WhatsApp account rules and recipient availability still apply. See [Open access](/docs/licensing/licensed-features).
 
 ## Find the recipient chat ID
 
@@ -35,13 +35,13 @@ If an incoming message gives a `message.from` value, use that value without chan
 Install the library in your project:
 
 ```bash
-npm install @open-wa/wa-automate
+npm install @eulab/openwaunlocked
 ```
 
 Create `send.mts` with this code:
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({ sessionId: 'sender' });
 
@@ -64,7 +64,7 @@ npx tsx send.mts
 Start the Easy API on the machine that holds the WhatsApp session:
 
 ```bash
-npx @open-wa/wa-automate --session-id sender --host 127.0.0.1 --port 8080 --api-key "your-api-key"
+npx @eulab/openwaunlocked --session-id sender --host 127.0.0.1 --port 8080 --api-key "your-api-key"
 ```
 
 Scan the QR code that the terminal shows. Then send a `POST` request to `/api/messages/sendText`:

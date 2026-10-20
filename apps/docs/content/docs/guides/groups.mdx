@@ -93,7 +93,7 @@ The runtime event map exposes `group.participants.changed.global`. Its
 the actor when available:
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.on('group.participants.changed.global', ({ change }) => {
   console.log(change.groupId, change.action, change.participantIds, change.by);

@@ -45,7 +45,7 @@ function buildMissingReadme(workspace) {
     '',
     workspace.description,
     '',
-    'Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).',
+    'Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).',
     '',
     '## Development',
     '',
@@ -57,7 +57,7 @@ function buildMissingReadme(workspace) {
     '',
     '## License',
     '',
-    '[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm',
+    '[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm',
     '',
   ].join('\n');
 }
@@ -104,7 +104,7 @@ function frontmatter(workspace) {
 
 function buildWorkspacePage(workspace) {
   const readme = fs.readFileSync(workspace.readmePath, 'utf8').trimEnd();
-  const sourceUrl = `https://github.com/open-wa/wa-automate-nodejs/blob/master/${workspace.relativeDir}/README.md`;
+  const sourceUrl = `https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/${workspace.relativeDir}/README.md`;
   return [
     frontmatter(workspace).trimEnd(),
     '',

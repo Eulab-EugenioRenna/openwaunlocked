@@ -5,23 +5,23 @@ description: Copy received WhatsApp media to a supported object store and read i
 
 # S3 media storage
 
-`@open-wa/integration-s3@5.1.0` listens for `message.received`, decrypts media that has a `deprecatedMms3Url`, uploads it through `pico-s3`, and adds `cloudUrl` to the message object. It does not remove or replace the original WhatsApp fields. This package exports the `s3Plugin(config)` factory; it is registered directly with `createClient()` rather than loaded from the CLI's string-based `plugins` list.
+`@eulab/openwaunlocked-integration-s3@1.0.0` listens for `message.received`, decrypts media that has a `deprecatedMms3Url`, uploads it through `pico-s3`, and adds `cloudUrl` to the message object. It does not remove or replace the original WhatsApp fields. This package exports the `s3Plugin(config)` factory; it is registered directly with `createClient()` rather than loaded from the CLI's string-based `plugins` list.
 
 ## Configure the plugin
 
 Install the public client, Puppeteer driver, and integration in the Node.js project:
 
 ```bash
-npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0 @open-wa/integration-s3@5.1.0
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0 @eulab/openwaunlocked-integration-s3@1.0.0
 ```
 
 Use a provider value accepted by the integration source. `provider`, `accessKeyId`, `secretAccessKey`, and `bucket` are required; `region` is optional.
 
 ```js
 // app.mjs
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
-import { createClient } from '@open-wa/wa-automate';
-import { s3Plugin } from '@open-wa/integration-s3';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
+import { createClient } from '@eulab/openwaunlocked';
+import { s3Plugin } from '@eulab/openwaunlocked-integration-s3';
 
 const client = await createClient({
   sessionId: 'sales',
@@ -60,9 +60,9 @@ On success, the plugin keeps the original WhatsApp fields and assigns `cloudUrl`
 Use one upload path for a message. If later work needs the URL immediately, use the integration's exported `S3Uploader` in your own awaited handler instead of registering `s3Plugin` for the same messages:
 
 ```js
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
-import { S3Uploader } from '@open-wa/integration-s3';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
+import { S3Uploader } from '@eulab/openwaunlocked-integration-s3';
 
 const mediaConfig = {
   provider: 'aws',

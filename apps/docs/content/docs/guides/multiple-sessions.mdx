@@ -20,10 +20,10 @@ different, nonempty `SALES_API_KEY` and `SUPPORT_API_KEY` values in your secret
 store or shell environment.
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales --host 127.0.0.1 --port 8081 --api-key "$SALES_API_KEY"
 
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id support --host 127.0.0.1 --port 8082 --api-key "$SUPPORT_API_KEY"
 ```
 
@@ -39,8 +39,8 @@ Create and retain one runtime per session, and stop each runtime during
 application shutdown.
 
 ```ts
-import { createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const sessions = new Map();
 

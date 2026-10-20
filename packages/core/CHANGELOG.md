@@ -1,4 +1,4 @@
-# @open-wa/core
+# @eulab/openwaunlocked-core
 
 
 
@@ -16,7 +16,7 @@
 ## 5.6.6
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/hyperemitter` v5.6.6
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-hyperemitter` v5.6.6
 
 ## 5.6.5
 <sub>2026-10-16</sub>
@@ -27,12 +27,12 @@
 ## 5.6.4
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/api` v5.6.4, `@open-wa/stickers` v5.6.4
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.4, `@eulab/openwaunlocked-stickers` v5.6.4
 
 ## 5.6.3
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/stickers` v5.6.3
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-stickers` v5.6.3
 
 ## 5.6.2
 <sub>2026-10-15</sub>
@@ -128,7 +128,7 @@
 <sub>2026-09-29</sub>
 
 - [#3465](https://github.com/open-wa/wa-automate-nodejs/pull/3465)  *(minor)* Thanks [@smashah](https://github.com/smashah)!
-  Create a Bun and TypeScript messaging application with `bunx --bun @open-wa/wa-automate init my-bot`. The public `create()` now prepares a matched browser, presents QR login, and returns a ready messaging client with private persistent session storage.
+  Create a Bun and TypeScript messaging application with `bunx --bun @eulab/openwaunlocked init my-bot`. The public `create()` now prepares a matched browser, presents QR login, and returns a ready messaging client with private persistent session storage.
 
   Provision missing browsers at startup with shared cache coordination, configurable cache and download policy, and explicit-path errors. Preserve explicit drivers and low-level lifecycle control.
 
@@ -168,15 +168,15 @@
 
 - Allow pre-auth QR bootstrap to continue when WhatsApp Web exposes the QR surface before `WAWebCollections` is injectable, gate dashboard runtime API calls until the session is ready, and return an empty plugin manifest when no plugins are mounted.
 - Updated dependencies [[`6a55aef`](https://github.com/open-wa/wa-automate-nodejs/commit/6a55aef602b347bfffc8550e448585e7776baf18)]:
-  - @open-wa/config@5.0.0
-  - @open-wa/schema@5.0.0
-  - @open-wa/plugin-sdk@5.0.0
-  - @open-wa/driver-interface@5.0.0
-  - @open-wa/driver-playwright@5.0.0
-  - @open-wa/driver-puppeteer@5.0.0
-  - @open-wa/hyperemitter@5.0.0
-  - @open-wa/logger@5.0.0
-  - @open-wa/runtime-core@5.0.0
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-runtime-core@1.0.0
 
 ## 5.0.0-alpha.7
 
@@ -185,84 +185,84 @@
 - Allow pre-auth QR bootstrap to continue when WhatsApp Web exposes the QR surface before `WAWebCollections` is injectable, gate dashboard runtime API calls until the session is ready, and return an empty plugin manifest when no plugins are mounted.
 
 - Updated dependencies []:
-  - @open-wa/config@5.0.0-alpha.7
-  - @open-wa/driver-interface@5.0.0-alpha.7
-  - @open-wa/driver-playwright@5.0.0-alpha.7
-  - @open-wa/driver-puppeteer@5.0.0-alpha.7
-  - @open-wa/hyperemitter@5.0.0-alpha.7
-  - @open-wa/logger@5.0.0-alpha.7
-  - @open-wa/plugin-sdk@5.0.0-alpha.7
-  - @open-wa/schema@5.0.0-alpha.7
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
 
 ## 5.0.0-alpha.6
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/config@5.0.0-alpha.6
-  - @open-wa/driver-interface@5.0.0-alpha.6
-  - @open-wa/driver-playwright@5.0.0-alpha.6
-  - @open-wa/driver-puppeteer@5.0.0-alpha.6
-  - @open-wa/hyperemitter@5.0.0-alpha.6
-  - @open-wa/logger@5.0.0-alpha.6
-  - @open-wa/plugin-sdk@5.0.0-alpha.6
-  - @open-wa/schema@5.0.0-alpha.6
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
 
 ## 5.0.0-alpha.5
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/config@5.0.0-alpha.5
-  - @open-wa/driver-interface@5.0.0-alpha.5
-  - @open-wa/driver-playwright@5.0.0-alpha.5
-  - @open-wa/driver-puppeteer@5.0.0-alpha.5
-  - @open-wa/hyperemitter@5.0.0-alpha.5
-  - @open-wa/logger@5.0.0-alpha.5
-  - @open-wa/plugin-sdk@5.0.0-alpha.5
-  - @open-wa/schema@5.0.0-alpha.5
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
 
 ## 5.0.0-alpha.4
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/config@5.0.0-alpha.4
-  - @open-wa/driver-interface@5.0.0-alpha.4
-  - @open-wa/driver-playwright@5.0.0-alpha.4
-  - @open-wa/driver-puppeteer@5.0.0-alpha.4
-  - @open-wa/hyperemitter@5.0.0-alpha.4
-  - @open-wa/logger@5.0.0-alpha.4
-  - @open-wa/plugin-sdk@5.0.0-alpha.4
-  - @open-wa/schema@5.0.0-alpha.4
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
 
 ## 5.0.0-alpha.3
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/schema@5.0.0-alpha.3
-  - @open-wa/config@5.0.0-alpha.3
-  - @open-wa/driver-interface@5.0.0-alpha.3
-  - @open-wa/driver-playwright@5.0.0-alpha.3
-  - @open-wa/driver-puppeteer@5.0.0-alpha.3
-  - @open-wa/hyperemitter@5.0.0-alpha.3
-  - @open-wa/logger@5.0.0-alpha.3
-  - @open-wa/plugin-sdk@5.0.0-alpha.3
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
 
 ## 5.0.0-alpha.2
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/hyperemitter@5.0.0-alpha.2
-  - @open-wa/config@5.0.0-alpha.2
-  - @open-wa/driver-interface@5.0.0-alpha.2
-  - @open-wa/driver-playwright@5.0.0-alpha.2
-  - @open-wa/driver-puppeteer@5.0.0-alpha.2
-  - @open-wa/logger@5.0.0-alpha.2
-  - @open-wa/plugin-sdk@5.0.0-alpha.2
-  - @open-wa/schema@5.0.0-alpha.2
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
 
 ## 6.0.0-alpha.2
 
@@ -273,14 +273,14 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/config@6.0.0-alpha.2
-  - @open-wa/driver-interface@6.0.0-alpha.2
-  - @open-wa/driver-playwright@6.0.0-alpha.2
-  - @open-wa/driver-puppeteer@6.0.0-alpha.2
-  - @open-wa/logger@6.0.0-alpha.2
-  - @open-wa/plugin-sdk@5.0.0-alpha.2
-  - @open-wa/schema@6.0.0-alpha.2
-  - @open-wa/hyperemitter@6.0.0-alpha.2
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
 
 ## 5.0.1-alpha.2
 
@@ -289,11 +289,11 @@
 - Dry run patch bump
 
 - Updated dependencies []:
-  - @open-wa/config@5.0.1-alpha.2
-  - @open-wa/driver-interface@5.0.1-alpha.2
-  - @open-wa/driver-playwright@5.0.1-alpha.2
-  - @open-wa/driver-puppeteer@5.0.1-alpha.2
-  - @open-wa/hyperemitter@5.0.1-alpha.2
-  - @open-wa/logger@5.0.1-alpha.2
-  - @open-wa/plugin-sdk@5.0.1-alpha.2
-  - @open-wa/schema@5.0.1-alpha.2
+  - @eulab/openwaunlocked-config@1.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
+  - @eulab/openwaunlocked-driver-playwright@1.0.0
+  - @eulab/openwaunlocked-driver-puppeteer@1.0.0
+  - @eulab/openwaunlocked-hyperemitter@1.0.0
+  - @eulab/openwaunlocked-logger@1.0.0
+  - @eulab/openwaunlocked-plugin-sdk@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0

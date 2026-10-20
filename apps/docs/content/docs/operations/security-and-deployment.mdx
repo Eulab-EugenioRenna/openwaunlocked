@@ -34,7 +34,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ```bash
 export WA_API_KEY="your-generated-key"
-npx @open-wa/wa-automate@5.1.0 --host 127.0.0.1 --port 8080 --api-key "$WA_API_KEY"
+npx @eulab/openwaunlocked@1.0.0 --host 127.0.0.1 --port 8080 --api-key "$WA_API_KEY"
 ```
 
 Or in a `.env` file:
@@ -196,7 +196,7 @@ Before deploying to production:
 ```
 
 - Simplest setup
-- Run with `npx @open-wa/wa-automate@5.1.0 --host 127.0.0.1 --port 8080 --api-key "key"`
+- Run with `npx @eulab/openwaunlocked@1.0.0 --host 127.0.0.1 --port 8080 --api-key "key"`
 - Use PM2 or systemd for process management
 
 ### Docker Container

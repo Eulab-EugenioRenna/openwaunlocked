@@ -98,7 +98,7 @@ Structured message snapshots also expose the event under `message.event`. The pe
 
 Event start/end times and event creation timestamps are **Unix seconds**. RSVP timestamps are **milliseconds**. Event creation needs a nonblank name and a future start time; an end time must be at or after the start time.
 
-Effect schemas are exported from `@open-wa/schema` and `@open-wa/client`: `EventInputSchema`, `EventUpdateSchema`, `WhatsAppEventSchema`, `EventResponseSchema`, `EventResponseTypeSchema`, `EventListOptionsSchema` and `EventPageSchema`. The method and listener registries derive their serving schemas from these contracts.
+Effect schemas are exported from `@eulab/openwaunlocked-schema` and `@eulab/openwaunlocked-client`: `EventInputSchema`, `EventUpdateSchema`, `WhatsAppEventSchema`, `EventResponseSchema`, `EventResponseTypeSchema`, `EventListOptionsSchema` and `EventPageSchema`. The method and listener registries derive their serving schemas from these contracts.
 
 ```ts
 import {
@@ -106,7 +106,7 @@ import {
   deserializeWhatsAppEvent,
   serializeEventResponse,
   deserializeEventResponse,
-} from '@open-wa/client';
+} from '@eulab/openwaunlocked-client';
 
 const snapshot = await client.getEvent(eventId);
 if (!snapshot) throw new Error('Event not found in synced history');

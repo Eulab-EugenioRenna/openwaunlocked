@@ -8,7 +8,7 @@ description: Send buttons, lists, forms, carousels and booking cards, and handle
 In `dev/free-use-offline`, interactive messages use local patches and require no license key. Live acceptance is still pending. Use one JSON document with the SDK, HTTP API or a message builder. `sendInteractive` returns the serialized outgoing message ID; that confirms the send operation, not recipient rendering or interaction.
 
 ```ts
-import { defineInteractiveMessage } from '@open-wa/wa-automate';
+import { defineInteractiveMessage } from '@eulab/openwaunlocked';
 
 const message = defineInteractiveMessage({
   type: 'buttons',
@@ -35,8 +35,8 @@ The HTTP equivalent is `POST /api/messages/sendInteractive` with `{ "to": "PHONE
 The examples use the `Client` facade. If you are starting a standalone SDK app, create the runtime, attach the facade and start the session:
 
 ```ts
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const runtime = await createClient({
   driver: new PuppeteerDriver(),
@@ -68,7 +68,7 @@ refer to Easy API and are not routes exposed by that harness.
 
 ## Document contract
 
-`version: 1` is optional and describes the OpenWA document format. Additive content types can be introduced without changing existing documents. Unknown fields are rejected so misspelled properties do not silently disappear. `InteractiveContentSchema` and the individual content/action schemas are exported by `@open-wa/schema`; `InteractiveContentSchema`, `defineInteractiveMessage` and the content types are also exported by the main package. Builders should store this document and export it directly, with no separate builder-specific wire format.
+`version: 1` is optional and describes the OpenWA document format. Additive content types can be introduced without changing existing documents. Unknown fields are rejected so misspelled properties do not silently disappear. `InteractiveContentSchema` and the individual content/action schemas are exported by `@eulab/openwaunlocked-schema`; `InteractiveContentSchema`, `defineInteractiveMessage` and the content types are also exported by the main package. Builders should store this document and export it directly, with no separate builder-specific wire format.
 
 Every content variant has `type`, `body` and optional `footer`. Use application-defined stable IDs for replies, list rows, questions and options. Labels can change without changing how your application identifies the response. Lists default to “Choose an option” and bookings to “View booking” when `buttonLabel` is omitted. `defineInteractiveMessage` fills those defaults and retains the specific content type, so a list remains a list in TypeScript autocomplete.
 

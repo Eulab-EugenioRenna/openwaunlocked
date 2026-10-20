@@ -57,7 +57,7 @@ Keep this terminal open while the runtime is running. Stop it with `Ctrl+C` afte
 Run supported **5.1.0** in your terminal. This starts a session called `quickstart` on port `8080`:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --session-id quickstart --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --session-id quickstart --host 127.0.0.1 --port 8080
 ```
 
 The session profile is persisted under `_IGNORE_quickstart` in the current directory unless you set `userDataDir` in a config file. `--host 127.0.0.1` keeps the API on this computer. The terminal should show the browser starting, then a QR code or another authentication prompt, and the local API address `http://localhost:8080`. When the dashboard is enabled, open [the local dashboard](http://localhost:8080/dashboard/) to view the session; use `/health` below for the explicit readiness fields.
@@ -178,10 +178,10 @@ The recipient’s phone should receive the message. That first received message,
 
 ```bash
 # Protect with an API key
-npx @open-wa/wa-automate@5.1.0 --session-id quickstart --host 127.0.0.1 --port 8080 --api-key "your-secure-key"
+npx @eulab/openwaunlocked@1.0.0 --session-id quickstart --host 127.0.0.1 --port 8080 --api-key "your-secure-key"
 
 # Run a second named session on another port
-npx @open-wa/wa-automate@5.1.0 --session-id sales --host 127.0.0.1 --port 8081
+npx @eulab/openwaunlocked@1.0.0 --session-id sales --host 127.0.0.1 --port 8081
 ```
 
 For Docker, use the complete [Docker baseline](/docs/getting-started/docker) with the same explicit `WA_*` settings; Docker Hub currently publishes only a moving image tag.

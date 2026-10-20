@@ -82,7 +82,7 @@ not declare that method.
 The in-process `Client` returns a validated serialized `MessageId` from
 `sendText`, or throws a typed `SendTextError`. A returned ID confirms submission,
 not delivery or reading. Subscribe to `onAck` before sending to observe later
-acknowledgements. Starting a chat with a new number has Open access in this Eulab branch.
+acknowledgements. Starting a chat with a new number has Open access in this EULAB branch.
 
 An error with `outcome: 'unknown'` means the message may already have been sent.
 Check the conversation before retrying. open-wa never retries `sendText`
@@ -343,7 +343,7 @@ When receiving a location message, read fields such as `lat`, `lng`, and `loc` f
 A message send can fail when the session is not ready or the chat ID is incorrect. It can also fail when the user is not available. WhatsApp can reject a large, malformed, or prohibited payload.
 
 ```ts
-import { SendTextError } from '@open-wa/wa-automate';
+import { SendTextError } from '@eulab/openwaunlocked';
 
 try {
   const messageId = await client.sendText(chatId, 'Hello');
@@ -387,7 +387,7 @@ replace `index.ts` with this example. Run `bun run start`, link the sending
 account if prompted, and send `!help` to it from your test chat.
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create();
 

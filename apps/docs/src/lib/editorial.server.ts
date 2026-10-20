@@ -6,7 +6,7 @@ const entrySchema = z.object({
   id: z.string(), slug: z.string().min(1).max(200).regex(/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/),
   title: z.string(), description: z.string(), bodyMarkdown: z.string(),
   publishedAt: z.string().datetime().nullable(), updatedAt: z.string().datetime().nullable(),
-  author: z.literal('open-wa'), image: z.string().nullable(), version: z.string().nullable(),
+  author: z.literal('EULAB'), image: z.string().nullable(), version: z.string().nullable(),
   audience: z.string().nullable(), highlights: z.array(z.string()),
   seo: z.object({title:z.string().nullish(), description:z.string().nullish(), canonical:z.string().nullish(), robots:z.string().nullish()}),
 });

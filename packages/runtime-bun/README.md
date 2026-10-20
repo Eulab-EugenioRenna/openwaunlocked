@@ -1,16 +1,16 @@
-# @open-wa/runtime-bun
+# @eulab/openwaunlocked-runtime-bun
 
 Bun Effect runtime Layer for open-wa
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
-- `pnpm --filter @open-wa/runtime-bun build`
-- `pnpm --filter @open-wa/runtime-bun test`
-- `pnpm --filter @open-wa/runtime-bun lint`
-- `pnpm --filter @open-wa/runtime-bun typecheck`
-- `pnpm --filter @open-wa/runtime-bun clean`
+- `pnpm --filter @eulab/openwaunlocked-runtime-bun build`
+- `pnpm --filter @eulab/openwaunlocked-runtime-bun test`
+- `pnpm --filter @eulab/openwaunlocked-runtime-bun lint`
+- `pnpm --filter @eulab/openwaunlocked-runtime-bun typecheck`
+- `pnpm --filter @eulab/openwaunlocked-runtime-bun clean`
 
 ## Documentation
 
@@ -18,4 +18,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

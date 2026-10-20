@@ -1,6 +1,6 @@
 ---
 title: v5 Release Status
-description: The supported @open-wa v5.1.0 release, prerelease tags, and the v4 archive.
+description: The supported @eulab v5.1.0 release, prerelease tags, and the v4 archive.
 ---
 
 The npm examples on this page pin **5.1.0**. The npm registry reported `latest=5.1.0` and `alpha=5.0.0-alpha.8` on 2026-09-29. Docker Hub listed only its moving `latest` tag, so the Docker image version could not be pinned to the npm release. Choose `alpha` only for deliberate prerelease work.
@@ -12,7 +12,7 @@ This release page records the registry result observed on 2026-09-29. Generated 
 ## Install the example version
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --session-id quickstart --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --session-id quickstart --host 127.0.0.1 --port 8080
 ```
 
 The Docker guide uses the only listed image tag, `latest`, which can move independently of npm `5.1.0`.
@@ -32,7 +32,7 @@ The [getting-started pages](/docs/getting-started/quickstart) add persistent pro
 The `alpha` dist-tag currently points to `5.0.0-alpha.8`. Select it only for deliberate prerelease work, record the exact tag in reports, and use a disposable account and session profile:
 
 ```bash
-npx @open-wa/wa-automate@alpha --session-id alpha-test --port 8080
+npx @eulab/openwaunlocked@alpha --session-id alpha-test --port 8080
 ```
 
 Prerelease selection does not change the supported release used by the main onboarding journey.
@@ -42,7 +42,7 @@ Prerelease selection does not change the supported release used by the main onbo
 Keep existing v4 applications on their archived npm package while you migrate:
 
 ```bash
-npx @open-wa/wa-automate@4.76.0
+npx @eulab/openwaunlocked@1.0.0
 ```
 
 Docker Hub did not list a versioned v4 image tag when checked on 2026-09-29. Keep v4 configuration and session profiles separate from v5. New npm examples on this site target `5.1.0`.

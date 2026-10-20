@@ -11,7 +11,7 @@ It selects Puppeteer by default and wraps the core runtime in the messaging
 `Client`. A failed startup closes the partially started client before rejecting.
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const recipient = 'REPLACE_WITH_RECIPIENT_CHAT_ID';
 const client = await create();
@@ -71,7 +71,7 @@ environment variables.
 To provision the same browser before starting a session:
 
 ```ts
-import { ensureBrowser } from '@open-wa/wa-automate';
+import { ensureBrowser } from '@eulab/openwaunlocked';
 
 await ensureBrowser({
   browser: { cacheDirectory: '/srv/open-wa/browser-cache' },

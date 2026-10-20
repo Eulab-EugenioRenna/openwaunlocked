@@ -1,4 +1,4 @@
-# @open-wa/runtime-bun
+# @eulab/openwaunlocked-runtime-bun
 
 
 
@@ -21,4 +21,4 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/runtime-core@5.0.0
+  - @eulab/openwaunlocked-runtime-core@1.0.0

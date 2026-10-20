@@ -56,7 +56,7 @@ export function getDocsSocialMeta({
 /** The `<title>` for a docs page: an explicit SEO title, or the page title with the brand. */
 export function getDocsDocumentTitle(data: Readonly<{ title: string; seoTitle?: string }>): string {
   if (data.seoTitle) return data.seoTitle;
-  return /open-?wa/i.test(data.title) ? data.title : `${data.title} | open-wa`;
+  return /open-?wa/i.test(data.title) ? data.title : `${data.title} | EULAB`;
 }
 
 /** TechArticle and breadcrumb structured data for a docs page. */

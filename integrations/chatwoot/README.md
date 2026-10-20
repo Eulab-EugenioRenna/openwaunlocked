@@ -1,6 +1,6 @@
-# @open-wa/integration-chatwoot
+# @eulab/openwaunlocked-integration-chatwoot
 
-`@open-wa/integration-chatwoot` bridges WhatsApp messages with a Chatwoot API inbox. The current plugin package is `5.1.0`. It initializes the Chatwoot client at `core.started`, syncs supported WhatsApp messages into Chatwoot, and exposes `createChatwootRouter` for Chatwoot webhooks.
+`@eulab/openwaunlocked-integration-chatwoot` bridges WhatsApp messages with a Chatwoot API inbox. The current plugin package is `5.1.0`. It initializes the Chatwoot client at `core.started`, syncs supported WhatsApp messages into Chatwoot, and exposes `createChatwootRouter` for Chatwoot webhooks.
 
 ## Quick start
 
@@ -11,7 +11,7 @@ export default {
   port: 8080,
   host: '0.0.0.0',
   apiKey: 'your-secure-key',
-  plugins: ['@open-wa/integration-chatwoot'],
+  plugins: ['@eulab/openwaunlocked-integration-chatwoot'],
   pluginConfig: {
     chatwoot: {
       chatwootUrl: 'https://app.chatwoot.com/api/v1/accounts/123',
@@ -67,7 +67,7 @@ A `200` response with an account ID confirms the token reaches Chatwoot. A `401`
 ## Development
 
 ```bash
-pnpm --filter @open-wa/integration-chatwoot dev
+pnpm --filter @eulab/openwaunlocked-integration-chatwoot dev
 ```
 
 The plugin exports `chatwootPlugin`, `ChatwootClient`, `createChatwootRouter`, `ChatwootPluginConfig`, and `ChatwootConfig`.
@@ -78,4 +78,4 @@ See the [Chatwoot guide](https://openwa.dev/docs/client-and-integrations/chatwoo
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

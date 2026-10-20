@@ -1,4 +1,4 @@
-# @open-wa/api
+# @eulab/openwaunlocked-api
 
 
 
@@ -16,12 +16,12 @@
 ## 5.6.6
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/hyperemitter` v5.6.6
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-hyperemitter` v5.6.6
 
 ## 5.6.5
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.5
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.5
 
 ## 5.6.4
 <sub>2026-10-16</sub>
@@ -33,7 +33,7 @@
 ## 5.6.3
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/stickers` v5.6.3
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-stickers` v5.6.3
 
 ## 5.6.2
 <sub>2026-10-15</sub>
@@ -46,7 +46,7 @@
 ## 5.6.1
 <sub>2026-10-14</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.1
 
 ## 5.6.0
 <sub>2026-10-14</sub>
@@ -58,7 +58,7 @@
 ## 5.5.1
 <sub>2026-10-12</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.5.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.5.1
 
 ## 5.5.0
 <sub>2026-10-12</sub>
@@ -84,7 +84,7 @@
 
 - [#3477](https://github.com/open-wa/wa-automate-nodejs/pull/3477)  *(patch)*
   - 🔒️ Redact customer session keys and secret-file settings from debug responses.
-- *(minor)* Version bump from group with `@open-wa/client` v5.4.0, `@open-wa/config` v5.4.0, `@open-wa/core` v5.4.0, `@open-wa/wa-automate` v5.4.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-client` v5.4.0, `@eulab/openwaunlocked-config` v5.4.0, `@eulab/openwaunlocked-core` v5.4.0, `@eulab/openwaunlocked` v5.4.0
 
 ## 5.3.0
 
@@ -99,7 +99,7 @@
   Preserve configured session, host, and port values when their CLI flags are omitted. Forward link-code configuration to the runtime and display generated codes in the local CLI console.
 
   Add bounded session diagnostics for reviewable dashboard issue reports, report the running API package version, and share Base UI controls and theme tokens between docs and dashboard.
-- *(minor)* Version bump from group with `@open-wa/client` v5.2.0, `@open-wa/config` v5.2.0, `@open-wa/core` v5.2.0, `@open-wa/driver-interface` v5.2.0, `@open-wa/driver-puppeteer` v5.2.0, `@open-wa/schema` v5.2.0, `@open-wa/wa-automate` v5.2.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-client` v5.2.0, `@eulab/openwaunlocked-config` v5.2.0, `@eulab/openwaunlocked-core` v5.2.0, `@eulab/openwaunlocked-driver-interface` v5.2.0, `@eulab/openwaunlocked-driver-puppeteer` v5.2.0, `@eulab/openwaunlocked-schema` v5.2.0, `@eulab/openwaunlocked` v5.2.0
 
 ## 5.1.0
 <sub>2026-09-29</sub>
@@ -131,9 +131,9 @@
 
 - Allow pre-auth QR bootstrap to continue when WhatsApp Web exposes the QR surface before `WAWebCollections` is injectable, gate dashboard runtime API calls until the session is ready, and return an empty plugin manifest when no plugins are mounted.
 - Updated dependencies [[`6a55aef`](https://github.com/open-wa/wa-automate-nodejs/commit/6a55aef602b347bfffc8550e448585e7776baf18)]:
-  - @open-wa/schema@5.0.0
-  - @open-wa/mcp@5.0.0
-  - @open-wa/screencaster@5.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.7
 
@@ -142,9 +142,9 @@
 - Allow pre-auth QR bootstrap to continue when WhatsApp Web exposes the QR surface before `WAWebCollections` is injectable, gate dashboard runtime API calls until the session is ready, and return an empty plugin manifest when no plugins are mounted.
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.0-alpha.7
-  - @open-wa/schema@5.0.0-alpha.7
-  - @open-wa/screencaster@5.0.0-alpha.7
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.6
 
@@ -153,9 +153,9 @@
 - Deduplicate React in the embedded dashboard build so the production dashboard does not crash on startup.
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.0-alpha.6
-  - @open-wa/schema@5.0.0-alpha.6
-  - @open-wa/screencaster@5.0.0-alpha.6
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.5
 
@@ -164,9 +164,9 @@
 - Embed the built dashboard SPA in the API package so clean CLI installs can serve `/dashboard/` without resolving a separate dashboard package.
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.0-alpha.5
-  - @open-wa/schema@5.0.0-alpha.5
-  - @open-wa/screencaster@5.0.0-alpha.5
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.4
 
@@ -175,28 +175,28 @@
 - Ship the dashboard SPA with the Easy API runtime so clean CLI installs can serve `/dashboard/`.
 
 - Updated dependencies []:
-  - @open-wa/dashboard-neo@5.0.0-alpha.4
-  - @open-wa/mcp@5.0.0-alpha.4
-  - @open-wa/schema@5.0.0-alpha.4
-  - @open-wa/screencaster@5.0.0-alpha.4
+  - @eulab/openwaunlocked-dashboard-neo@1.0.0
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.3
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/schema@5.0.0-alpha.3
-  - @open-wa/mcp@5.0.0-alpha.3
-  - @open-wa/screencaster@5.0.0-alpha.3
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.2
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.0-alpha.2
-  - @open-wa/schema@5.0.0-alpha.2
-  - @open-wa/screencaster@5.0.0-alpha.2
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.0-alpha.2
 
@@ -207,9 +207,9 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.0-alpha.2
-  - @open-wa/schema@6.0.0-alpha.2
-  - @open-wa/screencaster@5.0.0-alpha.2
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0
 
 ## 5.0.1-alpha.2
 
@@ -218,6 +218,6 @@
 - Dry run patch bump
 
 - Updated dependencies []:
-  - @open-wa/mcp@5.0.1-alpha.2
-  - @open-wa/schema@5.0.1-alpha.2
-  - @open-wa/screencaster@5.0.1-alpha.2
+  - @eulab/openwaunlocked-mcp@1.0.0
+  - @eulab/openwaunlocked-schema@1.0.0
+  - @eulab/openwaunlocked-screencaster@1.0.0

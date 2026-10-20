@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ArrowRight, Unlock } from 'lucide-react';
 import { DOCS_PATHS, type AccessTier } from '@/lib/site';
 
-const accessSummary = 'Open API access in the Eulab development branch. Availability depends on the WhatsApp session, native provider and tested functionality.';
+const accessSummary = 'Open API access in the EULAB development branch. Availability depends on the WhatsApp session, native provider and tested functionality.';
 const classes = (...values: Array<string | undefined>) => values.filter(Boolean).join(' ');
 
 export function OpenAccessButton({ href = DOCS_PATHS.licensedFeatures, className, label = 'Open access', subtle = false, onClick }: {

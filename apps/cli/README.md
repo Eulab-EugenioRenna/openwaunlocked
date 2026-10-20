@@ -1,15 +1,15 @@
-# @open-wa/cli-app
+# @eulab/openwaunlocked-cli-app
 
-WhatsApp CLI - Easy API mode for @open-wa/wa-automate
+WhatsApp CLI - Easy API mode for @eulab/openwaunlocked
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
-- `pnpm --filter @open-wa/cli-app build`
-- `pnpm --filter @open-wa/cli-app dev`
-- `pnpm --filter @open-wa/cli-app lint`
-- `pnpm --filter @open-wa/cli-app start`
+- `pnpm --filter @eulab/openwaunlocked-cli-app build`
+- `pnpm --filter @eulab/openwaunlocked-cli-app dev`
+- `pnpm --filter @eulab/openwaunlocked-cli-app lint`
+- `pnpm --filter @eulab/openwaunlocked-cli-app start`
 
 ## Documentation
 
@@ -17,4 +17,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

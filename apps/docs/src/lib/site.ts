@@ -2,12 +2,12 @@ import { version } from '../../../../packages/wa-automate/package.json';
 
 export type AccessTier = 'open';
 
-export const SITE_NAME = 'Eulab Open · documentazione';
+export const SITE_NAME = 'EULAB Open · documentazione';
 // Canonical origin for the docs site. Used for sitemap, robots, OG image URLs,
 // and og:url so they never disagree. Current docs are served at openwa.dev;
 // docs.openwa.dev redirects to the current documentation.
 export const SITE_ORIGIN = 'https://openwa.dev';
-export const REPO_URL = 'https://github.com/open-wa/wa-automate-nodejs';
+export const REPO_URL = 'https://github.com/Eulab-EugenioRenna/openwaunlocked';
 export const CURRENT_VERSION = version;
 
 export const DOCS_PATHS = {

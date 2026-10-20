@@ -5,7 +5,7 @@ Compact authentication is the only authentication path for `create()`, `createCl
 Existing browser profiles and obsolete v4 token JSON are not imported. Scan a new QR code when moving to compact authentication. Existing profile directories are left intact. Puppeteer and Playwright are supported; there is no legacy profile fallback.
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({
   sessionId: 'sales',
@@ -59,7 +59,7 @@ The file remains `{ auth, data }`. Session decoding, encryption and restoration 
 
 ## Shared storage and recovery
 
-The provider extends `@open-wa/session-sync` and uses its existing `pico-s3` transport. It supports PicoS3 provider names, custom endpoints, a configurable directory prefix, temporary credentials, and storage encryption headers. It does not set a public ACL.
+The provider extends `@eulab/openwaunlocked-session-sync` and uses its existing `pico-s3` transport. It supports PicoS3 provider names, custom endpoints, a configurable directory prefix, temporary credentials, and storage encryption headers. It does not set a public ACL.
 
 Local and S3 storage allow multiple processes to open the same session. They do not create or acquire companion lock files or objects. Each save replaces the complete checkpoint, and the last completed write wins. Storage does not coordinate WhatsApp activity between those processes.
 

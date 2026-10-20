@@ -1,11 +1,11 @@
-# @open-wa/stickers
+# @eulab/openwaunlocked-stickers
 
 Create WebP stickers locally, using an available browser for jobs it can execute
 completely, or a portable standalone worker for the whole job. No Sharp, native
 addon build, browser download or default model weights.
 
 ```js
-import { createSticker } from '@open-wa/stickers';
+import { createSticker } from '@eulab/openwaunlocked-stickers';
 import { writeFile } from 'node:fs/promises';
 
 const sticker = await createSticker('./photo.jpg', {
@@ -48,7 +48,7 @@ For a bundled browser UI, use the browser entry. Its browser export excludes
 the standalone Node worker and Node resource cache:
 
 ```js
-import { createSticker, validateStickerJob } from '@open-wa/stickers/browser';
+import { createSticker, validateStickerJob } from '@eulab/openwaunlocked-stickers/browser';
 const job = { effects: ['comic'] };
 validateStickerJob(job);
 const result = await createSticker(file, job);
@@ -78,8 +78,8 @@ overrides are strict.
 Outside a browser, standalone is the default. For an existing page/driver:
 
 ```js
-import { createStickerRuntime } from '@open-wa/stickers';
-import { createBrowserBackend } from '@open-wa/stickers/browser';
+import { createStickerRuntime } from '@eulab/openwaunlocked-stickers';
+import { createBrowserBackend } from '@eulab/openwaunlocked-stickers/browser';
 
 const stickers = createStickerRuntime({ browser: createBrowserBackend(page) });
 const result = await stickers.createSticker(input, { effects: ['invert'] });

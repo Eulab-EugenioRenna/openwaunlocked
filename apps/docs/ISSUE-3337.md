@@ -13,7 +13,7 @@ status:	none
 
 The docs use `create()` in every example (`custom-code.mdx`, `configuration-and-cli.mdx`, `error-handling.mdx`, `licensed-features.mdx`). But the README explicitly states:
 
-> "The v5 public contract exposes `createClient` from `@open-wa/core` through `@open-wa/wa-automate`"
+> "The v5 public contract exposes `createClient` from `@eulab/openwaunlocked-core` through `@eulab/openwaunlocked`"
 
 And the README's embedded runtime example uses `createClient({ sessionId, driver, headless })` with explicit driver injection.
 
@@ -34,7 +34,7 @@ The README has a full MCP section with:
 #### 3. Plugin/integration docs are missing
 
 The README explains:
-- Plugin SDK (`@open-wa/plugin-sdk`)
+- Plugin SDK (`@eulab/openwaunlocked-plugin-sdk`)
 - How to load plugins via `plugins` and `pluginConfig`
 - Available integrations (webhook, chatwoot, s3, cloudflare, node-red)
 - How to build and share plugins
@@ -380,7 +380,7 @@ The docs have zero compliance content.
 
 Node-RED is:
 - Mentioned in the README as a "built-in integration"
-- Has its own package (`@open-wa/node-red-contrib-wa-automate`)
+- Has its own package (`@eulab/openwaunlocked-node-red-contrib-wa-automate`)
 - Is a visual low-code tool perfect for CRM integrations
 - Has a README in the integration folder
 
@@ -388,7 +388,7 @@ Node-RED is:
 
 #### 9. No S3 integration docs
 
-The README mentions `@open-wa/integration-s3` for media storage. A CRM user might want to store WhatsApp media attachments in S3 for compliance or archival. **Zero docs coverage.**
+The README mentions `@eulab/openwaunlocked-integration-s3` for media storage. A CRM user might want to store WhatsApp media attachments in S3 for compliance or archival. **Zero docs coverage.**
 
 #### 10. No pricing guidance for CRM use cases
 
@@ -482,7 +482,7 @@ status:	none
 
 #### `/docs/reference/core` — No plugin types
 - **Missing**: No `<AutoTypeTable />` for `Plugin`, `PluginInput`, `Hooks`, `PluginClient`, `PluginMeta`, `PluginLogger`, `PluginEventEmitter`, `DashboardPage`, `ToolDefinition`, `ToolContext`.
-- **Missing**: No reference page for `@open-wa/plugin-sdk` exports (`createPlugin`, `defineConfig`, `z`).
+- **Missing**: No reference page for `@eulab/openwaunlocked-plugin-sdk` exports (`createPlugin`, `defineConfig`, `z`).
 
 ---
 
@@ -490,11 +490,11 @@ status:	none
 
 #### 1. Zero "Getting Started with Plugins" page
 There is no page that walks through:
-- Installing `@open-wa/plugin-sdk`
+- Installing `@eulab/openwaunlocked-plugin-sdk`
 - Creating your first plugin with `createPlugin()`
 - Defining config with `defineConfig()` and Zod
 - Loading it in `wa.config.js` via `plugins: ['./my-plugin']`
-- Testing it with `npx @open-wa/wa-automate`
+- Testing it with `npx @eulab/openwaunlocked`
 
 The `createPlugin()` source has excellent inline examples (calorie tracker, CRM webhook) but these exist only in JSDoc — not in the docs site.
 
@@ -539,7 +539,7 @@ The docs do not explain:
 The README says "share a plugin" means "publish a package people can install and load" but there is no guide covering:
 - Package structure (`package.json` fields, `main`/`exports`)
 - TypeScript compilation for distribution
-- Versioning and peer dependencies (`@open-wa/plugin-sdk`)
+- Versioning and peer dependencies (`@eulab/openwaunlocked-plugin-sdk`)
 - How to tell users to load it (`plugins: ['@myorg/stt-dictation']`)
 - How to document plugin config options for consumers
 - Whether there is a plugin registry or marketplace (answer: no, but docs should say so explicitly)
@@ -1049,7 +1049,7 @@ TODO:
 Evidence:
 
 - `apps/docs/content/docs/plugins/getting-started.mdx` gives plugin code and config, but does not say exactly where to create the file relative to the config file.
-- The local path example uses `./plugins/greeting-bot`, but the test command only runs `npx @open-wa/wa-automate --port 8080` and does not mention `--config`, current working directory, TypeScript compilation, or whether `.ts` plugins load directly.
+- The local path example uses `./plugins/greeting-bot`, but the test command only runs `npx @eulab/openwaunlocked --port 8080` and does not mention `--config`, current working directory, TypeScript compilation, or whether `.ts` plugins load directly.
 
 Impact: a reader may create a plugin file that never loads, then only sees no output.
 

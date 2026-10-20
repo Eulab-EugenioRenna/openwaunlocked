@@ -1,4 +1,8 @@
-# Release tools
+# EULAB release tools
+
+For the first EULAB npm publication using a local token, follow
+[the EULAB npm release guide](../../docs/development/NPM-RELEASE.md).
+The CI flow below requires fork-specific npm Trusted Publisher and deployment configuration.
 
 Development lands directly on `master`. Bumpy manages package bump intent and versions; one `master` → `release` PR starts publication. No development, Bumpy version, or version-sync PR is required.
 
@@ -68,7 +72,7 @@ New releases announce normally. Include `[skip-discord]` in the promotion PR's m
 
 ## Publishing access
 
-Existing packages use npm Trusted Publisher connections to `open-wa/wa-automate-nodejs`, workflow `release.yml`, environment `Release`. The publisher grants `id-token: write` and uses npm 11 on Node 24. A new npm package must first be created and have its Trusted Publisher configured before it can use OIDC. GitHub Packages uses the built-in `GITHUB_TOKEN`.
+For this fork, configure npm Trusted Publisher connections to `Eulab-EugenioRenna/openwaunlocked`, workflow `release.yml`, environment `Release`, after creating the npm packages. The publisher grants `id-token: write` and uses npm 11 on Node 24. A new npm package must first be created and have its Trusted Publisher configured before it can use OIDC. GitHub Packages uses the built-in `GITHUB_TOKEN`.
 
 Keep `DISCORD_WEBHOOK_URL` in the repository or `Release` environment secrets. Documentation retains the existing `Docs` environment and its Cloudflare credentials. Preparation has no npm credentials. Notes and availability use only Node and `gh`; only the announcement step receives the Discord secret.
 

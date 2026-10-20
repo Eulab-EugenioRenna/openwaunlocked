@@ -20,14 +20,14 @@ mkdir open-wa-bot
 cd open-wa-bot
 npm init -y
 npm pkg set type=module
-npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0
 ```
 
 Save this as `index.mjs`:
 
 ```js
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const runtime = await createClient({
   sessionId: 'hello-bot',
@@ -80,8 +80,8 @@ mkdir -p src
 Save this as `src/index.ts`:
 
 ```ts
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 async function main(): Promise<void> {
   const runtime = await createClient({
@@ -141,11 +141,11 @@ This variant checks runtime readiness before registering the reply flow, stops t
 The examples use `PuppeteerDriver` so the install and run path is complete. To use Lightpanda, install the matching driver package and change only the driver import and constructor:
 
 ```bash
-npm install @open-wa/driver-lightpanda@5.1.0
+npm install @eulab/openwaunlocked-driver-lightpanda@1.0.0
 ```
 
 ```ts
-import { LightpandaDriver } from '@open-wa/driver-lightpanda';
+import { LightpandaDriver } from '@eulab/openwaunlocked-driver-lightpanda';
 
 const runtime = await createClient({
   sessionId: 'hello-bot',

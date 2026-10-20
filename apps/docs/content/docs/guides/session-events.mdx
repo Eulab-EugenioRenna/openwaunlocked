@@ -18,7 +18,7 @@ OpenWA 5.6.0.
 Register the listener before starting the session:
 
 ```ts
-import { create, ev } from '@open-wa/wa-automate';
+import { create, ev } from '@eulab/openwaunlocked';
 
 ev.on('client.ready', (_event, sessionId) => {
   console.log(`Session ${sessionId} is ready`);
@@ -45,7 +45,7 @@ ev.on('session.connection.disconnected', (event, sessionId) => {
 In `jobs.ts`, register a listener:
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.on('app.job.finished', ({ jobId }) => {
   console.log('Finished:', jobId);
@@ -56,7 +56,7 @@ In `index.ts`, load that module before emitting the event:
 
 ```ts
 import './jobs';
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.emit('app.job.finished', { jobId: 'daily-summary' });
 ```
@@ -145,7 +145,7 @@ its current scope and removes it automatically when the scope closes:
 
 ```ts
 import { Effect } from 'effect';
-import { ev, onGlobalEvent } from '@open-wa/wa-automate';
+import { ev, onGlobalEvent } from '@eulab/openwaunlocked';
 
 await Effect.runPromise(Effect.scoped(Effect.gen(function* () {
   yield* onGlobalEvent('app.job.finished', ({ jobId }) => {
@@ -182,7 +182,7 @@ retain their synchronous behavior.
 
 ```ts
 import { Effect, PubSub } from 'effect';
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 await Effect.runPromise(Effect.scoped(Effect.gen(function* () {
   const subscription = yield* ev.subscribe();

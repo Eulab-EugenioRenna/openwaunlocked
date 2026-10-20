@@ -1,4 +1,4 @@
-# @open-wa/driver-lightpanda
+# @eulab/openwaunlocked-driver-lightpanda
 
 
 
@@ -16,42 +16,42 @@
 ## 5.6.6
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/hyperemitter` v5.6.6
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-hyperemitter` v5.6.6
 
 ## 5.6.5
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.5
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.5
 
 ## 5.6.4
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/api` v5.6.4, `@open-wa/stickers` v5.6.4
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.4, `@eulab/openwaunlocked-stickers` v5.6.4
 
 ## 5.6.3
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/stickers` v5.6.3
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-stickers` v5.6.3
 
 ## 5.6.2
 <sub>2026-10-15</sub>
 
-- *(patch)* Version bump from group with `@open-wa/api` v5.6.2, `@open-wa/client` v5.6.2, `@open-wa/core` v5.6.2, `@open-wa/logger` v5.6.2, `@open-wa/session-sync` v5.6.2, `@open-wa/wa-automate` v5.6.2
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.2, `@eulab/openwaunlocked-client` v5.6.2, `@eulab/openwaunlocked-core` v5.6.2, `@eulab/openwaunlocked-logger` v5.6.2, `@eulab/openwaunlocked-session-sync` v5.6.2, `@eulab/openwaunlocked` v5.6.2
 
 ## 5.6.1
 <sub>2026-10-14</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.1
 
 ## 5.6.0
 <sub>2026-10-14</sub>
 
-- *(minor)* Version bump from group with `@open-wa/api` v5.6.0, `@open-wa/config` v5.6.0, `@open-wa/core` v5.6.0, `@open-wa/hyperemitter` v5.6.0, `@open-wa/mcp` v5.6.0, `@open-wa/schema` v5.6.0, `@open-wa/socket-client` v5.6.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.0, `@eulab/openwaunlocked-config` v5.6.0, `@eulab/openwaunlocked-core` v5.6.0, `@eulab/openwaunlocked-hyperemitter` v5.6.0, `@eulab/openwaunlocked-mcp` v5.6.0, `@eulab/openwaunlocked-schema` v5.6.0, `@eulab/openwaunlocked-socket-client` v5.6.0
 
 ## 5.5.1
 <sub>2026-10-12</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.5.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.5.1
 
 ## 5.5.0
 <sub>2026-10-12</sub>
@@ -71,7 +71,7 @@
 ## 5.4.0
 <sub>2026-09-30</sub>
 
-- *(minor)* Version bump from group with `@open-wa/client` v5.4.0, `@open-wa/config` v5.4.0, `@open-wa/core` v5.4.0, `@open-wa/wa-automate` v5.4.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-client` v5.4.0, `@eulab/openwaunlocked-config` v5.4.0, `@eulab/openwaunlocked-core` v5.4.0, `@eulab/openwaunlocked` v5.4.0
 
 ## 5.3.0
 
@@ -80,63 +80,63 @@
 ## 5.2.0
 <sub>2026-09-29</sub>
 
-- *(minor)* Version bump from group with `@open-wa/client` v5.2.0, `@open-wa/config` v5.2.0, `@open-wa/core` v5.2.0, `@open-wa/driver-interface` v5.2.0, `@open-wa/driver-puppeteer` v5.2.0, `@open-wa/schema` v5.2.0, `@open-wa/wa-automate` v5.2.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-client` v5.2.0, `@eulab/openwaunlocked-config` v5.2.0, `@eulab/openwaunlocked-core` v5.2.0, `@eulab/openwaunlocked-driver-interface` v5.2.0, `@eulab/openwaunlocked-driver-puppeteer` v5.2.0, `@eulab/openwaunlocked-schema` v5.2.0, `@eulab/openwaunlocked` v5.2.0
 
 ## 5.1.0
 <sub>2026-09-29</sub>
 
 - [#3453](https://github.com/open-wa/wa-automate-nodejs/pull/3453)  *(patch)* Thanks [@smashah](https://github.com/smashah)!
   Keep local Bun development on TypeScript source while publishing entry points that resolve the distributed files. npm packages no longer inherit workspace-only source conditions.
-- *(minor)* Version bump from group with `@open-wa/api` v5.1.0, `@open-wa/client` v5.1.0, `@open-wa/core` v5.1.0, `@open-wa/schema` v5.1.0, `@open-wa/wa-automate` v5.1.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-api` v5.1.0, `@eulab/openwaunlocked-client` v5.1.0, `@eulab/openwaunlocked-core` v5.1.0, `@eulab/openwaunlocked-schema` v5.1.0, `@eulab/openwaunlocked` v5.1.0
 
 ## 5.0.0
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.7
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.7
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.6
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.6
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.5
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.5
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.4
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.4
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.3
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.3
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.0-alpha.2
 
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.0-alpha.2
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 6.0.0-alpha.2
 
@@ -147,7 +147,7 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@6.0.0-alpha.2
+  - @eulab/openwaunlocked-driver-interface@1.0.0
 
 ## 5.0.1-alpha.2
 
@@ -156,4 +156,4 @@
 - Dry run patch bump
 
 - Updated dependencies []:
-  - @open-wa/driver-interface@5.0.1-alpha.2
+  - @eulab/openwaunlocked-driver-interface@1.0.0

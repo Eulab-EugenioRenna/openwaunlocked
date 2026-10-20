@@ -12,10 +12,10 @@ both Node and Bun, each with a fresh Chrome profile and checkpoint:
 
 | Package | Startup entrypoints |
 | --- | --- |
-| `@open-wa/wa-automate` | `create`, `createClient`, `Client.start`, `runCli`, `startCli` |
-| `@open-wa/core` | `createClient` followed by `start` |
-| `@open-wa/client` | `Client.start` |
-| `@open-wa/cli` | `main`, `start` |
+| `@eulab/openwaunlocked` | `create`, `createClient`, `Client.start`, `runCli`, `startCli` |
+| `@eulab/openwaunlocked-core` | `createClient` followed by `start` |
+| `@eulab/openwaunlocked-client` | `Client.start` |
+| `@eulab/openwaunlocked-cli` | `main`, `start` |
 
 Both runtimes also execute every binary alias from the packed SDK/CLI manifests:
 the SDK's `wa-automate`, and the CLI's `wa`, `wa-automate` and `openwa`. Binary
@@ -48,5 +48,5 @@ For a focused diagnosis, `OPENWA_STARTUP_CASE` selects QR case names by substrin
 an unmatched selector fails. Omit it for the complete matrix. For example:
 
 ```sh
-OPENWA_STARTUP_CASE='Bun module @open-wa/core createClient' node --test tools/regression/runtime-startup.test.mjs
+OPENWA_STARTUP_CASE='Bun module @eulab/openwaunlocked-core createClient' node --test tools/regression/runtime-startup.test.mjs
 ```

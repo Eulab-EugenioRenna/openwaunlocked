@@ -1,4 +1,4 @@
-# @open-wa/config
+# @eulab/openwaunlocked-config
 
 
 
@@ -16,32 +16,32 @@
 ## 5.6.6
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/hyperemitter` v5.6.6
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-hyperemitter` v5.6.6
 
 ## 5.6.5
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.5
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.5
 
 ## 5.6.4
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/api` v5.6.4, `@open-wa/stickers` v5.6.4
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.4, `@eulab/openwaunlocked-stickers` v5.6.4
 
 ## 5.6.3
 <sub>2026-10-16</sub>
 
-- *(patch)* Version bump from group with `@open-wa/stickers` v5.6.3
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-stickers` v5.6.3
 
 ## 5.6.2
 <sub>2026-10-15</sub>
 
-- *(patch)* Version bump from group with `@open-wa/api` v5.6.2, `@open-wa/client` v5.6.2, `@open-wa/core` v5.6.2, `@open-wa/logger` v5.6.2, `@open-wa/session-sync` v5.6.2, `@open-wa/wa-automate` v5.6.2
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-api` v5.6.2, `@eulab/openwaunlocked-client` v5.6.2, `@eulab/openwaunlocked-core` v5.6.2, `@eulab/openwaunlocked-logger` v5.6.2, `@eulab/openwaunlocked-session-sync` v5.6.2, `@eulab/openwaunlocked` v5.6.2
 
 ## 5.6.1
 <sub>2026-10-14</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.6.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.6.1
 
 ## 5.6.0
 <sub>2026-10-14</sub>
@@ -53,7 +53,7 @@
 ## 5.5.1
 <sub>2026-10-12</sub>
 
-- *(patch)* Version bump from group with `@open-wa/core` v5.5.1
+- *(patch)* Version bump from group with `@eulab/openwaunlocked-core` v5.5.1
 
 ## 5.5.0
 <sub>2026-10-12</sub>
@@ -89,7 +89,7 @@
 <sub>2026-09-29</sub>
 
 - [#3465](https://github.com/open-wa/wa-automate-nodejs/pull/3465)  *(minor)* Thanks [@smashah](https://github.com/smashah)!
-  Create a Bun and TypeScript messaging application with `bunx --bun @open-wa/wa-automate init my-bot`. The public `create()` now prepares a matched browser, presents QR login, and returns a ready messaging client with private persistent session storage.
+  Create a Bun and TypeScript messaging application with `bunx --bun @eulab/openwaunlocked init my-bot`. The public `create()` now prepares a matched browser, presents QR login, and returns a ready messaging client with private persistent session storage.
 
   Provision missing browsers at startup with shared cache coordination, configurable cache and download policy, and explicit-path errors. Preserve explicit drivers and low-level lifecycle control.
 
@@ -100,7 +100,7 @@
 
 - [#3453](https://github.com/open-wa/wa-automate-nodejs/pull/3453)  *(patch)* Thanks [@smashah](https://github.com/smashah)!
   Keep local Bun development on TypeScript source while publishing entry points that resolve the distributed files. npm packages no longer inherit workspace-only source conditions.
-- *(minor)* Version bump from group with `@open-wa/api` v5.1.0, `@open-wa/client` v5.1.0, `@open-wa/core` v5.1.0, `@open-wa/schema` v5.1.0, `@open-wa/wa-automate` v5.1.0
+- *(minor)* Version bump from group with `@eulab/openwaunlocked-api` v5.1.0, `@eulab/openwaunlocked-client` v5.1.0, `@eulab/openwaunlocked-core` v5.1.0, `@eulab/openwaunlocked-schema` v5.1.0, `@eulab/openwaunlocked` v5.1.0
 
 ## 5.0.0
 

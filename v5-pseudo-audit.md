@@ -108,7 +108,7 @@ This package decomposition is itself a **potential improvement**, not a regressi
 
 The following architecture intent is now explicit from the user and should be treated as authoritative when judging v5:
 
-1. `@open-wa/wa-automate` remains the **main npm package entrypoint** for the library.
+1. `@eulab/openwaunlocked` remains the **main npm package entrypoint** for the library.
 2. That main package should expose/re-export the important user-facing layers such as:
    - CLI entry/runtime
    - SDK/client-facing runtime surface
@@ -144,9 +144,9 @@ Evidence:
 
 Observed behavior:
 
-- package name is `@open-wa/wa-automate`
+- package name is `@eulab/openwaunlocked`
 - it owns the `wa-automate` binary
-- it depends on `@open-wa/api`, `@open-wa/client`, `@open-wa/config`, `@open-wa/core`, `@open-wa/driver-puppeteer`, `@open-wa/schema`, `@open-wa/session-sync`
+- it depends on `@eulab/openwaunlocked-api`, `@eulab/openwaunlocked-client`, `@eulab/openwaunlocked-config`, `@eulab/openwaunlocked-core`, `@eulab/openwaunlocked-driver-puppeteer`, `@eulab/openwaunlocked-schema`, `@eulab/openwaunlocked-session-sync`
 
 Interpretation:
 
@@ -166,8 +166,8 @@ Evidence:
 
 Observed behavior:
 
-- `@open-wa/cli` depends on `@open-wa/wa-automate`
-- `packages/cli/src/index.ts` simply re-exports `runCli`, `startCli`, and `parseCliArgs` from `@open-wa/wa-automate`
+- `@eulab/openwaunlocked-cli` depends on `@eulab/openwaunlocked`
+- `packages/cli/src/index.ts` simply re-exports `runCli`, `startCli`, and `parseCliArgs` from `@eulab/openwaunlocked`
 
 Interpretation:
 
@@ -187,8 +187,8 @@ Evidence:
 
 Observed behavior:
 
-- `apps/cli` is a private executable wrapper around `@open-wa/cli`
-- `apps/orchestrator-cli` is a private executable wrapper around `@open-wa/orchestrator`
+- `apps/cli` is a private executable wrapper around `@eulab/openwaunlocked-cli`
+- `apps/orchestrator-cli` is a private executable wrapper around `@eulab/openwaunlocked-orchestrator`
 - `apps/dashboard-neo` and `apps/orchestrator-dashboard` are distinct UI applications rather than reusable library packages
 
 Interpretation:
@@ -207,7 +207,7 @@ Evidence:
 
 Observed behavior:
 
-- orchestrator resolves and launches the `@open-wa/wa-automate` CLI entry (`dist/cli.cjs`)
+- orchestrator resolves and launches the `@eulab/openwaunlocked` CLI entry (`dist/cli.cjs`)
 - orchestrator exposes create/start/stop/restart/proxy/list/status style management endpoints
 
 Interpretation:
@@ -226,7 +226,7 @@ Observed behavior:
 - dashboard sidecar launch is built into the shared API server package
 - dashboard is described as `dashboard-neo`
 - it is started by default from API server config unless disabled
-- it talks to Easy API via `@open-wa/socket-client`
+- it talks to Easy API via `@eulab/openwaunlocked-socket-client`
 
 Interpretation:
 
@@ -262,14 +262,14 @@ From `packages/wa-automate/src/index.ts`:
 - exports `APILifecycleManager`
 - exports `SessionManager`
 - exports CLI runtime helpers (`runCli`, `startCli`, `parseCliArgs`)
-- re-exports `Config` and `ConfigSchema` from `@open-wa/schema`
+- re-exports `Config` and `ConfigSchema` from `@eulab/openwaunlocked-schema`
 - re-exports API server helpers
 
 ### 4.2 Immediate contrast with legacy
 
 Legacy centered everything around a single authoritative bootstrap entrypoint: `create()`.
 
-Current v5, at least from `@open-wa/wa-automate`, does **not** export a top-level `create()` equivalent from its package root in the inspected file.
+Current v5, at least from `@eulab/openwaunlocked`, does **not** export a top-level `create()` equivalent from its package root in the inspected file.
 
 That does **not** automatically mean v5 is wrong. It does mean the audit must explicitly test whether:
 
@@ -280,12 +280,12 @@ This is one of the most important audit threads going forward.
 
 ### 4.2.a Reframing this concern in light of clarified architecture
 
-Given the user’s clarification, the absence of a top-level exported `create()` from `@open-wa/wa-automate` is **less important** than it first appeared.
+Given the user’s clarification, the absence of a top-level exported `create()` from `@eulab/openwaunlocked` is **less important** than it first appeared.
 
 The more correct question is now:
 
 - does the SDK/client/core layer expose the fundamental session bootstrap contract clearly enough?
-- and does `@open-wa/wa-automate` correctly act as the main composed package that re-exports the right surfaces?
+- and does `@eulab/openwaunlocked` correctly act as the main composed package that re-exports the right surfaces?
 
 So this concern should no longer be read as:
 
@@ -300,7 +300,7 @@ It should instead be read as:
 From `packages/wa-automate/src/cli-runtime.ts`, the current CLI boot path is:
 
 1. parse CLI flags into `ParsedCliArgs`
-2. call `resolveConfig(...)` from `@open-wa/config`
+2. call `resolveConfig(...)` from `@eulab/openwaunlocked-config`
 3. force/merge defaults including:
    - `disableSpins: true`
    - `apiLifecycle: 'hybrid'`
@@ -309,9 +309,9 @@ From `packages/wa-automate/src/cli-runtime.ts`, the current CLI boot path is:
    - `port: 8002`
 4. start `WAServer`
 5. create `PuppeteerDriver`
-6. call `createClient(...)` from `@open-wa/core`
+6. call `createClient(...)` from `@eulab/openwaunlocked-core`
 7. create `Transport`
-8. create `ClientFacade` from `@open-wa/client`
+8. create `ClientFacade` from `@eulab/openwaunlocked-client`
 9. attach QR updates from `openwaClient.events` to the server
 10. call `client.start()`
 
@@ -679,9 +679,9 @@ Evidence:
 
 Observed behavior:
 
-- `@open-wa/client` depends on `@open-wa/hyperemitter`
+- `@eulab/openwaunlocked-client` depends on `@eulab/openwaunlocked-hyperemitter`
 - core runtime uses `HyperEmitter`
-- the dashboard sidecar explicitly communicates with Easy API through `@open-wa/socket-client`
+- the dashboard sidecar explicitly communicates with Easy API through `@eulab/openwaunlocked-socket-client`
 
 Interpretation:
 
@@ -1412,7 +1412,7 @@ The next pass should now focus on the highest-value unresolved questions:
 4. inspect how `eventRegistry` in schema relates to `ListenerManager` and listener parity coverage
 5. inspect the API/debug routes and compatibility/deprecation surfaces for what was intentionally not carried forward
 6. inspect whether the SDK/client/core layer exposes a clear low-level session bootstrap contract that `wa-automate` can re-export appropriately
-7. inspect whether `@open-wa/wa-automate` should re-export more of the SDK/client layer than it currently does
+7. inspect whether `@eulab/openwaunlocked` should re-export more of the SDK/client layer than it currently does
 
 ---
 
@@ -1505,8 +1505,8 @@ Current status:
 
 What we now know:
 
-- `@open-wa/core` actively exports `createClient`, `OpenWAClient`, events, plugins, session, and transport primitives
-- `@open-wa/client` actively exports the `Client` facade plus collector/domain types
+- `@eulab/openwaunlocked-core` actively exports `createClient`, `OpenWAClient`, events, plugins, session, and transport primitives
+- `@eulab/openwaunlocked-client` actively exports the `Client` facade plus collector/domain types
 - this is enough to say the low-level bootstrap/SDK contract exists below `wa-automate`
 - what remains open is its behavioral completeness and whether `wa-automate` should re-export more of that surface
 
@@ -1539,7 +1539,7 @@ Evidence:
 Observed behavior:
 
 - `schema` owns a distinct `eventRegistry` for listener-facing event contracts and metadata
-- `client` `ListenerManager` imports `eventRegistry` from `@open-wa/schema`
+- `client` `ListenerManager` imports `eventRegistry` from `@eulab/openwaunlocked-schema`
 - listener registration is validated against event schemas and bridged from typed runtime events
 - API meta routes expose listener inventories using that same registry
 
@@ -1591,16 +1591,16 @@ Evidence:
 
 Observed behavior:
 
-- `@open-wa/client` exports the SDK facade and domain collector types
-- `@open-wa/core` exports `createClient`, `OpenWAClient`, events, plugins, session, and transport primitives
-- `@open-wa/wa-automate` currently exports:
+- `@eulab/openwaunlocked-client` exports the SDK facade and domain collector types
+- `@eulab/openwaunlocked-core` exports `createClient`, `OpenWAClient`, events, plugins, session, and transport primitives
+- `@eulab/openwaunlocked` currently exports:
   - `WAServer`
   - `APILifecycleManager`
   - `SessionManager`
   - CLI helpers
   - config/schema helpers
   - API server helpers
-- `@open-wa/wa-automate` does **not** currently re-export obvious SDK/client entrypoints like `Client` or `createClient`
+- `@eulab/openwaunlocked` does **not** currently re-export obvious SDK/client entrypoints like `Client` or `createClient`
 
 Interpretation:
 
@@ -1665,8 +1665,8 @@ Evidence:
 
 Observed behavior:
 
-- `@open-wa/core` exports `createClient`, `CreateClientOptions`, `OpenWAClient`, plus event/plugin/session/transport primitives
-- `@open-wa/client` exports the `Client` facade and collector/domain helpers
+- `@eulab/openwaunlocked-core` exports `createClient`, `CreateClientOptions`, `OpenWAClient`, plus event/plugin/session/transport primitives
+- `@eulab/openwaunlocked-client` exports the `Client` facade and collector/domain helpers
 - `Client` explicitly composes `OpenWAClient` plus `Transport` plus domain-specific method modules
 
 Interpretation:
@@ -1713,8 +1713,8 @@ Evidence:
 Observed behavior:
 
 - `wa-automate` currently exposes CLI helpers, API helpers, config/schema, and server/session-manager pieces
-- it does not currently re-export the obvious lower-level SDK/client entrypoints that already exist in `@open-wa/core` and `@open-wa/client`
-- `@open-wa/cli` is currently just a thin wrapper over `@open-wa/wa-automate`
+- it does not currently re-export the obvious lower-level SDK/client entrypoints that already exist in `@eulab/openwaunlocked-core` and `@eulab/openwaunlocked-client`
+- `@eulab/openwaunlocked-cli` is currently just a thin wrapper over `@eulab/openwaunlocked`
 
 Interpretation:
 
@@ -1796,7 +1796,7 @@ Evidence:
 Observed behavior:
 
 - `createClient().start()` still transitions directly from QR wait and stub-like WAPI injection to `READY`
-- `client.start()` in `@open-wa/client` is only a direct delegation to core startup
+- `client.start()` in `@eulab/openwaunlocked-client` is only a direct delegation to core startup
 - CLI binds the client into the API server after `client.start()` returns and then prints readiness state
 - `APILifecycleManager` comments explicitly note that hybrid mode is not yet the more advanced implementation it may eventually become
 
@@ -1871,8 +1871,8 @@ It is intentionally written as a **runtime contract**, not an implementation rec
 
 This contract applies to the layer currently distributed across:
 
-- `@open-wa/core`
-- `@open-wa/client`
+- `@eulab/openwaunlocked-core`
+- `@eulab/openwaunlocked-client`
 - the active transport/driver bootstrap path
 
 This contract does **not** prescribe:

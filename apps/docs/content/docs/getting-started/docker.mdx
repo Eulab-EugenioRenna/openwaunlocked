@@ -37,7 +37,7 @@ The mounted `./sessions` directory contains authentication state. Keep it privat
 
 ## Version pins and image source
 
-Docker Hub currently uses a moving `latest` tag, so the commands use the immutable OCI digest shown in each image reference. The image startup script otherwise installs npm `latest`; `W_A_V=5.1.0` selects the [published npm release](https://www.npmjs.com/package/@open-wa/wa-automate/v/5.1.0) used by these examples. See the [Docker Hub image](https://hub.docker.com/r/openwa/wa-automate/tags) and its [pinned startup script](https://raw.githubusercontent.com/open-wa/wa-automate-docker/5e3cf42b9a5549e85804c31c05cc05f1c58fda47/start.sh). The image declares Node.js `23.8.0`, which is above v5.1.0's `22.21.1` minimum.
+Docker Hub currently uses a moving `latest` tag, so the commands use the immutable OCI digest shown in each image reference. The image startup script otherwise installs npm `latest`; `W_A_V=5.1.0` selects the [published npm release](https://www.npmjs.com/package/@eulab/openwaunlocked/v/5.1.0) used by these examples. See the [Docker Hub image](https://hub.docker.com/r/openwa/wa-automate/tags) and its [pinned startup script](https://raw.githubusercontent.com/open-wa/wa-automate-docker/5e3cf42b9a5549e85804c31c05cc05f1c58fda47/start.sh). The image declares Node.js `23.8.0`, which is above v5.1.0's `22.21.1` minimum.
 
 ## Environment variables and secrets
 
@@ -149,7 +149,7 @@ Keep the API port private, persist the session profile, inject secrets at runtim
 The npm v4 archive remains available for existing v4 applications:
 
 ```bash
-npx @open-wa/wa-automate@4.76.0
+npx @eulab/openwaunlocked@1.0.0
 ```
 
 Docker Hub does not provide a matching versioned `4.76.0` image tag.

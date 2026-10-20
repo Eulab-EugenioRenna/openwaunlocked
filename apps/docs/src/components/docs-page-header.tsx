@@ -44,7 +44,7 @@ function PageActions({ pagePath }: Readonly<{ pagePath: string }>) {
       />
       <ViewOptionsPopover
         markdownUrl={markdownUrl}
-        githubUrl={`https://github.com/open-wa/wa-automate-nodejs/edit/master/${getSourcePath(pagePath)}`}
+        githubUrl={`https://github.com/Eulab-EugenioRenna/openwaunlocked/edit/master/${getSourcePath(pagePath)}`}
         className="min-h-9 w-auto px-2.5 text-xs sm:min-h-10 sm:px-3 sm:text-sm"
       >
         Page options

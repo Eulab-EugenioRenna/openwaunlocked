@@ -75,7 +75,7 @@ Each entry lists: file path, headings, and what content goes under each.
 **Sources**: Round 4 (#8), Round 2 (README table)
 
 - What is Node-RED and why use it
-- Installation (@open-wa/node-red-contrib-wa-automate)
+- Installation (@eulab/openwaunlocked-node-red-contrib-wa-automate)
 - Available nodes (send, receive, session, media)
 - Example flows (echo bot, CRM, conditional routing)
 - Connecting to Easy API
@@ -84,7 +84,7 @@ Each entry lists: file path, headings, and what content goes under each.
 ### `guides/s3-media.mdx` — S3 Media Storage
 **Sources**: Round 4 (#9)
 
-- What is the S3 integration (@open-wa/integration-s3)
+- What is the S3 integration (@eulab/openwaunlocked-integration-s3)
 - Configuration (bucket, credentials, plugin config)
 - How it works (auto upload, URL replacement, retrieval)
 - Use cases (compliance, CRM access, backup)
@@ -123,7 +123,7 @@ Each entry lists: file path, headings, and what content goes under each.
 **Sources**: Round 5 (#1), Round 6 (#5), Round 2 (suggested #2)
 
 - What are plugins (reusable integrations, architecture diagram)
-- Install the SDK (pnpm add @open-wa/plugin-sdk)
+- Install the SDK (pnpm add @eulab/openwaunlocked-plugin-sdk)
 - Your first plugin (createPlugin, defineConfig, event handlers, loading, testing)
 - Plugin architecture (security-filtered emitter, client proxy, config validation)
 - When to use plugins

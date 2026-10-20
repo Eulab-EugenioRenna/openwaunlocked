@@ -11,7 +11,7 @@ export function baseOptions(): BaseLayoutProps {
           <span className="site-brand-mark flex size-7 items-center justify-center rounded-md bg-[#214be6] text-white">
             <img src="/logo.png" alt="open-wa logo" className="size-4 object-contain" />
           </span>
-          <span>Eulab Open</span>
+          <span>EULAB Open</span>
         </span>
       ),
       url: '/',

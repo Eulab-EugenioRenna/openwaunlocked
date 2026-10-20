@@ -1,25 +1,25 @@
-# @open-wa/node-red
+# @eulab/openwaunlocked-node-red
 
-`@open-wa/node-red` connects Node-RED flows to an existing open-wa Easy API session. The current package is `5.1.0` and registers three node types: `owa-server`, `cmd`, and `listen`.
+`@eulab/openwaunlocked-node-red` connects Node-RED flows to an existing open-wa Easy API session. The current package is `5.1.0` and registers three node types: `owa-server`, `cmd`, and `listen`.
 
-The integration keeps the Node-RED palette small and maps commands and events to the Easy API metadata endpoints. It uses `@open-wa/socket-client` as the compatibility client; v5 commands travel over HTTP RPC and runtime events use the client event stream.
+The integration keeps the Node-RED palette small and maps commands and events to the Easy API metadata endpoints. It uses `@eulab/openwaunlocked-socket-client` as the compatibility client; v5 commands travel over HTTP RPC and runtime events use the client event stream.
 
 ## Quick start
 
 Start Easy API separately, then install the package into Node-RED's user directory:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales \
   --port 8080 \
   --api-key "$OPENWA_API_KEY"
 
 cd ~/.node-red
-npm install @open-wa/node-red@5.1.0
+npm install @eulab/openwaunlocked-node-red@1.0.0
 node-red
 ```
 
-Open `http://127.0.0.1:1880`, choose **Manage palette**, and confirm `@open-wa/node-red` is installed. Add an **owa-server** configuration node with the Easy API URL and the same key passed to `--api-key`. Leave the key empty only when Easy API was started without one.
+Open `http://127.0.0.1:1880`, choose **Manage palette**, and confirm `@eulab/openwaunlocked-node-red` is installed. Add an **owa-server** configuration node with the Easy API URL and the same key passed to `--api-key`. Leave the key empty only when Easy API was started without one.
 
 The configuration node keeps the `SocketClient` in Node-RED global context. It reports `connected`, `disconnected`, and connection-error states so a flow can distinguish a stopped API from a command failure.
 
@@ -31,7 +31,7 @@ The configuration node keeps the `SocketClient` in Node-RED global context. It r
 | **Command** | `cmd` | Loads command metadata from `/meta/basic/commands`, then calls `client.ask(method, args)` with node or message values. |
 | **Listen** | `listen` | Loads listener names from `/meta/basic/listeners`, subscribes with `client.listen(listener, callback)`, and emits event data as `msg.payload`. |
 
-The visible labels are **Command** and **Listen**. Older guides that describe separate Send, Receive, Session, or Media nodes refer to `@open-wa/node-red-contrib-wa-automate`, which is a different package and palette.
+The visible labels are **Command** and **Listen**. Older guides that describe separate Send, Receive, Session, or Media nodes refer to `@eulab/openwaunlocked-node-red-contrib-wa-automate`, which is a different package and palette.
 
 ## Configuration fields
 
@@ -86,7 +86,7 @@ A connection refusal means the URL or process is wrong. `401` means the configur
 From the monorepo checkout:
 
 ```bash
-pnpm --filter @open-wa/node-red dev
+pnpm --filter @eulab/openwaunlocked-node-red dev
 ```
 
 The package source lives under `integrations/node-red`; the published Node-RED entrypoints are the `dist/nodes/*` files declared in `package.json`.
@@ -97,4 +97,4 @@ See the [Node-RED guide](https://openwa.dev/docs/guides/node-red) for the import
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/integrations/node-red/LICENSE.md). The [MIT notice](https://github.com/open-wa/wa-automate-nodejs/blob/master/integrations/node-red/LICENSE) is retained for upstream Node-RED code.
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/integrations/node-red/LICENSE.md). The [MIT notice](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/integrations/node-red/LICENSE) is retained for upstream Node-RED code.

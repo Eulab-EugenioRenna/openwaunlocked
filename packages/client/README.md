@@ -1,21 +1,21 @@
-# @open-wa/client
+# @eulab/openwaunlocked-client
 
-`@open-wa/client` provides the in-process TypeScript client for a WhatsApp Web session. It wraps the client created by `@open-wa/core`. For a remote HTTP server, use `@open-wa/socket-client`.
+`@eulab/openwaunlocked-client` provides the in-process TypeScript client for a WhatsApp Web session. It wraps the client created by `@eulab/openwaunlocked-core`. For a remote HTTP server, use `@eulab/openwaunlocked-socket-client`.
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-bun add @open-wa/client @open-wa/core @open-wa/driver-puppeteer
+bun add @eulab/openwaunlocked-client @eulab/openwaunlocked-core @eulab/openwaunlocked-driver-puppeteer
 ```
 
 ## Start a session and send a message
 
 ```typescript
-import { Client } from '@open-wa/client';
-import { createClient } from '@open-wa/core';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client } from '@eulab/openwaunlocked-client';
+import { createClient } from '@eulab/openwaunlocked-core';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const session = await createClient({
   sessionId: 'main-session',
@@ -74,6 +74,6 @@ See the [custom code guide](https://openwa.dev/docs/getting-started/custom-code)
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
 
 Media settings use the shared `MediaSendOptions` contract. Set `type: 'video'` for `isGif` or `videoNote`, `type: 'audio'` for `ptt`, or `type: 'document'` to force a document attachment. Circular notes require prepared square MP4 video of at most 60 seconds. See the media guide for allowed combinations. Polls expose `voteOnPoll`, `getPollResults` and `onPollVote`; optional `endTime` uses Unix milliseconds and `hideVoterNames` requires native sending-account support.

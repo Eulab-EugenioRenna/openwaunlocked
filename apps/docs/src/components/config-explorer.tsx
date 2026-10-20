@@ -66,7 +66,7 @@ function buildSnippet(entries: ConfigManifestEntry[], format: Format): string {
     if (supported.length === 0) {
       return [
         '# These options are available in wa.config.json.',
-        'npx @open-wa/wa-automate --config ./wa.config.json',
+        'npx @eulab/openwaunlocked --config ./wa.config.json',
       ].join('\n');
     }
     const lines = supported.map((entry) =>
@@ -74,7 +74,7 @@ function buildSnippet(entries: ConfigManifestEntry[], format: Format): string {
         ? `  ${entry.cliFlag}`
         : `  ${entry.cliFlag} ${JSON.stringify(snippetValue(sampleValue(entry)))}`,
     );
-    const command = ['npx @open-wa/wa-automate \\', ...lines].join(' \\\n');
+    const command = ['npx @eulab/openwaunlocked \\', ...lines].join(' \\\n');
     return configOnly
       ? `# Put config-only options in wa.config.json.\n${command}`
       : command;
@@ -84,7 +84,7 @@ function buildSnippet(entries: ConfigManifestEntry[], format: Format): string {
   if (supported.length === 0) {
     return [
       '# These options are available in wa.config.json.',
-      'npx @open-wa/wa-automate --config ./wa.config.json',
+      'npx @eulab/openwaunlocked --config ./wa.config.json',
     ].join('\n');
   }
   const byVariable = new Map<string, ConfigManifestEntry[]>();

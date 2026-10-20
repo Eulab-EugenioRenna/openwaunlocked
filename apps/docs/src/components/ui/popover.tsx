@@ -6,4 +6,4 @@ export {
   PopoverPortal,
   PopoverContent,
   PopoverClose,
-} from '@open-wa/ui-components/popover';
+} from '@eulab/openwaunlocked-ui-components/popover';

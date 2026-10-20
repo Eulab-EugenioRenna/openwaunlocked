@@ -28,7 +28,7 @@ The fastest way to spin up the HTTP JSON-RPC gateway is via the CLI.
 Spawn the API server with strict port allocation and API key protection:
 
 ```bash
-npx @open-wa/wa-automate --port <PORT_NUMBER> --api-key "<YOUR_SECURE_API_KEY>"
+npx @eulab/openwaunlocked --port <PORT_NUMBER> --api-key "<YOUR_SECURE_API_KEY>"
 ```
 
 ### Step 2: Device Authentication (First-Run Only)
@@ -39,7 +39,7 @@ npx @open-wa/wa-automate --port <PORT_NUMBER> --api-key "<YOUR_SECURE_API_KEY>"
 4. Scan the terminal QR code.
 5. Alternatively, use phone number pairing (Link-code login):
    ```bash
-   npx @open-wa/wa-automate --port <PORT_NUMBER> --link-code "<YOUR_PHONE_NUMBER>"
+   npx @eulab/openwaunlocked --port <PORT_NUMBER> --link-code "<YOUR_PHONE_NUMBER>"
    ```
 
 ---
@@ -69,12 +69,12 @@ docker run -d \
 
 ## 4. Option C: Embedded Code (Direct Node.js Integration)
 
-To embed the core browser driver directly into your custom TypeScript/JavaScript runtime, use `@open-wa/core`.
+To embed the core browser driver directly into your custom TypeScript/JavaScript runtime, use `@eulab/openwaunlocked-core`.
 
 ### Installation
 
 ```bash
-npm install @open-wa/core @open-wa/driver-puppeteer
+npm install @eulab/openwaunlocked-core @eulab/openwaunlocked-driver-puppeteer
 ```
 
 ### Client Scaffolding
@@ -82,8 +82,8 @@ npm install @open-wa/core @open-wa/driver-puppeteer
 Create `client.ts` / `client.js`:
 
 ```typescript
-import { createClient } from '@open-wa/core';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { createClient } from '@eulab/openwaunlocked-core';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 async function start() {
   const client = await createClient({

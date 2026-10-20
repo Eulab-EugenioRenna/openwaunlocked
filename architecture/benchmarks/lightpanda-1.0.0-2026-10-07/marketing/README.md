@@ -14,7 +14,7 @@ The complete card settles by 22 seconds and stays visible through 32 seconds.
 The poster uses this same onboarding card.
 
 ```sh
-npx @open-wa/wa-automate --lightpanda
+npx @eulab/openwaunlocked --lightpanda
 ```
 
 This is the CTA for the upcoming minor release's experimental Lightpanda path.

@@ -25,13 +25,13 @@ The bot process must stay running to receive messages. Run it as a service, in D
 Run the initializer to create a project with the library and a start script:
 
 ```bash
-bunx --bun @open-wa/wa-automate init my-bot
+bunx --bun @eulab/openwaunlocked init my-bot
 ```
 
 For an existing Node.js project, install the library:
 
 ```bash
-npm install @open-wa/wa-automate
+npm install @eulab/openwaunlocked
 ```
 
 Read the [initializer guide](/docs/getting-started/initializer) for the generated files.
@@ -41,7 +41,7 @@ Read the [initializer guide](/docs/getting-started/initializer) for the generate
 Replace `index.ts` with this example. It replies to three commands and ignores all other messages.
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({ sessionId: 'bot' });
 

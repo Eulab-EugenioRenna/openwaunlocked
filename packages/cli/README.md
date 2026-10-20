@@ -1,13 +1,13 @@
-# @open-wa/cli
+# @eulab/openwaunlocked-cli
 
-`@open-wa/cli` provides the `wa` command for starting and managing an Open-WA session and API server. The CLI delegates session startup to `@open-wa/wa-automate`.
+`@eulab/openwaunlocked-cli` provides the `wa` command for starting and managing an Open-WA session and API server. The CLI delegates session startup to `@eulab/openwaunlocked`.
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-npm install --global @open-wa/cli@5.1.0
+npm install --global @eulab/openwaunlocked-cli@1.0.0
 ```
 
 ## Start the API server
@@ -20,7 +20,7 @@ Scan the QR code shown in the terminal to sign in. The server listens on `127.0.
 
 ## Remote clients
 
-Use [`@open-wa/socket-client`](https://openwa.dev/docs/client-and-integrations/socket-client) to send commands to this server and receive runtime events.
+Use [`@eulab/openwaunlocked-socket-client`](https://openwa.dev/docs/client-and-integrations/socket-client) to send commands to this server and receive runtime events.
 
 ## Documentation
 
@@ -28,4 +28,4 @@ See the [CLI reference](https://openwa.dev/docs/guides/configuration-and-cli).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

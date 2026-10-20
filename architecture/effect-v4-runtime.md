@@ -4,7 +4,7 @@ Open-wa v5 uses Effect as its portable execution, dependency, concurrency, resou
 
 ## Runtime capability boundary
 
-Domain programs import `@open-wa/runtime-core` and request capabilities. Composition roots provide them with one of the runtime Layers below. A Layer advertises what the host really supports; it never emulates Chromium, files, or processes where the host cannot provide them.
+Domain programs import `@eulab/openwaunlocked-runtime-core` and request capabilities. Composition roots provide them with one of the runtime Layers below. A Layer advertises what the host really supports; it never emulates Chromium, files, or processes where the host cannot provide them.
 
 | Runtime Layer | Browser client | Launch Chromium | Filesystem | Process | Fetch | Worker bindings |
 | --- | --- | --- | --- | --- | --- | --- |

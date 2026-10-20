@@ -12,9 +12,9 @@ Plugins are trusted, dynamically imported modules in the host process. The SDK f
 ## Install the SDK
 
 ```bash
-pnpm add @open-wa/plugin-sdk@5.1.0 hono
+pnpm add @eulab/openwaunlocked-plugin-sdk@1.0.0 hono
 # or
-npm install @open-wa/plugin-sdk@5.1.0 hono
+npm install @eulab/openwaunlocked-plugin-sdk@1.0.0 hono
 ```
 
 The SDK provides `createPlugin()`, `defineConfig()`, `z`, and the plugin contract types. The starter below imports `Hono` separately because the route is a regular Hono app.
@@ -25,7 +25,7 @@ Create `plugins/greeting-bot.mjs` with this JavaScript module:
 
 ```js
 import { Hono } from 'hono';
-import { createPlugin, defineConfig } from '@open-wa/plugin-sdk';
+import { createPlugin, defineConfig } from '@eulab/openwaunlocked-plugin-sdk';
 
 const configSchema = defineConfig((zod) => zod.object({
   greeting: zod.string().default('👋 Welcome!'),
@@ -103,7 +103,7 @@ The `pluginConfig` key is `meta.name` (`greeting-bot`), not the package name or 
 Run the CLI from the directory containing `wa.config.mjs`:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id my-session --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id my-session --host 127.0.0.1 --port 8080
 ```
 
 This binds the API to loopback, so it is reachable only from this machine. If you choose another host, protect `/api` with `--api-key "your-secure-key"` and add a guard to plugin routes before exposing them. See [HTTP routes in plugins](/docs/plugins/hono-routes).

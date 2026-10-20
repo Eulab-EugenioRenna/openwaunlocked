@@ -1,4 +1,4 @@
-### Copyright (c) 2020 Mohammed Shah
+### Copyright (c) 2026 EULAB
 
 # Hippocratic + Do Not Harm (H-DNH) Version 1.1
 

@@ -14,13 +14,13 @@ The example version is pinned; the registry tags above were checked on 2026-09-2
 Easy API:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --session-id quickstart --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --session-id quickstart --host 127.0.0.1 --port 8080
 ```
 
 Custom code:
 
 ```bash
-npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0
 ```
 
 Docker currently publishes only its moving `latest` tag; Docker image parity with npm `5.1.0` could not be pinned from the tag list checked on 2026-09-29.
@@ -40,7 +40,7 @@ Use the [quick start](/docs/getting-started/quickstart), [Docker](/docs/getting-
 The `alpha` dist-tag currently points to `5.0.0-alpha.8`. It is a separate prerelease selection and can change independently of `latest`; it is not the command used by the supported-release onboarding pages. If you intentionally test it, record the exact package and image tag with your report and use a disposable account and profile.
 
 ```bash
-npx @open-wa/wa-automate@alpha --session-id alpha-test --port 8080
+npx @eulab/openwaunlocked@alpha --session-id alpha-test --port 8080
 ```
 
 ## v4 archive
@@ -48,7 +48,7 @@ npx @open-wa/wa-automate@alpha --session-id alpha-test --port 8080
 Existing v4 applications can continue to use the archived npm package:
 
 ```bash
-npx @open-wa/wa-automate@4.76.0
+npx @eulab/openwaunlocked@1.0.0
 ```
 
 Docker Hub did not list a versioned v4 image tag when checked on 2026-09-29. Keep v4 configuration, examples, and session profiles separate from v5. The v4 npm package remains available for migration work; new examples on this site use `5.1.0`.

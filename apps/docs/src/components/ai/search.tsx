@@ -42,7 +42,7 @@ export function AISearchPanelHeader({ className, ...props }: ComponentProps<'div
       {...props}
     >
       <div className="flex-1 px-3 py-3">
-        <p className="mb-1 text-sm font-bold text-foreground">Ask open-wa docs</p>
+        <p className="mb-1 text-sm font-bold text-foreground">Ask EULAB docs</p>
         <p className="text-xs text-secondary-foreground/80">
           AI can be inaccurate, please verify the answers.
         </p>
@@ -268,7 +268,7 @@ function Input(props: ComponentProps<'textarea'>) {
 
 const roleName: Record<string, string> = {
   user: 'you',
-  assistant: 'open-wa ai',
+  assistant: 'EULAB ai',
 };
 
 function Message({ message, ...props }: { message: ChatUIMessage } & ComponentProps<'div'>) {

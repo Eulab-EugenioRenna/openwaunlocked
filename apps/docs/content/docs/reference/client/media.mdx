@@ -29,7 +29,7 @@ const result = await client.decryptMedia(message);
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 // Use the full media message received by your message handler.
@@ -122,7 +122,7 @@ const result = await client.downloadMedia(message, "./downloaded-media");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 // Use the full media message received by your message handler.

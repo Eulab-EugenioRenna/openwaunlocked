@@ -13,7 +13,7 @@ export OPENWA_VERSION='5.6.0'
 export OPENWA_API_URL='http://127.0.0.1:8080'
 export WA_API_KEY='REPLACE_WITH_YOUR_PRIVATE_API_KEY'
 
-npx "@open-wa/wa-automate@$OPENWA_VERSION" \
+npx "@eulab/openwaunlocked@$OPENWA_VERSION" \
   --session-id sales --host 127.0.0.1 --port 8080 \
   --api-key "$WA_API_KEY"
 ```

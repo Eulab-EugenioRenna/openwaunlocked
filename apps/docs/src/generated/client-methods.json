@@ -47,7 +47,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.acceptCall({});",
       "nodeCall": "const result = await client.acceptCall({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.acceptCall({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.acceptCall({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/acceptCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -103,7 +103,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.addLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.addLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.addLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/labels/add\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"label\": \"label\",\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -166,7 +166,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.addParticipant(\"447123456789-1445627445@g.us\", \"447123456789@c.us\");",
       "nodeCall": "const result = await client.addParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.addParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.addParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/addParticipant\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -228,7 +228,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.approveGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.approveGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.approveGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/approveJoinRequest\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -275,7 +275,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.archiveChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.archiveChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.archiveChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.archiveChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/archive\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -326,7 +326,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.blockContact(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.blockContact({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.blockContact({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.blockContact({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/contacts/block\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -375,7 +375,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.cancelEvent(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.cancelEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.cancelEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.cancelEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/events/cancelEvent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"eventId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -423,7 +423,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.checkNumberStatus(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.checkNumberStatus({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.checkNumberStatus({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.checkNumberStatus({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/checkNumberStatus\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": {\n      \"server\": \"example\",\n      \"user\": \"example\",\n      \"_serialized\": \"example\"\n    },\n    \"canReceiveMessage\": true\n  }\n}"
     }
@@ -471,7 +471,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.checkReadReceipts({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.checkReadReceipts({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.checkReadReceipts({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/checkReadReceipts\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -514,7 +514,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.clearCallAudio({});",
       "nodeCall": "const result = await client.clearCallAudio({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.clearCallAudio({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.clearCallAudio({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/clearCallAudio\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -561,7 +561,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.clearChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.clearChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.clearChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.clearChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X DELETE \"http://localhost:8080/api/chats/clear\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -620,7 +620,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.createGroup(\"name\", [\"447123456789@c.us\"]);",
       "nodeCall": "const result = await client.createGroup({\n  name: \"name\",\n  contacts: [\"447123456789@c.us\"],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.createGroup({\n  name: \"name\",\n  contacts: [\"447123456789@c.us\"],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.createGroup({\n  name: \"name\",\n  contacts: [\"447123456789@c.us\"],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/groups/create\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"name\": \"name\",\n    \"contacts\": [\n      \"447123456789@c.us\"\n    ]\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"gid\": \"447123456789-1445627445@g.us\"\n  }\n}"
     }
@@ -665,7 +665,7 @@
     "examples": {
       "inProcessSdk": "// Use the full media message from your message handler.\nconst result = await client.decryptMedia(message);",
       "nodeCall": "// Use the full media message received by your message handler.\nconst result = await client.decryptMedia({ message });",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\n// Use the full media message received by your message handler.\nconst result = await client.decryptMedia({ message });",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\n// Use the full media message received by your message handler.\nconst result = await client.decryptMedia({ message });",
       "http": "# Save the full incoming media message as the \"message\" field in request.json.\n# For downloadMedia, also set \"path\" to the destination filename.\ncurl -X POST \"http://localhost:8080/api/media/decrypt\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-binary @request.json",
       "response": "{\n  \"success\": true,\n  \"data\": \"data:image/png;base64,...\"\n}"
     }
@@ -697,7 +697,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.deleteAllStatus();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteAllStatus();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteAllStatus();",
       "http": "curl -X DELETE \"http://localhost:8080/api/status/deleteAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -744,7 +744,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.deleteChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.deleteChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X DELETE \"http://localhost:8080/api/chats/delete\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -814,7 +814,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.deleteMessage(\"447123456789@c.us\", [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"]);",
       "nodeCall": "const result = await client.deleteMessage({\n  chatId: \"447123456789@c.us\",\n  messageId: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteMessage({\n  chatId: \"447123456789@c.us\",\n  messageId: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteMessage({\n  chatId: \"447123456789@c.us\",\n  messageId: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
       "http": "curl -X DELETE \"http://localhost:8080/api/messages/delete\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\",\n    \"messageId\": [\n      \"false_447123456789@c.us_ABC123\",\n      \"false_447123456789@c.us_DEF456\"\n    ]\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -857,7 +857,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.deleteStatus({\n  statusesToDelete: [],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteStatus({\n  statusesToDelete: [],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.deleteStatus({\n  statusesToDelete: [],\n});",
       "http": "curl -X DELETE \"http://localhost:8080/api/status/delete\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"statusesToDelete\": []\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -920,7 +920,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.demoteParticipant(\"447123456789-1445627445@g.us\", \"447123456789@c.us\");",
       "nodeCall": "const result = await client.demoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.demoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.demoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/demoteParticipant\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -974,7 +974,7 @@
     "examples": {
       "inProcessSdk": "// Use the full media message from your message handler.\nconst result = await client.downloadMedia(message, \"./downloaded-media\");",
       "nodeCall": "// Use the full media message received by your message handler.\nconst result = await client.downloadMedia({ message, path: \"./downloaded-media\" });",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\n// Use the full media message received by your message handler.\nconst result = await client.downloadMedia({ message, path: \"./downloaded-media\" });",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\n// Use the full media message received by your message handler.\nconst result = await client.downloadMedia({ message, path: \"./downloaded-media\" });",
       "http": "# Save the full incoming media message as the \"message\" field in request.json.\n# For downloadMedia, also set \"path\" to the destination filename.\ncurl -X POST \"http://localhost:8080/api/media/download\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-binary @request.json",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -1033,7 +1033,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.editEvent(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\", {\"description\":\"Updated meetup details\"});",
       "nodeCall": "const result = await client.editEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  changes: {\"description\":\"Updated meetup details\"},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.editEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  changes: {\"description\":\"Updated meetup details\"},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.editEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  changes: {\"description\":\"Updated meetup details\"},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/events/editEvent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"eventId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"changes\": {\n      \"description\": \"Updated meetup details\"\n    }\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -1092,7 +1092,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.editMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  newContent: \"newContent\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.editMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  newContent: \"newContent\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.editMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  newContent: \"newContent\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/messages/edit\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"newContent\": \"newContent\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -1135,7 +1135,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.endCall({});",
       "nodeCall": "const result = await client.endCall({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.endCall({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.endCall({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/endCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -1206,7 +1206,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.forwardMessages(\"447123456789@c.us\", [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"]);",
       "nodeCall": "const result = await client.forwardMessages({\n  to: \"447123456789@c.us\",\n  messages: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.forwardMessages({\n  to: \"447123456789@c.us\",\n  messages: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.forwardMessages({\n  to: \"447123456789@c.us\",\n  messages: [\"false_447123456789@c.us_ABC123\",\"false_447123456789@c.us_DEF456\"],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/forward\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"messages\": [\n      \"false_447123456789@c.us_ABC123\",\n      \"false_447123456789@c.us_DEF456\"\n    ]\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1237,7 +1237,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getActiveCall();",
       "nodeCall": "const result = await client.getActiveCall();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getActiveCall();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getActiveCall();",
       "http": "curl -X POST \"http://localhost:8080/api/calls/getActiveCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"example\",\n    \"sessionId\": \"example\",\n    \"generation\": \"example\",\n    \"peer\": \"example\",\n    \"state\": \"example\",\n    \"direction\": \"incoming\",\n    \"video\": true,\n    \"terminal\": true,\n    \"observedAt\": 0\n  }\n}"
     }
@@ -1289,7 +1289,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getAlbumMessages(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.getAlbumMessages({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAlbumMessages({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAlbumMessages({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/messages/getAlbum\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"messageId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1327,7 +1327,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getAllChatIds();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllChatIds();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllChatIds();",
       "http": "curl -X GET \"http://localhost:8080/api/chatIds/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1376,7 +1376,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getAllChats();",
       "nodeCall": "const result = await client.getAllChats();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllChats();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllChats();",
       "http": "curl -X GET \"http://localhost:8080/api/chats/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1413,7 +1413,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getAllCommunities();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllCommunities();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllCommunities();",
       "http": "curl -X GET \"http://localhost:8080/api/communities/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1449,7 +1449,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getAllContacts();",
       "nodeCall": "const result = await client.getAllContacts();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllContacts();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllContacts();",
       "http": "curl -X GET \"http://localhost:8080/api/contacts/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1498,7 +1498,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getAllGroups();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllGroups();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllGroups();",
       "http": "curl -X GET \"http://localhost:8080/api/groups/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1534,7 +1534,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getAllLabels();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllLabels();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllLabels();",
       "http": "curl -X GET \"http://localhost:8080/api/labels/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1606,7 +1606,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getAllMessages();",
       "nodeCall": "const result = await client.getAllMessages();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllMessages();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getAllMessages();",
       "http": "curl -X GET \"http://localhost:8080/api/messages/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1637,7 +1637,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getBatteryLevel();",
       "nodeCall": "const result = await client.getBatteryLevel();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBatteryLevel();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBatteryLevel();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getBatteryLevel\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": 0\n}"
     }
@@ -1670,7 +1670,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getBlockedIds();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBlockedIds();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBlockedIds();",
       "http": "curl -X GET \"http://localhost:8080/api/contacts/getBlockedIds\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1723,7 +1723,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getBusinessProducts({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBusinessProducts({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBusinessProducts({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/business/getProducts\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1771,7 +1771,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getBusinessProfile({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBusinessProfile({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getBusinessProfile({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/business/getProfile\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"447123456789@c.us\"\n  }\n}"
     }
@@ -1802,7 +1802,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getCallCapabilities();",
       "nodeCall": "const result = await client.getCallCapabilities();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCallCapabilities();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCallCapabilities();",
       "http": "curl -X POST \"http://localhost:8080/api/calls/getCallCapabilities\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"control\": true,\n    \"audio\": true,\n    \"video\": true\n  }\n}"
     }
@@ -1853,7 +1853,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.getChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/chats/get\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"chatId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"447123456789@c.us\",\n    \"isGroup\": true,\n    \"contact\": {\n      \"id\": \"447123456789@c.us\"\n    }\n  }\n}"
     }
@@ -1900,7 +1900,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getChatsByLabel({\n  label: \"label\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChatsByLabel({\n  label: \"label\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChatsByLabel({\n  label: \"label\",\n});",
       "http": "curl -G \"http://localhost:8080/api/labels/getChats\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"label=label\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1933,7 +1933,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getChatWithNonContacts();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChatWithNonContacts();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getChatWithNonContacts();",
       "http": "curl -X GET \"http://localhost:8080/api/chats/getWithNonContacts\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -1982,7 +1982,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getCommonGroups(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.getCommonGroups({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommonGroups({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommonGroups({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/getCommonGroups\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2028,7 +2028,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getCommunityAdminIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityAdminIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityAdminIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/communities/getAdminIds\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"communityId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2074,7 +2074,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getCommunityAdmins({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityAdmins({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityAdmins({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/communities/getAdmins\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"communityId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2120,7 +2120,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getCommunityInfo({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityInfo({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityInfo({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/communities/getInfo\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"communityId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"447123456789-1445627445@g.us\",\n    \"subject\": \"example\",\n    \"creation\": 0,\n    \"participants\": [],\n    \"subGroups\": []\n  }\n}"
     }
@@ -2166,7 +2166,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getCommunityParticipantIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityParticipantIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityParticipantIds({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/communities/getParticipantIds\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"communityId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2212,7 +2212,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getCommunityParticipants({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityParticipants({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getCommunityParticipants({\n  communityId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/communities/getParticipants\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"communityId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2243,7 +2243,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getConnectionState();",
       "nodeCall": "const result = await client.getConnectionState();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getConnectionState();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getConnectionState();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getConnectionState\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -2291,7 +2291,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getContact(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.getContact({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getContact({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getContact({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/get\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"447123456789@c.us\"\n  }\n}"
     }
@@ -2342,7 +2342,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getEvent(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.getEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/events/getEvent\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"eventId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"example\",\n    \"chatId\": \"example\",\n    \"creatorId\": \"example\",\n    \"name\": \"example\",\n    \"startTime\": 0,\n    \"isCanceled\": true,\n    \"fromMe\": true,\n    \"timestamp\": 0\n  }\n}"
     }
@@ -2393,7 +2393,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getEventResponses(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.getEventResponses({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEventResponses({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEventResponses({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/events/getEventResponses\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"eventId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2451,7 +2451,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getEvents(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.getEvents({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEvents({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getEvents({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/events/get\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"chatId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"events\": [],\n    \"nextCursor\": \"example\"\n  }\n}"
     }
@@ -2485,7 +2485,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getFeatures();",
       "nodeCall": "const result = await client.getFeatures();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getFeatures();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getFeatures();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getFeatures\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {}\n}"
     }
@@ -2537,7 +2537,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getGroupAdmins({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupAdmins({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupAdmins({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/groups/getAdmins\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"groupId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2586,7 +2586,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getGroupInfo({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupInfo({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupInfo({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/groups/getInfo\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"groupId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"title\": \"example\"\n  }\n}"
     }
@@ -2635,7 +2635,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getGroupInviteLink(\"447123456789-1445627445@g.us\");",
       "nodeCall": "const result = await client.getGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/groups/getInviteLink\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"groupId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -2686,7 +2686,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getGroupMembers(\"447123456789-1445627445@g.us\");",
       "nodeCall": "const result = await client.getGroupMembers({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupMembers({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupMembers({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/groups/getMembers\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"groupId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2740,7 +2740,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getGroupMembersId(\"447123456789-1445627445@g.us\");",
       "nodeCall": "const result = await client.getGroupMembersId({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupMembersId({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getGroupMembersId({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/groups/getMemberIds\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"groupId=447123456789-1445627445@g.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2771,7 +2771,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getHostNumber();",
       "nodeCall": "const result = await client.getHostNumber();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getHostNumber();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getHostNumber();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getHostNumber\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -2805,7 +2805,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getKickedGroups();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getKickedGroups();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getKickedGroups();",
       "http": "curl -X GET \"http://localhost:8080/api/groups/getKicked\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -2836,7 +2836,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getLicenseFeatures();",
       "nodeCall": "const result = await client.getLicenseFeatures();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLicenseFeatures();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLicenseFeatures();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getLicenseFeatures\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"status\": \"valid\",\n    \"keyType\": \"example\",\n    \"expiresAt\": 0,\n    \"features\": {}\n  }\n}"
     }
@@ -2869,7 +2869,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getLicenseType();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLicenseType();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLicenseType();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getLicenseType\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"CUSTOM\"\n}"
     }
@@ -2905,7 +2905,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getAmountOfLoadedMessages();",
       "nodeCall": "const result = await client.getLoadedMessageCount();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLoadedMessageCount();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getLoadedMessageCount();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getLoadedMessageCount\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": 0\n}"
     }
@@ -2939,7 +2939,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getMe();",
       "nodeCall": "const result = await client.getMe();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMe();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMe();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getMe\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"me\": {\n      \"server\": \"example\",\n      \"user\": \"example\",\n      \"_serialized\": \"example\"\n    }\n  }\n}"
     }
@@ -2992,7 +2992,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getMessageById(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.getMessageById({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessageById({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessageById({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/messages/get\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"messageId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"body\": \"example\",\n    \"type\": \"chat\",\n    \"t\": 0,\n    \"from\": \"447123456789@c.us\",\n    \"to\": \"447123456789@c.us\",\n    \"self\": \"in\",\n    \"ack\": \"ACK_PENDING\",\n    \"sender\": {\n      \"id\": \"447123456789@c.us\"\n    },\n    \"timestamp\": 0,\n    \"content\": \"example\",\n    \"isGroupMsg\": true,\n    \"isMedia\": true,\n    \"isNotification\": true,\n    \"fromMe\": true,\n    \"chat\": {\n      \"id\": \"447123456789@c.us\",\n      \"isGroup\": true,\n      \"contact\": {\n        \"id\": \"447123456789@c.us\"\n      }\n    },\n    \"chatId\": \"447123456789@c.us\",\n    \"isQuotedMsgAvailable\": true\n  }\n}"
     }
@@ -3043,7 +3043,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getMessageInfo({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessageInfo({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessageInfo({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/messages/getInfo\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"messageId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"deliveryRemaining\": 0,\n    \"playedRemaining\": 0,\n    \"readRemaining\": 0,\n    \"delivery\": [],\n    \"read\": [],\n    \"played\": []\n  }\n}"
     }
@@ -3107,7 +3107,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getMessagesForLLM({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessagesForLLM({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMessagesForLLM({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/messages/getForLLM\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"chatId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -3156,7 +3156,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getMyLastMessage();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMyLastMessage();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getMyLastMessage();",
       "http": "curl -X GET \"http://localhost:8080/api/messages/getMyLast\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"body\": \"example\",\n    \"type\": \"chat\",\n    \"t\": 0,\n    \"from\": \"447123456789@c.us\",\n    \"to\": \"447123456789@c.us\",\n    \"self\": \"in\",\n    \"ack\": \"ACK_PENDING\",\n    \"sender\": {\n      \"id\": \"447123456789@c.us\"\n    },\n    \"timestamp\": 0,\n    \"content\": \"example\",\n    \"isGroupMsg\": true,\n    \"isMedia\": true,\n    \"isNotification\": true,\n    \"fromMe\": true,\n    \"chat\": {\n      \"id\": \"447123456789@c.us\",\n      \"isGroup\": true,\n      \"contact\": {\n        \"id\": \"447123456789@c.us\"\n      }\n    },\n    \"chatId\": \"447123456789@c.us\",\n    \"isQuotedMsgAvailable\": true\n  }\n}"
     }
@@ -3205,7 +3205,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getNumberProfile({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getNumberProfile({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getNumberProfile({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/getNumberProfile\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {}\n}"
     }
@@ -3250,7 +3250,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getOrder({\n  id: \"id\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getOrder({\n  id: \"id\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getOrder({\n  id: \"id\",\n});",
       "http": "curl -G \"http://localhost:8080/api/business/getOrder\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"id=id\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"example\",\n    \"createdAt\": 0,\n    \"currency\": \"example\",\n    \"products\": [],\n    \"sellerJid\": \"example\",\n    \"subtotal\": \"example\",\n    \"total\": \"example\"\n  }\n}"
     }
@@ -3301,7 +3301,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getPollResults(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.getPollResults({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getPollResults({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getPollResults({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/getPollResults\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"pollId\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"chatId\": \"447123456789@c.us\",\n    \"name\": \"example\",\n    \"selectableCount\": 0,\n    \"isClosed\": true,\n    \"hideVoterNames\": true,\n    \"options\": [],\n    \"voterCount\": 0,\n    \"scope\": \"synced\"\n  }\n}"
     }
@@ -3335,7 +3335,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getProcessStats();",
       "nodeCall": "const result = await client.getProcessStats();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getProcessStats();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getProcessStats();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getProcessStats\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {}\n}"
     }
@@ -3387,7 +3387,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getProfilePic(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.getProfilePicture({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getProfilePicture({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getProfilePicture({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/contacts/getProfilePicture\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"chatId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -3456,7 +3456,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getSnapshot();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getSnapshot();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getSnapshot();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getSnapshot\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -3505,7 +3505,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getStarredMessages();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStarredMessages();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStarredMessages();",
       "http": "curl -X GET \"http://localhost:8080/api/messages/getStarred\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -3553,7 +3553,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getStatus({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStatus({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStatus({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/mystatus/getStatus\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"contactId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"example\",\n    \"status\": \"example\"\n  }\n}"
     }
@@ -3590,7 +3590,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getStories();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStories();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getStories();",
       "http": "curl -X GET \"http://localhost:8080/api/status/getAll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -3623,7 +3623,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getUnsentMessages();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getUnsentMessages();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getUnsentMessages();",
       "http": "curl -X GET \"http://localhost:8080/api/messages/getUnsent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -3675,7 +3675,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getUserAgent();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getUserAgent();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getUserAgent();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getUserAgent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -3724,7 +3724,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.getVCards({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getVCards({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getVCards({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -G \"http://localhost:8080/api/messages/getVCards\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"messageId=false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -3757,7 +3757,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getWAVersion();",
       "nodeCall": "const result = await client.getWAVersion();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getWAVersion();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.getWAVersion();",
       "http": "curl -X GET \"http://localhost:8080/api/session/getWAVersion\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -3791,7 +3791,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.healthCheck();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.healthCheck();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.healthCheck();",
       "http": "curl -X GET \"http://localhost:8080/api/session/healthCheck\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": {}\n}"
     }
@@ -3838,7 +3838,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.isChatOnline(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.isChatOnline({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.isChatOnline({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.isChatOnline({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -G \"http://localhost:8080/api/chats/isOnline\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-urlencode \"chatId=447123456789@c.us\"",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -3874,7 +3874,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.getIsPlugged();",
       "nodeCall": "const result = await client.isPlugged();",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.isPlugged();",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.isPlugged();",
       "http": "curl -X GET \"http://localhost:8080/api/session/isPlugged\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{}'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -3933,7 +3933,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.joinGroupViaLink(\"link\");",
       "nodeCall": "const result = await client.joinGroupViaLink({\n  link: \"link\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.joinGroupViaLink({\n  link: \"link\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.joinGroupViaLink({\n  link: \"link\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/groups/join\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"link\": \"link\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"447123456789-1445627445@g.us\"\n}"
     }
@@ -3982,7 +3982,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.leaveGroup(\"447123456789-1445627445@g.us\");",
       "nodeCall": "const result = await client.leaveGroup({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.leaveGroup({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.leaveGroup({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/leave\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\"\n  }'",
       "response": "{\n  \"success\": true\n}"
     }
@@ -4053,7 +4053,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.loadEarlierMessages(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.loadEarlierMessages({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.loadEarlierMessages({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.loadEarlierMessages({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/loadEarlier\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": []\n}"
     }
@@ -4100,7 +4100,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.markAsRead({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.markAsRead({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.markAsRead({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/markAsRead\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4147,7 +4147,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.markAsUnread(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.markAsUnread({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.markAsUnread({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.markAsUnread({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/markAsUnread\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4200,7 +4200,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.muteCall({}, true);",
       "nodeCall": "const result = await client.muteCall({\n  call: {},\n  muted: true,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.muteCall({\n  call: {},\n  muted: true,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.muteCall({\n  call: {},\n  muted: true,\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/muteCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {},\n    \"muted\": true\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -4257,7 +4257,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.muteChat(\"447123456789@c.us\", 1);",
       "nodeCall": "const result = await client.muteChat({\n  chatId: \"447123456789@c.us\",\n  muteDuration: 1,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.muteChat({\n  chatId: \"447123456789@c.us\",\n  muteDuration: 1,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.muteChat({\n  chatId: \"447123456789@c.us\",\n  muteDuration: 1,\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/mute\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\",\n    \"muteDuration\": 1\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -4310,7 +4310,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.observeCallAudio({});",
       "nodeCall": "const result = await client.observeCallAudio({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.observeCallAudio({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.observeCallAudio({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/observeCallAudio\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\",\n    \"observerId\": \"example\"\n  }\n}"
     }
@@ -4357,7 +4357,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.pinChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.pinChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.pinChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.pinChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/pin\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4416,7 +4416,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.pinMessage(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.pinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.pinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.pinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/pin\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4471,7 +4471,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.postImageStatus(\"image\");",
       "nodeCall": "const result = await client.postImageStatus({\n  image: \"image\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postImageStatus({\n  image: \"image\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postImageStatus({\n  image: \"image\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/status/postImage\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"image\": \"image\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -4536,7 +4536,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.postTextStatus(\"text\");",
       "nodeCall": "const result = await client.postTextStatus({\n  text: \"text\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postTextStatus({\n  text: \"text\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postTextStatus({\n  text: \"text\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/status/postText\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"text\": \"text\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -4591,7 +4591,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.postVideoStatus(\"video\");",
       "nodeCall": "const result = await client.postVideoStatus({\n  video: \"video\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postVideoStatus({\n  video: \"video\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.postVideoStatus({\n  video: \"video\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/status/postVideo\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"video\": \"video\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -4654,7 +4654,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.promoteParticipant(\"447123456789-1445627445@g.us\", \"447123456789@c.us\");",
       "nodeCall": "const result = await client.promoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.promoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.promoteParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/promoteParticipant\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4713,7 +4713,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.react({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  emoji: \"emoji\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.react({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  emoji: \"emoji\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.react({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  emoji: \"emoji\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/react\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"emoji\": \"emoji\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4756,7 +4756,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.rejectCall({});",
       "nodeCall": "const result = await client.rejectCall({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.rejectCall({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.rejectCall({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/rejectCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -4818,7 +4818,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.rejectGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.rejectGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.rejectGroupJoinRequest({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/rejectJoinRequest\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -4874,7 +4874,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.removeLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.removeLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.removeLabel({\n  label: \"label\",\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/labels/remove\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"label\": \"label\",\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4937,7 +4937,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.removeParticipant(\"447123456789-1445627445@g.us\", \"447123456789@c.us\");",
       "nodeCall": "const result = await client.removeParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.removeParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.removeParticipant({\n  groupId: \"447123456789-1445627445@g.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/removeParticipant\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -4986,7 +4986,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.requestPhoneNumber(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.requestPhoneNumber({\n  to: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.requestPhoneNumber({\n  to: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.requestPhoneNumber({\n  to: \"447123456789@c.us\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/contacts/requestPhoneNumber\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true\n}"
     }
@@ -5045,7 +5045,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.respondToEvent(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\", \"going\");",
       "nodeCall": "const result = await client.respondToEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  response: \"going\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.respondToEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  response: \"going\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.respondToEvent({\n  eventId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  response: \"going\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/events/respondToEvent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"eventId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"response\": \"going\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -5094,7 +5094,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.revokeGroupInviteLink(\"447123456789-1445627445@g.us\");",
       "nodeCall": "const result = await client.revokeGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.revokeGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.revokeGroupInviteLink({\n  groupId: \"447123456789-1445627445@g.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/revokeInviteLink\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -5192,7 +5192,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendAdvancedButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n  text: \"text\",\n  footer: \"footer\",\n  filename: \"filename\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendAdvancedButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n  text: \"text\",\n  footer: \"footer\",\n  filename: \"filename\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendAdvancedButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n  text: \"text\",\n  footer: \"footer\",\n  filename: \"filename\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendAdvancedButtons\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"buttons\": [],\n    \"text\": \"text\",\n    \"footer\": \"footer\",\n    \"filename\": \"filename\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5277,7 +5277,7 @@
     "examples": {
       "inProcessSdk": "import { readFile } from 'node:fs/promises';\n\n// Put these real image files in your process working directory.\nconst media = await Promise.all(['photo-1.jpg', 'photo-2.jpg', 'photo-3.jpg', 'photo-4.jpg'].map(async filename => ({\n  filename,\n  file: `data:image/jpeg;base64,${(await readFile(filename)).toString('base64')}`,\n})));\n\nconst result = await client.sendAlbum('447123456789@c.us', media, 'One caption for the album');",
       "nodeCall": "import { readFile } from 'node:fs/promises';\n\n// Put these real image files in your process working directory.\nconst media = await Promise.all(['photo-1.jpg', 'photo-2.jpg', 'photo-3.jpg', 'photo-4.jpg'].map(async filename => ({\n  filename,\n  file: `data:image/jpeg;base64,${(await readFile(filename)).toString('base64')}`,\n})));\n\nconst result = await client.sendAlbum({\n  to: '447123456789@c.us',\n  media,\n  caption: 'One caption for the album',\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nimport { readFile } from 'node:fs/promises';\n\n// Put these real image files in your process working directory.\nconst media = await Promise.all(['photo-1.jpg', 'photo-2.jpg', 'photo-3.jpg', 'photo-4.jpg'].map(async filename => ({\n  filename,\n  file: `data:image/jpeg;base64,${(await readFile(filename)).toString('base64')}`,\n})));\n\nconst result = await client.sendAlbum({\n  to: '447123456789@c.us',\n  media,\n  caption: 'One caption for the album',\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nimport { readFile } from 'node:fs/promises';\n\n// Put these real image files in your process working directory.\nconst media = await Promise.all(['photo-1.jpg', 'photo-2.jpg', 'photo-3.jpg', 'photo-4.jpg'].map(async filename => ({\n  filename,\n  file: `data:image/jpeg;base64,${(await readFile(filename)).toString('base64')}`,\n})));\n\nconst result = await client.sendAlbum({\n  to: '447123456789@c.us',\n  media,\n  caption: 'One caption for the album',\n});",
       "http": "# Save an album request as album.json with \"to\", \"caption\", and \"media\".\n# Each media item needs \"filename\" and \"file\" containing a real image/video data URL.\n# See /docs/guides/messages#albums for encoding real files.\ncurl -X POST \"http://localhost:8080/api/messages/sendAlbum\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data-binary @album.json",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"albumId\": \"true_447123456789@c.us_ALBUM123\",\n    \"messageIds\": [\n      \"true_447123456789@c.us_PHOTO1\",\n      \"true_447123456789@c.us_PHOTO2\",\n      \"true_447123456789@c.us_PHOTO3\",\n      \"true_447123456789@c.us_PHOTO4\"\n    ]\n  }\n}"
     }
@@ -5356,7 +5356,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendAudio(\"447123456789@c.us\", \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\");",
       "nodeCall": "const result = await client.sendAudio({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendAudio({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendAudio({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendAudio\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"file\": \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5414,7 +5414,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendBanner({\n  to: \"447123456789@c.us\",\n  base64: \"base64\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendBanner({\n  to: \"447123456789@c.us\",\n  base64: \"base64\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendBanner({\n  to: \"447123456789@c.us\",\n  base64: \"base64\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendBanner\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"base64\": \"base64\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5502,7 +5502,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendButtons({\n  to: \"447123456789@c.us\",\n  buttons: [],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendButtons\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"buttons\": []\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5561,7 +5561,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendContact(\"447123456789@c.us\", \"447123456789@c.us\");",
       "nodeCall": "const result = await client.sendContact({\n  to: \"447123456789@c.us\",\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendContact({\n  to: \"447123456789@c.us\",\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendContact({\n  to: \"447123456789@c.us\",\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendContact\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5620,7 +5620,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendEvent(\"447123456789@c.us\", {\"name\":\"Community meetup\",\"startTime\":1893456000,\"description\":\"Meet the community\"});",
       "nodeCall": "const result = await client.sendEvent({\n  to: \"447123456789@c.us\",\n  event: {\"name\":\"Community meetup\",\"startTime\":1893456000,\"description\":\"Meet the community\"},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendEvent({\n  to: \"447123456789@c.us\",\n  event: {\"name\":\"Community meetup\",\"startTime\":1893456000,\"description\":\"Meet the community\"},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendEvent({\n  to: \"447123456789@c.us\",\n  event: {\"name\":\"Community meetup\",\"startTime\":1893456000,\"description\":\"Meet the community\"},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/events/sendEvent\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"event\": {\n      \"name\": \"Community meetup\",\n      \"startTime\": 1893456000,\n      \"description\": \"Meet the community\"\n    }\n  }'",
       "response": "{\n  \"success\": true\n}"
     }
@@ -5699,7 +5699,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendFile(\"447123456789@c.us\", \"data:application/pdf;base64,JVBERi0xLjQK...\");",
       "nodeCall": "const result = await client.sendFile({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendFile({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendFile({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendFile\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"file\": \"data:application/pdf;base64,JVBERi0xLjQK...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5788,7 +5788,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendFileFromUrl({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendFileFromUrl({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendFileFromUrl({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendFileFromUrl\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"url\": \"url\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5867,7 +5867,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendImage(\"447123456789@c.us\", \"data:application/pdf;base64,JVBERi0xLjQK...\");",
       "nodeCall": "const result = await client.sendImage({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendImage({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendImage({\n  to: \"447123456789@c.us\",\n  file: \"data:application/pdf;base64,JVBERi0xLjQK...\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendImage\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"file\": \"data:application/pdf;base64,JVBERi0xLjQK...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -5925,7 +5925,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendInteractive(\"447123456789@c.us\", {});",
       "nodeCall": "const result = await client.sendInteractive({\n  to: \"447123456789@c.us\",\n  content: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendInteractive({\n  to: \"447123456789@c.us\",\n  content: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendInteractive({\n  to: \"447123456789@c.us\",\n  content: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendInteractive\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"content\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -6036,7 +6036,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendLinkWithAutoPreview({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendLinkWithAutoPreview({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendLinkWithAutoPreview({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendLinkWithAutoPreview\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"url\": \"url\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6125,7 +6125,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendListMessage({\n  to: \"447123456789@c.us\",\n  sections: [],\n  title: \"title\",\n  description: \"description\",\n  actionText: \"actionText\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendListMessage({\n  to: \"447123456789@c.us\",\n  sections: [],\n  title: \"title\",\n  description: \"description\",\n  actionText: \"actionText\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendListMessage({\n  to: \"447123456789@c.us\",\n  sections: [],\n  title: \"title\",\n  description: \"description\",\n  actionText: \"actionText\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendList\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"sections\": [],\n    \"title\": \"title\",\n    \"description\": \"description\",\n    \"actionText\": \"actionText\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6224,7 +6224,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendLocation(\"447123456789@c.us\", 51.5074, -0.1278);",
       "nodeCall": "const result = await client.sendLocation({\n  to: \"447123456789@c.us\",\n  lat: 51.5074,\n  lng: -0.1278,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendLocation({\n  to: \"447123456789@c.us\",\n  lat: 51.5074,\n  lng: -0.1278,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendLocation({\n  to: \"447123456789@c.us\",\n  lat: 51.5074,\n  lng: -0.1278,\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendLocation\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"lat\": 51.5074,\n    \"lng\": -0.1278\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6355,7 +6355,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendMessageWithThumb({\n  thumb: \"thumb\",\n  url: \"url\",\n  title: \"title\",\n  description: \"description\",\n  content: \"Hello, world!\",\n  to: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendMessageWithThumb({\n  thumb: \"thumb\",\n  url: \"url\",\n  title: \"title\",\n  description: \"description\",\n  content: \"Hello, world!\",\n  to: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendMessageWithThumb({\n  thumb: \"thumb\",\n  url: \"url\",\n  title: \"title\",\n  description: \"description\",\n  content: \"Hello, world!\",\n  to: \"447123456789@c.us\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendLinkWithThumbnail\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"thumb\": \"thumb\",\n    \"url\": \"url\",\n    \"title\": \"title\",\n    \"description\": \"description\",\n    \"content\": \"Hello, world!\",\n    \"to\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6419,7 +6419,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendMultipleContacts(\"447123456789@c.us\", [\"447123456789@c.us\"]);",
       "nodeCall": "const result = await client.sendMultipleContacts({\n  to: \"447123456789@c.us\",\n  contactIds: [\"447123456789@c.us\"],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendMultipleContacts({\n  to: \"447123456789@c.us\",\n  contactIds: [\"447123456789@c.us\"],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendMultipleContacts({\n  to: \"447123456789@c.us\",\n  contactIds: [\"447123456789@c.us\"],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendContacts\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"contactIds\": [\n      \"447123456789@c.us\"\n    ]\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6497,7 +6497,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendPaymentRequest({\n  to: \"447123456789@c.us\",\n  amount: 1,\n  currency: \"currency\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPaymentRequest({\n  to: \"447123456789@c.us\",\n  amount: 1,\n  currency: \"currency\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPaymentRequest({\n  to: \"447123456789@c.us\",\n  amount: 1,\n  currency: \"currency\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendPaymentRequest\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"amount\": 1,\n    \"currency\": \"currency\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6576,7 +6576,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendPoll(\"447123456789@c.us\", \"name\", [\"Yes\", \"No\"]);",
       "nodeCall": "const result = await client.sendPoll({\n  to: \"447123456789@c.us\",\n  name: \"name\",\n  options: [\"Yes\", \"No\"],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPoll({\n  to: \"447123456789@c.us\",\n  name: \"name\",\n  options: [\"Yes\", \"No\"],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPoll({\n  to: \"447123456789@c.us\",\n  name: \"name\",\n  options: [\"Yes\", \"No\"],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendPoll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"name\": \"name\",\n    \"options\": [\n      \"Yes\",\n      \"No\"\n    ]\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6647,7 +6647,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendPtt(\"447123456789@c.us\", \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\");",
       "nodeCall": "const result = await client.sendPtt({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPtt({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendPtt({\n  to: \"447123456789@c.us\",\n  file: \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendPtt\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"file\": \"data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAA...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6705,7 +6705,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendRawMessage(\"447123456789@c.us\", {});",
       "nodeCall": "const result = await client.sendRawMessage({\n  to: \"447123456789@c.us\",\n  payload: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendRawMessage({\n  to: \"447123456789@c.us\",\n  payload: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendRawMessage({\n  to: \"447123456789@c.us\",\n  payload: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendRaw\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"payload\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -6804,7 +6804,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendReplyWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n  replyMessageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendReplyWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n  replyMessageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendReplyWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n  replyMessageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendReplyWithMentions\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"content\": \"Hello, world!\",\n    \"replyMessageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6851,7 +6851,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendSeen(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.sendSeen({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendSeen({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendSeen({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/messages/sendSeen\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -6920,7 +6920,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendSticker(\"447123456789@c.us\", \"input\");",
       "nodeCall": "const result = await client.sendSticker({\n  to: \"447123456789@c.us\",\n  input: \"input\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendSticker({\n  to: \"447123456789@c.us\",\n  input: \"input\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendSticker({\n  to: \"447123456789@c.us\",\n  input: \"input\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendSticker\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"input\": \"input\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -6931,7 +6931,7 @@
     "name": "sendText",
     "namespacedName": "messages.sendText",
     "namespace": "messages",
-    "description": "Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch.",
+    "description": "Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the EULAB development branch.",
     "license": null,
     "aliases": [
       "messages.sendText"
@@ -6985,7 +6985,7 @@
     },
     "sdkReturnType": "MessageId",
     "returnCaveat": "Validated serialized message ID. This confirms the send returned an ID, not delivery or reading.",
-    "returnNotes": "Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@open-wa/wa-automate` and `@open-wa/client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the Eulab development branch. HTTP and remote clients expose failures through their own error envelopes.",
+    "returnNotes": "Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@eulab/openwaunlocked` and `@eulab/openwaunlocked-client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the EULAB development branch. HTTP and remote clients expose failures through their own error envelopes.",
     "route": {
       "method": "POST",
       "path": "/api/messages/sendText",
@@ -6994,7 +6994,7 @@
     "examples": {
       "inProcessSdk": "const messageId = await client.sendText('447123456789@c.us', 'Hello from open-wa');\nconsole.log('Message ID:', messageId);",
       "nodeCall": "const messageId = await client.sendText(\"447123456789@c.us\", \"Hello, world!\");\nconsole.log('Message ID:', messageId);",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst messageId = await client.sendText(\"447123456789@c.us\", \"Hello, world!\");\nconsole.log('Message ID:', messageId);",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst messageId = await client.sendText(\"447123456789@c.us\", \"Hello, world!\");\nconsole.log('Message ID:', messageId);",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendText\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"content\": \"Hello, world!\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -7077,7 +7077,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendTextWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendTextWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendTextWithMentions({\n  to: \"447123456789@c.us\",\n  content: \"Hello, world!\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendTextWithMentions\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"content\": \"Hello, world!\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -7156,7 +7156,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendVCard(\"447123456789@c.us\", \"vcard\");",
       "nodeCall": "const result = await client.sendVCard({\n  to: \"447123456789@c.us\",\n  vcard: \"vcard\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendVCard({\n  to: \"447123456789@c.us\",\n  vcard: \"vcard\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendVCard({\n  to: \"447123456789@c.us\",\n  vcard: \"vcard\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendVCard\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"vcard\": \"vcard\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -7235,7 +7235,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sendVideoAsGif(\"447123456789@c.us\", \"data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21...\");",
       "nodeCall": "const result = await client.sendVideoAsGif({\n  to: \"447123456789@c.us\",\n  file: \"data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendVideoAsGif({\n  to: \"447123456789@c.us\",\n  file: \"data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendVideoAsGif({\n  to: \"447123456789@c.us\",\n  file: \"data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21...\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendVideoAsGif\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"file\": \"data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -7349,7 +7349,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.sendYouTubeLink({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendYouTubeLink({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sendYouTubeLink({\n  to: \"447123456789@c.us\",\n  url: \"url\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/sendYouTubeLink\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\",\n    \"url\": \"url\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"true_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n}"
     }
@@ -7402,7 +7402,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.setCallMedia({});",
       "nodeCall": "const result = await client.setCallMedia({\n  call: {},\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setCallMedia({\n  call: {},\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setCallMedia({\n  call: {},\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/setCallMedia\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {}\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -7459,7 +7459,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setChatEphemeral({\n  chatId: \"447123456789@c.us\",\n  ephemeral: 1,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setChatEphemeral({\n  chatId: \"447123456789@c.us\",\n  ephemeral: 1,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setChatEphemeral({\n  chatId: \"447123456789@c.us\",\n  ephemeral: 1,\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/setEphemeral\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\",\n    \"ephemeral\": 1\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7518,7 +7518,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setGroupDescription({\n  groupId: \"447123456789-1445627445@g.us\",\n  description: \"description\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupDescription({\n  groupId: \"447123456789-1445627445@g.us\",\n  description: \"description\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupDescription({\n  groupId: \"447123456789-1445627445@g.us\",\n  description: \"description\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/setDescription\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"description\": \"description\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7578,7 +7578,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setGroupEditToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupEditToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupEditToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/setEditAdminsOnly\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"onlyAdmins\": true\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7637,7 +7637,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.setGroupIcon(\"447123456789-1445627445@g.us\", \"image\");",
       "nodeCall": "const result = await client.setGroupIcon({\n  groupId: \"447123456789-1445627445@g.us\",\n  image: \"image\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupIcon({\n  groupId: \"447123456789-1445627445@g.us\",\n  image: \"image\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupIcon({\n  groupId: \"447123456789-1445627445@g.us\",\n  image: \"image\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/setIcon\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"image\": \"image\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7696,7 +7696,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setGroupTitle({\n  groupId: \"447123456789-1445627445@g.us\",\n  title: \"title\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupTitle({\n  groupId: \"447123456789-1445627445@g.us\",\n  title: \"title\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupTitle({\n  groupId: \"447123456789-1445627445@g.us\",\n  title: \"title\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/setTitle\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"title\": \"title\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7756,7 +7756,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setGroupToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setGroupToAdminsOnly({\n  groupId: \"447123456789-1445627445@g.us\",\n  onlyAdmins: true,\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/groups/setAdminsOnly\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"groupId\": \"447123456789-1445627445@g.us\",\n    \"onlyAdmins\": true\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7806,7 +7806,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.setMyName(\"OpenWA Bot\");",
       "nodeCall": "const result = await client.setMyName({\n  name: \"OpenWA Bot\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setMyName({\n  name: \"OpenWA Bot\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setMyName({\n  name: \"OpenWA Bot\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/session/setName\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"name\": \"OpenWA Bot\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7856,7 +7856,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.setMyStatus(\"Available\");",
       "nodeCall": "const result = await client.setMyStatus({\n  statusText: \"Available\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setMyStatus({\n  statusText: \"Available\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setMyStatus({\n  statusText: \"Available\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/session/setStatus\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"statusText\": \"Available\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7905,7 +7905,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.setProfilePicture({\n  image: \"data:image/png;base64,iVBORw0KGgo...\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setProfilePicture({\n  image: \"data:image/png;base64,iVBORw0KGgo...\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.setProfilePicture({\n  image: \"data:image/png;base64,iVBORw0KGgo...\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/session/setProfilePicture\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"image\": \"data:image/png;base64,iVBORw0KGgo...\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -7954,7 +7954,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.sharePhoneNumber(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.sharePhoneNumber({\n  to: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sharePhoneNumber({\n  to: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.sharePhoneNumber({\n  to: \"447123456789@c.us\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/contacts/sharePhoneNumber\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true\n}"
     }
@@ -8003,7 +8003,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.starMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.starMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.starMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/messages/star\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8076,7 +8076,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.startCall(\"to\");",
       "nodeCall": "const result = await client.startCall({\n  to: \"to\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.startCall({\n  to: \"to\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.startCall({\n  to: \"to\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/startCall\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"to\": \"to\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -8129,7 +8129,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.stopCallAudioObserver({}, \"observerId\");",
       "nodeCall": "const result = await client.stopCallAudioObserver({\n  call: {},\n  observerId: \"observerId\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.stopCallAudioObserver({\n  call: {},\n  observerId: \"observerId\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.stopCallAudioObserver({\n  call: {},\n  observerId: \"observerId\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/calls/stopCallAudioObserver\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"call\": {},\n    \"observerId\": \"observerId\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": {\n    \"ok\": true,\n    \"status\": \"requested\"\n  }\n}"
     }
@@ -8176,7 +8176,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.unarchiveChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.unarchiveChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unarchiveChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unarchiveChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/unarchive\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8227,7 +8227,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.unblockContact(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.unblockContact({\n  contactId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unblockContact({\n  contactId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unblockContact({\n  contactId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/contacts/unblock\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"contactId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8274,7 +8274,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.unmuteChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.unmuteChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unmuteChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unmuteChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/unmute\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": \"example\"\n}"
     }
@@ -8321,7 +8321,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.unpinChat(\"447123456789@c.us\");",
       "nodeCall": "const result = await client.unpinChat({\n  chatId: \"447123456789@c.us\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unpinChat({\n  chatId: \"447123456789@c.us\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unpinChat({\n  chatId: \"447123456789@c.us\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/chats/unpin\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"chatId\": \"447123456789@c.us\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8370,7 +8370,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.unpinMessage(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\");",
       "nodeCall": "const result = await client.unpinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unpinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unpinMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/unpin\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8419,7 +8419,7 @@
     "examples": {
       "inProcessSdk": "",
       "nodeCall": "const result = await client.unstarMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unstarMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.unstarMessage({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n});",
       "http": "curl -X PUT \"http://localhost:8080/api/messages/unstar\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\"\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }
@@ -8478,7 +8478,7 @@
     "examples": {
       "inProcessSdk": "const result = await client.voteOnPoll(\"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\", []);",
       "nodeCall": "const result = await client.voteOnPoll({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  optionIds: [],\n});",
-      "nodeClient": "import { SocketClient } from '@open-wa/socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.voteOnPoll({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  optionIds: [],\n});",
+      "nodeClient": "import { SocketClient } from '@eulab/openwaunlocked-socket-client';\n\nconst client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');\nconst result = await client.voteOnPoll({\n  messageId: \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n  optionIds: [],\n});",
       "http": "curl -X POST \"http://localhost:8080/api/messages/voteOnPoll\" \\\n  -H \"content-type: application/json\" \\\n  -H \"x-api-key: YOUR_API_KEY\" \\\n  --data '{\n    \"messageId\": \"false_447123456789@c.us_9C4D0965EA5C09D591334AB6BDB07FEB\",\n    \"optionIds\": []\n  }'",
       "response": "{\n  \"success\": true,\n  \"data\": true\n}"
     }

@@ -6,7 +6,7 @@ pack). Never invent content.
 
 ## 0. What open-wa actually is (research, 12 Oct 2026)
 
-open-wa (`@open-wa/wa-automate`) is an open-source Node.js toolkit, maintained
+open-wa (`@eulab/openwaunlocked`) is an open-source Node.js toolkit, maintained
 by Mohammed Shah since 2019, that drives WhatsApp Web in a browser it controls
 and gives your code the account's chats, messages and events. One `npx`
 command turns a phone's WhatsApp account into a local HTTP API with
@@ -22,7 +22,7 @@ Brazil, Indonesia, the Gulf, Africa), on fast laptops at work and mid-range
 Android phones otherwise. English is their working language for code.
 
 Real usage signals (dated, quote with the date): 3,666 GitHub stars, 723
-forks, about 105k npm downloads of `@open-wa/wa-automate` in the last 12
+forks, about 105k npm downloads of `@eulab/openwaunlocked` in the last 12
 months (16.5k in the last 30 days), 43.5k Docker pulls, about 1,050 Discord
 members, 648 published versions.
 
@@ -216,7 +216,7 @@ Never present them as customers.
 ## 9. Product truth
 
 All facts are in `_shared/content/openwa.json`. Import only the fields you
-render. Primary CTA: copy `npx @open-wa/wa-automate@latest --port 8080`, then
+render. Primary CTA: copy `npx @eulab/openwaunlocked@latest --port 8080`, then
 "Quick start" → `/quickstart/`. Docs: `https://openwa.dev/docs`.
 
 ## 10. Copy notes

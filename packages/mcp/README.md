@@ -1,13 +1,13 @@
-# @open-wa/mcp
+# @eulab/openwaunlocked-mcp
 
 MCP server integration for open-wa
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-pnpm add @open-wa/mcp
+pnpm add @eulab/openwaunlocked-mcp
 ```
 
 ## Documentation
@@ -29,4 +29,4 @@ the [event contracts](https://openwa.dev/docs/reference/event-contracts).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

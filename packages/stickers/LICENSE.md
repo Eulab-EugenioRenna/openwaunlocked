@@ -1,3 +1,8 @@
+# EULAB OpenWA Unlocked
+
+Copyright (c) 2026 EULAB for modifications to this fork.
+The original source terms and attributions below remain in effect.
+
 ### Copyright (c) 2020 Mohammed Shah
 
 # Hippocratic + Do Not Harm (H-DNH) Version 1.1

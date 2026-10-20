@@ -20,7 +20,7 @@ OpenWA 5.6 brings generated event contracts, signed MCP subscriptions, and an Ef
 The shared `ev` and socket clients now use HyperEmitter instead of a direct EventEmitter2 dependency. Ordinary callbacks still run synchronously, with variadic arguments, namespace wildcards, listener context, and the existing subscription helpers.
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.on('app.job.finished', ({ jobId }) => console.log(jobId));
 ev.emit('app.job.finished', { jobId: 'daily-summary' });
@@ -51,11 +51,11 @@ Hosted MCP serves protocol `2026-07-28`; use a compatible MCP 2.0 client and a p
 ## Upgrade
 
 ```sh
-npm install @open-wa/wa-automate@5.6.0 @open-wa/driver-puppeteer@5.6.0
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0
 # For remote Easy API clients:
-npm install @open-wa/socket-client@5.6.0
+npm install @eulab/openwaunlocked-socket-client@1.0.0
 ```
 
-All 28 packages in the fixed OpenWA group move to 5.6.0. `@open-wa/runtime-node` moves to 5.1.2 for its updated internal dependencies.
+All 28 packages in the fixed OpenWA group move to 5.6.0. `@eulab/openwaunlocked-runtime-node` moves to 5.1.2 for its updated internal dependencies.
 
-[Full diff](https://github.com/open-wa/wa-automate-nodejs/compare/v5.5.1...v5.6.0)
+[Full diff](https://github.com/Eulab-EugenioRenna/openwaunlocked/compare/v5.5.1...v5.6.0)

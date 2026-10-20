@@ -39,13 +39,13 @@ the [known gaps](#known-gaps) before moving a workflow that depends on them.
 
 ## What needs to change?
 
-This table describes an application that imports `@open-wa/wa-automate` and
+This table describes an application that imports `@eulab/openwaunlocked` and
 owns its WhatsApp browser session. Remote consumers also need the
 [Easy API and SocketClient changes](#migrate-easy-api-and-socketclient).
 
 | Your v4 code | What to do in v5 |
 | --- | --- |
-| `import { create } from '@open-wa/wa-automate'` | Keep it! `create()` returns a ready messaging client. You do not need to replace it with `createClient()`. |
+| `import { create } from '@eulab/openwaunlocked'` | Keep it! `create()` returns a ready messaging client. You do not need to replace it with `createClient()`. |
 | `client.onMessage(callback)` and `client.onAnyMessage(callback)` | Keep the callback pattern. Update any code that uses the registration result or removes listeners. |
 | `client.sendText(to, text)` | Keep the arguments. Handle a thrown error instead of checking for a `false` result. |
 | `client.kill()` | Replace it with `client.stop()` to close the browser. |
@@ -68,17 +68,17 @@ Once the release containing these fixes is available, run this in your existing
 application directory with [Bun installed](https://bun.sh/docs/installation):
 
 ```bash
-bun add @open-wa/wa-automate@latest
+bun add @eulab/openwaunlocked@latest
 ```
 
 You do not need to run the initializer over an existing application. If you
-already depend directly on other `@open-wa` packages, update those dependencies
+already depend directly on other `@eulab` packages, update those dependencies
 to compatible v5 releases too; do not combine a v4 remote client with a v5
 server. See the [package guide](/docs/concepts/packages) for what each package
 provides.
 
 Keep imports on public package exports. Replace any private import such as
-`@open-wa/wa-automate/dist/...` with its public equivalent.
+`@eulab/openwaunlocked/dist/...` with its public equivalent.
 The [client reference](/docs/reference/client) lists the public types and methods.
 
 ## 2. Keep create and update shutdown
@@ -86,7 +86,7 @@ The [client reference](/docs/reference/client) lists the public types and method
 A typical v4 bot looks like this:
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({ sessionId: 'support', multiDevice: true });
 
@@ -102,7 +102,7 @@ process.once('SIGINT', () => void client.kill());
 In v5, the same bot can use this complete `index.ts`:
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create({
   sessionId: 'support',
@@ -232,7 +232,7 @@ secret-loading path and can also come from `OPENWA_SESSION_DATA_ENCRYPTION_KEY`
 or `WA_SESSION_DATA_ENCRYPTION_KEY`, or their `_FILE` variants.
 
 ```ts
-import { create, type CreateOptions } from '@open-wa/wa-automate';
+import { create, type CreateOptions } from '@eulab/openwaunlocked';
 
 const options = {
   sessionId: 'support',
@@ -321,7 +321,7 @@ application events between files.
 Put the listener in `events.ts`:
 
 ```ts
-import { ev } from '@open-wa/wa-automate';
+import { ev } from '@eulab/openwaunlocked';
 
 ev.on('client.ready', (_event, sessionId) => {
   console.log(`Session ${sessionId} is ready`);
@@ -340,7 +340,7 @@ Import it before startup in `index.ts`:
 
 ```ts
 import './events';
-import { create, ev } from '@open-wa/wa-automate';
+import { create, ev } from '@eulab/openwaunlocked';
 
 const client = await create({ sessionId: 'support', sessionDataPath: './v5-sessions' });
 ev.emit('app.job.finished', { jobId: 'daily-summary' });
@@ -445,7 +445,7 @@ error handling. A browser connection can fail after a message was submitted,
 so a blind retry can send it twice.
 
 ```ts
-import { SendTextError } from '@open-wa/wa-automate';
+import { SendTextError } from '@eulab/openwaunlocked';
 
 // Inside your existing message handler:
 try {
@@ -478,7 +478,7 @@ session name and private bind address:
 ```bash
 mkdir open-wa-v5
 cd open-wa-v5
-bunx --bun @open-wa/wa-automate@latest --session-id migration --host 127.0.0.1 --port 8080
+bunx --bun @eulab/openwaunlocked@latest --session-id migration --host 127.0.0.1 --port 8080
 ```
 
 Scan the terminal QR code from **Linked Devices** on your phone. Keep the new
@@ -529,11 +529,11 @@ commands and Server-Sent Events for events. It is not a Socket.IO connection.
 Update any reverse proxy rules or custom Socket.IO code accordingly.
 
 ```bash
-bun add @open-wa/socket-client@latest
+bun add @eulab/openwaunlocked-socket-client@latest
 ```
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect(
   'http://127.0.0.1:8080',

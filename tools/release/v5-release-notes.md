@@ -32,11 +32,11 @@ Easy API can expose its schema as MCP tools at `/mcp`. Tool discovery and execut
 
 ### 01 / Pin or opt in deliberately
 
-`npm` now resolves `@open-wa/wa-automate@latest` to v5. Existing v4 deployments should pin `4.76.0` until their code and configuration are migrated. Start a separate v5 Easy API instance and verify login, named sessions, and recovery before switching traffic.
+`npm` now resolves `@eulab/openwaunlocked@latest` to v5. Existing v4 deployments should pin `4.76.0` until their code and configuration are migrated. Start a separate v5 Easy API instance and verify login, named sessions, and recovery before switching traffic.
 
 ### 02 / Update the edges that changed
 
-Move remote consumers to SocketClient and embedded users to `createClient`. Configure webhooks with `@open-wa/integration-webhook` in `wa.config.*`; the v5 CLI accepts `--webhook` but does not register delivery. Webhook receivers should read `payload` in the new `{ webhookId, sessionId, event, payload, timestamp }` envelope, rather than v4-style `data`.
+Move remote consumers to SocketClient and embedded users to `createClient`. Configure webhooks with `@eulab/openwaunlocked-integration-webhook` in `wa.config.*`; the v5 CLI accepts `--webhook` but does not register delivery. Webhook receivers should read `payload` in the new `{ webhookId, sessionId, event, payload, timestamp }` envelope, rather than v4-style `data`.
 
 ### 03 / Check the live contract
 
@@ -46,4 +46,4 @@ Open `/api-docs/` on your running Easy API and compare the methods and schemas y
 
 The attached numbered images contain the complete package-level changelogs in readable pages. Start with the [Easy API guide](https://openwa.dev/docs/getting-started/easy-api), [SocketClient guide](https://openwa.dev/docs/client-and-integrations/socket-client), [configuration guide](https://openwa.dev/docs/guides/configuration-and-cli), and [webhook guide](https://openwa.dev/docs/guides/webhooks-for-business).
 
-Compare the source since the last v4 release: [4.76.0…v5.0.0](https://github.com/open-wa/wa-automate-nodejs/compare/4.76.0...v5.0.0).
+Compare the source since the last v4 release: [4.76.0…v5.0.0](https://github.com/Eulab-EugenioRenna/openwaunlocked/compare/4.76.0...v5.0.0).

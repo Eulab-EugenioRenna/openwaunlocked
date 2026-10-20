@@ -1,12 +1,12 @@
-# @open-wa/integration-webhook
+# @eulab/openwaunlocked-integration-webhook
 
 Webhook delivery integration plugin for open-wa
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## What it does
 
-`@open-wa/integration-webhook` forwards public open-wa events to an external URL with HTTP `POST`. It supports event filtering, custom headers, request timeouts, retry with exponential backoff, and concurrent delivery through a queue.
+`@eulab/openwaunlocked-integration-webhook` forwards public open-wa events to an external URL with HTTP `POST`. It supports event filtering, custom headers, request timeouts, retry with exponential backoff, and concurrent delivery through a queue.
 
 Use this integration to send open-wa runtime events to another service without direct open-wa integration.
 
@@ -63,10 +63,10 @@ Persist the receiver's inbox record or idempotency key before returning `2xx`. T
 
 ## Development
 
-- `pnpm --filter @open-wa/integration-webhook build`
-- `pnpm --filter @open-wa/integration-webhook dev`
-- `pnpm --filter @open-wa/integration-webhook lint`
-- `pnpm --filter @open-wa/integration-webhook clean`
+- `pnpm --filter @eulab/openwaunlocked-integration-webhook build`
+- `pnpm --filter @eulab/openwaunlocked-integration-webhook dev`
+- `pnpm --filter @eulab/openwaunlocked-integration-webhook lint`
+- `pnpm --filter @eulab/openwaunlocked-integration-webhook clean`
 
 ## Documentation
 
@@ -74,4 +74,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

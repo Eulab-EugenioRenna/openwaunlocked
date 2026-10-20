@@ -1,5 +1,5 @@
 > [!NOTE]
-> **Eulab Open · branch dev/free-use-offline:** versione di sviluppo con accesso
+> **EULAB OpenWAUnlocked · master:** versione di sviluppo con accesso
 > Open alle API e patch locali. Le API ricostruite richiedono ancora accettazione live.
 > Vedi [stato, limiti e Docker di prova](docs/development/free-use-offline.md) e
 > [prossima implementazione](docs/development/NEXT-IMPLEMENTATION.md).
@@ -11,19 +11,19 @@
 > This project is unofficial and is not affiliated with WhatsApp or Meta. Use it at your own risk.
 
 > [!NOTE]
-> Version 5 is the current release line. Existing v4 applications should use an
-> explicit v4 version while they migrate; unqualified installs use v5.
+> EULAB packages use version 1.0.0 and the npm scope `@eulab`.
+> Install `@eulab/openwaunlocked`; the CLI command is `openwaunlocked`.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/open-wa/wa-automate-nodejs/master/resources/hotfix-logo.png" width="128" height="128"/>
+<img src="resources/hotfix-logo.png" width="128" height="128"/>
 
-# Eulab Open / wa-automate
+# EULAB OpenWAUnlocked
 
 **Turn a WhatsApp account into an API, bot runtime, webhook bridge, and AI tool surface.**
 
-[![npm version](https://img.shields.io/npm/v/@open-wa/wa-automate.svg?color=green)](https://www.npmjs.com/package/@open-wa/wa-automate)
-![node](https://img.shields.io/node/v/@open-wa/wa-automate)
-[![Downloads](https://img.shields.io/npm/dm/@open-wa/wa-automate.svg)](https://www.npmjs.com/package/@open-wa/wa-automate)
+[![npm version](https://img.shields.io/npm/v/@eulab/openwaunlocked.svg?color=green)](https://www.npmjs.com/package/@eulab/openwaunlocked)
+![node](https://img.shields.io/node/v/@eulab/openwaunlocked)
+[![Downloads](https://img.shields.io/npm/dm/@eulab/openwaunlocked.svg)](https://www.npmjs.com/package/@eulab/openwaunlocked)
 <a href="https://discord.gg/dnpp72a"><img src="https://img.shields.io/discord/661438166758195211?color=blueviolet&label=discord&style=flat" /></a>
 
 <p align="center">
@@ -39,9 +39,9 @@
 
 ## What this is
 
-`@open-wa/wa-automate` is a Node.js toolkit for WhatsApp Web automation. You can make a local API, bot backend, webhook source, plugin host, or MCP server.
+`@eulab/openwaunlocked` is a Node.js toolkit for WhatsApp Web automation. You can make a local API, bot backend, webhook source, plugin host, or MCP server.
 
-This repository is the **v5 monorepo**. Its packages share the stable **5.0.0** release and use separate modules for the runtime, drivers, API, and integrations.
+This is the **EULAB OpenWAUnlocked monorepo**, based on OpenWA v5. Its packages share version **1.0.0** under the **@eulab** npm scope, with separate modules for the runtime, drivers, API, and integrations. EULAB maintains the fork; original and third-party license notices remain applicable.
 
 Need a WhatsApp API running quickly? Start with **Easy API**. Want the browser/runtime inside your own app? Use the **embedded runtime**. Building integrations, proxying sessions, or exposing WhatsApp to an AI agent? Those surfaces are in this repo too.
 
@@ -92,7 +92,7 @@ You can use this project in a few practical ways:
 Want to convert a WhatsApp account into an API with the least ceremony? Run the CLI:
 
 ```bash
-npx @open-wa/wa-automate@latest --port 8080
+npx @eulab/openwaunlocked@latest --port 8080
 ```
 
 That starts an Easy API instance, launches the first-run authentication flow, and exposes interactive docs for the live session.
@@ -123,13 +123,13 @@ Useful first commands:
 
 ```bash
 # choose a port
-npx @open-wa/wa-automate@latest --port 8080
+npx @eulab/openwaunlocked@latest --port 8080
 
 # provide your own API key
-npx @open-wa/wa-automate@latest --port 8080 --api-key "your-secure-key"
+npx @eulab/openwaunlocked@latest --port 8080 --api-key "your-secure-key"
 
 # run a named session
-npx @open-wa/wa-automate@latest --session-id sales --port 8081
+npx @eulab/openwaunlocked@latest --session-id sales --port 8081
 ```
 
 Good defaults for a first real session:
@@ -138,7 +138,7 @@ Good defaults for a first real session:
 - protect the API with an `--api-key` before exposing it outside your machine
 - keep business logic in your own app and let open-wa own the WhatsApp runtime
 
-If your goal is simply "connect WhatsApp to another service", configure `@open-wa/integration-webhook` in `wa.config.*`. The v5 CLI parses `--webhook` but currently warns that CLI webhook registration parity is not restored, so that flag does not enable source-backed delivery. See [Webhooks for Business](apps/docs/content/docs/guides/webhooks-for-business.mdx) for the working configuration.
+If your goal is simply "connect WhatsApp to another service", configure `@eulab/openwaunlocked-integration-webhook` in `wa.config.*`. The v5 CLI parses `--webhook` but currently warns that CLI webhook registration parity is not restored, so that flag does not enable source-backed delivery. See [Webhooks for Business](apps/docs/content/docs/guides/webhooks-for-business.mdx) for the working configuration.
 
 If you prefer Docker:
 
@@ -159,13 +159,13 @@ Building a bot, worker, or app integration? Keep the WhatsApp runtime in Easy AP
 Start the runtime:
 
 ```bash
-npx @open-wa/wa-automate@latest --port 8080 --api-key "your-secure-key"
+npx @eulab/openwaunlocked@latest --port 8080 --api-key "your-secure-key"
 ```
 
 Install the remote consumer in your app:
 
 ```bash
-npm install @open-wa/socket-client
+npm install @eulab/openwaunlocked-socket-client
 ```
 
 Keep the Easy API process running. Your app is a remote consumer, not the runtime host.
@@ -173,7 +173,7 @@ Keep the Easy API process running. Your app is a remote consumer, not the runtim
 Then connect from your app:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 async function start() {
   const client = await SocketClient.connect('http://localhost:8080', 'your-secure-key');
@@ -200,17 +200,17 @@ Use this choice to deploy automation quickly. The Easy API process owns browser 
 
 If Easy API is the hosted engine, embedded runtime is the cockpit. Use it when your app needs to own browser selection, lifecycle, and runtime behavior directly.
 
-The v5 public contract exposes `createClient` from `@open-wa/core` through `@open-wa/wa-automate`.
+The v5 public contract exposes `createClient` from `@eulab/openwaunlocked-core` through `@eulab/openwaunlocked`.
 
 This path is lower-level than Easy API + SocketClient. Use it when runtime ownership matters more than the quickest working bot.
 
 ```bash
-npm install @open-wa/wa-automate @open-wa/driver-puppeteer
+npm install @eulab/openwaunlocked @eulab/openwaunlocked-driver-puppeteer
 ```
 
 ```ts
-import { createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 async function start() {
   const client = await createClient({
@@ -237,9 +237,9 @@ Important v5 reality:
 
 Available runtime driver packages in this repo:
 
-- `@open-wa/driver-puppeteer`
-- `@open-wa/driver-playwright`
-- `@open-wa/driver-lightpanda`
+- `@eulab/openwaunlocked-driver-puppeteer`
+- `@eulab/openwaunlocked-driver-playwright`
+- `@eulab/openwaunlocked-driver-lightpanda`
 
 Use the embedded path when you need deeper control over browser selection, runtime lifecycle, or infrastructure behavior.
 
@@ -287,16 +287,16 @@ pnpm build
 
 This repo is no longer just a single package. It includes a plugin/integration surface for extending the runtime.
 
-Want to build one? Start with the **[plugin authoring guide](https://openwa.dev/docs/plugins/getting-started)** (`@open-wa/plugin-sdk`).
+Want to build one? Start with the **[plugin authoring guide](apps/docs/content/docs/plugins/getting-started.mdx)** (`@eulab/openwaunlocked-plugin-sdk`).
 
 Relevant packages in this repo:
 
-- `@open-wa/plugin-sdk`
-- `@open-wa/integration-webhook`
-- `@open-wa/integration-chatwoot`
-- `@open-wa/integration-s3`
-- `@open-wa/integration-cloudflare`
-- `@open-wa/node-red`
+- `@eulab/openwaunlocked-plugin-sdk`
+- `@eulab/openwaunlocked-integration-webhook`
+- `@eulab/openwaunlocked-integration-chatwoot`
+- `@eulab/openwaunlocked-integration-s3`
+- `@eulab/openwaunlocked-integration-cloudflare`
+- `@eulab/openwaunlocked-node-red`
 
 ### Loading plugins
 
@@ -304,8 +304,8 @@ The current config schema supports plugin references as npm package names or fil
 
 ```ts
 plugins: [
-  '@open-wa/integration-chatwoot',
-  '@open-wa/integration-webhook',
+  '@eulab/openwaunlocked-integration-chatwoot',
+  '@eulab/openwaunlocked-integration-webhook',
   './my-local-plugin'
 ],
 pluginConfig: {
@@ -345,7 +345,7 @@ So today, “share a plugin” realistically means “publish a package users ca
 
 ## Cloudflare Session Proxy
 
-If you want remote access without exposing local ports, this repo ships `@open-wa/cf-proxy`.
+If you want remote access without exposing local ports, this repo ships `@eulab/openwaunlocked-cf-proxy`.
 
 High-level flow:
 
@@ -356,7 +356,7 @@ High-level flow:
 Example consumer connection:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect(
   'cf-proxy://open-wa-proxy.account.workers.dev?sessionId=my-session&token=CONSUMER_TOKEN'
@@ -390,7 +390,7 @@ export default {
 Then start the v5 Easy API from the same directory:
 
 ```bash
-WA_API_KEY="your-secure-key" npx @open-wa/wa-automate@latest --config ./wa.config.mjs
+WA_API_KEY="your-secure-key" npx @eulab/openwaunlocked@latest --config ./wa.config.mjs
 ```
 
 Then point your MCP client at:
@@ -460,7 +460,7 @@ If you prefer HTTP, give your agent the Easy API docs surface instead:
 The npm `latest` tag now selects v5. Pin v4 explicitly while migrating an existing application:
 
 ```bash
-npx @open-wa/wa-automate@4.76.0
+npx @eulab/openwaunlocked@1.0.0
 ```
 
 The v5 runtime has a different public surface, so update existing integrations deliberately:
@@ -475,20 +475,20 @@ The v5 runtime has a different public surface, so update existing integrations d
 
 The current docs organize information by usage mode. Start with:
 
-- **Easy API quick start**: https://openwa.dev/docs/getting-started/easy-api
-- **Custom code**: https://openwa.dev/docs/getting-started/custom-code
-- **Socket Client**: https://openwa.dev/docs/client-and-integrations/socket-client
-- **Cloudflare Session Proxy**: https://openwa.dev/docs/client-and-integrations/cf-proxy
-- **Configuration and CLI**: https://openwa.dev/docs/guides/configuration-and-cli
-- **Chatwoot**: https://openwa.dev/docs/client-and-integrations/chatwoot
-- **Core reference**: https://openwa.dev/docs/reference/core
+- **Easy API quick start**: apps/docs/content/docs/getting-started/easy-api.mdx
+- **Custom code**: apps/docs/content/docs/getting-started/custom-code.mdx
+- **Socket Client**: apps/docs/content/docs/client-and-integrations/socket-client.mdx
+- **Cloudflare Session Proxy**: apps/docs/content/docs/client-and-integrations/cf-proxy.mdx
+- **Configuration and CLI**: apps/docs/content/docs/guides/configuration-and-cli.mdx
+- **Chatwoot**: apps/docs/content/docs/client-and-integrations/chatwoot.mdx
+- **Core reference**: apps/docs/content/docs/reference/core.mdx
 
 ## Running this repo locally
 
 If you want to work on the monorepo itself:
 
 ```bash
-git clone https://github.com/open-wa/wa-automate-nodejs.git
+git clone https://github.com/Eulab-EugenioRenna/openwaunlocked.git
 cd wa-automate-nodejs
 pnpm install
 pnpm build
@@ -503,9 +503,9 @@ pnpm lint
 pnpm typecheck
 ```
 
-## Eulab Open
+## EULAB Open
 
-Autore e manutentore del fork: **Eulab**. Le API di questo branch hanno accesso
+Autore e manutentore del fork: **EULAB**. Le API di questo branch hanno accesso
 **Open**, senza piani a pagamento o chiavi di attivazione. La disponibilità
 operativa e le prove ancora aperte sono documentate nell'[audit](docs/development/PREMIUM-AUDIT.md).
 

@@ -1,13 +1,13 @@
-# @open-wa/wa-automate-types-only
+# @eulab/openwaunlocked-types-only
 
-Lightweight type-only re-exports from @open-wa/schema — zero runtime dependencies
+Lightweight type-only re-exports from @eulab/openwaunlocked-schema — zero runtime dependencies
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Install
 
 ```bash
-pnpm add @open-wa/wa-automate-types-only
+pnpm add @eulab/openwaunlocked-types-only
 ```
 
 ## Documentation
@@ -16,4 +16,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) — Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) — Hippocratic + Do Not Harm

@@ -5,7 +5,7 @@ WhatsApp Web: `2.3000.1050814928`.
 
 ## API per motore vocale esterno: 20 ottobre 2026
 
-Esportata `createVoiceCallAudio` da `@open-wa/runtime-node`: ascolto PCM
+Esportata `createVoiceCallAudio` da `@eulab/openwaunlocked-runtime-node`: ascolto PCM
 continuo, risposte progressive con backpressure, conversione della frequenza,
 interruzione della risposta senza chiudere l'ascolto, metriche e rilascio stream.
 Contratto e limiti in [VOICE-API.md](./VOICE-API.md). Nessun modello installato.

@@ -10,8 +10,8 @@ Treat every client method as an async operation and handle failures explicitly.
 ## Embedded runtime pattern
 
 ```ts
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const runtime = await createClient({
   sessionId: 'sales',
@@ -285,7 +285,7 @@ Turn on enough logging to see which layer failed: your app, Easy API, the browse
 For Easy API, start by capturing stdout and stderr:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --session-id sales --host 127.0.0.1 --port 8080 --log-console --verbose > open-wa.log 2>&1
+npx @eulab/openwaunlocked@1.0.0 --session-id sales --host 127.0.0.1 --port 8080 --log-console --verbose > open-wa.log 2>&1
 ```
 
 For custom code, enable browser console logging during diagnosis:

@@ -3,17 +3,17 @@
 > [API per IVR e agente vocale esterno](./VOICE-API.md): implementazione Node,
 > senza installazione del modello e senza certificazione delle API ancora da provare.
 
-# Eulab Open · sviluppo
+# EULAB Open · sviluppo
 
 Stato aggiornato al 20 ottobre 2026. Branch: `dev/free-use-offline`.
-Autore e manutentore: **Eulab**. Questa documentazione descrive il fork locale di sviluppo, non i pacchetti npm
+Autore e manutentore: **EULAB**. Questa documentazione descrive il fork locale di sviluppo, non i pacchetti npm
 pubblicati. Non trasferire automaticamente queste modifiche su `master` o
 `release`. I file di licenza e le attribuzioni del progetto restano presenti:
 “free dev” indica l'assenza di controlli della chiave nel runtime di questo branch.
 
-## Identità Eulab e accesso Open
+## Identità EULAB e accesso Open
 
-I 57 manifest del checkout indicano Eulab come autore del fork. README, sito
+I 57 manifest del checkout indicano EULAB come autore del fork. README, sito
 documentazione e dashboard presentano l'accesso alle API come **Open**. Sono
 rimossi il checkout commerciale, i moduli per inserire chiavi e i collegamenti
 di acquisto. Le capacità mostrate nel pannello Open provengono dal runtime;

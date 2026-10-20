@@ -10,16 +10,16 @@ Use the v5 webhook integration when a CRM, helpdesk, queue, or backend should re
 
 ## Prerequisites
 
-- An Easy API project running `@open-wa/wa-automate@5.1.0`.
+- An Easy API project running `@eulab/openwaunlocked@1.0.0`.
 - A public HTTPS receiver URL that can accept `POST /webhooks/open-wa`.
 - One non-empty random value shared only by the sender and receiver as `OPEN_WA_WEBHOOK_SECRET`.
 
-The current package is `@open-wa/integration-webhook@5.1.0`. The CLI `--webhook` flag is parsed for compatibility but does not register the v5 delivery plugin.
+The current package is `@eulab/openwaunlocked-integration-webhook@1.0.0`. The CLI `--webhook` flag is parsed for compatibility but does not register the v5 delivery plugin.
 
 ## Configure the sender
 
 ```bash
-npm install @open-wa/integration-webhook@5.1.0
+npm install @eulab/openwaunlocked-integration-webhook@1.0.0
 export OPEN_WA_WEBHOOK_SECRET='use-a-long-random-value'
 ```
 
@@ -34,7 +34,7 @@ export default {
   sessionId: 'sales',
   host: '127.0.0.1',
   port: 8080,
-  plugins: ['@open-wa/integration-webhook'],
+  plugins: ['@eulab/openwaunlocked-integration-webhook'],
   pluginConfig: {
     webhook: {
       url: 'https://receiver.example/webhooks/open-wa',
@@ -60,7 +60,7 @@ export default {
 Start the session with the config file:
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --config ./wa.config.mjs --session-id sales --host 127.0.0.1 --port 8080
+npx @eulab/openwaunlocked@1.0.0 --config ./wa.config.mjs --session-id sales --host 127.0.0.1 --port 8080
 ```
 
 ## Run the receiver

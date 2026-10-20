@@ -1,11 +1,11 @@
-# @open-wa/socket-client
+# @eulab/openwaunlocked-socket-client
 
-Use `@open-wa/socket-client` from a Node.js application to call a running `@open-wa/wa-automate` API server and receive its runtime events. Commands use the server's HTTP API, and event subscriptions use Server-Sent Events (SSE).
+Use `@eulab/openwaunlocked-socket-client` from a Node.js application to call a running `@eulab/openwaunlocked` API server and receive its runtime events. Commands use the server's HTTP API, and event subscriptions use Server-Sent Events (SSE).
 
 ## Start the API server
 
 ```bash
-npx @open-wa/wa-automate@5.1.0 --session-id main --host 127.0.0.1 --port 8002 --api-key replace-this-key
+npx @eulab/openwaunlocked@1.0.0 --session-id main --host 127.0.0.1 --port 8002 --api-key replace-this-key
 ```
 
 Keep the server on loopback or a private network unless you have configured an appropriate access boundary. The API key is sent by the client in the `X-API-Key` header for commands and as an `api_key` query parameter for the SSE connection.
@@ -13,11 +13,11 @@ Keep the server on loopback or a private network unless you have configured an a
 ## Connect and send a message
 
 ```bash
-npm install @open-wa/socket-client@5.1.0
+npm install @eulab/openwaunlocked-socket-client@1.0.0
 ```
 
 ```typescript
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://127.0.0.1:8002', 'replace-this-key');
 
@@ -38,4 +38,4 @@ See the [socket client guide](https://openwa.dev/docs/client-and-integrations/so
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

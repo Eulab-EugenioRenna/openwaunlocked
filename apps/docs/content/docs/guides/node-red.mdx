@@ -5,7 +5,7 @@ description: Connect Node-RED to an existing open-wa Easy API session with the c
 
 # Node-RED integration
 
-`@open-wa/node-red` connects Node-RED to an already running open-wa Easy API instance. The current package is `5.1.0` and registers exactly three node types: the `owa-server` configuration node, `Command`, and `Listen`. It does not provide separate Send, Receive, Session, or Media nodes.
+`@eulab/openwaunlocked-node-red` connects Node-RED to an already running open-wa Easy API instance. The current package is `5.1.0` and registers exactly three node types: the `owa-server` configuration node, `Command`, and `Listen`. It does not provide separate Send, Receive, Session, or Media nodes.
 
 ## Prerequisites
 
@@ -20,11 +20,11 @@ Install into the Node-RED user directory so Node-RED can load it from its palett
 
 ```bash
 cd ~/.node-red
-npm install @open-wa/node-red@5.1.0
+npm install @eulab/openwaunlocked-node-red@1.0.0
 node-red
 ```
 
-Open `http://127.0.0.1:1880`, choose **Manage palette**, and confirm the `@open-wa/node-red` package is installed. The package name is `@open-wa/node-red`; the older `@open-wa/node-red-contrib-wa-automate` guide describes a different package and palette.
+Open `http://127.0.0.1:1880`, choose **Manage palette**, and confirm the `@eulab/openwaunlocked-node-red` package is installed. The package name is `@eulab/openwaunlocked-node-red`; the older `@eulab/openwaunlocked-node-red-contrib-wa-automate` guide describes a different package and palette.
 
 ## Connect to Easy API
 
@@ -32,7 +32,7 @@ Start an Easy API session separately. This loopback example requires Node-RED an
 
 ```bash
 export WA_API_KEY="replace-with-your-api-key"
-npx @open-wa/wa-automate@5.1.0 --session-id sales --host 127.0.0.1 --port 8080 --api-key "$WA_API_KEY"
+npx @eulab/openwaunlocked@1.0.0 --session-id sales --host 127.0.0.1 --port 8080 --api-key "$WA_API_KEY"
 ```
 
 In Node-RED, add the **owa-server** configuration node and fill these fields:

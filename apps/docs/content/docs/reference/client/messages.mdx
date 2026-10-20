@@ -28,7 +28,7 @@ const result = await client.deleteMessage("447123456789@c.us", ["false_447123456
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.deleteMessage({
@@ -118,7 +118,7 @@ Edits the text of a message through the installed private patch
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.editMessage({
@@ -212,7 +212,7 @@ const result = await client.forwardMessages("447123456789@c.us", ["false_4471234
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.forwardMessages({
@@ -310,7 +310,7 @@ const result = await client.getAlbumMessages("false_447123456789@c.us_9C4D0965EA
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getAlbumMessages({
@@ -401,7 +401,7 @@ const result = await client.getAllMessages();
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getAllMessages();
@@ -493,7 +493,7 @@ const result = await client.getMessageById("false_447123456789@c.us_9C4D0965EA5C
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getMessageById({
@@ -605,7 +605,7 @@ Get message delivery info
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getMessageInfo({
@@ -696,7 +696,7 @@ Get messages formatted for LLMs
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getMessagesForLLM({
@@ -781,7 +781,7 @@ Get last message sent by host
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getMyLastMessage();
@@ -897,7 +897,7 @@ const result = await client.getPollResults("false_447123456789@c.us_9C4D0965EA5C
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getPollResults({
@@ -993,7 +993,7 @@ Get starred messages
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getStarredMessages();
@@ -1075,7 +1075,7 @@ Get unsent/pending messages
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getUnsentMessages();
@@ -1157,7 +1157,7 @@ Extract vCards from message
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.getVCards({
@@ -1246,7 +1246,7 @@ const result = await client.loadEarlierMessages("447123456789@c.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.loadEarlierMessages({
@@ -1341,7 +1341,7 @@ const result = await client.pinMessage("false_447123456789@c.us_9C4D0965EA5C09D5
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.pinMessage({
@@ -1426,7 +1426,7 @@ React to message with emoji
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.react({
@@ -1513,7 +1513,7 @@ Sends an advanced button message with media (deprecated)
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendAdvancedButtons({
@@ -1622,7 +1622,7 @@ const result = await client.sendAlbum('447123456789@c.us', media, 'One caption f
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 import { readFile } from 'node:fs/promises';
@@ -1735,7 +1735,7 @@ const result = await client.sendAudio("447123456789@c.us", "data:audio/mpeg;base
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendAudio({
@@ -1823,7 +1823,7 @@ Sends a banner image
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendBanner({
@@ -1911,7 +1911,7 @@ Sends a button message (deprecated)
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendButtons({
@@ -2006,7 +2006,7 @@ const result = await client.sendContact("447123456789@c.us", "447123456789@c.us"
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendContact({
@@ -2101,7 +2101,7 @@ const result = await client.sendFile("447123456789@c.us", "data:application/pdf;
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendFile({
@@ -2189,7 +2189,7 @@ Downloads media and sends it through sendFile with the same typed presentation o
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendFileFromUrl({
@@ -2285,7 +2285,7 @@ const result = await client.sendImage("447123456789@c.us", "data:application/pdf
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendImage({
@@ -2380,7 +2380,7 @@ const result = await client.sendInteractive("447123456789@c.us", {});
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendInteractive({
@@ -2467,7 +2467,7 @@ Sends a link with auto-generated preview
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendLinkWithAutoPreview({
@@ -2557,7 +2557,7 @@ Sends a list/menu message (deprecated)
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendListMessage({
@@ -2659,7 +2659,7 @@ const result = await client.sendLocation("447123456789@c.us", 51.5074, -0.1278);
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendLocation({
@@ -2749,7 +2749,7 @@ Sends a link preview message with custom thumbnail
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendMessageWithThumb({
@@ -2854,7 +2854,7 @@ const result = await client.sendMultipleContacts("447123456789@c.us", ["44712345
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendMultipleContacts({
@@ -2946,7 +2946,7 @@ Sends a payment request message
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendPaymentRequest({
@@ -3043,7 +3043,7 @@ const result = await client.sendPoll("447123456789@c.us", "name", ["Yes", "No"])
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendPoll({
@@ -3143,7 +3143,7 @@ const result = await client.sendPtt("447123456789@c.us", "data:audio/mpeg;base64
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendPtt({
@@ -3240,7 +3240,7 @@ const result = await client.sendRawMessage("447123456789@c.us", {});
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendRawMessage({
@@ -3327,7 +3327,7 @@ Sends a reply to a message that includes @mentions
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendReplyWithMentions({
@@ -3424,7 +3424,7 @@ const result = await client.sendSeen("447123456789@c.us");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendSeen({
@@ -3516,7 +3516,7 @@ const result = await client.sendSticker("447123456789@c.us", "input");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendSticker({
@@ -3595,7 +3595,7 @@ Validated serialized message ID. This confirms the send returned an ID, not deli
 
 ## `sendText`
 
-Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the Eulab development branch.
+Sends a text message and returns a validated serialized message ID. The in-process Client throws SendTextError on failure. An unknown outcome means the message may have been sent: check the chat before retrying. Starting a chat with a new number has Open access in the EULAB development branch.
 
 **Signature** `client.sendText(to: string, content: string, options?: unknown): Promise<MessageId>`
 
@@ -3615,7 +3615,7 @@ console.log('Message ID:', messageId);
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendText("447123456789@c.us", "Hello, world!");
@@ -3657,7 +3657,7 @@ Example response envelope:
 | Return type | `Promise<MessageId>` |
 | MessageId | [View fields](/docs/reference/client/return-types#messageid) |
 
-Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@open-wa/wa-automate` and `@open-wa/client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the Eulab development branch. HTTP and remote clients expose failures through their own error envelopes.
+Resolves to a validated serialized `MessageId` string, not a delivery or read receipt. The in-process Client throws `SendTextError`, exported by `@eulab/openwaunlocked` and `@eulab/openwaunlocked-client`, on failure. Its `code` is `INVALID_ARGUMENT`, `SEND_REJECTED`, `INVALID_SEND_RESULT`, or `SEND_FAILED`. Its `outcome` is `not_sent` for invalid arguments and known runtime rejections, or `unknown` when the runtime returns no valid ID or browser evaluation fails. An unknown outcome means the message may already have been sent: check the chat before retrying. The client never retries automatically. New chats have Open access in the EULAB development branch. HTTP and remote clients expose failures through their own error envelopes.
 
 In-process Client resolves to `Promise<MessageId>`. The contract above is for the remote Node.js client; HTTP wraps that result in its `data` property.
 Validated serialized message ID. This confirms the send returned an ID, not delivery or reading.
@@ -3701,7 +3701,7 @@ Sends a text message that includes @mentions
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendTextWithMentions({
@@ -3796,7 +3796,7 @@ const result = await client.sendVCard("447123456789@c.us", "vcard");
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendVCard({
@@ -3891,7 +3891,7 @@ const result = await client.sendVideoAsGif("447123456789@c.us", "data:video/mp4;
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendVideoAsGif({
@@ -3979,7 +3979,7 @@ Sends a YouTube link with auto-generated preview
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.sendYouTubeLink({
@@ -4069,7 +4069,7 @@ Star a message
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.starMessage({
@@ -4161,7 +4161,7 @@ const result = await client.unpinMessage("false_447123456789@c.us_9C4D0965EA5C09
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.unpinMessage({
@@ -4246,7 +4246,7 @@ Unstar a message
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.unstarMessage({
@@ -4338,7 +4338,7 @@ const result = await client.voteOnPoll("false_447123456789@c.us_9C4D0965EA5C09D5
   <InterfaceTab value="SocketClient">
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://localhost:8080', 'YOUR_API_KEY');
 const result = await client.voteOnPoll({

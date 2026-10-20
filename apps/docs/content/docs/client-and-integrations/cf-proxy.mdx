@@ -20,10 +20,10 @@ The Durable Object uses Cloudflare's WebSocket hibernation APIs and an edge ping
 
 ## Deploy from an empty directory
 
-`@open-wa/cf-proxy` is currently a private monorepo package, so it is not installed from npm. A fresh deployment starts with the repository checkout that contains the Worker entrypoint.
+`@eulab/openwaunlocked-cf-proxy` is currently a private monorepo package, so it is not installed from npm. A fresh deployment starts with the repository checkout that contains the Worker entrypoint.
 
 ```bash
-git clone https://github.com/open-wa/wa-automate-nodejs.git
+git clone https://github.com/Eulab-EugenioRenna/openwaunlocked.git
 cd wa-automate-nodejs
 corepack enable
 pnpm install
@@ -73,8 +73,8 @@ Contributors who already have the repository use the same entrypoint and binding
 
 ```bash
 pnpm install
-pnpm --filter @open-wa/cf-proxy exec wrangler whoami
-pnpm --filter @open-wa/cf-proxy exec wrangler deploy
+pnpm --filter @eulab/openwaunlocked-cf-proxy exec wrangler whoami
+pnpm --filter @eulab/openwaunlocked-cf-proxy exec wrangler deploy
 ```
 
 Run `secret put` again only when rotating a value. The Worker code reads the secrets by the exact names `UPSTREAM_TOKEN` and `CONSUMER_TOKEN`; renaming them requires a runtime change.
@@ -85,7 +85,7 @@ Run the CLI on the machine that owns the WhatsApp browser session. It keeps the 
 
 ```bash
 export OPENWA_PROXY_HOST='https://open-wa-proxy.<account>.workers.dev'
-npx @open-wa/wa-automate@5.1.0 \
+npx @eulab/openwaunlocked@1.0.0 \
   --session-id sales \
   --host 127.0.0.1 \
   --port 8080 \
@@ -118,10 +118,10 @@ curl -i -X POST \
 
 The Worker forwards the request to the local Easy API through the upstream connection. A remote caller with the consumer token but no required Easy API key still receives the local API's authentication response.
 
-Node clients can use the compatibility URL, which selects the tunnel transport in `@open-wa/socket-client`:
+Node clients can use the compatibility URL, which selects the tunnel transport in `@eulab/openwaunlocked-socket-client`:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect(
   `cf-proxy://open-wa-proxy.<account>.workers.dev?sessionId=sales&token=${encodeURIComponent(process.env.OPENWA_PROXY_CONSUMER_TOKEN)}`,

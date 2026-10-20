@@ -25,14 +25,14 @@ mkdir open-wa-link-code
 cd open-wa-link-code
 npm init -y
 npm pkg set type=module
-npm install @open-wa/wa-automate@5.1.0 @open-wa/driver-puppeteer@5.1.0
+npm install @eulab/openwaunlocked@1.0.0 @eulab/openwaunlocked-driver-puppeteer@1.0.0
 ```
 
 Save the following as `index.mjs`. Replace the example number with the full phone number, including country code, using digits only.
 
 ```js
-import { Client, createClient } from '@open-wa/wa-automate';
-import { PuppeteerDriver } from '@open-wa/driver-puppeteer';
+import { Client, createClient } from '@eulab/openwaunlocked';
+import { PuppeteerDriver } from '@eulab/openwaunlocked-driver-puppeteer';
 
 const runtime = await createClient({
   sessionId: 'link-code-demo',

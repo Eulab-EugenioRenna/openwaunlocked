@@ -7,11 +7,11 @@ Start with the package that matches where your WhatsApp session will run. You ca
 
 | What you want to do | Package and setup guide |
 | --- | --- |
-| Run a local HTTP API | [`@open-wa/wa-automate`: Easy API quick start](/docs/getting-started/quickstart) |
-| Own the browser and session inside a Node.js app | [`@open-wa/wa-automate`: custom code](/docs/getting-started/custom-code) |
-| Connect to an Easy API session that is already running | [`@open-wa/socket-client`: remote client setup](/docs/client-and-integrations/socket-client) |
-| Build a plugin | [`@open-wa/plugin-sdk`: plugin getting started](/docs/plugins/getting-started) |
-| Decrypt downloaded WhatsApp media | [`@open-wa/decrypt`: package reference](/docs/reference/workspaces/packages/decrypt) |
+| Run a local HTTP API | [`@eulab/openwaunlocked`: Easy API quick start](/docs/getting-started/quickstart) |
+| Own the browser and session inside a Node.js app | [`@eulab/openwaunlocked`: custom code](/docs/getting-started/custom-code) |
+| Connect to an Easy API session that is already running | [`@eulab/openwaunlocked-socket-client`: remote client setup](/docs/client-and-integrations/socket-client) |
+| Build a plugin | [`@eulab/openwaunlocked-plugin-sdk`: plugin getting started](/docs/plugins/getting-started) |
+| Decrypt downloaded WhatsApp media | [`@eulab/openwaunlocked-decrypt`: package reference](/docs/reference/workspaces/packages/decrypt) |
 
 The installation examples use **5.1.0**. See [release status](/docs/releases/v5-alpha) before choosing a different npm tag or Docker image; those release channels can move independently. The [v5.1.0 release notes](/docs/releases/v5.1) describe changes in this release.
 
@@ -21,19 +21,19 @@ Embedded applications pass a driver to `createClient()`. The [custom-code guide]
 
 | Driver package | When to consider it |
 | --- | --- |
-| [`@open-wa/driver-puppeteer`](/docs/reference/workspaces/packages/driver-puppeteer) | Follow the Puppeteer setup used in the getting-started examples. |
-| [`@open-wa/driver-playwright`](/docs/reference/workspaces/packages/driver-playwright) | Use the Playwright adapter when it fits your browser setup. |
-| [`@open-wa/driver-lightpanda`](/docs/reference/workspaces/packages/driver-lightpanda) | Explore the experimental Lightpanda adapter and its current limitations. |
+| [`@eulab/openwaunlocked-driver-puppeteer`](/docs/reference/workspaces/packages/driver-puppeteer) | Follow the Puppeteer setup used in the getting-started examples. |
+| [`@eulab/openwaunlocked-driver-playwright`](/docs/reference/workspaces/packages/driver-playwright) | Use the Playwright adapter when it fits your browser setup. |
+| [`@eulab/openwaunlocked-driver-lightpanda`](/docs/reference/workspaces/packages/driver-lightpanda) | Explore the experimental Lightpanda adapter and its current limitations. |
 
 ## Explore the implementation
 
 Most applications can stay with the entry points above. If you need to work on the runtime itself, the package references describe each workspace:
 
-- [`@open-wa/client`](/docs/reference/workspaces/packages/client) exposes the Client API.
-- [`@open-wa/core`](/docs/reference/workspaces/packages/core) coordinates the browser driver and runtime events.
-- [`@open-wa/config`](/docs/reference/workspaces/packages/config) loads and validates configuration.
-- [`@open-wa/session-sync`](/docs/reference/workspaces/packages/session-sync) handles session synchronization.
-- [`@open-wa/screencaster`](/docs/reference/workspaces/packages/screencaster) streams the browser screen to a client.
-- [`@open-wa/hyperemitter`](/docs/reference/workspaces/packages/hyperemitter) provides the runtime's schema-based event emitter.
+- [`@eulab/openwaunlocked-client`](/docs/reference/workspaces/packages/client) exposes the Client API.
+- [`@eulab/openwaunlocked-core`](/docs/reference/workspaces/packages/core) coordinates the browser driver and runtime events.
+- [`@eulab/openwaunlocked-config`](/docs/reference/workspaces/packages/config) loads and validates configuration.
+- [`@eulab/openwaunlocked-session-sync`](/docs/reference/workspaces/packages/session-sync) handles session synchronization.
+- [`@eulab/openwaunlocked-screencaster`](/docs/reference/workspaces/packages/screencaster) streams the browser screen to a client.
+- [`@eulab/openwaunlocked-hyperemitter`](/docs/reference/workspaces/packages/hyperemitter) provides the runtime's schema-based event emitter.
 
 Browse the [workspace reference](/docs/reference/workspaces) for the complete package, application, and integration list.

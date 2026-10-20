@@ -16,11 +16,11 @@ Effect stays behind the public API. Every exported Promise-returning method,
 HTTP handler, Socket.IO handler, webhook, and plugin-facing surface must catch
 failures at the boundary and rethrow a plain `OpenWAError`.
 
-- Use `runToPromise(effect)` from `@open-wa/core` (`src/effect/errors.ts`) at
+- Use `runToPromise(effect)` from `@eulab/openwaunlocked-core` (`src/effect/errors.ts`) at
   public boundaries instead of `Effect.runPromise`. It guarantees the rejection
   is an `OpenWAError` with a stable `name` (the failure's tag), a readable
   `message`, an HTTP-ish `status`, optional `details`, and the original `cause`.
-- Drivers use the shared `toPublicError` from `@open-wa/driver-interface` at
+- Drivers use the shared `toPublicError` from `@eulab/openwaunlocked-driver-interface` at
   their Promise boundaries, avoiding a circular dependency on core.
 - Never expose `Cause`, `Exit`, `FiberFailure`, or a fiber trace to a caller.
 - HTTP surfaces map `OpenWAError.status` to the response code.
@@ -30,11 +30,11 @@ Downstream users and their tools must be able to read our errors as ordinary
 
 ## Where Effect is allowed
 
-- **Yes:** `@open-wa/core` internals (transport/session lifecycle, `httpClient`),
+- **Yes:** `@eulab/openwaunlocked-core` internals (transport/session lifecycle, `httpClient`),
   `integrations/webhook` delivery, the execution kernel, and (later) the schema
   layer and orchestrator core. Browser provisioning and browser preference
   persistence also use scoped resources and typed failures internally.
-- **No:** public method signatures, `@open-wa/plugin-sdk`, `@open-wa/client`,
+- **No:** public method signatures, `@eulab/openwaunlocked-plugin-sdk`, `@eulab/openwaunlocked-client`,
   generated code, and anything a consumer imports and calls directly. Those stay
   Promise-based. (An additive `client.effect.*` surface may be offered later,
   but the Promise surface always exists.)

@@ -1,6 +1,6 @@
 # Schema Package v2 Migration Plan
 
-This document outlines the steps to refactor the `@open-wa/wa-automate/schema` package to support "Dual-Mode" inputs (Positional Arguments + Named Objects), rich metadata for RBAC/Automation, and a runtime implementation bridge.
+This document outlines the steps to refactor the `@eulab/openwaunlocked/schema` package to support "Dual-Mode" inputs (Positional Arguments + Named Objects), rich metadata for RBAC/Automation, and a runtime implementation bridge.
 
 ## Goals
 1.  **Dual-Mode Inputs**: Support `method(a, b)` AND `method({ a: val, b: val })` automatically.
@@ -196,10 +196,10 @@ export const sendText = defineMethod('sendText', {
 ```
 
 ## Phase 6: Client Usage (Future)
-When the `@open-wa/wa-automate` client imports this, it can use the default behavior or override it.
+When the `@eulab/openwaunlocked` client imports this, it can use the default behavior or override it.
 
 ```typescript
-import { sendText, implementMethod } from '@open-wa/schema';
+import { sendText, implementMethod } from '@eulab/openwaunlocked-schema';
 
 class Client {
     

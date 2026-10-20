@@ -5,20 +5,20 @@ description: Answer and start WhatsApp audio calls, play greetings, capture rece
 
 # Calls
 
-Calling has **Open** access in the Eulab development branch. This branch provides audio controls and media sources; camera calls and provider adapters are still in development. Build the local checkout to use this version; published upstream packages do not include these fork changes.
+Calling has **Open** access in the EULAB development branch. This branch provides audio controls and media sources; camera calls and provider adapters are still in development. Build the local checkout to use this version; published upstream packages do not include these fork changes.
 
 ## Answer with a greeting and record the caller
 
 Install the main package, which includes its browser driver and audio decoder:
 
 ```sh
-npm install @open-wa/wa-automate@latest
+npm install @eulab/openwaunlocked@latest
 ```
 
 Create a client, then handle incoming calls:
 
 ```ts
-import { create } from '@open-wa/wa-automate';
+import { create } from '@eulab/openwaunlocked';
 
 const client = await create();
 
@@ -31,7 +31,7 @@ The first argument supplies the microphone audio; the second receives the caller
 
 OpenWA prepares the source and recording before answering. The greeting begins when the call becomes active, plays once, and then sends silence while the call stays open. Returning from your callback keeps the call media alive. When the peer hangs up, OpenWA stops the source, closes its resources and finishes the recording. Existing recordings are preserved by choosing a new filename.
 
-There is no capability-check step. Without a supported browser or native calling provider, Eulab Open logs the reason and calling actions return an unavailable result; your messaging session continues.
+There is no capability-check step. Without a supported browser or native calling provider, EULAB Open logs the reason and calling actions return an unavailable result; your messaging session continues.
 
 ## Use devices, URLs or streams
 
@@ -44,7 +44,7 @@ await client.onIncomingCall(call => call.accept());
 Device access needs working browser permissions and devices. Use files or streams for a headless server without physical devices. `DEFAULT_MIC` and `DEFAULT_SPEAKER` are available when you want to spell out a default in a mixed-source call.
 
 ```ts
-import { DEFAULT_SPEAKER } from '@open-wa/wa-automate';
+import { DEFAULT_SPEAKER } from '@eulab/openwaunlocked';
 
 await client.onIncomingCall(async call => {
   await call.accept('https://example.com/greeting.mp3', DEFAULT_SPEAKER);
@@ -135,7 +135,7 @@ The `dev/free-use-offline` Node runtime exports `createVoiceCallAudio` for an
 external IVR or full-duplex voice engine. It contains no STT, TTS or model:
 
 ```ts
-import { createVoiceCallAudio } from '@open-wa/runtime-node';
+import { createVoiceCallAudio } from '@eulab/openwaunlocked-runtime-node';
 
 const audio = createVoiceCallAudio({ responseSampleRate: 24000 });
 const accepted = await call.accept(audio.media);
@@ -159,7 +159,7 @@ multi-session model serving are outside this helper.
 The remote helper opens files and streams on the caller's machine:
 
 ```ts
-import { SocketClient } from '@open-wa/socket-client';
+import { SocketClient } from '@eulab/openwaunlocked-socket-client';
 
 const client = await SocketClient.connect('http://127.0.0.1:8080');
 await client.onIncomingCall(call => call.accept('greeting.wav', 'received.wav'));
@@ -174,7 +174,7 @@ An API on another machine uses its configured API authentication and an HTTPS/WS
 Start the locally built Easy API with the dashboard enabled:
 
 ```sh
-pnpm --filter @open-wa/wa-automate exec wa-automate --dashboard
+pnpm --filter @eulab/openwaunlocked exec openwaunlocked --dashboard
 ```
 
 Open `/dashboard/calls` on the API's address. Search for a contact by name, phone number or LID and select the result, or enter an international number or full contact ID and select it. Choose **Bundled OpenWA greeting**, select **Record received audio** and choose **Start audio call**. The speech starts after the peer answers. End the call from either side; the page shows the terminal state and offers **Download received audio**.

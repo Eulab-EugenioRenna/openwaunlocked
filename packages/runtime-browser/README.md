@@ -1,16 +1,16 @@
-# @open-wa/runtime-browser
+# @eulab/openwaunlocked-runtime-browser
 
 Browser Effect runtime Layer for open-wa control-plane clients
 
-Part of the [@open-wa v5 monorepo](https://github.com/open-wa/wa-automate-nodejs).
+Part of the [EULAB Open monorepo](https://github.com/Eulab-EugenioRenna/openwaunlocked).
 
 ## Development
 
-- `pnpm --filter @open-wa/runtime-browser build`
-- `pnpm --filter @open-wa/runtime-browser test`
-- `pnpm --filter @open-wa/runtime-browser lint`
-- `pnpm --filter @open-wa/runtime-browser typecheck`
-- `pnpm --filter @open-wa/runtime-browser clean`
+- `pnpm --filter @eulab/openwaunlocked-runtime-browser build`
+- `pnpm --filter @eulab/openwaunlocked-runtime-browser test`
+- `pnpm --filter @eulab/openwaunlocked-runtime-browser lint`
+- `pnpm --filter @eulab/openwaunlocked-runtime-browser typecheck`
+- `pnpm --filter @eulab/openwaunlocked-runtime-browser clean`
 
 ## Documentation
 
@@ -18,4 +18,4 @@ See the [docs site](https://openwa.dev).
 
 ## License
 
-[H-DNH 1.1](https://github.com/open-wa/wa-automate-nodejs/blob/master/LICENSE.md) - Hippocratic + Do Not Harm
+[H-DNH 1.1](https://github.com/Eulab-EugenioRenna/openwaunlocked/blob/master/LICENSE.md) - Hippocratic + Do Not Harm

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the implementation plan for adding Zod codecs and reusable parameters to the `@open-wa/schema` package. The goal is to create intelligent, bi-directional transformations for common WhatsApp data types and provide a library of reusable, well-documented parameters.
+This document outlines the implementation plan for adding Zod codecs and reusable parameters to the `@eulab/openwaunlocked-schema` package. The goal is to create intelligent, bi-directional transformations for common WhatsApp data types and provide a library of reusable, well-documented parameters.
 
 ## Background
 
@@ -159,8 +159,8 @@ export const groupIdCodec = z.codec(
 Since the file codec needs to support multiple output types, we'll create a **factory function** that generates codecs for each output type:
 
 ```typescript
-import { AdvancedFile } from '@open-wa/core/api/model';
-import { assertFile, FileOutputTypes } from '@open-wa/core/utils/tools';
+import { AdvancedFile } from '@eulab/openwaunlocked-core/api/model';
+import { assertFile, FileOutputTypes } from '@eulab/openwaunlocked-core/utils/tools';
 
 /**
  * Creates a file codec that transforms various file inputs to a specific output type
@@ -275,7 +275,7 @@ export const urlToDataUrlCodec = z.codec(
     decode: async (url, ctx) => {
       try {
         // Use existing getDUrl utility
-        const { getDUrl } = await import('@open-wa/core/utils/tools');
+        const { getDUrl } = await import('@eulab/openwaunlocked-core/utils/tools');
         return await getDUrl(url);
       } catch (err: any) {
         ctx.issues.push({
@@ -744,7 +744,7 @@ export const jsonStringCodec = <T extends z.ZodType>(schema: T) =>
 ### Example 1: Using Chat ID Codec Directly
 
 ```typescript
-import { chatIdCodec } from '@open-wa/schema';
+import { chatIdCodec } from '@eulab/openwaunlocked-schema';
 
 // Decode: flexible input → formatted output
 const chatId1 = chatIdCodec.decode("447123456789");
@@ -764,7 +764,7 @@ const chatId4 = chatIdCodec.decode("447123456789@c.us");
 ### Example 2: Using File Codec
 
 ```typescript
-import { fileToDataUrlCodec } from '@open-wa/schema';
+import { fileToDataUrlCodec } from '@eulab/openwaunlocked-schema';
 
 // All of these work!
 const dataUrl1 = await fileToDataUrlCodec.decode("./image.png");
@@ -803,7 +803,7 @@ export const sendTextV2 = defineMethodV2('sendText', {
 ### Example 4: Client Usage (End User)
 
 ```typescript
-import { Client } from '@open-wa/wa-automate';
+import { Client } from '@eulab/openwaunlocked';
 
 const client = new Client();
 

@@ -171,7 +171,7 @@ export default function DefaultSearchDialog(props: SharedProps) {
 
     return (
       <div role="status" className="py-10 text-center text-sm text-fd-muted-foreground">
-        Search the open-wa guides and API reference.
+        Search the EULAB guides and API reference.
       </div>
     );
   };

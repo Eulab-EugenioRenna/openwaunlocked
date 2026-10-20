@@ -1,4 +1,4 @@
-# @open-wa/runtime-edge
+# @eulab/openwaunlocked-runtime-edge
 
 
 
@@ -21,4 +21,4 @@
 ### Patch Changes
 
 - Updated dependencies []:
-  - @open-wa/runtime-core@5.0.0
+  - @eulab/openwaunlocked-runtime-core@1.0.0
