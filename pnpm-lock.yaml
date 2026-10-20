@@ -13,8 +13,8 @@ catalogs:
       specifier: 4.0.2
       version: 4.0.2
     '@effect/platform-bun':
-      specifier: 4.0.2
-      version: 4.0.2
+      specifier: 4.0.5
+      version: 4.0.5
     '@effect/platform-node':
       specifier: 4.0.2
       version: 4.0.2
@@ -1187,7 +1187,7 @@ importers:
     dependencies:
       '@effect/platform-bun':
         specifier: 'catalog:'
-        version: 4.0.2(effect@4.0.2)
+        version: 4.0.5(effect@4.0.2)
       '@eulab/openwaunlocked-runtime-core':
         specifier: workspace:*
         version: link:../runtime-core
@@ -1946,10 +1946,10 @@ packages:
     peerDependencies:
       effect: ^4.0.2
 
-  '@effect/platform-bun@4.0.2':
-    resolution: {integrity: sha512-wbQ9jQKtTjqHOYvMrgINWKuP05Q0cXe/Rze2c2gOAakztE34tVzT4aRvvooUR2l+JGWf/hL26nmHXJ4/Urkqiw==}
+  '@effect/platform-bun@4.0.5':
+    resolution: {integrity: sha512-tB/GapZ/bVoCbwRgnojGP4TwopvkMoFoSCipXT1sf0guvG/2oRVhWzJW/1vkrYFEdLM7XyRnVVLrSJyqdok7DA==}
     peerDependencies:
-      effect: ^4.0.2
+      effect: ^4.0.5
 
   '@effect/platform-node-shared@4.0.2':
     resolution: {integrity: sha512-xn8aDw9p/QUPt1Yi0C3HUMcycT+MjHfAe19FDUDrUuzcwq0xxskkamVSqbdykF/Dsuus4aZTsCBZA/vkhHIfbQ==}
@@ -12431,7 +12431,7 @@ snapshots:
     dependencies:
       effect: 4.0.2
 
-  '@effect/platform-bun@4.0.2(effect@4.0.2)':
+  '@effect/platform-bun@4.0.5(effect@4.0.2)':
     dependencies:
       '@effect/platform-node-shared': 4.0.2(effect@4.0.2)
       effect: 4.0.2
